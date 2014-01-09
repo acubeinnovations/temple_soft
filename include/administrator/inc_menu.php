@@ -11,7 +11,20 @@
 
         <li class="divider"></li>
 
-        <li class="has-dropdown">
+      
+
+         <li class="has-dropdown">
+           <a href="#">Master</a>
+           <ul class="dropdown">
+              <li><a href=""> Pooja</a></li>
+              <li class="divider"></li>
+               <li><a href="">Stars</a></li>
+              <li class="divider"></li>
+          </ul>
+        </li>
+
+         
+          <li class="has-dropdown">
           <a href="#">Administrator</a>
           <ul class="dropdown">
             <li><a href="users.php">Users</a></li>
@@ -19,6 +32,9 @@
             <li class="divider"></li>
           </ul>
         </li>
+
+        
+           
 
 <?php } ?>
         <li class="divider"></li>
