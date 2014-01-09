@@ -32,7 +32,7 @@ class UserSession {
 
     function login(){
           $strSQL = "SELECT U.* FROM users U WHERE U.username = '".mysql_real_escape_string($this->username);
-          $strSQL .= "' AND U.password='".$this->password."' AND (U.user_status_id = '".USERSTATUS_ACTIVE."' OR U.user_status_id = '".USERSTATUS_IMPORTED."' OR U.user_status_id = '".USERSTATUS_MOBILE_REGISTRATION."')";
+          $strSQL .= "' AND U.password='".$this->password."' AND (U.user_status_id = '".USERSTATUS_ACTIVE."')";
 		//echo $strSQL;exit();
           $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
           if ( mysql_num_rows($rsRES) > 0 ){
