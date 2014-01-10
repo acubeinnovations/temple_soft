@@ -16,7 +16,7 @@
          <li class="has-dropdown">
            <a href="#">Master</a>
            <ul class="dropdown">
-              <li><a href=""> Pooja</a></li>
+              <li><a href="poojas.php"> Pooja</a></li>
               <li class="divider"></li>
                <li><a href="">Stars</a></li>
               <li class="divider"></li>

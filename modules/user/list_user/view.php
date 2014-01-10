@@ -35,8 +35,6 @@
     </div>
 
 
-
-
     <div class="row">
 		<div class="medium-6 columns">
 			<label for="new_username">Phone</label>
