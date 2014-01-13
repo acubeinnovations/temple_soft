@@ -18,7 +18,7 @@
            <ul class="dropdown">
               <li><a href="poojas.php"> Pooja</a></li>
               <li class="divider"></li>
-               <li><a href="star.php">Stars</a></li>
+               <li><a href="stars.php">Stars</a></li>
               <li class="divider"></li>
           </ul>
         </li>
