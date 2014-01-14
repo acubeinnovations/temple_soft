@@ -18,7 +18,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_user.php","class_user_notifications.php");
+	$page->class_list = array("class_user.php","class_user_notifications.php","UserCredit.php");
 	$page->script_list_link = array("jquery.min.js");
 
 	$index=0;

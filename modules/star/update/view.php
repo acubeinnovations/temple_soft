@@ -17,7 +17,7 @@ if(!defined('CHECK_INCLUDED')){
 
  		<div class="row">
  			<div class="medium-6 columns">
- 				<label for="pooja">Star</label>
+ 				<label for="star">Star </label>
  				<input type="text" name="name" id="star" value="<?php  echo $add_star->name;?>"/>
  			</div>
  		</div>

@@ -26,6 +26,7 @@ if(!defined('CHECK_INCLUDED')){
  			<div class="medium-6 columns">
  				<label for="rate">Rate</label>
  				<input type="text" name="rate" id="rate" value="<?php echo $add_pooja->rate;?>"/>
+ 				
  			</div>
  		</div>
 

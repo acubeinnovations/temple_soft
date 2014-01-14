@@ -4,7 +4,7 @@ if(!defined('CHECK_INCLUDED')){
 }
 $add_stars=new Star($myconnection);
 $add_stars->connection=$myconnection;
-$pagination= new pagination(5);
+$pagination= new pagination(10);
 
 if(isset($_GET['submit'])){
 	$add_stars->name=$_GET['search'];
