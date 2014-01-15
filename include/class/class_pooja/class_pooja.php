@@ -90,10 +90,10 @@ function get_list_array()
 		if ( mysql_num_rows($rsRES) > 0 )
 			{
 			while ( list ($id,$name,$rate,$status_id) = mysql_fetch_row($rsRES) ){
-				$items[$i]["id"] =  $id;
-				$items[$i]["name"] = $name;
-				$items[$i]["rate"] = $rate;
-				$items[$i]["status_id"] = $status_id;
+				$pooja[$i]["id"] =  $id;
+				$pooja[$i]["name"] = $name;
+				$pooja[$i]["rate"] = $rate;
+				$pooja[$i]["status_id"] = $status_id;
 				$i++;
            	}
             return $pooja;
@@ -113,22 +113,21 @@ function get_array()
 			$i=0;
 			$strSQL = "SELECT id,name,rate,status_id FROM pooja";
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-			if ( mysql_num_rows($rsRES) > 0 )
-				 {while(list($id,$name,$rate,$status_id) = mysql_fetch_row($rsRES) ){
+			if ( mysql_num_rows($rsRES) > 0 ){
+				 while(list($id,$name,$rate,$status_id) = mysql_fetch_row($rsRES) ){
 						$pooja[$i]['id'] =  $id;
 						$pooja[$i]['name'] =  $name;
 						$pooja[$i]['rate'] =  $rate;
 						$pooja[$i]['status_id'] =  $status_id;
-
 						$i++;
            		 		}
             		return $pooja;
-       			}else{
+       				}else{
 					$this->error_number = 4;
 					$this->error_description="Can't list pooja";
 					return false;
     				}
-		}		
+}		
 
 
 

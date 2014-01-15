@@ -139,6 +139,44 @@ function get_list_array()
 }
 
 
+function get_array()
+
+  {
+      $star = array();
+      $i=0;
+      $strSQL = "SELECT id,name,status_id FROM star";
+      $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+      if ( mysql_num_rows($rsRES) > 0 ){
+            while(list($id,$name,$status_id) = mysql_fetch_row($rsRES) ){
+                  $star[$i]['id'] =  $id;
+                  $star[$i]['name'] =  $name;
+                  $star[$i]['status_id'] =  $status_id;
+                $i++;
+                      }
+                return $star;
+            }else{
+          $this->error_number = 4;
+          $this->error_description="Can't list star";
+          return false;
+            }
+    } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

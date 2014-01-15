@@ -23,6 +23,18 @@
           </ul>
         </li>
 
+
+           <li class="has-dropdown">
+           <a href="#">Vazhipadu</a>
+           <ul class="dropdown">
+              <li><a href="Vazhipadu.php"> Vazhipadu</a></li>
+                  <li class="divider"></li>
+               
+              <li class="divider"></li>
+          </ul>
+        </li>
+
+
          
           <li class="has-dropdown">
           <a href="#">Administrator</a>
