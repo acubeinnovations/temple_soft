@@ -29,10 +29,15 @@
            <ul class="dropdown">
               <li><a href="Vazhipadu.php"> Vazhipadu</a></li>
                   <li class="divider"></li>
-               
               <li class="divider"></li>
           </ul>
         </li>
+        <li class="has-dropdown">
+          <a href="#" Donation</a>
+            <ul class="dropdown">
+              <li><a href="donation.php"> Donation</a></li>
+                  <li class="divider"></li>
+              <li class="divider"></li>
 
 
          
