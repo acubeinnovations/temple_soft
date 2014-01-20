@@ -17,7 +17,7 @@ $page = new Page;
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_doantions.php");
+	$page->class_list = array("class_donation.php","class_stars.php");
 	$page->script_list = array("jquery.min.js");
 	
 	

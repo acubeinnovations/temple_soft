@@ -1,10 +1,10 @@
 <!--
 $(document).ready(function(){
-$('select[name=listpooja]').change(function(){
+$('.listpooja').change(function(){
         var pooja_id = $(this).val();
         if(pooja_id == -1)
         {
-            $("#rate").val("");
+            $(this.).next().val("");
         }
         else
         {
@@ -14,7 +14,7 @@ $('select[name=listpooja]').change(function(){
             });
             success_post.done(function (rate) {
                   if(rate){
-                    $("#rate").val(rate);
+                    $(this.).next().val(rate);
                   }
            });
         }

@@ -17,7 +17,7 @@ $page = new Page;
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_star.php");
+	$page->class_list = array("class_stars.php");
 	
 	
 	$page->access_list = array("ADMINISTRATOR");

@@ -3,7 +3,7 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-Class Star{
+Class stars{
 
 var $id=gINVALID;
 var $name="";
@@ -21,7 +21,7 @@ function update()
 		{
 
 			if ( $this->id == "" || $this->id == gINVALID) {
-			$strSQL = "INSERT INTO star(name,status_id) VALUES ('";
+			$strSQL = "INSERT INTO stars(name,status_id) VALUES ('";
 			$strSQL .= addslashes(trim($this->name)) ."','";
 			$strSQL .= addslashes(trim($this->status_id)) . "')";
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
@@ -31,13 +31,13 @@ function update()
               return $this->id;
         		  }else{
               $this->error_number = 3;
-              $this->error_description="Can't insert star ";
+              $this->error_description="Can't insert stars ";
               return false;
               }
          }
 
 	elseif($this->id > 0 ) {
-			$strSQL = "UPDATE star SET name = '".addslashes(trim($this->name))."',";
+			$strSQL = "UPDATE stars SET name = '".addslashes(trim($this->name))."',";
 			$strSQL .= "status_id = '".addslashes(trim($this->status_id))."'";
 			$strSQL .= " WHERE id = ".$this->id;
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
@@ -46,7 +46,7 @@ function update()
                  return true;
            	     }else{
                	 $this->error_number = 3;
-              	 $this->error_description="Can't update star";
+              	 $this->error_description="Can't update stars";
                	return false;
            		 }
     		  }
@@ -56,20 +56,20 @@ function update()
 
 function get_list_array()
      {
-    $star = array();$i=0;
-    $strSQL = "SELECT  id,name,status_id FROM star";
+    $stars = array();$i=0;
+    $strSQL = "SELECT  id,name,status_id FROM stars";
     $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     if ( mysql_num_rows($rsRES) > 0 )
         {
       while ( list ($id,$name,$status_id) = mysql_fetch_row($rsRES) ){
-        $star[$i]["id"] =  $id;
-        $star[$i]["name"] = $name;
-        $star[$i]["status_id"] = $status_id;
+        $stars[$i]["id"] =  $id;
+        $stars[$i]["name"] = $name;
+        $stars[$i]["status_id"] = $status_id;
         $i++;
-          } return $star;
+          } return $stars;
             }else{    
       $this->error_number = 4;
-      $this->error_description="Can't list star";
+      $this->error_description="Can't list stars";
       return false;
       }
 }
@@ -77,11 +77,11 @@ function get_list_array()
 
 
 
-    function get_list_array_bylimit($start_record = 0,$max_records = 25){
-        $star = array();
+    function get_list_array_bylimit($starst_record = 0,$max_records = 25){
+        $stars = array();
         $i=0;
         $str_condition = "";
-        $strSQL = "SELECT id,name,status_id FROM star WHERE 1";
+        $strSQL = "SELECT id,name,status_id FROM stars WHERE 1";
 
         if($this->id!='' && $this->id!=gINVALID){
            $strSQL .= " AND id = '".addslashes(trim($this->id))."'";
@@ -93,7 +93,7 @@ function get_list_array()
 
 
      $strSQL .= " ORDER BY id";
-     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
+     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $starst_record, $max_records);
      $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
 
     if ( mysql_num_rows($rsRES) > 0 ){
@@ -105,11 +105,11 @@ function get_list_array()
              $this->total_records = mysql_num_rows($all_rs);
           }
       while ( list ($id,$name,$status_id) = mysql_fetch_row($rsRES) ){
-          $star[$i]["id"] =  $id;
-          $star[$i]["name"] = $name;
-          $star[$i]["status_id"] = $status_id;
+          $stars[$i]["id"] =  $id;
+          $stars[$i]["name"] = $name;
+          $stars[$i]["status_id"] = $status_id;
           $i++;
-         }return $star;
+         }return $stars;
           } else {
           return false;
        } 
@@ -122,7 +122,7 @@ function get_list_array()
     function get_details()
   {
     if($this->id >0){
-    $strSQL = "SELECT id,name,status_id FROM star WHERE id = '".$this->id."'";
+    $strSQL = "SELECT id,name,status_id FROM stars WHERE id = '".$this->id."'";
     $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
      if(mysql_num_rows($rsRES) > 0){
       $user   = mysql_fetch_assoc($rsRES);
@@ -142,21 +142,21 @@ function get_list_array()
 function get_array()
 
   {
-      $star = array();
+      $stars = array();
       $i=0;
-      $strSQL = "SELECT id,name,status_id FROM star";
+      $strSQL = "SELECT id,name,status_id FROM stars";
       $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
       if ( mysql_num_rows($rsRES) > 0 ){
             while(list($id,$name,$status_id) = mysql_fetch_row($rsRES) ){
-                  $star[$i]['id'] =  $id;
-                  $star[$i]['name'] =  $name;
-                  $star[$i]['status_id'] =  $status_id;
+                  $stars[$i]['id'] =  $id;
+                  $stars[$i]['name'] =  $name;
+                  $stars[$i]['status_id'] =  $status_id;
                 $i++;
                       }
-                return $star;
+                return $stars;
             }else{
           $this->error_number = 4;
-          $this->error_description="Can't list star";
+          $this->error_description="Can't list stars";
           return false;
             }
     } 

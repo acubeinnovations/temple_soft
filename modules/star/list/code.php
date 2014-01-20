@@ -2,7 +2,7 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
-$add_stars=new Star($myconnection);
+$add_stars=new Stars($myconnection);
 $add_stars->connection=$myconnection;
 $pagination= new pagination(10);
 

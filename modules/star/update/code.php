@@ -3,7 +3,7 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-$add_star=new Star($myconnection);
+$add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
 
 if(isset($_GET['id'])){

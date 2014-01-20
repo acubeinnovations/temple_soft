@@ -12,7 +12,7 @@ $breadcrumb='<a href="/index.php">Home</a> &raquo; <a href="/login.php">Login</a
 		<div class="medium-12 columns ">
 						<div class="medium-5 columns ">
 							<label>User Name <small>*</small></label>
-							<input name="loginname"  type="text" required class="text " id="loginname"  title=""  value="" placeholder="Enter your name" >
+							<input name="loginname"  type="text" required class="text " id="loginname"  title=""  value=""  >
 						 </div>
 						<div class="medium-5 columns ">
 					
@@ -22,7 +22,7 @@ $breadcrumb='<a href="/index.php">Home</a> &raquo; <a href="/login.php">Login</a
 		<div class="medium-12 columns ">
 						<div class="medium-5 columns ">
 							<label>Password <small>*</small></label>
-							<input name="passwd"  type="password" required class="text " placeholder="Enter your password" id="passwd" >
+							<input name="passwd"  type="password" required class="text" id="passwd" >
 						 </div>
 						<div class="medium-5 columns ">
 					
@@ -31,7 +31,7 @@ $breadcrumb='<a href="/index.php">Home</a> &raquo; <a href="/login.php">Login</a
 	
 		<div class="medium-12 columns ">
 						<div class="medium-5 columns ">
-							<input  value="<?php echo $capSIGNIN; ?>" type="submit" name="submit" class="tiny success button" >
+							<input  value="<?php echo $capSIGNIN; ?>" type="submit" name="submit" class="small button" >
          					    <input name="h_id" value="" type="hidden"><input name="h_login" value="pass" type="hidden">
 								<a href="forgot_password.php" class="button-link">Forgot Password?</a>
 						 </div>

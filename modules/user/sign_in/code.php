@@ -25,8 +25,12 @@ if(isset($_POST['submit']) and $_POST['submit'] == $capSIGNIN)
 			  header('Location:dashboard.php');
 				exit();
 		  } else{
-			  $login_error = "Invalid Username or password!";
-		  }
+			 $login_error .= "Invalid Login name/Password.";
+			$_SESSION[SESSION_TITLE.'flash'] = $login_error;
+		 }
+	
+}else{
+ 	$_SESSION[SESSION_TITLE.'flash'] = $login_error;
 		  
 	}
 	
