@@ -85,7 +85,7 @@ INSERT INTO `pooja` (`id`, `name`, `rate`, `status_id`) VALUES
 -- Dumping data for table `star`
 --
 
-INSERT INTO `star` (`id`, `name`, `status_id`) VALUES
+INSERT INTO `stars` (`id`, `name`, `status_id`) VALUES
 (1, 'à´…à´¶àµà´µà´¤à´¿', 0),
 (2, 'à´­à´°à´£à´¿', 0),
 (3, 'à´•à´¾à´°àµâ€à´¤àµà´¤à´¿à´•', 0),
@@ -128,12 +128,7 @@ INSERT INTO `statuses` (`id`, `name`) VALUES
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `address`, `occupation`, `user_status_id`, `organization_id`, `registration_date`, `activation_token`, `password_token`) VALUES
-(1, 'tester@acube.co', '81dc9bdb52d04dc20036dbd8313ed055', 'Tester', 'Acube', 'tester@acube.co', '', 'tester@acube.co', 'tester@acube.co', 1, NULL, '0000-00-00 00:00:00', NULL, NULL),
-(2, 'febeena@acube.co', '81dc9bdb52d04dc20036dbd8313ed055', 'febeena', 'shamneer', '', '9539031126', 'kochin', '', 1, 0, '2014-01-09 14:35:51', '', NULL),
-(3, 'swapna', '81dc9bdb52d04dc20036dbd8313ed055', 'swapna', 'shiju', 'swapnam@gmail.com', '789456', 'swapnam@gmail.com', '789456', 1, 0, '2014-01-13 15:56:33', '', NULL),
-(4, 'swapna@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'swapna', 'shijo', 'swapna@gmail.com', '98956485', 'swapna@gmail.com', '56565787', 1, 0, '2014-01-13 17:11:33', '', NULL),
-(5, 'minto@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'minto', 'jojo', 'minto@gmail.com', '98954522', 'minto@gmail.com', '9895254', 1, 0, '2014-01-13 17:17:33', '', NULL),
-(6, 'arun@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'arun', 'arun', 'arun@gmail.com', '36985214', 'arun@gmail.com', '4578588', 1, 0, '2014-01-13 17:19:36', '', NULL);
+(1, 'tester@acube.co', '81dc9bdb52d04dc20036dbd8313ed055', 'Tester', 'Acube', 'tester@acube.co', '', 'tester@acube.co', 'tester@acube.co', 1, NULL, '0000-00-00 00:00:00', NULL, NULL);
 
 --
 -- Dumping data for table `user_statuses`
@@ -147,12 +142,7 @@ INSERT INTO `user_statuses` (`id`, `name`, `description`) VALUES
 
 --
 -- Dumping data for table `vazhipadu`
---
 
-INSERT INTO `vazhipadu` (`id`, `bill_item_id`, `name`, `star_id`, `pooja_id`, `rate`, `quantity`, `date`) VALUES
-(1, 0, 'gfhgfhhgf', -1, 8, 34, 10, '0000-00-00'),
-(2, 0, 'dfhgdf', -1, 2, 12, 10, '0000-00-00'),
-(3, 0, 'swapna', -1, 9, 1, 40, '0000-00-00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

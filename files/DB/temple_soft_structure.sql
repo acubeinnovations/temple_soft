@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `bill_items` (
 -- Table structure for table `bill_type`
 --
 
-CREATE TABLE IF NOT EXISTS `bill_type` (
+CREATE TABLE IF NOT EXISTS `bill_types` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
   `name` varchar(450) NOT NULL,
   `last_bill_number` int(30) NOT NULL,
@@ -94,14 +94,14 @@ CREATE TABLE IF NOT EXISTS `bill_type` (
 -- Table structure for table `donation`
 --
 
-CREATE TABLE IF NOT EXISTS `donation` (
+CREATE TABLE IF NOT EXISTS `donations` (
   `id` int(25) NOT NULL AUTO_INCREMENT,
   `bill_item_id` varchar(25) NOT NULL,
   `name` text NOT NULL,
   `address` varchar(250) NOT NULL,
   `star_id` int(25) NOT NULL,
   `amount` int(30) NOT NULL,
-  `desc` text NOT NULL,
+  `description` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `pooja` (
 -- Table structure for table `star`
 --
 
-CREATE TABLE IF NOT EXISTS `star` (
+CREATE TABLE IF NOT EXISTS `stars` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `status_id` int(10) NOT NULL,
