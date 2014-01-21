@@ -66,6 +66,51 @@ function update()
 
 
 
+function get_list_array()
+	{
+		$donation = array();$i=0;
+		$strSQL = "SELECT  name,address,star_id,amount,description FROM donations";
+		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+		if ( mysql_num_rows($rsRES) > 0 )
+			{
+			while ( list ($name,$address,$star_id,$amount,$description) = mysql_fetch_row($rsRES) ){
+				//$donation[$i]["id"] =  $id;
+				$donation[$i]["name"] = $name;
+				$donation[$i]["address"] = $address;
+				$donation[$i]["star_id"] = $star_id;
+				$donation[$i]["amount"] = $amount;
+				$donation[$i]["description"] = $description;
+				$i++;
+           	}
+            return $donation;
+       		}else{
+			$this->error_number = 4;
+			$this->error_description="Can't list donation";
+			return false;
+    	}
+}
+
+function get_details()
+	{
+	if($this->id >0){
+		$strSQL = "SELECT id,name,address,star_id,amount FROM donations WHERE id = '".$this->id."'";
+		$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+		 if(mysql_num_rows($rsRES) > 0){
+			$user 	= mysql_fetch_assoc($rsRES);
+			$this->id 		= $user['id'];
+			$this->name 	= $user['name'];
+			$this->address= $user['address'];
+			$this->star_id = $user['star_id'];
+			$this->amount = $user['amount'];
+			return true;
+			}else{
+			return false;
+			}
+			}else{
+			return false;
+			}
+}
+
 
 
 

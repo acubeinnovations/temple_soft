@@ -11,6 +11,10 @@ $add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
 $array_stars=$add_star->get_array();
 
+if(isset($_GET['id'])){
+	$add_donation=$_GET['id'];
+	$add_donation->get_details();
+}
 $msg="";
 if(isset($_POST['submit'])){
 	$add_donation->name=$_POST['name'];

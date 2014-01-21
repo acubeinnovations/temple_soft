@@ -31,7 +31,7 @@
         </li>
 
         <li class="has-dropdown">
-          <a href="donations.php"> Donations</a>
+          <a href="donation.php"> Donations</a>
             <ul class="dropdown">
             </ul>
           </li>

@@ -10,6 +10,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">
 		<div class="medium-3 columns">
 			<input class="small button" name="addnew" id="addnew" value="Add new" type="button"/>
+			<input type="hidden" name="count" value=1 id="count">
 		</div>
 	</div>
 
@@ -21,6 +22,7 @@ if(!defined('CHECK_INCLUDED')){
 		</div>
 	</div>
 	</br>
+	
 	<div id="load">
 		<div id="default_row">
 		<div class="row">
@@ -32,7 +34,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">
 		<div class="medium-2 columns">
 			<label for="listpooja"> Select pooja</label>
-			<?php echo populate_list_array("listpooja", $array_vazhipadu, 'id','name',$add_vazhipadu->pooja_id,$disable=false,true,'class=listpooja');?>
+			<?php echo populate_list_array("listpooja", $array_vazhipadu, 'id','name',$add_vazhipadu->pooja_id,$disable=false,true,'class=ratepooja');?>
 		</div>
 
 
@@ -63,14 +65,17 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 
 
+
 	<!--<div class="row">
 		<div class="medium-3 columns">
 			<input class="small button" name="submit" id="" value="submit" type="submit"/>
 			<input type="hidden" name="h_id" value=""/>
 		</div>
 	</div>-->
+	
 </div>
 </div>
+
 
 
 
