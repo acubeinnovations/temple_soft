@@ -24,7 +24,7 @@ if(!defined('CHECK_INCLUDED')){
 	<div class="row">
 		<div class="medium-4 columns">
 			<label for="voucher">Date</label>
-			<input type="text" name="txtdate" id="txtdate" value="<?php echo $account->date?>" class="mydatepicker" <?php echo $readonly;?>/>
+			<input type="text" name="txtdate" id="txtdate" value="<?php echo ($account->date =="")?date('d-m-Y',strtotime(CURRENT_DATE)):date('d-m-Y',strtotime($account->date));?>" class="mydatepicker" <?php echo $readonly;?>/>
 		</div>
 		<div class="medium-4 columns">
 			<label for="voucher">Voucher Number</label>

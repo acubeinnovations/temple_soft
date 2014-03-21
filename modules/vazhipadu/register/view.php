@@ -19,13 +19,13 @@ if(!defined('CHECK_INCLUDED')){
 <fieldset>
 <div class="row">		
 	<div class="medium-2 columns">
-		<label for="name"> From Date<small> required</small>
-		<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $from_date;?>" required/></label>
+		<label for="name"> From Date
+		<input class="mydatepicker" name="txtfrom" id="" value="<?php if($vazhipadu->from_date != "") echo date('d-m-Y',strtotime($vazhipadu->from_date));?>" /></label>
 	</div>
 
 	<div class="medium-2 columns">
-		<label for="name"> To Date<small> required</small>
-		<input class="mydatepicker" name="txtto" id="" value="<?php echo $to_date;?>" required/></label>
+		<label for="name"> To Date
+		<input class="mydatepicker" name="txtto" id="" value="<?php if($vazhipadu->to_date != "") echo date('d-m-Y',strtotime($vazhipadu->to_date));?>" /></label>
 	</div>
 	<div class="medium-2 columns">
 		<input type="submit" class="small button" value="Search" name="submit">
@@ -35,7 +35,8 @@ if(!defined('CHECK_INCLUDED')){
 <div class="medium-12 columns">
 <?php if($count >0){?>
 <div class="row">
-	<table width="100%" id="tbl-append">
+
+	<!--<table width="100%" id="tbl-append">
 		<thead>
 			<tr>
 				<td width="10%">Voucher Number</td>
@@ -91,7 +92,45 @@ if(!defined('CHECK_INCLUDED')){
 
 		
 
+	</table>-->
+
+	<table width="100%" id="tbl-append">
+		<thead>
+			<tr>
+				<td width="8%">Voucher Number</td>
+				<td width="10%">Date</td>
+				<td width="30%">Pooja</td>
+				<td>Name</td>
+				<td width="15%">Star</td>
+				<td width="10%">Amount</td>
+			</tr>
+		</thead>
+		<tbody
+			<?php 
+			$i=0;$total_amount = 0;
+			while($i<$count){
+			?>
+		<tr>
+			<td><?php echo $vazhipadu_list[$i]['vazhipadu_rpt_number']; ?></td>
+			<td><?php echo $vazhipadu_list[$i]['vazhipadu_date']; ?></td>
+			<td><?php echo $vazhipadu_list[$i]['pooja_name']; ?></td>
+			<td><?php echo $vazhipadu_list[$i]['name']; ?></td>
+			<td><?php echo $vazhipadu_list[$i]['star_name']; ?></td>
+			<td><?php echo number_format($vazhipadu_list[$i]['unit_rate'],2); ?></td>
+		</tr>
+		<?php $total_amount+=$vazhipadu_list[$i]['unit_rate'];$i++;}?>
+		<tr>
+			<td colspan="5" align="right" style="font-weight:bold;">Total</td>
+			<td><?php echo number_format($total_amount,2);?></td>
+		</tr>
+			
+		</tbody>
+
+		
+
 	</table>
+
+
 	</div>
 </div>
 <div class="medium-12 columns">
@@ -99,7 +138,14 @@ if(!defined('CHECK_INCLUDED')){
 	<?php echo $pagination->pagination_style_numbers();?>
 </div></div>
 
-<?php }?>		
+<?php }else{?>		
+<div class="medium-12 columns">
+<div class="text-center">
+No Records Found
+</div>
+</div>
+
+<?php }?>
 
 
 

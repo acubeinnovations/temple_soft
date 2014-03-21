@@ -9,10 +9,11 @@ define("CURRENT_TIME",date('H:i:s'));
 
 
 //User Types
-define("ADMINISTRATOR", 999);
+//define("ADMINISTRATOR", 999);
 
 define("COUNTER", 1);
 define("FINANCE", 2);
+define("ADMINISTRATOR", 3);
 
 //
 define("NOT_DELETED", 1);

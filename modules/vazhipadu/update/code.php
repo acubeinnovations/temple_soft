@@ -51,8 +51,7 @@ if(isset($_POST['submit'])){
 			foreach($_POST['hd_row'] as $row){
 				$list = explode("_", $row);
 				$dataArray[$i]['name'] = $list[0];
-				$dataArray[$i]['age'] = $list[1];
-				$dataArray[$i]['star_id'] = $list[2];
+				$dataArray[$i]['star_id'] = $list[1];
 				$i++;
 			}
 		}else{

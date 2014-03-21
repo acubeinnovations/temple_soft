@@ -1,11 +1,11 @@
 <?php // prevent execution of this page by direct call by browser
 if ( !defined('CHECK_INCLUDED') ){
     exit();
-}
-$breadcrumb='<a href="/index.php">Home</a> &raquo; <a href="/login.php">Login</a>';?>
-<br>
+}?>
+
+<h3>Login</h3> 
 <fieldset>
-    <legend>Login</legend> 
+    
 <div class="row" >
 	<div class="medium-12 columns">
 		<form  id="ajax-contact-form" target="_self" method="post" action="<?php echo $current_url?>" name="frmlogin">
