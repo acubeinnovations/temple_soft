@@ -264,7 +264,7 @@ Class Account{
         {
             $strSQL = "SELECT am.account_id,am.account_debit AS debit,am.account_credit AS credit,am.date,am.narration,ls.ledger_sub_id AS ledger_id,ls.ledger_sub_name AS ledger_name FROM account_master am";
             $strSQL .= " LEFT JOIN ledger_sub ls ON ls.ledger_sub_id = am.account_to";
-            $strSQL .= " WHERE ls.fy_id = '".$this->current_fy_id."' AND am.fy_id = '".$this->current_fy_id."' AND deleted='".NOT_DELETED."' AND voucher_type_id = '".$this->voucher_type_id."'";
+            $strSQL .= " WHERE ls.fy_id = '".$this->current_fy_id."' AND am.fy_id = '".$this->current_fy_id."' AND ls.deleted='".NOT_DELETED."' AND voucher_type_id = '".$this->voucher_type_id."'";
             if($this->voucher_number != ""){
                 $strSQL .= " AND am.voucher_number = '".$this->voucher_number."'"   ;
             }

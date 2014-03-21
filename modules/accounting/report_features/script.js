@@ -35,7 +35,7 @@ $(document).ready(function(){
 			contentType: "application/json",
 			dataType: "json",
 			success: function (json) {
-				lstsledger += '<select id="lstsledger" name="lstsledger" multiple ><option value="-1">Choose from list..</option>';
+				lstsledger += '<select id="lstsledger" name="lstsledger" multiple >';
 				if(json['sub']){
 					 
 					$.each(json['sub'], function(id, name){

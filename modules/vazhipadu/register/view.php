@@ -7,30 +7,32 @@ if(!defined('CHECK_INCLUDED')){
 <form id="" name="form1" method="POST" >
 <div class="row" >
 	<div class="medium-4 columns">
-		<h3>Vazhipadu</h3>
+		<h3>Vazhipadu Register</h3>
 	</div>
-
+<div class="medium-8 columns">
 	<div class="text-right" style="margin-top:5px;">
 		<a class="small button" href="vazhipadu.php">New</a>
+	</div>
 	</div>
 </div>
 
 <fieldset>
 <div class="row">		
 	<div class="medium-2 columns">
-		<label for="name"> From Date</label>
-		<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $from_date;?>"/>
+		<label for="name"> From Date<small> required</small>
+		<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $from_date;?>" required/></label>
 	</div>
 
 	<div class="medium-2 columns">
-		<label for="name"> To Date</label>
-		<input class="mydatepicker" name="txtto" id="" value="<?php echo $to_date;?>"/>
+		<label for="name"> To Date<small> required</small>
+		<input class="mydatepicker" name="txtto" id="" value="<?php echo $to_date;?>" required/></label>
 	</div>
 	<div class="medium-2 columns">
 		<input type="submit" class="small button" value="Search" name="submit">
 	</div>
 
 </div>
+<div class="medium-12 columns">
 <?php if($count >0){?>
 <div class="row">
 	<table width="100%" id="tbl-append">
@@ -57,8 +59,8 @@ if(!defined('CHECK_INCLUDED')){
 				<table width="100%">
 					<thead>
 					<tr>
-						<td width="50%">Name</td>
-						<td width="30%">Star</td>
+						<td width="40%">Name</td>
+						<td width="40%">Star</td>
 						<td width="20%">Amount</td>
 					</tr>
 					</thead>
@@ -90,11 +92,12 @@ if(!defined('CHECK_INCLUDED')){
 		
 
 	</table>
+	</div>
 </div>
-
+<div class="medium-12 columns">
 <div class="row">
 	<?php echo $pagination->pagination_style_numbers();?>
-</div>
+</div></div>
 
 <?php }?>		
 

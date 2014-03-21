@@ -3,11 +3,11 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-<form id="" name ="form1" method="get" >
+<h3>Search by Star</h3>
+<form id="" name ="form1" method="post" >
 
 	<fieldset>
- 		<legend>Search by Star: </legend>
-
+ 		
  		<div class="row">
  			<div class="medium-6 columns">
     	<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
   	<thead>
 
 	<tr>
-		<td>Sl no</td>
+		<td width="10%">Sl no</td>
 		<td>Star name</td>
 		<td>Status</td>
 	</tr>
@@ -56,7 +56,7 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <tr>
-	<td>
+	<td colspan="3">
 		<?php  $pagination->pagination_style_numbers();?>
 	</td>
 </tr>

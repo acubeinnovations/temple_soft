@@ -3,19 +3,42 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-$add_star=new Stars($myconnection);
-$add_star->connection=$myconnection;
+$star=new Stars($myconnection);
+$star->connection=$myconnection;
 
 if(isset($_GET['id'])){
-	$add_star->id=$_GET['id'];
-	$add_star->get_details();
+	$star->id=$_GET['id'];
+	$star->get_details();
 }
 if(isset($_POST['submit'])){
-	$add_star->name=$_POST['name'];
-	$add_star->status_id=$_POST['liststar'];
-	$add_star->update();
-	header("Location:stars.php");
-	exit();
+
+	//validation 
+	$errorMSG = "";
+	if(trim($_POST['name']) == ""){
+		$errorMSG .= "Star name required ";
+	}
+
+	if($errorMSG == ""){
+		$star->id = $_POST['h_id'];
+		$star->name=$_POST['name'];
+		if($star->validate()){
+			$star->status_id=$_POST['liststar'];
+			$star->update();
+			header("Location:stars.php");
+			exit();
+		}else{
+			$_SESSION[SESSION_TITLE.'flash'] = $star->error_description;
+	        header( "Location:".$current_url);
+	        exit();
+		}
+		
+	}else{
+		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
+        header( "Location:".$current_url);
+        exit();
+	}
+	
+	
 }
 
 

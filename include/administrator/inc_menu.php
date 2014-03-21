@@ -104,14 +104,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
 
 
          
-          <li class="has-dropdown">
-          <a href="#">Administrator</a>
-          <ul class="dropdown">
-            <li><a href="users.php">Users</a></li>
-            <li><a href="change_password.php">Change Password</a></li>
-            <li class="divider"></li>
-          </ul>
-        </li>
+          
 
         <li class="has-dropdown">
           <a href="#">Accounting</a>
@@ -203,7 +196,14 @@ if ( mysql_num_rows($rsRES2) > 0 )
           </ul>
         </li>
 
-        
+        <li class="has-dropdown">
+          <a href="#">Administrator</a>
+          <ul class="dropdown">
+            <li><a href="users.php">Users</a></li>
+            <li><a href="change_password.php">Change Password</a></li>
+            <li class="divider"></li>
+          </ul>
+        </li>
            
 
 <?php } ?>

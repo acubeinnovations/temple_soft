@@ -3,7 +3,7 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-
+</br>
 <div class="row">
 	<div class="large-4 columns">
 	<?php echo $ledger->error_description;?>
@@ -29,8 +29,8 @@ if(!defined('CHECK_INCLUDED')){
 	 		<legend>Add Ledger </legend>
 	 		<div class="row">
 	 			<div class="medium-8 columns">
-	 				<label for="ledger">Ledger Name</label>
-	 				<input type="text" name="txtledger" id="txtledger" value="<?php //echo $add_pooja->name;?>"/>
+	 				<label for="ledger">Ledger Name <small>required</small>
+	 				<input type="text" name="txtledger" id="txtledger" value="<?php //echo $add_pooja->name;?>" required/></label>
 	 			</div>
 	 			<div class="medium-8 columns">
 	 				<label for="ledger">Ledger Master</label>

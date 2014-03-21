@@ -3,27 +3,50 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-$add_pooja=new Pooja($myconnection);
-$add_pooja->connection=$myconnection;
+$pooja=new Pooja($myconnection);
+$pooja->connection=$myconnection;
 
 if(isset($_GET['id'])){
-$add_pooja->id=$_GET['id'];
-$add_pooja->get_details();
+	$pooja->id=$_GET['id'];
+	$pooja->get_details();
 }
 
-$array_add_pooja=$add_pooja->get_list_array();
 
-$msg="";
 if(isset($_POST['submit'])){
-	$add_pooja->h_id=$_POST['h_id'];
-	$add_pooja->name=$_POST['name'];
-	$add_pooja->rate=$_POST['rate'];
-	$add_pooja->status_id=$_POST['listpooja'];
-	$add_pooja->update();
-	header("Location:poojas.php");
+	//validation 
+	$errorMSG = "";
+	if(trim($_POST['name']) == ""){
+		$errorMSG .= "Pooja name required ";
+	}
+	if(trim($_POST['rate']) == ""){
+		$errorMSG .= "Pooja rate required";
+	}elseif(!filter_var($_POST['rate'], FILTER_VALIDATE_FLOAT)){
+		$errorMSG .= "Invalid rate";
+	}
 
-}else{
-	$msg="Invalid";
+
+	if($errorMSG == ""){
+		$pooja->h_id=$_POST['h_id'];
+		$pooja->name=$_POST['name'];
+
+		if($pooja->validate()){
+			$pooja->rate=$_POST['rate'];
+			$pooja->status_id=$_POST['listpooja'];
+			$pooja->update();
+			$_SESSION[SESSION_TITLE.'flash'] = "Pooja added successfully";
+			header("Location:poojas.php");
+		}else{
+			$_SESSION[SESSION_TITLE.'flash'] = $pooja->error_description;
+	        header( "Location:".$current_url);
+	        exit();
+		}
+	}else{
+		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
+        header( "Location:".$current_url);
+        exit();
+	}
+	
+
 }
 
 

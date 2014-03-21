@@ -15,6 +15,7 @@ $ledger->connection = $myconnection;
 $ledgers = $ledger->get_list_master_array();
 
 
+
 if(isset($_GET['slno'])){
 	$report->report_id = $_GET['slno'];
 	$report->get_details();	
@@ -32,6 +33,7 @@ if(isset($_GET['slno'])){
 }*/
 
 $features = $report_feature->get_details_with_report();
+
 
 
 if(isset($_POST['submit'])){

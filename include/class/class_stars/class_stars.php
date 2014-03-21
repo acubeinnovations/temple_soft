@@ -168,7 +168,22 @@ function get_array()
     } 
 
 
+    public function validate()
+    {
+      if ( $this->id >0) {
+        return true;
+      }else{
+        $strSQL = "SELECT * FROM stars WHERE name = '".$this->name."'";
+        $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+        if(mysql_num_rows($rsRES) > 0){
+          $this->error_description = "Star already exists";
+          return false;//star exist
+        }else{
+          return true;
+        }
+      }
 
+    }
 
 
 

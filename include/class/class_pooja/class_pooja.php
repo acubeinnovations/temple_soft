@@ -219,6 +219,24 @@ function get_array()
     }
 
 
+    public function validate()
+    {
+    	if ( $this->id >0) {
+    		return true;
+    	}else{
+	    	$strSQL = "SELECT * FROM pooja WHERE name = '".$this->name."'";
+	    	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+	    	if(mysql_num_rows($rsRES) > 0){
+	    		$this->error_description = "Pooja already exists";
+	    		return false;//pooja exist
+	    	}else{
+	    		return true;
+	    	}
+	    }
+
+    }
+
+
 
 
 

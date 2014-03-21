@@ -12,20 +12,20 @@ if(!defined('CHECK_INCLUDED')){
 <div class="row">
 
 	<form id="frmpooja" name="frmpooja" method="POST" action="<?php echo $current_url;?>">
-	<div class="medium-5 columns">
+	<div class="medium-2 columns">
 		<label>Date</label>
 		<input type="text" class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?>"/>
 	</div>
-	<div class="medium-2 columns">
+	<div class="medium-6 columns">
 		<input type="submit" name="submit" value="Filter" class="small button"/>
 	</div>
 	</form>
-
+<div class="medium-4 columns">
 	<div class="text-right">
 		<input type="button" class="small button" value="print" id="button-print"/>
 		<!--<a href="poojas.php" class="small button">View</a>-->
 	</div>
-
+</div>
 </div>
 
 <div class="row">
@@ -35,10 +35,10 @@ if(!defined('CHECK_INCLUDED')){
 		<thead>
 		<tr>
 			<td width="10%">Slno</td>
-			<td width="50%">Pooja Details</td>
+			<td width="45%">Pooja Details</td>
 			<td width="15%">Unit Rate</td>
-			<td width="10%">Qty</td>
-			<td >Total</td>
+			<td width="15%">Qty</td>
+			<td width="15%">Total</td>
 		</tr>
 		</thead>
 		<tbody>
@@ -57,6 +57,13 @@ if(!defined('CHECK_INCLUDED')){
 				$i++;$slno++;
 			}
 		?>
+		<tr>
+			<td width="10%"></td>
+			<td width="45%"><strong>Total</strong> </td>
+			<td width="15%"> </td>
+			<td width="15%"></td>
+			<td width="15%"></td>
+		</tr>
 		<tr>
 			<td colspan="5"><?php  $pagination->pagination_style_numbers();?></td>
 		</tr>
