@@ -97,7 +97,15 @@ Class ReportFeature{
     				$features[$i]['position'] 			= $row['position'];
     				$features[$i]['sort_order'] 		= $row['sort_order'];
 
+
+					
     				$sub_ledgers = $row['sub_ledgers'];
+					if(trim($sub_ledgers) == "" OR trim($sub_ledgers) == "null" ){
+						$sub_ledgers =  "SELECT ledger_sub_id from ledger_sub WHERE ledger_id ='".$row['ledger_master_id']."'";
+					}else{
+						// Do Noting
+					}
+
                     $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, (SELECT SUM(account_debit) FROM account_master   WHERE fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id ) AS debit,(SELECT SUM(account_credit) FROM account_master   WHERE  fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id) AS credit 
 FROM ledger_sub ls 
 WHERE ls.fy_id = '".$this->current_fy_id."' AND ls.ledger_sub_id IN(".$sub_ledgers.")";
