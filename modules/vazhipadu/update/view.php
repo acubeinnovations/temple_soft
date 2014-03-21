@@ -37,8 +37,9 @@ if(!defined('CHECK_INCLUDED')){
 
 	
 		<div class="medium-2 columns">
-			<label for="name"> Date</label>
+			<label for="name"> Date
 			<input class="mydatepicker" name="txtdate" id="" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
+			</label>
 		</div>
 
 		
