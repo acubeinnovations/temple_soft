@@ -11,7 +11,12 @@ define("CURRENT_TIME",date('H:i:s'));
 //User Types
 define("ADMINISTRATOR", 999);
 
-define("REGISTERED_USER", 1);
+define("COUNTER", 1);
+define("FINANCE", 2);
+
+//
+define("NOT_DELETED", 1);
+define("DELETED", 2);
 
 //User Status
 define("USERSTATUS_ACTIVE", 1);
@@ -24,11 +29,71 @@ define("USERSTATUS_DISABLED", 4);
 define("STATUS_ACTIVE", 1);
 define("STATUS_INACTIVE", 2);
 
+//REPORT FEATURE POSITION
+define("LHS", 1);
+define("RHS", 2);
+
+
+//report position
+define("LHS_ONLY",1);
+define("LHS_AND_RHS",2);
+
+//lhs status
+define("LHS_STATUS_ACTIVE", 1);
+define("LHS_STATUS_INACTIVE", 2);
+
+//rhs status
+define("RHS_STATUS_ACTIVE", 1);
+define("RHS_STATUS_INACTIVE", 2);
+
+//voucher show or hide in menu list
+define("VOUCHER_SHOW", 1);
+define("VOUCHER_HIDDEN", 2);
+
+
+// Voucher source
+define("VOUCHER_FOR_ACCOUNT", 1);
+define("VOUCHER_FOR_INVENTORY", 2);
+define("VOUCHER_FOR_MODULE",3);
+
+//stock input type
+define("INPUT_PURCHASE","Purchase");
+define("INPUT_SALE", "Sale");
+define("INPUT_DONATION","Donation");
+define("INPUT_AUCTION", "Auction");
+
+//PRIORITY FOR REPORT FEATURE
+define("PRIORITY_MASTER",1);
+define("PRIORITY_SUB", 2);
+
+//VOUCHER MASTER IDS
+define("SALES",13);
+define("PURCHASE",14);
+
+//LEDGER MASTER IDS
+define(LEDGER_DUTIES_AND_TAXES, 12);
+define(LEDGER_SUNDRY_CREDITORS, 31);
+define(LEDGER_SUNDRY_DEBITORS, 32);
+
+//modules
+define("MODULE_VAZHIPADU", 1);
+$g_ARRAY_LIST_MODULE = array();
+$g_ARRAY_LIST_MODULE[0]["id"] = 1;
+$g_ARRAY_LIST_MODULE[0]["name"] = "MODULE_VAZHIPADU";
+
+//ledger for from or to
+define("FROM", 1);
+define("TO", 2);
+
+
+
 $g_ARRAY_LIST_STATUS = array();
 $g_ARRAY_LIST_STATUS[0]["id"] = 1;
 $g_ARRAY_LIST_STATUS[0]["name"] = "Active";
 $g_ARRAY_LIST_STATUS[1]["id"] = 2;
 $g_ARRAY_LIST_STATUS[1]["name"] = "Inactive";
+
+
 
 
 
@@ -116,5 +181,9 @@ define("DEFAULT_IMPORT_DELIMITER", ',');
 define("DEFAULT_OPTION_DELIMITER", '#!@$&');
 define("DEFAULT_ANSWER_KEY_DELIMITER", ',');
 define("DEFAULT_IDS_DELIMITER", ',');
+
+//Financial Year Status
+define("FINANCIAL_YEAR_OPEN",'1');
+define("FINANCIAL_YEAR_CLOSE", '0');
 
 ?>

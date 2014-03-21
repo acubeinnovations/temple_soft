@@ -8,8 +8,8 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
 $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
-	$page->title = "Administrator - Testimonial";	// page Title
-	$page->page_name = 'Testimonial';		// page name for menu and other purpose
+	$page->title = "Administrator - Temple Software";	// page Title
+	$page->page_name = 'poojas';		// page name for menu and other purpose
 	$page->layout = 'default.html';			// layout name
 
 

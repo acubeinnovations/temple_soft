@@ -24,6 +24,7 @@ function update()
 			$strSQL = "INSERT INTO stars(name,status_id) VALUES ('";
 			$strSQL .= addslashes(trim($this->name)) ."','";
 			$strSQL .= addslashes(trim($this->status_id)) . "')";
+      mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 
        if ( mysql_affected_rows($this->connection) > 0 ) {
@@ -40,6 +41,7 @@ function update()
 			$strSQL = "UPDATE stars SET name = '".addslashes(trim($this->name))."',";
 			$strSQL .= "status_id = '".addslashes(trim($this->status_id))."'";
 			$strSQL .= " WHERE id = ".$this->id;
+       mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 
         if ( mysql_affected_rows($this->connection) >= 0 ) {
@@ -58,6 +60,7 @@ function get_list_array()
      {
     $stars = array();$i=0;
     $strSQL = "SELECT  id,name,status_id FROM stars";
+     mysql_query("SET NAMES utf8");
     $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     if ( mysql_num_rows($rsRES) > 0 )
         {
@@ -94,6 +97,7 @@ function get_list_array()
 
      $strSQL .= " ORDER BY id";
      $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $starst_record, $max_records);
+      mysql_query("SET NAMES utf8");
      $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
 
     if ( mysql_num_rows($rsRES) > 0 ){
@@ -123,6 +127,7 @@ function get_list_array()
   {
     if($this->id >0){
     $strSQL = "SELECT id,name,status_id FROM stars WHERE id = '".$this->id."'";
+     mysql_query("SET NAMES utf8");
     $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
      if(mysql_num_rows($rsRES) > 0){
       $user   = mysql_fetch_assoc($rsRES);
@@ -145,6 +150,7 @@ function get_array()
       $stars = array();
       $i=0;
       $strSQL = "SELECT id,name,status_id FROM stars";
+       mysql_query("SET NAMES utf8");
       $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
       if ( mysql_num_rows($rsRES) > 0 ){
             while(list($id,$name,$status_id) = mysql_fetch_row($rsRES) ){

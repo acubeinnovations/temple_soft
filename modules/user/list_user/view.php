@@ -49,7 +49,7 @@
     <div class="row">
 
         <div class="medium-6 columns">
-            <input class="small button" value="submit" type="submit" name="submit" >
+            <input class="small button" value="Search" type="submit" name="submit" >
 			<a href="user.php" class = "small secondary button" > Add New User</a>
         </div>
     </div>

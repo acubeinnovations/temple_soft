@@ -33,7 +33,7 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="row">
  			<div class= "medium-6 columns">
  				<label for="listpooja">Status <small>required</small></label>
-				<?php echo populate_list_array("listpooja", $g_ARRAY_LIST_STATUS, 'id','name', $add_pooja->status_id,$disable=false);?>
+				<?php echo populate_list_array("listpooja", $g_ARRAY_LIST_STATUS, 'id','name', $add_pooja->status_id,$disable=false,false);?>
  	
  			</div>
  		</div>

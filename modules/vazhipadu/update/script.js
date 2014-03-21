@@ -1,14 +1,52 @@
 <!--
 $(document).ready(function(){
-	alert('hi');
-	var listcount=$('#count').val();
-	$('addnew').click(function(){
-	listcount++;
 
-$('<div class="row"><div class="medium-2 columns"><label for="name"> Name</label><input type="text" name="name" id="" value=""/></div><div class="row"><div class="medium-2 columns"><label for="listpooja"> Select pooja</label><?php echo populate_list_array("listpooja", $array_vazhipadu, 'id','name',$add_vazhipadu->pooja_id,$disable=false,true,'class=ratepooja');?></div><div class="row"><div class="medium-2 columns"><label for="rate">rate</label><input type="text" name="rate" id="rate" value="<?php echo $add_vazhipadu->rate;?>" readonly/></div><div class="row"><div class="medium-2 columns"><label for="liststar"> Select Star</label><?php echo populate_list_array("liststar", $array_star, 'id','name',$add_vazhipadu->star_id,$disable=false);?></div><div class="row"><div class="medium-2 columns"><label for="quantity">quantity</label><input type="text" name="quantity" id=""value=""/></div><div class="row"><div class="medium-2 columns"><label for="name"> Date</label><input class="mydatepicker"name="date" id="" value=""/></div></div>').animate({ opacity: 'show' }, 'slow').appendTo("listpooja");
+	var nameObj	= $("input:text[name=txtname]");
+	var ageObj 	= $("input:text[name=txtage]");
+	var starObj = $("#liststar");
+
+	var tblArray = [];
+	
+	$("#button-add").click(function(){
+
+		var name	= nameObj.val();
+		var age 	= ageObj.val();
+		var star 	= $("#liststar option:selected").text();
+		var star_id = starObj.val();
+
+		
+		
+
+		if(name!='' && age!='' && star_id >0){
+			var hiddenStr = name+'_'+age+'_'+star_id;
+					
+			$("#tbl-append").append('<tbody><tr><td>'+name+'<input type="hidden" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+age+'<input type="hidden" name="hd_age[]" value="'+age+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td></td></tr></tbody>');
+
+			$("input:text[name=txtname]").val('');
+			$("input:text[name=txtage]").val('');
+			$("#liststar").val(-1);
+
+
+		}
+		$("input:text[name=txtname]").focus();
+		
+
+	});
+
+	$("#txtage").keypress(function(evt){
+		evt = (evt) ? evt : window.event;
+	    var charCode = (evt.which) ? evt.which : evt.keyCode;
+	    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+	        return false;
+	    }
+	    return true;
+	});
+
+
+
+
+
+
 });
-});
 
 
-
--->

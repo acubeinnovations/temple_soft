@@ -9,16 +9,22 @@ if(!defined('CHECK_INCLUDED')){
  		<legend>Search by Pooja: </legend>
 
  		<div class="row">
- 			<div class="medium-6 columns">
-    	<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
-     	 <input type="submit" name="submit" value="Search" class="small button" />
-			<a href="pooja.php" class="small secondary button">Add New Pooja</a>
- 			
+ 			<div class="medium-5 columns">
+    			<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
+    		</div>
+    		<div class="medium-2 columns">
+     	 		<input type="submit" name="submit" value="Search" class="small button" />
+     	 	</div>
+
+ 			<div class="text-right">
+ 			<a href="pooja.php" class="small button">Add New</a>
+ 				<a href="pooja_register.php" class="small button">Register</a>
  			</div>
+
  		</div>
  	</fieldset>
     
-      </form>
+</form>
 
       
 

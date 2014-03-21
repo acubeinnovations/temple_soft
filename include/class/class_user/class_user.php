@@ -16,6 +16,7 @@ class User {
     var $occupation 	= "";
     var $user_status_id	= "";
     var $password_token="" ; 
+    var $user_type_id = "";
 
 	var $activation_token="" ; 
     var $newpasswd=""; 
@@ -44,7 +45,7 @@ class User {
         if ( $this->id == "" || $this->id == gINVALID) {
 		$date=date("Y/m/d H.i:s<br>", time());
 		
-              $strSQL = "INSERT INTO users (username,password,first_name,last_name,email,phone,address,occupation, user_status_id,organization_id,registration_date,activation_token) ";
+              $strSQL = "INSERT INTO users (username,password,first_name,last_name,email,phone,address,occupation, user_status_id,organization_id,registration_date,activation_token,user_type_id) ";
               $strSQL .= "VALUES ('".addslashes(trim($this->username))."','";
               $strSQL .= md5(addslashes(trim($this->password)))."','";
               $strSQL .= addslashes(trim($this->first_name))."','";
@@ -56,7 +57,9 @@ class User {
               $strSQL .= addslashes(trim($this->user_status_id))."','";
 			  $strSQL .= addslashes(trim($this->organization_id))."','";
 			  $strSQL .= "$date','";
-		      $strSQL .= addslashes(trim($this->activation_token))."')";
+              $strSQL .= addslashes(trim($this->activation_token))."','";
+		      $strSQL .= addslashes(trim($this->user_type_id))."')";
+            //echo $strSQL;exit();
 			  $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
               if ( mysql_affected_rows($this->connection) > 0 ){
                     $this->id = mysql_insert_id();
@@ -72,7 +75,7 @@ class User {
         elseif($this->id > 0 ) {
             $strSQL = "UPDATE users SET ";
 	    if($this->username!=''){
-	    $strSQL .= "username = '".addslashes(tget_array_usernamerim($this->username))."',";
+	    $strSQL .= "username = '".addslashes(trim($this->username))."',";
 	    }
             $strSQL .= "first_name = '".addslashes(trim($this->first_name))."',";
             $strSQL .= "last_name = '".addslashes(trim($this->last_name))."',";
@@ -84,9 +87,8 @@ class User {
 	    
             $strSQL .= "phone = '".addslashes(trim($this->phone))."',";
             $strSQL .= "email = '".addslashes(trim($this->email))."',";
-            $strSQL .= "occupation = '".addslashes(trim($this->occupation))."',";
-            $strSQL .= "address = '".addslashes(trim($this->address))."'";
-	    $strSQL .= " WHERE id = ".$this->id;
+            $strSQL .= "user_type_id = '".addslashes(trim($this->user_type_id))."'";
+	        $strSQL .= " WHERE id = ".$this->id;
             $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
             if ( mysql_affected_rows($this->connection) >= 0 ) {
 		$this->error_description = "Updated data Successfuly";                    
@@ -158,6 +160,7 @@ class User {
                 $this->address = mysql_result($rsRES,0,'address');
                 $this->occupation = mysql_result($rsRES,0,'occupation');
 		        $this->registration_date = mysql_result($rsRES,0,'registration_date');
+                $this->user_type_id = mysql_result($rsRES,0,'user_type_id');
                 
                 return true;
         }
@@ -177,6 +180,7 @@ function get_detail_by_username(){
                 $this->phone = mysql_result($rsRES,0,'phone');
                 $this->address = mysql_result($rsRES,0,'address');
                 $this->occupation = mysql_result($rsRES,0,'occupation');
+                $this->user_type_id = mysql_result($rsRES,0,'user_type_id');
 		
                 return true;
         }
@@ -300,7 +304,7 @@ function get_list_array(){
         $limited_data = array(); 
 		$i=0;
 		$str_condition = "";
-        $strSQL = "SELECT id,username,first_name,last_name,user_status_id,registration_date,email,phone FROM users";
+        $strSQL = "SELECT id,username,first_name,last_name,user_status_id,registration_date,email,phone,user_type_id FROM users";
 	if($this->id!='' && $this->id!=gINVALID || $this->username!=''|| $this->email!='' || $this->last_name!='' || $this->first_name!='' || $this->phone!=''|| $this->user_status_id!='' || $this->organization_id!=''){
 	$strSQL .= " WHERE";
 	if($this->id!='' && $this->id!=gINVALID){
@@ -370,16 +374,17 @@ function get_list_array(){
 
 
 
-		    while ( list ($id,$username,$firstname,$lastname,$user_status_id,$registration_date,$email,$phone) = mysql_fetch_row($rsRES) ){
+		    while ( list ($id,$username,$firstname,$lastname,$user_status_id,$registration_date,$email,$phone,$user_type_id) = mysql_fetch_row($rsRES) ){
 		          $limited_data[$i]["id"] = $id;
 		          $limited_data[$i]["username"] = $username;
 		          $limited_data[$i]["first_name"] = $firstname;
 		          $limited_data[$i]["last_name"] = $lastname;
 			  $limited_data[$i]["user_status_id"] = $user_status_id;
 			  $limited_data[$i]["registration_date"]=$registration_date;
-		          $limited_data[$i]["email"] = $email;
+		          $limited_data[$i]["email"] = $email;                
 			   
 			  $limited_data[$i]["phone"]=$phone;
+              $limited_data[$i]["user_type_id"] = $user_type_id;
 		          $i++;
 		    }
         	return $limited_data;
@@ -582,12 +587,32 @@ $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
                 $limited_data[$i]["registration_date"]= $row['registration_date'];
                 $limited_data[$i]["email"] = $row['email'];
                 $limited_data[$i]["phone"]=$row['phone'];
+                $limited_data[$i]["user_type_id"]=$row['user_type_id'];
                 $i++;
             }
             return $limited_data;
         }
         else
         {
+            return false;
+        }
+    }
+
+
+    public function get_list_user_types()
+    {
+        $user_types = array();$i=0;
+        $strSQL = "SELECT id,name FROM user_types";
+        $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+        if(mysql_num_rows($rsRES) > 0)
+        {
+            while(list($id,$name) = mysql_fetch_row($rsRES)){
+                $user_types[$i]['id'] = $id;
+                $user_types[$i]['name'] = $name;
+                $i++;
+            }
+            return $user_types;
+        }else{
             return false;
         }
     }

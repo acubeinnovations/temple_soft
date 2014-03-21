@@ -79,7 +79,8 @@ flash_alert(alert_message,alert_redirect);
 </script>
 		<?php if (!empty($this->style)) echo $this->style ?>
 	</head>
-  <body>
+  <body >
+  <div class="show_screen">
 
     <!-- Navigation -->
 
@@ -183,5 +184,8 @@ flash_alert(alert_message,alert_redirect);
 
 <!-- the jScrollPane script -->
 <script type="text/javascript" src="/js/jscroll/jquery.jscrollpane.min.js"></script>
+</div>
+<div class="show_print"><?php if (isset($print_content)) echo $print_content; ?></div>
   </body>
+
 </html>

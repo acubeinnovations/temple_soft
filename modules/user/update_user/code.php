@@ -3,75 +3,68 @@
 if ( !defined('CHECK_INCLUDED') ){
     exit();
 }
-	$myuser = new User();
-    $myuser->connection = $myconnection;
-	$user_statuses=$myuser->get_list_array();
+$myuser = new User();
+$myuser->connection = $myconnection;
+
+$user_statuses=$myuser->get_list_array();
+$user_types = $myuser->get_list_user_types();
+
  if ( isset($_POST['submit']) && $_POST['submit'] == $CAP_add ) {
- $strERR = "";
- if ( trim($_POST['txtusername']) == "" ){
-      $strERR .= $MSG_empty_username;
- }
-/*
- if ( trim($_POST['txtemail']) == "" ){
-      $strERR .= $MSG_empty_email;
- }*/
+ 	$strERR = "";
+	 if ( trim($_POST['txtusername']) == "" ){
+	      $strERR .= $MSG_empty_username;
+	 }
 
- if ( trim($_POST['txtpassword']) == "" && trim($_POST['txtrepassword']) == "" ){
-	      $strERR .= $MSG_empty_password;
-  
- }
-if ( trim($_POST['txtpassword']) !=trim($_POST['txtrepassword']) ){
-	      $strERR .= $MSG_match_password;
-  
- }
+
+	 if ( trim($_POST['txtpassword']) == "" && trim($_POST['txtrepassword']) == "" ){
+		      $strERR .= $MSG_empty_password;
+	  
+	 }
+	if ( trim($_POST['txtpassword']) !=trim($_POST['txtrepassword']) ){
+		      $strERR .= $MSG_match_password;
+	  
+	 }
  
- if ( $_POST['txtuserstatus'] == -1 ){
-      $strERR .= $MSG_empty_userstatus;
- }
-/*
-if($_POST['txtphone'] == ""){
-	$strERR .= $MSG_empty_phone;
- }*/
-$myuser->error_description = $strERR;
+	 if ( $_POST['txtuserstatus'] == -1 ){
+	      $strERR .= $MSG_empty_userstatus;
+	 }
 
-if ( $strERR == "" ){
-    $myuser->username = $_POST['txtusername'];
-    //check user exist or not
-    $chk = $myuser->exist();
-    if ( $chk == true ){
-        $myuser->error_description = "User already exist";
-    }else{
-          	$myuser->password = $_POST['txtpassword'];
-		$myuser->first_name = $_POST['txtfirstname'];
-        	$myuser->last_name = $_POST['txtlastname'];
-		$myuser->user_status_id =  $_POST['txtuserstatus'];
-		if($myuser->user_status_id== USERSTATUS_WAITING_EMAIL_ACTIVATION){
-		$myuser->activation_token=md5(time());
-		}else{
-		$myuser->activation_token="";
-		}
-		$myuser->email = $_POST['txtemail'];
-		$myuser->phone = $_POST['txtphone'];
-		$myuser->address = $_POST['txtaddress'];
-		$myuser->occupation = $_POST['txtoccupation'];
-		$chk = $myuser->update();
-          if ( $chk == true ){
-			if($myuser->user_status_id==USERSTATUS_WAITING_EMAIL_ACTIVATION){
-				$myuser_notification = new User_notifications();
-				$myuser_notification->username = $myuser->username;
-				$myuser_notification->activation_token=$myuser->activation_token;
-				$myuser_notification->password=$myuser->password;
-				$myuser_notification->to =$myuser->email;
-				$msg=$myuser_notification->user_account_activation();
+	  if ( $_POST['lstusertype'] == -1 ){
+	      $strERR .= $MSG_empty_usertype;
+	 }
+
+	$myuser->error_description = $strERR;
+
+	if ( $strERR == "" ){
+	    $myuser->username = $_POST['txtusername'];
+	    //check user exist or not
+	    $chk = $myuser->exist();
+	    if ( $chk == true ){
+	        $myuser->error_description = "User already exist";
+	    }else{
+	        $myuser->password = $_POST['txtpassword'];
+			$myuser->first_name = $_POST['txtfirstname'];
+	        $myuser->last_name = $_POST['txtlastname'];
+			$myuser->user_status_id =  $_POST['txtuserstatus'];
+			if($myuser->user_status_id== USERSTATUS_WAITING_EMAIL_ACTIVATION){
+				$myuser->activation_token=md5(time());
+			}else{
+				$myuser->activation_token="";
+			}
+			$myuser->email = $_POST['txtemail'];
+			$myuser->phone = $_POST['txtphone'];
+			$myuser->user_type_id = $_POST['lstusertype'];
+			$chk = $myuser->update();
+	        if ( $chk == true ){
+				if($myuser->user_status_id==USERSTATUS_WAITING_EMAIL_ACTIVATION){
+					$myuser_notification = new User_notifications();
+					$myuser_notification->username = $myuser->username;
+					$myuser_notification->activation_token=$myuser->activation_token;
+					$myuser_notification->password=$myuser->password;
+					$myuser_notification->to =$myuser->email;
+					$msg=$myuser_notification->user_account_activation();
 				}
 				
-				$myuser_credits=new UserCredit();
-				$myuser_credits->connection = $myconnection;
-				$myuser_credits->credit_type_id=CREDIT_TYPE_OFFER;
-				$myuser_credits->user_id=$myuser->id;
-				$myuser_credits->credit=DEFAULT_NEW_USER_CREDITS;
-				$myuser_credits->update();
-
 				$_SESSION[SESSION_TITLE.'flash'] = $RD_MSG_added ;
 				//$_SESSION[SESSION_TITLE.'flash_redirect_page'] = "users.php";
 				header( "Location: users.php");
@@ -82,7 +75,7 @@ if ( $strERR == "" ){
 				header( "Location:".$current_url);
 				exit();
 			}
-    	}
+	    }
 	}
 }
 
@@ -100,7 +93,7 @@ if ( $strERR == "" ){
 
 
  if ( isset($_POST['submit']) && $_POST['submit'] == $CAP_update ) {
- $strERR = "";
+ 	$strERR = "";
 	
 	 if ( $_POST['txtuserstatus'] == -1 ){
 		  $strERR .= $MSG_empty_userstatus;
@@ -121,22 +114,20 @@ if ( $strERR == "" ){
 		$strERR .= "User already exist";
 		$myuser->get_detail();
 	    	}
-		}
+	}
 	$myuser->error_description = $strERR;
-	 if ( $strERR == "" ){
+	if ( $strERR == "" ){
 		
-		echo $myuser->id = $_POST['h_id'];
-		
+		$myuser->id = $_POST['h_id'];
 		$chk = $myuser->get_detail();
+
 		$myuser->username = $_POST['txtusername'];
-		$myuser->password = $_POST['txtpassword'];
-		$myuser->first_name = $_POST['txtfirstname'];
-        	$myuser->last_name = $_POST['txtlastname'];
 		$myuser->user_status_id = $_POST['txtuserstatus'];
+		$myuser->user_type_id = $_POST['lstusertype'];
+		$myuser->first_name = $_POST['txtfirstname'];
+        $myuser->last_name = $_POST['txtlastname'];
 		$myuser->email = $_POST['txtemail'];
-		$myuser->phone = $_POST['txtphone'];
-		$myuser->address = $_POST['txtaddress'];
-		$myuser->occupation = $_POST['txtoccupation'];
+		$myuser->phone = $_POST['txtphone'];		
 		$chk = $myuser->update();
 
 		if ( $chk == true ){

@@ -21,6 +21,8 @@ $MSG_empty_userstatus = "Userstatus Empty ";
 
 $MSG_empty_phone = "Phone Empty ";
 
+$MSG_empty_usertype = "User Type Empty ";
+
 
 $RD_MSG_deleted = "User Deleted";
 

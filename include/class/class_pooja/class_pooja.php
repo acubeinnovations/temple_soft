@@ -13,6 +13,8 @@ Class Pooja{
 	var $rate ="";
 	var $status_id ="";
 
+	var $vazhipadu_date = CURRENT_DATE;
+
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
@@ -28,6 +30,7 @@ Class Pooja{
 			$strSQL .= addslashes(trim($this->name)) ."','";
 			$strSQL .= addslashes(trim($this->rate)) . "','";
 			$strSQL .= addslashes(trim($this->status_id)) . "')";
+ 			mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 
           if ( mysql_affected_rows($this->connection) > 0 ) {
@@ -45,6 +48,7 @@ Class Pooja{
 			$strSQL .= "rate = '".addslashes(trim($this->rate))."',";
 			$strSQL .= "status_id = '".addslashes(trim($this->status_id))."'";
 			$strSQL .= " WHERE id = ".$this->id;
+			 mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 
             if ( mysql_affected_rows($this->connection) >= 0 ) {
@@ -63,6 +67,7 @@ function get_details()
 {
 	if($this->id >0){
 		$strSQL = "SELECT id,name,rate,status_id FROM pooja WHERE id = '".$this->id."'";
+		 mysql_query("SET NAMES utf8");
 		$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
 		 if(mysql_num_rows($rsRES) > 0){
 			$user 	= mysql_fetch_assoc($rsRES);
@@ -86,6 +91,7 @@ function get_list_array()
 	{
 		$pooja = array();$i=0;
 		$strSQL = "SELECT  id,name,rate,status_id FROM pooja";
+		 mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		if ( mysql_num_rows($rsRES) > 0 )
 			{
@@ -112,6 +118,7 @@ function get_array()
         	$pooja = array();
 			$i=0;
 			$strSQL = "SELECT id,name,rate,status_id FROM pooja";
+			 mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 			if ( mysql_num_rows($rsRES) > 0 ){
 				 while(list($id,$name,$rate,$status_id) = mysql_fetch_row($rsRES) ){
@@ -146,6 +153,7 @@ function get_array()
 
         $strSQL .= " ORDER BY id";
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
+		mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
 
         if ( mysql_num_rows($rsRES) > 0 ){
@@ -167,6 +175,47 @@ function get_array()
       			 return false;
         	}
         
+    }
+
+    public function get_vazhipadu_pooja_list($start_record = 0,$max_records = 25)
+    {
+
+    	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
+    	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
+    	$str_condition = "";
+    	if($this->vazhipadu_date != ""){
+    		$str_condition .= "v.vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
+    	}
+
+    	if($str_condition != ""){
+    		$strSQL .= " WHERE ".$str_condition;
+    	}
+
+    	$strSQL .= " GROUP BY v.vazhipadu_rpt_number";
+    	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
+    	//echo $strSQL;exit();
+    	 mysql_query("SET NAMES utf8");
+		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+		$pooja = array();$i=0;
+        if ( mysql_num_rows($rsRES) > 0 ){
+			if (trim($this->total_records)!="" && $this->total_records > 0) {
+            } else {
+				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
+            	$this->total_records = mysql_num_rows($all_rs);
+			}
+			while ( list ($id,$name,$rate,$date,$quantity) = mysql_fetch_row($rsRES) ){
+				$pooja[$i]["id"] =  $id;
+				$pooja[$i]["name"] = $name;
+				$pooja[$i]["rate"] = $rate;
+				$pooja[$i]["date"] = $date;
+				$pooja[$i]["total"] = $rate*$quantity;
+				$pooja[$i]["quantity"] = $quantity;
+				$i++;
+			}
+			return $pooja;
+		} else {
+  			return false;
+        }
     }
 
 

@@ -29,7 +29,7 @@
 		</div>
 
 
-		<div class="medium-6 columns">
+		<div class="medium-3 columns">
 			<label for="status">Status</label>
 			<?php 
 			if(isset($_POST['txtuserstatus'])){
@@ -38,6 +38,10 @@
 				$user_status_id=$myuser->user_status_id;
 			}
 			populate_list_array("txtuserstatus", $user_statuses, "id", "name",$user_status_id,$disable=false); ?>  
+		</div>
+		<div class="medium-3 columns">
+			<label for="status">User Type</label>
+			<?php echo populate_list_array("lstusertype", $user_types, "id", "name",$myuser->user_type_id,$disable=false); ?>  
 		</div>
 
 	</div>
@@ -64,13 +68,13 @@
 
 		<div class="medium-6 columns">
 			<label for="first_name">First Name <small>required</small></label>
-			<input placeholder=""  required =""   type="text" name="txtfirstname" id="txtfirstname" >
+			<input placeholder=""  required =""   type="text" name="txtfirstname" id="txtfirstname"  value="<?php echo $myuser->first_name; ?>">
 			<small class="error" data-error-message="">Empty First Name.</small>
 		 </div>
 
 		<div class="medium-6 columns">
 			<label for="first_name ">Last Name<small>required</small></label>
-			<input placeholder=""  required =""   type="text" name="txtlastname" id="txtlastname" >
+			<input placeholder=""  required =""   type="text" name="txtlastname" id="txtlastname" value="<?php echo $myuser->last_name; ?>">
 			<small class="error" data-error-message="">Empty Last Name.</small>
 		 </div>
 	</div>
@@ -79,31 +83,17 @@
 
 		<div class="medium-6 columns">
 			<label for="email">Email </label>
-			<input placeholder=""   type="text" name="txtemail" id="txtemail" >
+			<input placeholder=""   type="text" name="txtemail" id="txtemail"value="<?php echo $myuser->email; ?>" >
 		 </div>
 
 		<div class="medium-6 columns">
 			<label for="Phone">Phone</label>
-			<input placeholder=""   type="text" name="txtphone" id="txtphone" >
+			<input placeholder=""   type="text" name="txtphone" id="txtphone" value="<?php echo $myuser->phone; ?>" >
 		 </div>
 	</div>
 
 
-	<div class="row">
-
-		<div class="medium-6 columns">
-			<label for="email">Email </label>
-			<input placeholder=""   type="text" name="txtaddress" id="txtaddress" >
-		 </div>
-
-		<div class="medium-6 columns">
-			<label for="Phone">Phone</label>
-			<input placeholder=""   type="text" name="txtoccupation" id="txtoccupation" >
-		 </div>
-	</div>
-
-
-
+	
 	<div class="row">
 		<div class="medium-6 columns">
 
@@ -114,6 +104,10 @@
                     <?php }else{ ?>
                     <input class="small button" type="submit" name="submit" value="<?php echo$CAP_add?>" onClick="return validate_member_update();">
                     <?php }?>
+
+                    
+
+
 
 
 		

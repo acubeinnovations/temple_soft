@@ -25,7 +25,7 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="row">
  			<div class= "medium-6 columns">
  				<label for="liststar">Status <small>required</small></label>
-				<?php echo populate_list_array("liststar", $g_ARRAY_LIST_STATUS, 'id','name', $add_star->status_id,$disable=false);?>
+				<?php echo populate_list_array("liststar", $g_ARRAY_LIST_STATUS, 'id','name', $add_star->status_id,$disable=false,false);?>
  	
  			</div>
  		</div>
@@ -33,7 +33,7 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="row">
  			<div class="medium-6 columns">
  				<input class="small button"  value="submit" name="submit" type="submit"/>
- 				<input type="hidden" name="h_id" value="<?php// echo $add_star->id; ?>" />
+ 				<input type="hidden" name="h_id" value="<?php echo $add_star->id; ?>" />
 
  			</div>
  		</div>

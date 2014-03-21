@@ -16,23 +16,24 @@ if(isset($_POST['submit']) and $_POST['submit'] == $capSIGNIN)
 	
 	if ( $login_error == "" )
 	{
-		  $username = trim($_POST['loginname']);
-		  $password = md5(trim($_POST['passwd']));
-		  $usersession = new UserSession($username,$password,$myconnection);
-		  $chk = $usersession->login();
-		  if ( $chk == true ){
-			
-			  header('Location:dashboard.php');
-				exit();
-		  } else{
-			 $login_error .= "Invalid Login name/Password.";
-			$_SESSION[SESSION_TITLE.'flash'] = $login_error;
-		 }
-	
-}else{
- 	$_SESSION[SESSION_TITLE.'flash'] = $login_error;
-		  
+		$username = trim($_POST['loginname']);
+		$password = md5(trim($_POST['passwd']));
+		$usersession = new UserSession($username,$password,$myconnection);
+		$chk = $usersession->login();
+		if ( $chk == true ){
+			if($_SESSION[SESSION_TITLE.'user_type']==COUNTER){
+			header('Location:/counter/dashboard.php');
+			exit();
+		}elseif($_SESSION[SESSION_TITLE.'user_type']==FINANCE){
+			header('Location:/finance/dashboard.php');
+			exit();
+		}
+
+	} else{
+		$login_error = "Invalid Username or password!";
 	}
+
+}
 	
 	
 }

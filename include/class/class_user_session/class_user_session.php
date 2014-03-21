@@ -16,6 +16,8 @@ class UserSession {
     var $occupation 	= "";
     var $user_status_id	= "";
 
+    var $user_type_id = "";
+
 
 
     var $error = false;
@@ -42,14 +44,15 @@ class UserSession {
                 $this->first_name = mysql_result($rsRES,0,'first_name');
                 $this->last_name = mysql_result($rsRES,0,'last_name');
 				$this->user_status_id=mysql_result($rsRES,0,'user_status_id');
+                $this->user_type_id = mysql_result($rsRES,0,'user_type_id');
 
 				$_SESSION[SESSION_TITLE.'user_status_id'] = $this->user_status_id;
 				$_SESSION[SESSION_TITLE.'userid'] = $this->id;
 				$_SESSION[SESSION_TITLE.'name'] = $this->first_name." ".$this->last_name;
 				$_SESSION[SESSION_TITLE.'username'] = $this->username;
-				$_SESSION[SESSION_TITLE.'user_type'] = REGISTERED_USER;
+				$_SESSION[SESSION_TITLE.'user_type'] = $this->user_type_id;
 
-		return true;
+		      return true;
           }
           else{
                 $this->error_description = "Login Failed";
@@ -59,7 +62,7 @@ class UserSession {
 
 
     function check_login(){
-		if ( isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0 && $this->id == $_SESSION[SESSION_TITLE.'userid'] && $_SESSION[SESSION_TITLE.'user_type'] == REGISTERED_USER ) {
+		if ( isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0 && $this->id == $_SESSION[SESSION_TITLE.'userid'] && $_SESSION[SESSION_TITLE.'user_type'] == $this->user_type_id ) {
 			return true;
 		}else{
 			return false;

@@ -52,3 +52,15 @@ p.heading {
     background: none repeat scroll 0% 0% #ccc;
     overflow: hidden;
 }
+
+@media screen
+  {
+  .show_print{display: none;}
+  .show_screen{display: block;}
+  }
+
+@media print
+  {
+  	 .show_print{display: block;}
+	 .show_screen{display: none;}
+  }
