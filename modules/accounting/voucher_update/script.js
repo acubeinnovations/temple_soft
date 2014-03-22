@@ -46,10 +46,8 @@ $(document).ready(function(){
 			if($("#lstledger").val() == null){
 				msg += "Select default ledgers<br>";
 			}
-		}else if(source == 2){alert($("#lstfromledger").val());
-			if($("#lstfromledger").val() == null && $("#lsttoledger").val() == null){
-				msg += "Select default ledgers<br>";
-			}
+		}else if(source == 2){
+			
 		}
 
 		
