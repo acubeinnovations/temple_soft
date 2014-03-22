@@ -84,7 +84,8 @@ Class ReportFeature{
 
 
     		$strSQL .= " WHERE RF.report_id = '".$this->report_id."' AND RF.status = '".STATUS_ACTIVE."' AND RF.position = '".$this->position."'";
-    		
+
+            mysql_query("SET NAMES utf8");    		
     		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     		if(mysql_num_rows($rsRES) > 0){
     			while($row = mysql_fetch_assoc($rsRES)){
@@ -145,6 +146,7 @@ WHERE ls.fy_id = '".$this->current_fy_id."' AND ls.ledger_sub_id IN(".$sub_ledge
         $strSQL .= " LEFT JOIN ledger_master LM ON LM.ledger_id = RF.ledger_master_id";
         $strSQL .= " WHERE RF.report_id = '".$this->report_id."'";
         //echo $strSQL;exit();
+        mysql_query("SET NAMES utf8");
         $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
         $features = array();$i=0;
         if(mysql_num_rows($rsRES) > 0){

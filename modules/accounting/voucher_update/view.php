@@ -139,7 +139,7 @@ if(!defined('CHECK_INCLUDED')){
  		<legend>Voucher account Details</legend>
 
  		<div class="medium-4 columns" >
- 			<label for="ledger">Source<small>required</small>
+ 			<label for="ledger">Source<small id="error_source">required</small>
  			<select name="lstsource" id="lstsource">
  				<option value="-1">Choose from list..</option>
  				<option value="1">Voucher for account</option>
@@ -158,18 +158,18 @@ if(!defined('CHECK_INCLUDED')){
  			</div>
  			<div class="medium-6 columns" >
 				<label for="ledger">Ledgers</label>
- 				<?php echo populate_list_array("lstledger[]", $ledgers, 'id','name', '',$disable=false,false,"multiple");?>
+ 				<?php echo populate_multiple_list_array("lstledger", $ledgers, 'id','name', array(),$disable=false,false);?>
  			</div>
  		</div>
 
  		<div class="medium-8 columns" id="div-dtls2">
  			<div class="medium-4 columns" >
 	 			<label for="ledger">Default From Account</label>
-	 			<?php echo populate_list_array("lstfromledger[]", $ledgers, 'id','name', '',$disable=false,false,"multiple");?>
+	 			<?php echo populate_multiple_list_array("lstfromledger", $ledgers, 'id','name', array(),$disable=false,false);?>
  			</div>
  			<div class="medium-4 columns" >
 				<label for="ledger">Default To Account</label>
- 				<?php echo populate_list_array("lsttoledger[]", $ledgers, 'id','name', '',$disable=false,false,"multiple");?>
+ 				<?php echo populate_multiple_list_array("lsttoledger", $ledgers, 'id','name',  array(),$disable=false,false);?>
  			</div>
 
  			<div class="medium-4 columns" >

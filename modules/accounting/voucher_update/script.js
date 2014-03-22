@@ -32,10 +32,32 @@ $(document).ready(function(){
 
 	$("#frmvoucher").submit(function(){
 
+		var msg ="";
 		var voucher_type = $("#lstmvoucher").val();
 		var source = $("#lstsource").val();
+
+		if(voucher_type == -1){
+			msg += "Select voucher type<br>";
+		}
+
 		if(source == -1){
-			
+			msg += "Select Source<br>";
+		}else if(source == 1){
+			if($("#lstledger").val() == null){
+				msg += "Select default ledgers<br>";
+			}
+		}else if(source == 2){alert($("#lstfromledger").val());
+			if($("#lstfromledger").val() == null && $("#lsttoledger").val() == null){
+				msg += "Select default ledgers<br>";
+			}
+		}
+
+		
+		if(msg == ""){
+			return true;
+		}else{
+			popup_alert(msg,false);
+			return false;
 		}
 		
 	});
