@@ -4,7 +4,6 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
-<form data-abide target="_self" method="GET" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
 <div class="row" >
 	<div class="medium-4 columns">
 		<h3><?php echo $page_heading; ?></h3>
@@ -15,24 +14,9 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 	<?php }?>
 </div>
-	<fieldset>
- 		
 
- 		<!--<div class="row">
- 			<div class="medium-6 columns">
-    			<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
-    		</div>
-    		<div class="medium-4 columns">
-     	 		<input type="submit" name="submit" value="Search" class="small button" />
- 			
- 			</div>
 
- 			
-
- 		</div>-->
-
- 	    
-</form>
+	
 <?php if($count_list >0){?>
 
 <table width="100%">
@@ -80,4 +64,3 @@ if(!defined('CHECK_INCLUDED')){
 
 <?php }?>
 
-</fieldset>

@@ -4,17 +4,12 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
+<h3>Account Settings</h3>
+
 <form id="frmsettings" name="frmsettings" action="<?php echo $current_url;?>" method="POST">
 
 <div class="row">
-	<div class="large-4 columns">
-	
-	</div>
-</div>
-
-<div class="row">
 	<fieldset>
- 		<legend>Settings </legend>
 
  		<div class="row">
  			<div class="medium-5 columns">

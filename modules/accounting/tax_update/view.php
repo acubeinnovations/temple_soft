@@ -3,35 +3,29 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
+<h3><?php echo (isset($_GET['edt']))?"Edit Tax":"Add Tax";?></h3>
 
 <form id="frm-tax" name="frm-tax" method="POST" action="<?php echo $current_url;?>">
 	<input type="hidden" value="<?php echo $tax->id;?>" name="hd_taxid" />
  	<fieldset>
- 		<legend>Update Tax</legend>
-
- 		<div class="row">
- 			<div class="large-4 columns">
- 			</div>
- 		</div>
-
  		<div class="row">
  			<div class="large-4 columns">
  				<label for="stock">Name</label>
  				<input type="text" name="txtname" id="txtname" value="<?php echo $tax->name;?>"/>
  			</div>
 
- 			<div class="large-4 columns">
+ 			<div class="large-2 columns">
  				<label for="stock">Tax Rate in %</label>
  				<input type="text" name="txtrate" id="txtrate" value="<?php echo $tax->rate*100;?>"/>
  			</div>
 
- 			<div class="large-4 columns">
- 				<label for="stock">Unit of Measure</label>
+ 			<div class="large-3 columns">
+ 				<label for="stock">Status</label>
  				<?php echo populate_list_array("lststatus", $g_ARRAY_LIST_STATUS, 'id','name', $tax->status,$disable=false,false);?>
  			</div>
 
- 			<div class="large-4 columns">
- 				<input type="submit" name="submit" value="Save" class="small button"/>
+ 			<div class="large-3 columns">
+ 				<input type="submit" name="submit" value="Save" class="tiny button"/>
  			</div>
 
  		</div>

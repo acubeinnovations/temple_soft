@@ -4,11 +4,11 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
+<h3><?php echo (isset($_GET['edt']))?"Edit Item":"Add Item";?></h3>
+
 <form id="frmitemadd" name="frmitemadd" method="POST" action="<?php echo $current_url;?>">
 	<input type="hidden" value="<?php echo $stock->item_id;?>" name="hd_itemid" />
  	<fieldset>
- 		<legend><?php echo (isset($_GET['edt']))?"Edit Item":"Add Item";?></legend>
-
  		<div class="row">
  			<div class="large-4 columns">
  			</div>
@@ -26,7 +26,7 @@ if(!defined('CHECK_INCLUDED')){
  			</div>
 
  			<div class="large-4 columns">
- 				<input type="submit" name="submit" value="Save" class="small button"/>
+ 				<input type="submit" name="submit" value="Save" class="tiny button"/>
  			</div>
 
  		</div>

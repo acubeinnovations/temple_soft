@@ -44,13 +44,35 @@ if($financial_years <> false){
 //submit action
 if(isset($_POST['submit'])){
 
-	$financial_year->id	= $_POST['hdfyid'];
-	$financial_year->fy_start	= $_POST['txtfystart'];
-	$financial_year->fy_end		= $_POST['txtfyend'];
-	$financial_year->fy_name    = $_POST['txtfyname'];
-	$financial_year->status 	= $_POST['lststatus'];
-	$financial_year->update();
-	header("Location:".$current_url);
+	$errMSG = "";
+	if($_POST['hdfyid'] >0){
+
+	}else{
+		if(trim($_POST['txtfystart']) == ""){
+			$errMSG .= "Invalid start Date<br>";
+		}
+		if(trim($_POST['txtfyend']) == ""){
+			$errMSG .= "Enter financial year end<br>";
+		}
+	}
+	if(trim($_POST['txtfyname']) == ""){
+		$errMSG .= "Enter financial year Name<br>";
+	}
+
+	if($errMSG == ""){
+
+		$financial_year->id	= $_POST['hdfyid'];
+		$financial_year->fy_start	= $_POST['txtfystart'];
+		$financial_year->fy_end		= $_POST['txtfyend'];
+		$financial_year->fy_name    = $_POST['txtfyname'];
+		$financial_year->status 	= $_POST['lststatus'];
+		$financial_year->update();
+		header("Location:".$current_url);
+	}else{
+		$_SESSION[SESSION_TITLE.'flash'] = $errMSG;
+	    header( "Location:".$current_url);
+	    exit();
+	}
 }
 
 

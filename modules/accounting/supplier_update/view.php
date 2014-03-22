@@ -4,12 +4,11 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
+<h3><?php echo (isset($_GET['edt']))?"Edit supplier":"Add supplier";?></h3>
+
 <form name="frmsupplier" id="frmsupplier" action="<?php echo $current_url;?>" method="POST">
 <input type="hidden" name="hd_supplierid" value="<?php echo $supplier->supplier_id; ?>"/> 
-	<fieldset>
- 		<legend><?php echo (isset($_GET['edt']))?"Edit supplier":"Add supplier";?></legend>
-
-	
+	<fieldset>	
  		<div class="row">
 	 		<div class="medium-4 columns">
 				<label for="ledger">Name<span class="required">*</span></label>

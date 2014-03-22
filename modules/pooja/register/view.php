@@ -5,28 +5,32 @@ if(!defined('CHECK_INCLUDED')){
 
 
 ?>
-<div class="row">
-	<h3>Pooja Register</h3>
-</div>
 
-<div class="row">
-
-	<form id="frmpooja" name="frmpooja" method="POST" action="<?php echo $current_url;?>">
-	<div class="medium-2 columns">
-		<label>Date</label>
-		<input type="text" class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?>"/>
+<div class="row" >
+	<div class="medium-4 columns">
+		<h3>Pooja Register</h3>
 	</div>
-	<div class="medium-6 columns">
-		<input type="submit" name="submit" value="Filter" class="small button"/>
-	</div>
-	</form>
-<div class="medium-4 columns">
-	<div class="text-right">
+<div class="medium-8 columns">
+	<div class="text-right" style="margin-top:5px;">
 		<input type="button" class="small button" value="print" id="button-print"/>
-		<!--<a href="poojas.php" class="small button">View</a>-->
+	</div>
 	</div>
 </div>
-</div>
+
+<form id="frmpooja" name="frmpooja" method="POST" action="<?php echo $current_url;?>">
+	<fieldset>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Pooja Date</label>
+				<input type="text" class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?>"/>
+			</div>
+			<div class="medium-6 columns">
+				<input type="submit" name="submit" value="Filter" class="small button"/>
+			</div>
+			
+		</div>
+	</fieldset>
+</form>
 
 <div class="row">
 <div class="medium-12 columns">

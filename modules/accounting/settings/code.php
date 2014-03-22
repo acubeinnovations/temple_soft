@@ -19,12 +19,24 @@ $financial_years = $financial_year->get_list_array();
 
 if(isset($_POST['submit']) && $_POST['submit'] == "Save"){
 
-	//update current financial year
-	$account_settings->current_fy_id = $_POST['lstfy'];
-	$account_settings->updateCurrentFY();
-	$_SESSION[SESSION_TITLE.'flash'] = "Updated";
-    header( "Location:".$current_url);
-    exit();
+	$errMSG = "";
+	if($_POST['lstfy'] >0){
+	}else{
+		$errMSG .= "Select Financial Year<br>";
+	}
+	if($errMSG == ""){
+		//update current financial year
+		$account_settings->current_fy_id = $_POST['lstfy'];
+		$account_settings->updateCurrentFY();
+		$_SESSION[SESSION_TITLE.'flash'] = "Updated";
+	    header( "Location:".$current_url);
+	    exit();
+	}else{
+		$_SESSION[SESSION_TITLE.'flash'] = $errMSG;
+	    header( "Location:".$current_url);
+	    exit();
+	}
+	
 
 }
 

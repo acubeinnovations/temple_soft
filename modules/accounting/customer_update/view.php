@@ -3,13 +3,12 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
+<h3><?php echo (isset($_GET['edt']))?"Edit Customer":"Add Customer";?></h3>
 
 <form name="frmcustomer" id="frmcustomer" action="<?php echo $current_url;?>" method="POST">
 <input type="hidden" name="hd_customerid" value="<?php echo $customer->customer_id; ?>"/> 
 	<fieldset>
- 		<legend><?php echo (isset($_GET['edt']))?"Edit Customer":"Add Customer";?></legend>
-
-	
+ 		
  		<div class="row">
 	 		<div class="medium-4 columns">
 				<label for="ledger">Name<span class="required">*</span></label>

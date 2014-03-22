@@ -4,7 +4,7 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
-<form id="" name="form1" method="POST" >
+
 <div class="row" >
 	<div class="medium-4 columns">
 		<h3>Vazhipadu Register</h3>
@@ -16,22 +16,26 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
-<fieldset>
-<div class="row">		
-	<div class="medium-2 columns">
-		<label for="name"> From Date
-		<input class="mydatepicker" name="txtfrom" id="" value="<?php if($vazhipadu->from_date != "") echo date('d-m-Y',strtotime($vazhipadu->from_date));?>" /></label>
-	</div>
+<form id="" name="form1" method="POST" >
+	<fieldset>
+		<div class="row">		
+			<div class="medium-2 columns">
+				<label for="name"> From Date
+				<input class="mydatepicker" name="txtfrom" id="" value="<?php if($vazhipadu->from_date != "") echo date('d-m-Y',strtotime($vazhipadu->from_date));?>" /></label>
+			</div>
 
-	<div class="medium-2 columns">
-		<label for="name"> To Date
-		<input class="mydatepicker" name="txtto" id="" value="<?php if($vazhipadu->to_date != "") echo date('d-m-Y',strtotime($vazhipadu->to_date));?>" /></label>
-	</div>
-	<div class="medium-2 columns">
-		<input type="submit" class="small button" value="Search" name="submit">
-	</div>
+			<div class="medium-2 columns">
+				<label for="name"> To Date
+				<input class="mydatepicker" name="txtto" id="" value="<?php if($vazhipadu->to_date != "") echo date('d-m-Y',strtotime($vazhipadu->to_date));?>" /></label>
+			</div>
+			<div class="medium-2 columns">
+				<input type="submit" class="small button" value="Search" name="submit">
+			</div>
 
-</div>
+		</div>
+	</fieldset>
+</form>
+
 <div class="medium-12 columns">
 <?php if($count >0){?>
 <div class="row">
@@ -150,7 +154,6 @@ No Records Found
 
 
 		
-</fieldset>
-</form>
+
 
 

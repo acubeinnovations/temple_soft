@@ -4,10 +4,8 @@ if(!defined('CHECK_INCLUDED')){
 }
 
 ?>
+<h3>List Reports</h3>
 
-
-<fieldset>
-<legend>Reports</legend>
 <?php if($count_data > 0){?>
 <table width="100%">
 	<thead>
@@ -58,4 +56,3 @@ if(!defined('CHECK_INCLUDED')){
 	</tbody>
 </table>
 <?php }?>
-</fieldset>

@@ -191,7 +191,7 @@ function get_array()
     		$strSQL .= " WHERE ".$str_condition;
     	}
 
-    	$strSQL .= " GROUP BY v.vazhipadu_rpt_number";
+    	$strSQL .= " GROUP BY p.id";
     	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
     	//echo $strSQL;exit();
     	 mysql_query("SET NAMES utf8");

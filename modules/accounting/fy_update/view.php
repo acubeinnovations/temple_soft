@@ -3,33 +3,35 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
+<h3>Add Financial Year</h3>
 
-<form id="frm-fymaster" name="frm-fymaster" method="POST" action="<?php echo $current_url;?>">
+<form id="frm-fymaster" name="frm-fymaster" method="POST" action="<?php echo $current_url;?>" data-abide >
 <input type="hidden" value="<?php echo $financial_year->id;?>" name="hdfyid" />
  	<fieldset>
- 		<legend>Add Financial Year </legend>
-
  			<div class="row">
 	 			<div class="medium-2 columns">
-	 				<label for="financial-year">Financial Year Start</label>
-	 				<?php if(isset($_GET['edt'])) {?>
-	 				<input type="text" name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" disabled/> 
-	 				<?php }else{?>
-	 				<input type="text" name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" class="mydatepicker"/>
-	 				<?php }?>
+	 				<label for="financial-year">Financial Year Start
+		 				<?php if(isset($_GET['edt'])) {?>
+		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" disabled requierd type="text"/> 
+		 				<?php }else{?>
+		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" class="mydatepicker" requierd type="text"/>
+		 				<?php }?>
+	 				</label>
 
 	 			</div>
 	 			<div class="medium-2 columns">
-	 				<label for="financial-year">Financial Year End</label>
+	 				<label for="financial-year">Financial Year End
 	 				<?php if(isset($_GET['edt'])) {?>
-	 				<input type="text" name="txtfyend" id="fystart" value="<?php echo $financial_year->fy_end;?>" disabled/> 
+	 				<input type="text" name="txtfyend" id="fystart" value="<?php echo $financial_year->fy_end;?>" disabled requierd type="date"/> 
 	 				<?php }else{?>
-	 				<input type="text" name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="mydatepicker"/>
+	 				<input name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="mydatepicker" requierd type="text"/>
 	 				<?php }?>
+	 				</label>
 	 			</div>
 	 			<div class="medium-3 columns">
-	 				<label for="financial-year">Financial Year Name</label>
-	 				<input type="text" name="txtfyname" id="fyname" value="<?php echo $financial_year->fy_name;?>" />
+	 				<label for="financial-year">Financial Year Name<small>required</small>
+	 				<input type="text" name="txtfyname" id="fyname" value="<?php echo $financial_year->fy_name;?>" required/>
+	 				</label>
 	 			</div>
 
 	 			<div class="medium-2 columns">

@@ -45,18 +45,15 @@ if(isset($_POST['submit'])){
 
 		$dataArray = array();
 		$i=0;
-
-		if(isset($_POST['hd_row'])){
-			$total_amount = $_POST['txtamount']*count($_POST['hd_row']);
-			foreach($_POST['hd_row'] as $row){
-				$list = explode("_", $row);
-				$dataArray[$i]['name'] = $list[0];
-				$dataArray[$i]['star_id'] = $list[1];
-				$i++;
-			}
-		}else{
-			$total_amount = $_POST['txtamount'];
+		
+		$total_amount = $_POST['txtamount']*count($_POST['hd_row']);
+		foreach($_POST['hd_row'] as $row){
+			$list = explode("_", $row);
+			$dataArray[$i]['name'] = $list[0];
+			$dataArray[$i]['star_id'] = $list[1];
+			$i++;
 		}
+		
 		//add voucher entry
 		$voucher->module_id = $_POST['hd_moduleid'];
 		$voucher->get_details_with_moduleid();
@@ -67,6 +64,7 @@ if(isset($_POST['submit'])){
 		}else{
 			$voucher_number = $voucher->series_start;
 		}
+		//echo $voucher_number;exit();
 		
 		$account->voucher_number 	= $voucher_number;
 		$account->voucher_type_id	= $voucher->voucher_id;
@@ -81,6 +79,8 @@ if(isset($_POST['submit'])){
 		$dataAccount[1]['account_debit']  = "";
 		$dataAccount[1]['account_credit'] = $total_amount;
 		$dataAccount[1]['ref_ledger'] = $voucher->default_to;
+
+		//print_r($dataAccount);exit();
 		$insert = $account->insert_batch($dataAccount);
 		//voucher entry ends
 
@@ -88,8 +88,8 @@ if(isset($_POST['submit'])){
 			$account->get_details();
 			$vazhipadu_rpt_number = $voucher->series_prefix.$voucher->series_seperator.$account->voucher_number.$voucher->series_seperator.$voucher->series_sufix;
 			$add_vazhipadu->vazhipadu_rpt_number = $vazhipadu_rpt_number;
-
-
+//echo $add_vazhipadu->vazhipadu_rpt_number;
+//print_r($dataArray);exit();
 			$last_id = $add_vazhipadu->update($dataArray);
 			if($last_id){
 				if($vazhipadu_rpt_number){

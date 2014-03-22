@@ -3,31 +3,23 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-<h3>Form Variables</h3>
-<div class="text-right">
-	<a href="ac_form_type.php" class="small button">Form Types</a>
+<div class="row" >
+	<div class="medium-6 columns">
+		<h3>Add Form Variable</h3>
+	</div>
+
+	<div class="medium-6 columns">
+		<div class="text-right" style="margin-top:5px;">
+			<a href="ac_form_type.php" class="small button">Form Types</a>
+		</div>
+	</div>
 </div>
-<div class="medium-6 columns">
-<form id="frm-formtype" name="frm-formtype" method="POST" action="<?php echo $current_url;?>">
-<fieldset>
-	<legend>Update Form Variables</legend>
-			<div class="medium-8 columns">
-				<label for="form-type">Variable Name</label>
-				<input type="text" name="txtvariable" id="txtvariable" value="" />
-			</div>
 
-			<div class="medium-2 columns">
-				<input type="submit" name="submit_variable" value="Submit"  class="small button"/>
-
-			</div>
-
-</fieldset>
- </form>
- </div>
-
- <div class="medium-6 columns">
+<div class="row" >
+<div class="medium-5 columns">
  <fieldset>
 	<legend>Form Variables</legend>
+	<div class="scroll-div">
 	<?php if($form_variables){?>
 	<table width="100%">
 		<thead>
@@ -48,5 +40,27 @@ if(!defined('CHECK_INCLUDED')){
 		</tbody>
 	</table>
 	<?php }?>
+	</div>
 </fieldset>
 </div>
+
+
+<div class="medium-7 columns">
+<form id="frm-formtype" name="frm-formtype" method="POST" action="<?php echo $current_url;?>">
+<fieldset>
+	<legend>Update Form Variables</legend>
+			<div class="medium-8 columns">
+				<label for="form-type">Variable Name</label>
+				<input type="text" name="txtvariable" id="txtvariable" value="" />
+			</div>
+
+			<div class="medium-2 columns">
+				<input type="submit" name="submit_variable" value="Submit"  class="small button"/>
+
+			</div>
+
+</fieldset>
+</form>
+</div>
+</div>
+

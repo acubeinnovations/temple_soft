@@ -3,8 +3,6 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-
-<form data-abide target="_self" method="POST" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
 <div class="row" >
 	<div class="medium-4 columns">
 		<h3>Search Ledger</h3>
@@ -13,38 +11,30 @@ if(!defined('CHECK_INCLUDED')){
 		
 	</div>
 </div>
-	<fieldset>
- 		
 
+<form data-abide target="_self" method="POST" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
+	<fieldset>
  		<div class="row">
  			<div class="medium-4 columns">
  				<label for="ledger">Select Ledger</label>
     			<?php echo populate_list_array("lstledger", $ledgers, 'id','name', $account->ref_ledger,$disable=false);?>
     		</div>
-
-    		<div class="medium-4 columns">
- 				<label for="ledger">Enter Ledger</label>
-    			<input type="text" name="txtledger" id="txtledger"  value="<?php echo $ledger_name; ?>"/>
-    		</div>
-    	</div>
-
-    	<div class="row">
-    		<div class="medium-4 columns">
+    		<div class="medium-3 columns">
  				<label for="ledger">Date From</label>
     			<input type="text" name="txtfromdate" id="txtfromdate"  value="<?php echo $datefrom;?>" class="mydatepicker"/>
     		</div>
 
-    		<div class="medium-4 columns">
+    		<div class="medium-3 columns">
  				<label for="ledger">Date To</label>
     			<input type="text" name="txttodate" id="txttodate"  value="<?php echo $dateto;?>" class="mydatepicker"/>
     		</div>
-    	</div>
-
-    	<div class="row">
-    		<div class="text-center">
-				<input type="submit" name="submit" value="Search" class="small button" />
- 			</div>
+    		<div class="medium-2 columns">
+	    		<div class="text-center">
+					<input type="submit" name="submit" value="Search" class="small button" />
+	 			</div>
+	 		</div>
  		</div>
+ 	</fieldset>
  	    
 </form>
 
@@ -87,4 +77,3 @@ if(!defined('CHECK_INCLUDED')){
 
 
 
-</fieldset>

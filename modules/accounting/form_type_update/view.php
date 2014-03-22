@@ -3,10 +3,19 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-<h3>Form Types</h3>
-<div class="text-right">
-	<a href="ac_form_variable.php" class="small button">Form Variable</a>
+
+<div class="row" >
+	<div class="medium-6 columns">
+		<h3>Add Form Type</h3>
+	</div>
+
+	<div class="medium-6 columns">
+		<div class="text-right" style="margin-top:5px;">
+			<a href="ac_form_variable.php" class="small button">Form Variable</a>
+		</div>
+	</div>
 </div>
+
 
 <form id="frm-formtype" name="frm-formtype" method="POST" action="<?php echo $current_url;?>">
 <input type="hidden" value="" name="hd_typeid" />

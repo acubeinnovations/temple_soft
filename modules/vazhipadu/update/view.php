@@ -14,7 +14,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
-			<a class="small button" href="vazhipadu_register.php">Register</a>
+			<a class="tiny button" href="vazhipadu_register.php">Register</a>
 		</div>
 	</div>
 </div>
@@ -67,7 +67,7 @@ if(!defined('CHECK_INCLUDED')){
 				<tr>
 					<td><input  type="text" name="txtname" id="" value=""/></td>
 					<td><?php echo populate_list_array("liststar", $array_star, 'id','name',$add_vazhipadu->star_id,$disable=false);?></td>
-					<td><input type="hidden" name="txtage" id="txtage" value="" /><input type="button" name="button-add" value="Add" id="button-add"/></td>
+					<td><input type="hidden" name="txtage" id="txtage" value="" /><input type="button" name="button-add" value="Add" id="button-add" class="tiny secondary button" /></td>
 				</tr>
 				
 			<tbody>
@@ -80,12 +80,12 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row" >
 
-		<div class="medium-3 columns" >
-			<input type="submit" name="submit" value="Save" />
+		<div class="medium-5 columns" >
+			<input type="submit" name="submit" value="Submit" class="tiny button" />
 
-			<input type="button" name="button-print" value="Print" />
+			<input type="button" name="button-print" value="Print" class="tiny button" />
 
-			<input type="reset" name="button-cancel" value="Cancel" />
+			<input type="reset" name="button-cancel" value="Cancel" class="tiny button" />
 		</div>
 		
 	</div>

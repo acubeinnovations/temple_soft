@@ -13,16 +13,18 @@ if(!defined('CHECK_INCLUDED')){
 
 <div class="row">
 	<?php if($ledgers <> false){?>
-	<div class="medium-4 columns" id="ledger_list">
+	<div class="medium-5 columns" id="ledger_list" >
 		<fieldset>
 	 		<legend>List Ledgers </legend>
+	 		<div class="scroll-div">
 	 		<?php echo $ledgers; ?>
+	 		</div>
 	 	</fieldset>
 	</div>
 	<?php }?>
 	
 
-	<div class="medium-8 columns">
+	<div class="medium-7 columns">
 		<form id="frm-ledger" name="frm-ledger" method="POST" action="<?php echo $current_url;?>">
 
 		<fieldset>

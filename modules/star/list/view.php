@@ -5,19 +5,21 @@ if(!defined('CHECK_INCLUDED')){
 ?>
 <h3>Search by Star</h3>
 <form id="" name ="form1" method="post" >
-
 	<fieldset>
  		
  		<div class="row">
  			<div class="medium-6 columns">
     	<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
      	 <input type="submit" name="submit" value="Search" class="small button" />
-			<a href="star.php" class="small secondary button">Add New Star</a>
+			<a href="star.php" class="small button">Add New Star</a>
  			
  			</div>
  		</div>
  	</fieldset>
-	<table width="100%">
+</form>
+
+
+<table width="100%">
   	<thead>
 
 	<tr>
@@ -55,10 +57,10 @@ if(!defined('CHECK_INCLUDED')){
 			?>
 
 
-<tr>
-	<td colspan="3">
-		<?php  $pagination->pagination_style_numbers();?>
-	</td>
-</tr>
+	<tr>
+		<td colspan="3">
+			<?php  $pagination->pagination_style_numbers();?>
+		</td>
+	</tr>
 </table>
-</form>
+	

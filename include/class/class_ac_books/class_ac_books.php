@@ -74,6 +74,7 @@ Class AcBook{
         $strSQL = "SELECT id,name,ledgers FROM ac_books WHERE 1";
 
         $strSQL .= " ORDER BY id";
+
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
 		if ( mysql_num_rows($rsRES) > 0 ){
@@ -90,6 +91,7 @@ Class AcBook{
 				$books[$i]["name"] = $name;
 				$ledger_array = unserialize($ledgers);
 				$strSQL_ledgers = "SELECT ledger_sub_id,ledger_sub_name FROM ledger_sub WHERE ledger_sub_id IN (".implode(',',$ledger_array).")";
+				mysql_query("SET NAMES utf8");
 				$rsRES_ledgers = mysql_query($strSQL_ledgers, $this->connection) or die(mysql_error(). $strSQL_ledgers);
 				$ledger_name_array = array();$j=0;
 				if ( mysql_num_rows($rsRES_ledgers) > 0 ){
