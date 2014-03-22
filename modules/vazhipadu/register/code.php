@@ -39,6 +39,7 @@ if($vazhipadu->to_date == ""){
 
 //$vazhipadu_list = $vazhipadu->get_filter_array_by_limit($data,$pagination->start_record,$pagination->max_records);
 $vazhipadu_list = $vazhipadu->get_array_by_limit($pagination->start_record,$pagination->max_records,$data);
+$vazhipadu_total_list = $vazhipadu->get_array_by_limit($pagination->start_record,$vazhipadu->total_records,$data);
 
 
 //print_r($vazhipadu_list);exit();

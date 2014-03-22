@@ -12,6 +12,7 @@ if(!defined('CHECK_INCLUDED')){
 <div class="medium-8 columns">
 	<div class="text-right" style="margin-top:5px;">
 		<a class="small button" href="vazhipadu.php">New</a>
+		<input type="button" class="small button" value="print" id="button-print"/>
 	</div>
 	</div>
 </div>
@@ -150,6 +151,60 @@ No Records Found
 </div>
 
 <?php }?>
+
+
+
+
+
+<?php ob_start();?>
+<h3>Vazhipadu Register</h3>
+<p>Date : <?php echo ($vazhipadu->from_date == $vazhipadu->to_date)?$vazhipadu->from_date:$vazhipadu->from_date." - ".$vazhipadu->to_date;?></p>
+<div>
+<?php if($vazhipadu_total_list){?>
+
+<table width="100%" id="tbl-append">
+		<thead>
+			<tr>
+				<td width="8%">Voucher Number</td>
+				<td width="10%">Date</td>
+				<td width="30%">Pooja</td>
+				<td>Name</td>
+				<td width="15%">Star</td>
+				<td width="10%">Amount</td>
+			</tr>
+		</thead>
+		<tbody
+			<?php 
+			$i=0;$total_amount = 0;
+			while($i<count($vazhipadu_total_list)){
+			?>
+		<tr>
+			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></td>
+			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></td>
+			<td><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></td>
+			<td><?php echo $vazhipadu_total_list[$i]['name']; ?></td>
+			<td><?php echo $vazhipadu_total_list[$i]['star_name']; ?></td>
+			<td><?php echo number_format($vazhipadu_total_list[$i]['unit_rate'],2); ?></td>
+		</tr>
+		<?php $total_amount+=$vazhipadu_total_list[$i]['unit_rate'];$i++;}?>
+		<tr style="font-weight:bold;">
+			<td colspan="5" align="right" >Total</td>
+			<td><?php echo number_format($total_amount,2);?></td>
+		</tr>
+			
+		</tbody>
+
+		
+
+	</table>
+<?php }?>
+</div>
+<?php 
+	$print_content = ob_get_contents();
+	ob_end_clean();
+	//echo $print_content;
+	
+?>
 
 
 

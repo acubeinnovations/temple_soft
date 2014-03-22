@@ -35,7 +35,7 @@ ob_start();
 					$total += $vazhipadu_details[$i]['rate'];
 				?>
 				<tr>
-					<td><?php echo $vazhipadu_details[$i]['name']."(".$vazhipadu_details[$i]['age'].")";?></td>
+					<td><?php echo $vazhipadu_details[$i]['name']	;?></td>
 					<td><?php echo $vazhipadu_details[$i]['star']; ?></td>
 					<td><?php echo $vazhipadu_details[$i]['rate']; ?></td>
 					

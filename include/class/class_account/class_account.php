@@ -229,6 +229,7 @@ Class Account{
             if($condition != ""){
                 $strSQL .= " WHERE ".$condition;
             }
+            mysql_query("SET NAMES utf8");
 
     		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
 			$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
@@ -272,6 +273,7 @@ Class Account{
                 $strSQL .= " AND am.".$filter_by." = am.ref_ledger";
             }
            // echo $strSQL;exit();
+            mysql_query("SET NAMES utf8");
             $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
             if(mysql_num_rows($rsRES) > 0){
                 while($row = mysql_fetch_assoc($rsRES)){
