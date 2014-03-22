@@ -25,7 +25,7 @@ if(!defined('CHECK_INCLUDED')){
 				<input type="text" class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?>"/>
 			</div>
 			<div class="medium-6 columns">
-				<input type="submit" name="submit" value="Filter" class="small button"/>
+				<input type="submit" name="submit" value="Filter" class="tiny button"/>
 			</div>
 			
 		</div>
@@ -48,6 +48,7 @@ if(!defined('CHECK_INCLUDED')){
 		<tbody>
 		<?php 
 			$i=0;$slno = ($pagination->page_num*$pagination->max_records)+1;
+			$total_qty = 0;$total_amount =0;
 			while($i<$count_pooja){
 		?>
 		<tr>
@@ -58,15 +59,14 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $pooja_list[$i]['total']?></td>
 		</tr>
 		<?php
+				$total_qty += $pooja_list[$i]['quantity'];$total_amount +=$pooja_list[$i]['total'];
 				$i++;$slno++;
 			}
 		?>
-		<tr>
-			<td width="10%"></td>
-			<td width="45%"><strong>Total</strong> </td>
-			<td width="15%"> </td>
-			<td width="15%"></td>
-			<td width="15%"></td>
+		<tr style="font-weight:bold;">
+			<td colspan="3" align="right">Total</td>
+			<td><?php echo $total_qty;?></td>
+			<td><?php echo $total_amount;?></td>
 		</tr>
 		<tr>
 			<td colspan="5"><?php  $pagination->pagination_style_numbers();?></td>

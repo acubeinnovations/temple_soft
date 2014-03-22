@@ -28,30 +28,17 @@ $(document).ready(function(){
 			$("#v_ac_dtls").show();
 		}
 	});
-	/*
+	
 
 	$("#frmvoucher").submit(function(){
 
-		var message = "";
-		var voucher_name = $("#txtname").val();
 		var voucher_type = $("#lstmvoucher").val();
-
-		if(isNull(voucher_name)){
-			message += "Empty voucher name \n";
-		}
-
-		if(isInteger(voucher_type)){
-			message += "Select voucher type \n";
-		}
-
-		if(message == ""){
-			return true;
-		}else{
-			alert(message);
-			return false;
+		var source = $("#lstsource").val();
+		if(source == -1){
+			
 		}
 		
 	});
-*/
+
 
 });

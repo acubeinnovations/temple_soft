@@ -11,7 +11,7 @@ require(ROOT_PATH.'include/class/class_administrator_session/class_administrator
 $myuser = new AdministratorSession("","","");
 $chk = $myuser->logout();
 if ($chk == true){
-    header("Location: index.php");
+    header("Location:".ROOT_PATH);
     exit();
 }
 ?>

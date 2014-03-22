@@ -17,6 +17,9 @@ if(isset($_POST['submit'])){
 	$data['from_date'] =  $_POST['txtfrom'];
 	$data['to_date']   = $_POST['txtto'];
 
+}else{
+	$data['from_date'] =  date('d-m-Y',strtotime(CURRENT_DATE));
+	$data['to_date']   = date('d-m-Y',strtotime(CURRENT_DATE));
 }
 
 if($vazhipadu->from_date == ""){

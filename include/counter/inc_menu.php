@@ -9,16 +9,13 @@
   <li class="divider"></li>
 
   <li class="has-dropdown">
-    <a href="#">Master</a>
+    <a href="#">Vazhipadu</a>
     <ul class="dropdown">
-      <li><a href="poojas.php"> Pooja</a></li>
-      <li class="divider"></li>
-      <li><a href="stars.php">Stars</a></li>
-      <li class="divider"></li>
+      <li><a href="vazhipadu.php">Add Vazhipadu</a></li>
+      <li><a href="vazhipadu_register.php">Vazhipadu Register</a></li>
+      <li><a href="pooja_register.php">Pooja Register</a></li>
     </ul>
   </li>
-
-  <li class="has-dropdown"><a href="Vazhipadu.php">Vazhipadu</a></li>
 
 
 <?php } ?>
@@ -31,7 +28,5 @@
 <?php } else {?>
   <li><a href="index.php"  >Login</a></li>
 <?php }?>
-
-
 
 </ul>

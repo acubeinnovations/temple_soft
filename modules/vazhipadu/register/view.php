@@ -21,12 +21,12 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">		
 			<div class="medium-2 columns">
 				<label for="name"> From Date
-				<input class="mydatepicker" name="txtfrom" id="" value="<?php if($vazhipadu->from_date != "") echo date('d-m-Y',strtotime($vazhipadu->from_date));?>" /></label>
+				<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $from_date;?>" /></label>
 			</div>
 
 			<div class="medium-2 columns">
 				<label for="name"> To Date
-				<input class="mydatepicker" name="txtto" id="" value="<?php if($vazhipadu->to_date != "") echo date('d-m-Y',strtotime($vazhipadu->to_date));?>" /></label>
+				<input class="mydatepicker" name="txtto" id="" value="<?php echo $to_date;?>" /></label>
 			</div>
 			<div class="medium-2 columns">
 				<input type="submit" class="small button" value="Search" name="submit">
@@ -123,8 +123,8 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo number_format($vazhipadu_list[$i]['unit_rate'],2); ?></td>
 		</tr>
 		<?php $total_amount+=$vazhipadu_list[$i]['unit_rate'];$i++;}?>
-		<tr>
-			<td colspan="5" align="right" style="font-weight:bold;">Total</td>
+		<tr style="font-weight:bold;">
+			<td colspan="5" align="right" >Total</td>
 			<td><?php echo number_format($total_amount,2);?></td>
 		</tr>
 			

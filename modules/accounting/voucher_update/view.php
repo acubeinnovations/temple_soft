@@ -4,7 +4,7 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
-<form name="frmvoucher" id="frmvoucher" action="<?php echo $current_url;?>" method="POST">
+<form name="frmvoucher" id="frmvoucher" action="<?php echo $current_url;?>" method="POST" data-abide>
 
 <h3>Add Voucher</h3>
 
@@ -22,11 +22,13 @@ if(!defined('CHECK_INCLUDED')){
  		<fieldset>
  			<legend>Voucher Elements </legend>
  			<div class="medium-6 columns">
-				<label for="ledger">Name</label>
-				<input type="text" name="txtname" id="txtname" value=""/>
+				<label for="ledger">Name<small>requied</small>
+				<input type="text" name="txtname" id="txtname" value="" required/>
+				</label>
 
-				<label for="ledger">Type</label>
+				<label for="ledger">Type<small>requied</small>
 				<?php echo populate_list_array("lstmvoucher", $masterVouchers, 'id','name', '',$disable=false);?>
+				</label>
 			
 				
 			</div>
@@ -67,8 +69,9 @@ if(!defined('CHECK_INCLUDED')){
 				</div>
 				<div class="row">
 					<div class="columns">
-						<label for="ledger">Start From</label>
-						<input type="text" name="txtseries" id="txtseries" value=""/>
+						<label for="ledger">Start From<small>required</small>
+						<input type="text" name="txtseries" id="txtseries" value="" required/>
+						</label>
 					</div>
 				</div>
 
@@ -136,12 +139,13 @@ if(!defined('CHECK_INCLUDED')){
  		<legend>Voucher account Details</legend>
 
  		<div class="medium-4 columns" >
- 			<label for="ledger">Source</label>
+ 			<label for="ledger">Source<small>required</small>
  			<select name="lstsource" id="lstsource">
  				<option value="-1">Choose from list..</option>
  				<option value="1">Voucher for account</option>
  				<option value="2">Voucher for inventory</option>
  			</select>
+ 			</label>
  		</div>
 
  		<div class="medium-8 columns" id="div-dtls1">

@@ -38,7 +38,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row">
 		<div class="medium-4 columns">
-			<label for="voucher">From</label>
+			<label for="voucher">To</label>
 			<?php 
 				if(isset($_GET['edt'])){
 					$disable=true;
@@ -53,7 +53,7 @@ if(!defined('CHECK_INCLUDED')){
 			?>
 		</div>
 		<div class="medium-4 columns">
-			<label for="voucher">To</label>
+			<label for="voucher">From</label>
 			<?php 
 				if($default_to){
 					echo populate_list_array("lstto", $ledgers_default_to_filtered, 'id','name', $account->account_to,$disable);
@@ -99,7 +99,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row">
 		<div class="medium-4 columns">
-			<label for="voucher">From</label>
+			<label for="voucher">To</label>
 			<?php 
 				if(isset($_GET['edt'])){
 					$disable=true;
@@ -115,7 +115,7 @@ if(!defined('CHECK_INCLUDED')){
 			?>
 		</div>
 		<div class="medium-4 columns">
-			<label for="voucher">To</label>
+			<label for="voucher">From</label>
 			<?php 
 				if($default_to){
 					echo populate_list_array("lstto", $ledgers_default_to_filtered, 'id','name', $account->account_to,$disable);
