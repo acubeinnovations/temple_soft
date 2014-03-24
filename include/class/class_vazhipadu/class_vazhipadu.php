@@ -212,13 +212,11 @@ Class Vazhipadu{
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE 1";
-    if(isset($dataArray['from_date']) and isset($dataArray['to_date'])){
-      $this->from_date = date('Y-m-d',strtotime($dataArray['from_date']));
-      $this->to_date = date('Y-m-d',strtotime($dataArray['to_date']));
+    if($this->from_date != "" and $this->to_date != ""){
       if($this->from_date == $this->to_date){
-        $strSQL .=" AND (vazhipadu_date = '".$this->from_date."')";
+        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
       }else{
-        $strSQL .=" AND (vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
+        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
       }
     }
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";

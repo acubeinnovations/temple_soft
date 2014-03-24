@@ -17,17 +17,17 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
-<form id="" name="form1" method="POST" >
+<form id="" name="form1" method="GET" >
 	<fieldset>
 		<div class="row">		
 			<div class="medium-2 columns">
 				<label for="name"> From Date
-				<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $from_date;?>" /></label>
+				<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $vazhipadu->from_date;?>" /></label>
 			</div>
 
 			<div class="medium-2 columns">
 				<label for="name"> To Date
-				<input class="mydatepicker" name="txtto" id="" value="<?php echo $to_date;?>" /></label>
+				<input class="mydatepicker" name="txtto" id="" value="<?php echo $vazhipadu->to_date;?>" /></label>
 			</div>
 			<div class="medium-2 columns">
 				<input type="submit" class="small button" value="Search" name="submit">
@@ -38,7 +38,7 @@ if(!defined('CHECK_INCLUDED')){
 </form>
 
 <div class="medium-12 columns">
-<?php if($count >0){?>
+<?php if(isset($count)){?>
 <div class="row">
 
 	<!--<table width="100%" id="tbl-append">
@@ -110,7 +110,7 @@ if(!defined('CHECK_INCLUDED')){
 				<td width="10%">Amount</td>
 			</tr>
 		</thead>
-		<tbody
+		<tbody>
 			<?php 
 			$i=0;$total_amount = 0;
 			while($i<$count){

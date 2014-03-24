@@ -197,7 +197,7 @@ Class Ledger{
 	    		}
 	    		$i++;
 	    	}
-	    	
+	    	//print_r($ledger_list);exit();
 	    	return $ledger_list;
     	}else{
     		return false;
@@ -209,9 +209,10 @@ Class Ledger{
     	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id) AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id) AS credit FROM ledger_sub,account_master
 			WHERE ledger_sub.deleted = '".NOT_DELETED."'AND ledger_sub.status = '".STATUS_ACTIVE."' AND parent_sub_ledger_id = '".$id."' GROUP BY ledger_sub_id";
 			 mysql_query("SET NAMES utf8");
+		
 		$rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		if ( mysql_num_rows($rsRES) > 0 ){
-			$sibblings .= array();$i=0;
+			$sibblings = array();$i=0;
 			while ( list ($id,$name,$debit,$credit) = mysql_fetch_row($rsRES) ){
 				$sibblings[$i]['id'] = $id;
 				$sibblings[$i]['name'] = $name;
@@ -370,7 +371,7 @@ Class Ledger{
 
     public function ledgerID($ledger_name = "")
     {
-    	$strSQL = "SELECT ledger_sub_id FROM ledger_sub WHERE deleted = '".NOT_DELETED."'AND status = '".STATUS_ACTIVE."' AND ledger_sub_name like '".$ledger_name."'";
+    	$strSQL = "SELECT ledger_sub_id FROM ledger_sub WHERE deleted = '".NOT_DELETED."'AND status = '".STATUS_ACTIVE."' AND ledger_sub_name LIKE '%".$ledger_name."%'";
     	//echo $strSQL;exit();
     	 mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );

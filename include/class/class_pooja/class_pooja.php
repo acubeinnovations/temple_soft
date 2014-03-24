@@ -11,9 +11,13 @@ Class Pooja{
 	var $id  =  gINVALID;
 	var $name ="";
 	var $rate ="";
+	var $ledger_sub_id = gINVALID;
 	var $status_id ="";
 
 	var $vazhipadu_date = CURRENT_DATE;
+
+	var $from_date = "";
+  	var $to_date = "";
 
 	var $error = false;
     var $error_number=gINVALID;
@@ -23,12 +27,13 @@ Class Pooja{
 
 
     function update()
-		{
+	{
 
-			if ( $this->id == "" || $this->id == gINVALID) {
-			$strSQL = "INSERT INTO pooja(name,rate,status_id) VALUES ('";
+		if ( $this->id == "" || $this->id == gINVALID) {
+			$strSQL = "INSERT INTO pooja(name,rate,ledger_sub_id,status_id) VALUES ('";
 			$strSQL .= addslashes(trim($this->name)) ."','";
 			$strSQL .= addslashes(trim($this->rate)) . "','";
+			$strSQL .= addslashes(trim($this->ledger_sub_id)) . "','";
 			$strSQL .= addslashes(trim($this->status_id)) . "')";
  			mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
@@ -41,9 +46,9 @@ Class Pooja{
               $this->error_description="Can't insert pooja ";
               return false;
               }
-         }
+        }
 
-	elseif($this->id > 0 ) {
+		elseif($this->id > 0 ) {
 			$strSQL = "UPDATE pooja SET name = '".addslashes(trim($this->name))."',";
 			$strSQL .= "rate = '".addslashes(trim($this->rate))."',";
 			$strSQL .= "status_id = '".addslashes(trim($this->status_id))."'";
@@ -66,15 +71,16 @@ Class Pooja{
 function get_details()
 {
 	if($this->id >0){
-		$strSQL = "SELECT id,name,rate,status_id FROM pooja WHERE id = '".$this->id."'";
+		$strSQL = "SELECT id,name,rate,ledger_sub_id,status_id FROM pooja WHERE id = '".$this->id."'";
 		 mysql_query("SET NAMES utf8");
 		$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
 		 if(mysql_num_rows($rsRES) > 0){
-			$user 	= mysql_fetch_assoc($rsRES);
-			$this->id 		= $user['id'];
-			$this->name 	= $user['name'];
-			$this->rate= $user['rate'];
-			$this->status_id = $user['status_id'];
+			$row 	= mysql_fetch_assoc($rsRES);
+			$this->id 		= $row['id'];
+			$this->name 	= $row['name'];
+			$this->rate= $row['rate'];
+			$this->ledger_sub_id= $row['ledger_sub_id'];
+			$this->status_id = $row['status_id'];
 			return true;
 			}else{
 			return false;
@@ -182,14 +188,15 @@ function get_array()
 
     	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
     	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
-    	$str_condition = "";
-    	if($this->vazhipadu_date != ""){
-    		$str_condition .= "v.vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
-    	}
-
-    	if($str_condition != ""){
-    		$strSQL .= " WHERE ".$str_condition;
-    	}
+    	$strSQL .= " WHERE 1";
+    	
+    	 if($this->from_date != "" and $this->to_date != ""){
+	      if($this->from_date == $this->to_date){
+	        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
+	      }else{
+	        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
+	      }
+	    }
 
     	$strSQL .= " GROUP BY p.id";
     	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -222,6 +229,7 @@ function get_array()
     public function validate()
     {
     	if ( $this->id >0) {
+    		$this->get_details();
     		return true;
     	}else{
 	    	$strSQL = "SELECT * FROM pooja WHERE name = '".$this->name."'";
@@ -235,14 +243,6 @@ function get_array()
 	    }
 
     }
-
-
-
-
-
-
-
-
 
 
 }

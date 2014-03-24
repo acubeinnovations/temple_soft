@@ -12,7 +12,7 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
-<form data-abide target="_self" method="POST" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
+<form data-abide target="_self" method="GET" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
 	<fieldset>
  		<div class="row">
  			<div class="medium-4 columns">

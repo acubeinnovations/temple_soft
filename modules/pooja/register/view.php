@@ -17,15 +17,20 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
-<form id="frmpooja" name="frmpooja" method="POST" action="<?php echo $current_url;?>">
+<form id="frmpooja" name="frmpooja" method="GET" action="<?php echo $current_url;?>">
 	<fieldset>
 		<div class="row">
-			<div class="medium-4 columns">
-				<label>Pooja Date</label>
-				<input type="text" class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?>"/>
+			<div class="medium-2 columns">
+				<label for="name"> From Date
+				<input class="mydatepicker" name="txtfrom" id="" value="<?php echo $pooja->from_date;?>" /></label>
 			</div>
-			<div class="medium-6 columns">
-				<input type="submit" name="submit" value="Filter" class="tiny button"/>
+
+			<div class="medium-2 columns">
+				<label for="name"> To Date
+				<input class="mydatepicker" name="txtto" id="" value="<?php echo $pooja->to_date;?>" /></label>
+			</div>
+			<div class="medium-2 columns">
+				<input type="submit" class="small button" value="Search" name="submit">
 			</div>
 			
 		</div>

@@ -40,14 +40,27 @@ $(document).ready(function(){
 			msg += "Select voucher type<br>";
 		}
 
-		if(source == -1){
-			msg += "Select Source<br>";
-		}else if(source == 1){
-			if($("#lstledger").val() == null){
-				msg += "Select default ledgers<br>";
+		if($("#chk_hidden").prop("checked")){
+			if($("#lstmodules").val() == -1){
+				msg += "Module not selected<br>";
 			}
-		}else if(source == 2){
-			
+			if($("#lstfromledger").val() == -1){
+				msg += "Select From Ledger<br>";
+			}
+			if($("#lsttoledger").val() == -1){
+				msg += "Select To Ledger<br>";
+			}
+
+		}else{
+			if(source == -1){
+				msg += "Select Source<br>";
+			}else if(source == 1){
+				if($("#lstledger").val() == null){
+					msg += "Select default ledgers<br>";
+				}
+			}else if(source == 2){
+				
+			}
 		}
 
 		

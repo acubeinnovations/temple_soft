@@ -27,6 +27,7 @@ $array_star=$add_star->get_array();
 
 if(isset($_POST['submit'])){
 
+
 	$errorMSG = "";
 	if($_POST['listpooja'] >0){
 	}else{
@@ -71,7 +72,7 @@ if(isset($_POST['submit'])){
 		$dataAccount = array();
 		$account->fy_id				= $voucher->fy_id;
 		$account->account_from 		= $voucher->default_from;
-		$account->account_to		= $voucher->default_to;
+		$account->account_to		= $_POST['hd_ledger_id'];//$voucher->default_to;
 		$account->date				= CURRENT_DATE;
 		$dataAccount[0]['account_debit']  = $total_amount;
 		$dataAccount[0]['account_credit'] = "";
@@ -109,14 +110,15 @@ if(isset($_POST['submit'])){
 
 }
 
-if(isset($_POST['pooja']) and $_POST['pooja'] > 0)
+if(isset($_GET['pooja']) and $_GET['pooja'] > 0)
 {
-   $add_pooja->id=$_POST['pooja'];
-    $add_pooja->get_details();
-        print  $add_pooja->rate;
-        exit();
-       
-  
+	$json = array();
+   	$add_pooja->id=$_GET['pooja'];
+   	$add_pooja->get_details();
+   	$json['rate'] = $add_pooja->rate;
+   	$json['ledger'] = $add_pooja->ledger_sub_id;
+   	echo json_encode($json);exit();
+     
 }
 
 
