@@ -284,12 +284,7 @@ Class Account{
                 $limited_data[$i]['voucher_number'] = $row['voucher_number'];
                 $limited_data[$i]['voucher_name'] = $row['voucher_name'];
                 $limited_data[$i]['voucher_type_id'] = $row['voucher_type_id'];
-                switch ($row['voucher_type_id']) {
-                    case VOUCHER_CASH_RECEIPT:$limited_data[$i]['ref_ledger_name']  = $row['ref_ledger_name'];break;
-                    case VOUCHER_CASH_PAYMENT:$limited_data[$i]['ref_ledger_name']  = $row['ref_ledger_name'];break;
-                    default:break;
-                } 
-            
+                $limited_data[$i]['ref_ledger_name']  = $row['ref_ledger_name'];
                 $limited_data[$i]['date']           = date('d-m-Y',strtotime($row['date']));
                 $limited_data[$i]['narration']      = $row['narration'];
                 $limited_data[$i]['account_from']   = $row['account_from'];
@@ -298,6 +293,7 @@ Class Account{
                 $limited_data[$i]['account_credit'] = $row['account_credit'];
                 $i++;
             }
+            //print_r($limited_data);exit();
             return $limited_data;
         }
     }

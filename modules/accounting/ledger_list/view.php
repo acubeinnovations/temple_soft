@@ -43,7 +43,7 @@ if(!defined('CHECK_INCLUDED')){
 	 			</li>
 
 	 			<?php if($master['sub_ledgers']){?>
-		 		<ul>
+	 			<!--<ul>
 		 			<?php foreach ($master['sub_ledgers'] as $sub) {?>
 		 			<li>
 			 			<div class="medium-8 columns">
@@ -57,6 +57,10 @@ if(!defined('CHECK_INCLUDED')){
 			 			</div>
 		 			</li>
 		 			<?php }?>
+		 		</ul>-->
+
+	 			<ul>
+		 		<?php displayLedger($master['sub_ledgers']);?>
 		 		</ul>
 		 		<?php }?>
 
