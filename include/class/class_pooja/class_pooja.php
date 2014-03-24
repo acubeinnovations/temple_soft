@@ -71,15 +71,16 @@ Class Pooja{
 function get_details()
 {
 	if($this->id >0){
-		$strSQL = "SELECT id,name,rate,status_id FROM pooja WHERE id = '".$this->id."'";
+		$strSQL = "SELECT id,name,rate,ledger_sub_id,status_id FROM pooja WHERE id = '".$this->id."'";
 		 mysql_query("SET NAMES utf8");
 		$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
 		 if(mysql_num_rows($rsRES) > 0){
-			$user 	= mysql_fetch_assoc($rsRES);
-			$this->id 		= $user['id'];
-			$this->name 	= $user['name'];
-			$this->rate= $user['rate'];
-			$this->status_id = $user['status_id'];
+			$row 	= mysql_fetch_assoc($rsRES);
+			$this->id 		= $row['id'];
+			$this->name 	= $row['name'];
+			$this->rate= $row['rate'];
+			$this->ledger_sub_id= $row['ledger_sub_id'];
+			$this->status_id = $row['status_id'];
 			return true;
 			}else{
 			return false;

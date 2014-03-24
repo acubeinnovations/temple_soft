@@ -31,7 +31,6 @@ if(isset($_POST['submit'])){
 	if($errorMSG == ""){
 		$pooja->id=$_POST['h_id'];
 		$pooja->name=$_POST['name'];
-
 		if($pooja->validate()){
 			$ledger->ledger_sub_id = $pooja->ledger_sub_id;
 			$ledger->ledger_sub_name = $_POST['name'];
@@ -41,6 +40,8 @@ if(isset($_POST['submit'])){
 				$ledger->parent_sub_ledger_id = $vazhipadu_ledger;
 				$ledger_update = $ledger->update();
 				if($ledger_update){
+					$pooja->name=$_POST['name'];
+					$pooja->ledger_sub_id = $ledger->ledger_sub_id;
 					$pooja->rate=$_POST['rate'];
 					$pooja->status_id=$_POST['listpooja'];
 					$pooja->update();
