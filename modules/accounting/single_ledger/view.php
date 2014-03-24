@@ -12,6 +12,10 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
+
+
+
+
 <form data-abide target="_self" method="GET" action="<?php echo $current_url?>" name="frmsearch" id="frmsearch">
 	<fieldset>
  		<div class="row">
@@ -37,7 +41,17 @@ if(!defined('CHECK_INCLUDED')){
  	</fieldset>
  	    
 </form>
-
+<div class="row" >
+	<div class="medium-4 columns">
+		<h5>Opening Balance   : <?php
+			if(isset($subledger_opening) && $subledger_opening!=false){
+				echo $subledger_opening[0]["balance"];
+			}else{
+				echo "0";
+			}
+		?></h5>
+	</div>
+</div>
 <?php if(isset($count_list)){?>
 <table width="100%">
 	<thead>
@@ -74,6 +88,17 @@ if(!defined('CHECK_INCLUDED')){
 	
 <?php }?>
 
+<div class="row" >
+	<div class="medium-4 columns">
+		<h5>Closing Balance   : <?php
+			if(isset($subledger_closing) && $subledger_closing!=false){
+				echo $subledger_closing[0]["balance"];
+			}else{
+				echo "0";
+			}
+		?></h5>
+	</div>
+</div>
 
 
 
