@@ -8,6 +8,15 @@ if(!defined('CHECK_INCLUDED')){
 $ledger = new Ledger($myconnection);
 $ledger->connection = $myconnection;
 
+$account = new Account($myconnection);
+$account->connection = $myconnection;
+
+$fy_year = new FinancialYear($myconnection);
+$fy_year->connection = $myconnection;
+$fy_year->id = $account->current_fy_id;
+$fy_year->get_details();
+
+
 $ledgers = $ledger->generateLedgerList();
 
 
@@ -24,7 +33,23 @@ if(isset($_POST['submit'])){
 		}
 		$ledger->fy_id =1;
 		
-		$ledger->update();
+		$insert = $ledger->update();
+
+		if($insert){
+			if($_POST['lstobtype'] > 0){
+				$account->ref_ledger = $insert;
+				$account->date = $fy_year->fy_start;
+				if($_POST['lstobtype'] == 1){
+					$account->account_to = $insert;
+					$account->account_credit = $_POST['txtamount'];
+				}else if($_POST['lstobtype'] == 2){
+					$account->account_from = $insert;
+					$account->account_debit = $_POST['txtamount'];
+				}
+				$account->update();
+			}
+			
+		}
 	}else{
 		//do nothing
 	}

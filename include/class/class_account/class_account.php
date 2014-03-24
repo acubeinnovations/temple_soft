@@ -52,9 +52,9 @@ Class Account{
     		$strSQL.= mysql_real_escape_string($this->account_to)."','";
     		$strSQL.= mysql_real_escape_string($this->account_debit)."','";
     		$strSQL.= mysql_real_escape_string($this->account_credit)."','";
-    		$strSQL.= mysql_real_escape_string($this->date)."','";
+    		$strSQL.= date('Y-m-d',strtotime($this->date))."','";
     		$strSQL.= mysql_real_escape_string($this->narration)."','";
-    		$strSQL.= date('Y-m-d',strtotime($this->ref_ledger))."')";
+    		$strSQL.= mysql_real_escape_string($this->ref_ledger)."')";
    
 			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );

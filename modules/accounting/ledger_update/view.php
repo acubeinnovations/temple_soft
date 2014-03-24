@@ -45,6 +45,21 @@ if(!defined('CHECK_INCLUDED')){
 	 			</div>
 
 	 		</div>
+	 		<div class="row">
+		 		<div class="medium-4 columns">
+ 					<label for="ledger">Opening Balance
+ 					<select name="lstobtype">
+ 						<option value=-1>Choose from list..</option>
+ 						<option value=1>Credit</option>
+ 						<option value=2>Debit</option>
+ 					</select>
+ 					</label>
+ 				</div>
+ 				<div class="medium-4 columns">
+ 					<label for="ledger">Amount
+ 					<input type="text" name="txtamount" id="txtamount" value=""/></label>
+ 				</div>
+	 		</div>
 
 	 		<div class="row">
 	 			<div class="medium-8 columns">

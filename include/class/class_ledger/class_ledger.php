@@ -158,8 +158,102 @@ Class Ledger{
        	}
        	return $ledgers;
     }
+    public function getLedgerTransaction()
+    {
+    	$ledger_list = array();$i=0;
+    	$masterLedgers = $this->get_list_master_array();
+    	if($masterLedgers){
+    		$i=0;
+	    	foreach($masterLedgers as $master){
+	    		$ledger_list[$i]['id'] = $master['id'];
+	    		$ledger_list[$i]['name'] = $master['name'];
+	    		$sub_ledgers = $this->get_list_sub_level1_with_account_master($master['id']);
+	    		if($sub_ledgers){
+	    			$level1 = array();$j=0;$total_credit=0;$total_debit=0;
+	    			foreach ($sub_ledgers as $sub) {
+	    				$level1[$j]['id'] = $sub['id'];
+	    				$level1[$j]['name'] = $sub['name'];
+	    				$next = $this->getSibblingsArray($sub['id']);
+
+	    				if($next){
+	    					$level1[$j]['sub_ledgers'] = $next['sibblings'];
+	    					$level1[$j]['credit'] = $next['credit'];
+	    					$level1[$j]['debit'] = $next['debit'];
+
+	    				}else{
+	    					$level1[$j]['credit'] = ($sub['credit'] ==NULL)?0:$sub['credit'];
+	    					$level1[$j]['debit'] = ($sub['debit'] ==NULL)?0:$sub['debit'];
+	    				}
+	    				$total_credit+=$level1[$j]['credit'];
+	    				$total_debit+=$level1[$j]['debit'];
+
+	    				$j++;
+
+	    			}
+	    			$ledger_list[$i]['debit'] = $total_debit;
+	    			$ledger_list[$i]['credit'] = $total_credit;
+	    			$ledger_list[$i]['sub_ledgers'] = $level1;
+	    			
+	    			
+	    		}else{
+	    			$ledger_list[$i]['sub_ledgers'] = false;
+	    			$ledger_list[$i]['debit'] = 0;
+	    			$ledger_list[$i]['credit'] = 0;
+	    		}
+	    		$i++;
+	    	}
+	    	//echo "<pre>";
+	    	//print_r($ledger_list);echo "<pre>";
+	    	return $ledger_list;
+    	}else{
+    		return false;
+    	}
+    }
+
+    public function getSibblingsArray($id)
+    {
+    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id) AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id) AS credit FROM ledger_sub,account_master
+			WHERE ledger_sub.deleted = '".NOT_DELETED."'AND ledger_sub.status = '".STATUS_ACTIVE."' AND parent_sub_ledger_id = '".$id."' GROUP BY ledger_sub_id";
+			 mysql_query("SET NAMES utf8");
+		
+		$rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+		if ( mysql_num_rows($rsRES) > 0 ){
+			$sibblings = array();$i=0;$total_debit=0;$total_credit = 0;
+$output =array();
+			while ( list ($id,$name,$debit,$credit) = mysql_fetch_row($rsRES) ){
+				$sibblings[$i]['id'] = $id;
+				$sibblings[$i]['name'] = $name;
+				$total_credit += $credit;
+				$total_debit += $debit;
+				$this->debit += $debit;
+	    		$this->credit += $credit;
+				$next = $this->getSibblingsArray($id);
+				if($next){
+					$sibblings[$i]['sub_ledgers'] = $next;
+					$sibblings[$i]['credit'] = $total_credit;
+					$sibblings[$i]['debit'] = $total_debit;
+				}else{
+					$sibblings[$i]['debit'] = $debit;
+					$sibblings[$i]['credit'] = $credit;
+				}
+				$i++;
+			}
+			$output['sibblings'] = $sibblings;
+			$output['credit'] = $total_credit;
+			$output['debit'] = $total_debit;
 
 
+		}else{
+			$output= false;
+		}
+		//echo "<pre>";
+		//($output);
+		//echo "<pre>";
+		return $output;
+
+    }
+
+/*
     public function getLedgerTransaction()
     {
     	$ledger_list = array();$i=0;
@@ -232,6 +326,7 @@ Class Ledger{
 		return $sibblings;
 
     }
+    */
 
 
 
