@@ -213,6 +213,57 @@ ORDER BY LS.ledger_sub_id ASC";
 		return $balancesheet;
 	}
 
+
+
+
+function get_subledger_closing($ledger_sub_id = "", $closing_date = ""){
+		$condition = "";
+		if($ledger_sub_id > 0){
+			$condition .=" AND LS.ledger_sub_id = '".$ledger_sub_id."'";
+		}
+
+		if($closing_date == ""){
+			$closing_date = date("Y-m-d");
+			$condition .=" AND AM.date <= '".$closing_date."'";
+		}else{
+			$condition .=" AND AM.date <= '".$closing_date."'";
+		}
+
+		$strSQL = "SELECT LS.ledger_id, LM.ledger_name , LS.ledger_sub_id, LS.ledger_sub_name,  SUM(AM.account_debit), SUM(AM.account_credit), ( SUM(AM.account_debit) -SUM(AM.account_credit)) as balance 
+FROM 
+ledger_sub LS, ledger_master LM , account_master AM
+WHERE 
+LS.ledger_id=LM.ledger_id 
+AND LS.fy_id='".$this->fy_id."' 
+AND  AM.ref_ledger=LS.ledger_sub_id 
+AND AM.fy_id='".$this->fy_id."' 
+AND AM.deleted='".NOT_DELETED."' ".$condition."
+GROUP BY LS.ledger_sub_id 
+ORDER BY LS.ledger_sub_id ASC";
+
+		mysql_query("SET NAMES utf8");
+        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+        if(mysql_num_rows($rsRES) > 0){
+			$subledgers = array();
+
+			$index = 0;
+
+            while($row = mysql_fetch_assoc($rsRES)){
+				$subledgers[$index]["ledger_name"] = $row['ledger_name'];
+				$subledgers[$index]["ledger_id"] = $row['ledger_id'];
+				$subledgers[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+				$subledgers[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+				$subledgers[$index]["balance"] = abs($row['balance']);
+				$index++;
+			}
+
+        }else{
+			$subledgers =false;
+		}
+
+		return $subledgers;
+	}
+
 }
 
 ?>
