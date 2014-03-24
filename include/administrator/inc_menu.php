@@ -11,6 +11,7 @@ if(mysql_num_rows($rsRES_ac) > 0){
 }
 
 $strSQL = "SELECT V.voucher_id ,V.voucher_name AS voucher FROM voucher V WHERE  V.fy_id = '".$current_fy_id."' AND V.hidden = '".VOUCHER_SHOW."'";
+ mysql_query("SET NAMES utf8");
 $rsRES = mysql_query($strSQL,$myconnection) or die(mysql_error(). $strSQL );
 $vouchers = array();$i=0;
 if ( mysql_num_rows($rsRES) > 0 )
@@ -26,6 +27,7 @@ if ( mysql_num_rows($rsRES) > 0 )
 }
 
 $strSQL1 = "SELECT  id,name,ledgers FROM ac_books";
+ mysql_query("SET NAMES utf8");
 $rsRES1 = mysql_query($strSQL1,$myconnection) or die(mysql_error(). $strSQL1 );
 $books = array();$i=0;
 if ( mysql_num_rows($rsRES1) > 0 )
@@ -41,6 +43,7 @@ if ( mysql_num_rows($rsRES1) > 0 )
 }
 
 $strSQL2 = "SELECT report_id,report_head FROM report";
+ mysql_query("SET NAMES utf8");
 $rsRES2 = mysql_query($strSQL2,$myconnection) or die(mysql_error(). $strSQL2 );
 $reports = array();$i=0;
 if ( mysql_num_rows($rsRES2) > 0 )

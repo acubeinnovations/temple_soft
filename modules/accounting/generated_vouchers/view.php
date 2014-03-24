@@ -43,7 +43,7 @@ if(!defined('CHECK_INCLUDED')){
 	<tr>
 		<td><?php echo $account_list[$i]['date']; ?></td>
 		<td><?php echo $account_list[$i]['voucher_name']."-".$account_list[$i]['voucher_number']; ?></td>		
-		<td><?php echo $account_list[$i]['ref_ledger_name']; ?><br/><?php echo $account_list[$i]['narration']; ?></td>
+		<td><?php echo $account_list[$i]['ref_ledger_name'].",".$account_list[$i]['narration']; ?></td>
 		<td><?php echo $account_list[$i]['account_debit']; ?></td>
 		<td><?php echo $account_list[$i]['account_credit']; ?></td>
 		<td>

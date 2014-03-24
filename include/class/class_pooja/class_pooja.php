@@ -15,6 +15,9 @@ Class Pooja{
 
 	var $vazhipadu_date = CURRENT_DATE;
 
+	var $from_date = "";
+  	var $to_date = "";
+
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
@@ -182,14 +185,15 @@ function get_array()
 
     	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
     	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
-    	$str_condition = "";
-    	if($this->vazhipadu_date != ""){
-    		$str_condition .= "v.vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
-    	}
-
-    	if($str_condition != ""){
-    		$strSQL .= " WHERE ".$str_condition;
-    	}
+    	$strSQL .= " WHERE 1";
+    	
+    	 if($this->from_date != "" and $this->to_date != ""){
+	      if($this->from_date == $this->to_date){
+	        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
+	      }else{
+	        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
+	      }
+	    }
 
     	$strSQL .= " GROUP BY p.id";
     	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);

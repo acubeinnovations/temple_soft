@@ -8,11 +8,16 @@ $pooja->connection=$myconnection;
 
 $pagination = new Pagination(10);
 
-if(isset($_POST['submit'])){
-	if(trim($_POST['txtdate'])!=""){
-		$pooja->vazhipadu_date = $_POST['txtdate'];
-	}
+if(isset($_GET['submit'])){
+	
+	$pooja->from_date =  $_GET['txtfrom'];
+	$pooja->to_date   = $_GET['txtto'];
+
+}else{
+	$pooja->from_date =  date('d-m-Y',strtotime(CURRENT_DATE));
+	$pooja->to_date   = date('d-m-Y',strtotime(CURRENT_DATE));
 }
+
 
 $pooja_list = $pooja->get_vazhipadu_pooja_list($pagination->start_record,$pagination->max_records);
 
