@@ -29,13 +29,12 @@ $new_url = "#";
 if(isset($_GET['slno'])){
 
 	$new_url = "ac_generate_voucher.php?v=".$_GET['slno'];
+	$account->total_records=$pagination->total_records;
 
 	$voucher->voucher_id = $_GET['slno'];
 	$voucher->get_details();
-
 	$page_heading = $voucher->voucher_name;
 
-	$account->total_records=$pagination->total_records;
 	$dataArray = array();
 	if($voucher->default_from!=""){
 		$dataArray['account_from'] = unserialize($voucher->default_from);
@@ -56,16 +55,14 @@ if(isset($_GET['slno'])){
 	}
 	//echo $count_list;exit();
 }
+//ac books start here-------------------------------------
 else if(isset($_GET['bid'])){
 
 	$acbook->id = $_GET['bid'];
 	$acbook->get_details();
-	$data = array();
 	$page_heading = $acbook->name;
 
-	$data['book_ledgers'] = unserialize($acbook->ledgers);
-
-	$account_list = $account->getAccountTransaction($pagination->start_record,$pagination->max_records,$data);
+	$account_list = $account->getBookDetails($pagination->start_record,$pagination->max_records,unserialize($acbook->ledgers));
 
 	if($account_list){
 		$pagination->total_records = $account->total_records;

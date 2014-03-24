@@ -187,4 +187,12 @@ define("DEFAULT_IDS_DELIMITER", ',');
 define("FINANCIAL_YEAR_OPEN",'1');
 define("FINANCIAL_YEAR_CLOSE", '0');
 
+
+//vouchers
+define('VOUCHER_VAZHIPADU',1);
+define('VOUCHER_CASH_RECEIPT',8);
+define('VOUCHER_CASH_PAYMENT', 9);
+define('VOUCHER_BANK_RECEIPT', 10);
+define('VOUCHER_BANK_PAYMENT', 11);
+
 ?>

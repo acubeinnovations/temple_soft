@@ -44,6 +44,8 @@ if(isset($_POST['submit'])){
 		$dateto = $_POST['txtfromdate'];
 	}
 
+	
+
 }
 
 $account_list = $account->getAccountTransaction($pagination->start_record,$pagination->max_records,$dataArray);
@@ -53,6 +55,8 @@ if($account_list){
 	$pagination->total_records = $account->total_records;
 	$pagination->paginate();
 }
+
+
 
 
 ?>
