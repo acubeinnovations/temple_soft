@@ -371,7 +371,7 @@ Class Ledger{
 
     public function ledgerID($ledger_name = "")
     {
-    	$strSQL = "SELECT ledger_sub_id FROM ledger_sub WHERE deleted = '".NOT_DELETED."'AND status = '".STATUS_ACTIVE."' AND ledger_sub_name like '".$ledger_name."'";
+    	$strSQL = "SELECT ledger_sub_id FROM ledger_sub WHERE deleted = '".NOT_DELETED."'AND status = '".STATUS_ACTIVE."' AND ledger_sub_name LIKE '%".$ledger_name."%'";
     	//echo $strSQL;exit();
     	 mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );

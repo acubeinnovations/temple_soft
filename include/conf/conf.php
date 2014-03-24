@@ -195,4 +195,11 @@ define('VOUCHER_CASH_PAYMENT', 9);
 define('VOUCHER_BANK_RECEIPT', 10);
 define('VOUCHER_BANK_PAYMENT', 11);
 
+
+//LEDGERS
+define(LEDGER_DIRECT_INCOME, 11);
+
+//SUB LEDGER
+define(LEDGER_SUB_VAZHIPADU, 'വഴിപാട്');
+
 ?>

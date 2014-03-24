@@ -11,6 +11,7 @@ Class Pooja{
 	var $id  =  gINVALID;
 	var $name ="";
 	var $rate ="";
+	var $ledger_sub_id = gINVALID;
 	var $status_id ="";
 
 	var $vazhipadu_date = CURRENT_DATE;
@@ -26,12 +27,13 @@ Class Pooja{
 
 
     function update()
-		{
+	{
 
-			if ( $this->id == "" || $this->id == gINVALID) {
-			$strSQL = "INSERT INTO pooja(name,rate,status_id) VALUES ('";
+		if ( $this->id == "" || $this->id == gINVALID) {
+			$strSQL = "INSERT INTO pooja(name,rate,ledger_sub_id,status_id) VALUES ('";
 			$strSQL .= addslashes(trim($this->name)) ."','";
 			$strSQL .= addslashes(trim($this->rate)) . "','";
+			$strSQL .= addslashes(trim($this->ledger_sub_id)) . "','";
 			$strSQL .= addslashes(trim($this->status_id)) . "')";
  			mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
@@ -44,9 +46,9 @@ Class Pooja{
               $this->error_description="Can't insert pooja ";
               return false;
               }
-         }
+        }
 
-	elseif($this->id > 0 ) {
+		elseif($this->id > 0 ) {
 			$strSQL = "UPDATE pooja SET name = '".addslashes(trim($this->name))."',";
 			$strSQL .= "rate = '".addslashes(trim($this->rate))."',";
 			$strSQL .= "status_id = '".addslashes(trim($this->status_id))."'";
@@ -226,6 +228,7 @@ function get_array()
     public function validate()
     {
     	if ( $this->id >0) {
+    		$this->get_details();
     		return true;
     	}else{
 	    	$strSQL = "SELECT * FROM pooja WHERE name = '".$this->name."'";
@@ -239,14 +242,6 @@ function get_array()
 	    }
 
     }
-
-
-
-
-
-
-
-
 
 
 }
