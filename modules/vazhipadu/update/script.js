@@ -31,7 +31,50 @@ $(document).ready(function(){
 	});
 
 
+	$('#listpooja').change(function(){
+        var pooja_id = $(this).val();
+        if(pooja_id == -1)
+        {
+            $("#txtamount").val('');
+        }
+        else
+        {
+        	$.ajax({
+				type:'GET',
+				url:CURRENT_URL,
+				data:{pooja:pooja_id},
+				contentType: "application/json",
+				dataType: "json",
+				success: function (json) {
+					if(json['rate']){
+						$("#txtamount").val(json['rate']);
+		            }
+		            if(json['ledger']){
+		            	$("#hd_ledger_id").val(json['ledger']);
+		            }
+				}				
+			});
+        }
+    });
+
+
+
 
 });
+
+	/*
+            var success_post = $.post('<?php echo $current_url ?>',
+            {
+              pooja:pooja_id,
+            });
+            success_post.done(function(rate) {
+              if(rate){
+                $("#txtamount").val(rate);
+              }
+           });
+        }
+   
+    });
+*/
 
 

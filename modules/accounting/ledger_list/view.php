@@ -43,28 +43,11 @@ if(!defined('CHECK_INCLUDED')){
 	 			</li>
 
 	 			<?php if($master['sub_ledgers']){?>
-	 			<!--<ul>
-		 			<?php foreach ($master['sub_ledgers'] as $sub) {?>
-		 			<li>
-			 			<div class="medium-8 columns">
-			 				<?php echo $sub['name'];?>
-			 			</div>
-			 			<div class="medium-2 columns">
-			 				<?php echo number_format($sub['debit'],2);?>
-			 			</div>
-			 			<div class="medium-2 columns">
-			 				<?php echo number_format($sub['credit'],2);?>
-			 			</div>
-		 			</li>
-		 			<?php }?>
-		 		</ul>-->
-
-	 			<ul>
-		 		<?php displayLedger($master['sub_ledgers']);?>
-		 		</ul>
+		 			<ul>
+			 		<?php displayLedger($master['sub_ledgers']);?>
+			 		</ul>
 		 		<?php }?>
 
-		 	
 		 	<?php }?>
 	 	
 	 	</ul>
