@@ -26,7 +26,7 @@ if(!defined('CHECK_INCLUDED')){
  			</div>
 
  			<div class="large-2 columns">
- 				<input type="submit" name="submit" value="Save" class="small button"/>
+ 				<input type="submit" name="submit" value="Save" class="tiny button"/>
  			</div>
 
  		</div>

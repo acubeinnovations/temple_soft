@@ -63,7 +63,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	 		<div class="row">
 	 			<div class="medium-8 columns">
-	 				<input class="small button"  value="submit" name="submit" type="submit"/>
+	 				<input class="tiny button"  value="submit" name="submit" type="submit"/>
 	 			</div>
  			</div>
 

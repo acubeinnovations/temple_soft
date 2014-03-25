@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
 
  		<div class="row">
  			<div class="medium-5 columns">
- 				<input class="small button"  value="Save" name="submit" type="submit"/>
+ 				<input class="tiny button"  value="Save" name="submit" type="submit"/>
  			</div>
  		</div>
 

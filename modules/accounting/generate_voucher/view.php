@@ -13,7 +13,7 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 
 	<div class="text-right" style="margin-top:5px;">
-		<a class="small button" href="<?php echo $list_url; ?>">Register</a>
+		<a class="tiny button" href="<?php echo $list_url; ?>">Register</a>
 	</div>
 </div>
 
@@ -76,7 +76,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row">
 		<div class="text-center">
-			<input class="small button"  value="Save" name="submit" type="submit"/>
+			<input class="tiny button"  value="Save" name="submit" type="submit"/>
 		</div>
 	</div>
 

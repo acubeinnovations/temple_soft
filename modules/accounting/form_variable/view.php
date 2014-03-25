@@ -10,7 +10,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
-			<a href="ac_form_type.php" class="small button">Form Types</a>
+			<a href="ac_form_type.php" class="tiny button">Form Types</a>
 		</div>
 	</div>
 </div>
@@ -55,7 +55,7 @@ if(!defined('CHECK_INCLUDED')){
 			</div>
 
 			<div class="medium-2 columns">
-				<input type="submit" name="submit_variable" value="Submit"  class="small button"/>
+				<input type="submit" name="submit_variable" value="Submit"  class="tiny button"/>
 
 			</div>
 
