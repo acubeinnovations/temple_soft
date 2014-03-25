@@ -17,6 +17,7 @@ Class StockRegister{
 	var $purchase_reference_number = "";
 	var $date = "";
 	var $tax_id = gINVALID;
+	var $fy_id = gINVALID;
 	
 
 	var $error = false;
@@ -75,7 +76,7 @@ Class StockRegister{
     public function update()
     {
     	if ( $this->stk_id == "" || $this->stk_id == gINVALID) {
-    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,date) VALUES('";
+    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,fy_id,date) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
     		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
     		$strSQL.= mysql_real_escape_string($this->item_id)."','";
@@ -84,6 +85,7 @@ Class StockRegister{
     		$strSQL.= mysql_real_escape_string($this->input_type)."','";
     		$strSQL.= mysql_real_escape_string($this->purchase_reference_number)."','";
     		$strSQL.= mysql_real_escape_string($this->tax_id)."','";
+    		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
     		$strSQL.= date('Y-m-d',strtotime($this->date))."')";
    
 			//echo $strSQL;exit();
@@ -236,8 +238,7 @@ Class StockRegister{
         $strSQL .= " LEFT JOIN stock_master sm ON sm.item_id = sr.item_id";
         $strSQL .= " LEFT JOIN tax_master tm ON tm.id = sr.tax_id";
         $strSQL .= " LEFT JOIN uom_master um ON sm.uom_id = um.uom_id";
-        $strSQL .=" INNER JOIN voucher v ON v.voucher_id = sr.voucher_type_id";
-        $strSQL .= " WHERE v.fy_id = '".$this->current_fy_id."'";
+        $strSQL .= " WHERE sr.fy_id = '".$this->current_fy_id."'";
 
         if($this->input_type != ""){
         	$strSQL .= " AND sr.input_type = '".$this->input_type."'";
@@ -245,8 +246,8 @@ Class StockRegister{
 
        
 
-        $strSQL .= " GROUP BY item_id";
-       // echo $strSQL;
+        $strSQL .= " GROUP BY sr.item_id";
+       // echo $strSQL;exit();
 
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);

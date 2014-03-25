@@ -52,56 +52,49 @@ if(isset($_POST['submit'])){
 
 	//validation
 	if(trim($_POST['txtname']) == ""){
-		$errorMSG .= "supplier Name is required \n";
+		$errorMSG .= "supplier Name is required <br>";
 	}
 	if(trim($_POST['txtaddress']) == ""){
-		$errorMSG .= "supplier Address is required \n";
+		$errorMSG .= "supplier Address is required  <br>";
 	}
 	if(trim($_POST['txtphone']) == ""){
-		$errorMSG .= "supplier Phone number is required \n";
+		$errorMSG .= "supplier Phone number is required  <br>";
 	}
 	if(!filter_var($_POST['txtemail'], FILTER_VALIDATE_EMAIL)){
-		$errorMSG .= "Invalid Email Id \n";
+		$errorMSG .= "Invalid Email Id <br>";
 	}
 	
 
 	if(trim($errorMSG) != ""){//validation failed
-		$_SESSION[SESSION_TITLE.'flash'] = "Please fill all required fields";
+		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG ;
         header( "Location:".$current_url);
         exit();
 	}else{//validation true
-		$supplier->supplier_phone = $_POST['txtphone'];
-		if(!$supplier->validate()){
-			$supplier->supplier_id = $_POST['hd_supplierid'];
-			$supplier->supplier_name = $_POST['txtname'];
-			$supplier->supplier_address = $_POST['txtaddress'];
-			$supplier->supplier_fax = $_POST['txtfax'];
-			$supplier->contact_person = $_POST['txtperson'];
-			$supplier->contact_mobile = $_POST['txtmobile'];	
-			$supplier->contact_email = $_POST['txtemail'];
-			$supplier->supplier_cst_number = $_POST['txtcstnumber'];
-			$supplier->supplier_tin_number = $_POST['txttinnumber'];
+		$supplier->supplier_id = $_POST['hd_supplierid'];
+		$supplier->supplier_name = $_POST['txtname'];
 
-			if($supplier->supplier_id > 0){
-				$supplier->get_details();
-				$ledger->ledger_sub_name = $supplier->supplier_name;
-				$ledger_sub_id = $ledger->getLedgerId();
-			}else{
-				$ledger_sub_id = false;
+		if($supplier->validate()){
+			$ledger->ledger_sub_id = $supplier->ledger_sub_id;
+			$ledger->ledger_sub_name = $_POST['txtname'];
+			$ledger->ledger_id = LEDGER_SUNDRY_DEBITORS;
+			$ledger->fy_id = $account_settings->current_fy_id;
+			//echo $ledger->ledger_sub_id;exit();
+			$ledger_sub_id = $ledger->update();
+			if($ledger_sub_id){
+				$supplier->ledger_sub_id = $ledger->ledger_sub_id;
+				$supplier->supplier_name = $_POST['txtname'];
+				$supplier->supplier_phone = $_POST['txtphone'];
+				$supplier->supplier_address = $_POST['txtaddress'];
+				$supplier->supplier_fax = $_POST['txtfax'];
+				$supplier->contact_person = $_POST['txtperson'];
+				$supplier->contact_mobile = $_POST['txtmobile'];	
+				$supplier->contact_email = $_POST['txtemail'];
+				$supplier->supplier_cst_number = $_POST['txtcstnumber'];
+				$supplier->supplier_tin_number = $_POST['txttinnumber'];
+				$update = $supplier->update();
 			}
 
-			$update = $supplier->update();
 			if($update){
-
-				if($ledger_sub_id){
-					$ledger->ledger_sub_id = $ledger_sub_id;
-				}
-				$ledger->ledger_sub_name = $_POST['txtname'];
-				$ledger->ledger_id = LEDGER_SUNDRY_DEBITORS;
-				$ledger->fy_id = $account_settings->current_fy_id;
-
-				$ledger->update();
-
 				$_SESSION[SESSION_TITLE.'flash'] = "Success";
 	        	header( "Location:".$current_url);
 	        	exit();
