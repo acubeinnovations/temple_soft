@@ -58,10 +58,10 @@ if(!defined('CHECK_INCLUDED')){
 		<td colspan="4"><b>Opening Balance </b></td>
 		<td width="10%"><b><?php if(isset($subledger_opening) && $subledger_opening!=false){
 				echo $subledger_opening[0]["balance_dr"];
-			}?></b></td>
+			}else{ echo 0; }?></b></td>
 		<td width="10%"><b><?php if(isset($subledger_opening) && $subledger_opening!=false){
 				echo $subledger_opening[0]["balance_cr"];
-			}?></b></td>
+			}else{ echo 0; }?></b></td>
 	</tr>
 
 
@@ -83,10 +83,10 @@ if(!defined('CHECK_INCLUDED')){
 		<td colspan="4"><b>Closing Balance </b></td>
 		<td width="10%"><b><?php if(isset($subledger_closing) && $subledger_closing!=false){
 				echo $subledger_closing[0]["balance_dr"];
-			}?></b></td>
+			}else{ echo 0; }?></b></td>
 		<td width="10%"><b><?php if(isset($subledger_closing) && $subledger_closing!=false){
 				echo $subledger_closing[0]["balance_cr"];
-			}?></b></td>
+			}else{ echo 0; } ?></b></td>
 	</tr>
 	<tr>
 		<td colspan="6"><?php  echo $pagination->pagination_style_numbers();?></td>
