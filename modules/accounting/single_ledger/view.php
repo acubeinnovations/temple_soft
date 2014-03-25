@@ -56,11 +56,10 @@ if(!defined('CHECK_INCLUDED')){
 <table width="100%">
 	<thead>
 	<tr>
-		<td width="10%">Voucher Number</td>
 		<td width="10%">Date</td>
-		<td width="30%">Narration</td>
-		<td width="15%">From</td>
-		<td width="15%">To</td>
+		<td width="10%">Voucher Number</td>
+		<td width="20%">Voucher Type</td>
+		<td width="40%">Particulars</td>
 		<td width="10%">Debit</td>
 		<td width="10%">Credit</td>
 	</tr>
@@ -71,17 +70,16 @@ if(!defined('CHECK_INCLUDED')){
 	while($i < $count_list){
 	?>
 	<tr>
-		<td><?php echo $account_list[$i]['voucher_number']; ?></td>
 		<td><?php echo $account_list[$i]['date']; ?></td>
-		<td><?php echo $account_list[$i]['narration']; ?></td>
-		<td><?php echo $ledger->ledgerName($account_list[$i]['account_from']); ?></td>
-		<td><?php echo $ledger->ledgerName($account_list[$i]['account_to']); ?></td>
+		<td><?php echo $account_list[$i]['voucher_number']; ?></td>
+		<td><?php echo $account_list[$i]['voucher_name']; ?></td>
+		<td><?php echo  $ledger->ledgerName($account_list[$i]['account_to'])."-".$account_list[$i]['narration']; ?></td>
 		<td><?php echo $account_list[$i]['account_debit']; ?></td>
 		<td><?php echo $account_list[$i]['account_credit']; ?></td>
 	</tr>
 	<?php $i++; }?>
 	<tr>
-		<td colspan="7"><?php  echo $pagination->pagination_style_numbers();?></td>
+		<td colspan="6"><?php  echo $pagination->pagination_style_numbers();?></td>
 	</tr>
 	</tbody>
 </table>
