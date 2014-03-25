@@ -171,7 +171,7 @@ Class FinancialYear{
 
     public function revert_close(){
 		$this->get_details();
-		$this->status = FINANCIAL_YEAR_OPNE;
+		$this->status = FINANCIAL_YEAR_OPEN;
 		$this->update();
 		return true;
 		
