@@ -189,42 +189,39 @@ Class Account{
     public function getAccountTransaction($start_record = 0,$max_records = 25,$voucher = array())
     {
        // print_r($voucher);
-    		$strSQL = "SELECT account_id,voucher_number, voucher_type_id,date,narration,account_from,account_to,account_debit,account_credit FROM account_master";
-            $condition = "fy_id = '".$this->current_fy_id."' AND deleted='".NOT_DELETED."'";
+    		$strSQL = "SELECT am.account_id,am.voucher_number, am.voucher_type_id,am.date,am.narration,am.account_from,am.account_to,am.account_debit,am.account_credit,v.voucher_name FROM account_master am";
+            $strSQL .= " LEFT JOIN voucher v ON v.voucher_id=am.voucher_type_id";
+            $strSQL .= " WHERE am.fy_id = '".$this->current_fy_id."' AND am.deleted='".NOT_DELETED."'";
 
             if($this->voucher_type_id > 0){
-               $condition.= " AND voucher_type_id = '".$this->voucher_type_id."'";
+              $strSQL .= " AND am.voucher_type_id = '".$this->voucher_type_id."'";
             }
 
     	    if(isset($voucher['account_from'])){
     			$ids = implode(",",$voucher['account_from']);
-                $condition.= " AND ref_ledger IN(".$ids.")";
+                $strSQL.= " AND am.ref_ledger IN(".$ids.")";
     		}
             else if(isset($voucher['account_to'])){
     			$ids = implode(",",$voucher['account_to']);
-    			$condition.= " AND ref_ledger IN(".$ids.")";
+    			$strSQL.= " AND am.ref_ledger IN(".$ids.")";
     		}
 
 	        if(isset($voucher['book_ledgers'])){
                 $ids = implode(",",$voucher['book_ledgers']);
-                $condition.= " AND ref_ledger IN(".$ids.")";
+                $strSQL.= " AND am.ref_ledger IN(".$ids.")";
             }
 
             if(isset($voucher['ref_ledger'])){
                 $id = $voucher['ref_ledger'];
-                $condition.= " AND ref_ledger ='".$id."'";
+                $strSQL.= " AND am.ref_ledger ='".$id."'";
             }
             //time period
             if(isset($voucher['datefrom']) and isset($voucher['dateto'])){
                 $datefrom = date('Y-m-d',strtotime($voucher['datefrom']));
                 $dateto = date('Y-m-d',strtotime($voucher['dateto']));
-                $condition.= " AND date BETWEEN '".$datefrom."' AND '".$dateto."'";
+                $strSQL.= " AND am.date BETWEEN '".$datefrom."' AND '".$dateto."'";
             }
 
-
-            if($condition != ""){
-                $strSQL .= " WHERE ".$condition;
-            }
             mysql_query("SET NAMES utf8");
 
     		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -241,6 +238,7 @@ Class Account{
     			while($row = mysql_fetch_assoc($rsRES)){
     				$data[$i]['account_id'] 	= $row['account_id'];
     				$data[$i]['voucher_number'] = $row['voucher_number'];
+                    $data[$i]['voucher_name']   = $row['voucher_name'];
     				$data[$i]['date'] 			= date('d-m-Y',strtotime($row['date']));
     				$data[$i]['narration'] 		= $row['narration'];
     				$data[$i]['account_from'] 	= $row['account_from'];
