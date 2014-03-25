@@ -19,9 +19,7 @@ $ledger_name = "";
 $dataArray = array();
 
 
-$mybalancesheet = new BalanceSheet();
-$mybalancesheet->connection = $myconnection;
-$mybalancesheet->fy_id = 1;
+$mybalancesheet = new BalanceSheet($myconnection);
 $datefrom =date("d-m-Y");
 $dateto =date("d-m-Y");
 

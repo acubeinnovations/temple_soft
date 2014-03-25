@@ -41,17 +41,7 @@ if(!defined('CHECK_INCLUDED')){
  	</fieldset>
  	    
 </form>
-<div class="row" >
-	<div class="medium-4 columns">
-		<h5>Opening Balance   : <?php
-			if(isset($subledger_opening) && $subledger_opening!=false){
-				echo $subledger_opening[0]["balance"];
-			}else{
-				echo "0";
-			}
-		?></h5>
-	</div>
-</div>
+
 <?php if(isset($count_list)){?>
 <table width="100%">
 	<thead>
@@ -64,6 +54,17 @@ if(!defined('CHECK_INCLUDED')){
 		<td width="10%">Credit</td>
 	</tr>
 	</thead>
+	<tr>
+		<td colspan="4"><b>Opening Balance </b></td>
+		<td width="10%"><b><?php if(isset($subledger_opening) && $subledger_opening!=false){
+				echo $subledger_opening[0]["balance_dr"];
+			}else{ echo 0; }?></b></td>
+		<td width="10%"><b><?php if(isset($subledger_opening) && $subledger_opening!=false){
+				echo $subledger_opening[0]["balance_cr"];
+			}else{ echo 0; }?></b></td>
+	</tr>
+
+
 	<tbody>
 	<?php 
 	$i=0;
@@ -79,6 +80,15 @@ if(!defined('CHECK_INCLUDED')){
 	</tr>
 	<?php $i++; }?>
 	<tr>
+		<td colspan="4"><b>Closing Balance </b></td>
+		<td width="10%"><b><?php if(isset($subledger_closing) && $subledger_closing!=false){
+				echo $subledger_closing[0]["balance_dr"];
+			}else{ echo 0; }?></b></td>
+		<td width="10%"><b><?php if(isset($subledger_closing) && $subledger_closing!=false){
+				echo $subledger_closing[0]["balance_cr"];
+			}else{ echo 0; } ?></b></td>
+	</tr>
+	<tr>
 		<td colspan="6"><?php  echo $pagination->pagination_style_numbers();?></td>
 	</tr>
 	</tbody>
@@ -86,17 +96,7 @@ if(!defined('CHECK_INCLUDED')){
 	
 <?php }?>
 
-<div class="row" >
-	<div class="medium-4 columns">
-		<h5>Closing Balance   : <?php
-			if(isset($subledger_closing) && $subledger_closing!=false){
-				echo $subledger_closing[0]["balance"];
-			}else{
-				echo "0";
-			}
-		?></h5>
-	</div>
-</div>
+
 
 
 

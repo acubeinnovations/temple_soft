@@ -10,5 +10,6 @@ ul.master_list >li {
 	float: left;
 	max-height: 500px;
 	overflow: scroll;
+	width:100%;
 
 }

@@ -13,11 +13,37 @@ Class BalanceSheet{
 	var $p_and_l_income = array(11,16,17,18);
 
 	var $fy_id = "";
+	var $fy_name = "";
+	var $fy_start = "";
+	var $fy_end = "";
 	
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
     var $total_records='';
+
+
+public function __construct($connection)
+    {
+
+		$this->connection=$connection;
+        $strSQL = "SELECT FYM.* FROM account_settings AST,fy_master FYM WHERE AST.id = '1' AND AST.current_fy_id = FYM.fy_id";
+        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+        if(mysql_num_rows($rsRES) > 0){
+            $row = mysql_fetch_assoc($rsRES);
+            $this->fy_id =$row['fy_id'];
+            $this->fy_name =$row['fy_name'];
+            $this->fy_start =$row['fy_start'];
+            $this->fy_end =$row['fy_end'];
+            $this->error=false;
+        }else{
+            $this->error=true;
+        }
+    }
+
+
+
+
 
 	function get(){
 		$balancesheet = array();
@@ -254,6 +280,17 @@ ORDER BY LS.ledger_sub_id ASC";
 				$subledgers[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
 				$subledgers[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
 				$subledgers[$index]["balance"] = abs($row['balance']);
+				if($row['balance'] > 0){
+					$subledgers[$index]["balance_dr"] = abs($row['balance']);
+					$subledgers[$index]["balance_cr"] = 0;
+				}elseif($row['balance'] < 0){
+					$subledgers[$index]["balance_dr"] = 0;
+					$subledgers[$index]["balance_cr"] = abs($row['balance']);
+				}else{
+					$subledgers[$index]["balance_dr"] = 0;
+					$subledgers[$index]["balance_cr"] = 0;
+				}
+				
 				$index++;
 			}
 
