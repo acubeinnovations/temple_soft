@@ -13,8 +13,7 @@ $data = array();
 
 if(isset($_GET['submit'])){
 	$vazhipadu->vazhipadu_date =  $_GET['txtdate'];
-}else{
-	$vazhipadu->vazhipadu_date =  date('d-m-Y',strtotime(CURRENT_DATE));
+	$vazhipadu->vazhipadu_rpt_number = $_GET['txtrpt'];
 }
 
 
@@ -26,6 +25,17 @@ if($vazhipadu_list){
 	$count = count($vazhipadu_list);
 }else{
 	$count = 0;
+}
+
+//url parameter vazhipadu receipt number
+if(isset($_GET['cnl'])){ 
+	$vazhipadu->vazhipadu_rpt_number = $_GET['cnl'];
+	$cancel = $vazhipadu->cancelVazhipadu();
+	if($cancel){
+		$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu cancelled";
+        header( "Location:".$current_url);
+        exit();
+	}
 }
 
 

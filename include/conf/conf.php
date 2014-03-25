@@ -62,6 +62,7 @@ define("INPUT_PURCHASE","Purchase");
 define("INPUT_SALE", "Sale");
 define("INPUT_DONATION","Donation");
 define("INPUT_AUCTION", "Auction");
+define("INPUT_OPENING", "Opening");
 
 //PRIORITY FOR REPORT FEATURE
 define("PRIORITY_MASTER",1);
@@ -201,5 +202,9 @@ define(LEDGER_DIRECT_INCOME, 11);
 
 //SUB LEDGER
 define(LEDGER_SUB_VAZHIPADU, 'വഴിപാട്');
+
+//vazhipadu cancel
+define('CANCEL_STATUS_TRUE', 2);
+define('CANCEL_STATUS_FALSE',1);
 
 ?>

@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
 					$stock->get_details();
 					$stock_register->item_id = $stock->item_id;
 					$stock_register->quantity = $_POST['txtqty'];
-					$stock_register->input_type = INPUT_PURCHASE;
+					$stock_register->input_type = INPUT_OPENING;
 					$stock_register->date = $fy_year->fy_start;
 					//echo $stock_register->stk_id;exit();
 					$stock_register->update();

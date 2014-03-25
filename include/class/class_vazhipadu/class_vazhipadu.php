@@ -15,6 +15,7 @@ Class Vazhipadu{
   var $age="";
   var $quantity = 1;
   var $amount = '';
+  var $cancel_status ='';
 
   var $pooja_description = "";
 
@@ -32,7 +33,7 @@ Class Vazhipadu{
 
     if ( $this->vazhipadu_id == "" || $this->vazhipadu_id == gINVALID) {
       if($dataArray){
-        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount) VALUES";
+        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,cancel_status) VALUES";
         for($i=0; $i<count($dataArray); $i++)
         {
           $nameData = $dataArray[$i]['name'];
@@ -44,17 +45,19 @@ Class Vazhipadu{
           $strSQL .= "'".addslashes(trim($this->pooja_id))."',";
           $strSQL .= "'".addslashes($nameData)."',";          
           $strSQL .= "'".addslashes(trim($this->quantity))."',";
-          $strSQL .= "'".addslashes(trim($this->amount))."'),";
+          $strSQL .= "'".addslashes(trim($this->amount))."',";
+          $strSQL .= "'".addslashes(trim($this->cancel_status))."'),";
         }
       }else{
-        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount) VALUES";
+        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,cancel_status) VALUES";
         $strSQL .= "('".addslashes(trim($this->vazhipadu_rpt_number))."',";
         $strSQL .= "'".date('Y-m-d',strtotime($this->vazhipadu_date))."',";
         $strSQL .= "'".addslashes(trim($this->star_id))."',";
         $strSQL .= "'".addslashes(trim($this->pooja_id))."',";
         $strSQL .= "'".addslashes($this->name)."',";
         $strSQL .= "'".addslashes(trim($this->quantity))."',";
-        $strSQL .= "'".addslashes(trim($this->amount))."'),";
+        $strSQL .= "'".addslashes(trim($this->amount))."',";
+        $strSQL .= "'".addslashes(trim($this->cancel_status))."'),";
       }
      // echo $strSQL;exit();
        mysql_query("SET NAMES utf8");
@@ -108,7 +111,7 @@ Class Vazhipadu{
         $strSQL =" SELECT v.vazhipadu_id,v.vazhipadu_date,v.vazhipadu_rpt_number,v.name AS name,v.age AS age,p.name AS pooja,p.rate,s.name AS star FROM vazhipadu v";
         $strSQL .= " LEFT JOIN pooja p ON p.id = v.pooja_id";
         $strSQL .= " LEFT JOIN stars s ON s.id = v.star_id";
-         $strSQL .=" WHERE v.vazhipadu_rpt_number = '".$this->vazhipadu_rpt_number."'";
+         $strSQL .=" WHERE v.cancel_status ='".CANCEL_STATUS_FALSE."' AND v.vazhipadu_rpt_number = '".$this->vazhipadu_rpt_number."'";
 
          //echo $strSQL;exit();
           mysql_query("SET NAMES utf8");
@@ -141,7 +144,7 @@ Class Vazhipadu{
     $vazhipadu = array();$i=0;
     $strSQL = "SELECT  v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,p.name as pooja_name,sum(quantity) as quantity FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
-    $strSQL .= " WHERE 1";
+    $strSQL .= " WHERE v.cancel_status ='".CANCEL_STATUS_FALSE."'";
 
     if($this->vazhipadu_date != ""){
       $strSQL .=" AND vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
@@ -151,6 +154,9 @@ Class Vazhipadu{
       $strSQL .=" AND (vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
     }
 
+    if($this->vazhipadu_rpt_number != ""){
+      $strSQL .=" AND vazhipadu_rpt_number = '".mysql_real_escape_string($this->vazhipadu_rpt_number)."'";
+    }
   
     $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_rpt_number";
@@ -212,7 +218,7 @@ Class Vazhipadu{
     $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
-    $strSQL .= " WHERE 1";
+    $strSQL .= " WHERE v.cancel_status ='".CANCEL_STATUS_FALSE."'";
     if($this->from_date != "" and $this->to_date != ""){
       if($this->from_date == $this->to_date){
         $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
@@ -252,6 +258,22 @@ Class Vazhipadu{
         $this->error_description="Can't list vazhipadu";
         return false;
       }
+  }
+
+
+  public function cancelVazhipadu()
+  {
+    if($this->vazhipadu_rpt_number != ''){
+      $strSQL = "UPDATE vazhipadu SET cancel_status = '".CANCEL_STATUS_TRUE."' WHERE vazhipadu_rpt_number = '".$this->vazhipadu_rpt_number."'";
+      $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+      if ( mysql_affected_rows($this->connection) > 0 ) {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
   }
 
 

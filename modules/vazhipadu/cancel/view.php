@@ -12,13 +12,13 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">		
 			<div class="medium-2 columns">
 				<label for="name"> Date
-				<input class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo $vazhipadu->from_date;?>" /></label>
+				<input class="mydatepicker" name="txtdate" id="txtdate" value="<?php echo $vazhipadu->vazhipadu_date;?>" /></label>
 			</div>
 
 			
 			<div class="medium-2 columns">
 				<label for="name"> Receipt Number
-				<input  name="txtrpt" id="txtrpt" value="" /></label>
+				<input  name="txtrpt" id="txtrpt" value="<?php echo $vazhipadu->vazhipadu_rpt_number;?>" /></label>
 			</div>
 			<div class="medium-2 columns">
 				<input type="submit" class="small button" value="Search" name="submit">
@@ -77,7 +77,7 @@ if(!defined('CHECK_INCLUDED')){
 				
 			</td>
 			<td><?php echo number_format($vazhipadu_list[$i]['amount'],2); ?></td>
-			<td></td>
+			<td><a href="javascript:cancelVazhipadu('<?php echo $vazhipadu_list[$i]['vazhipadu_rpt_number'];?>')">Cancel</a></td>
 
 		</tr>
 		<?php $total_amount+=$vazhipadu_list[$i]['amount'];$i++;}?>
