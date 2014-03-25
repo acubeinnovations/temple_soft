@@ -116,7 +116,7 @@ Class Ledger{
 
     public function get_list_sub_level1_with_account_master($ledger_id)
     {
-    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id) AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id) AS credit FROM ledger_sub,account_master
+    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub,account_master
 			WHERE ledger_sub.deleted = '".NOT_DELETED."' AND ledger_sub.fy_id = '".$this->current_fy_id."' AND account_master.fy_id = '".$this->current_fy_id."' AND ledger_sub.status = '".STATUS_ACTIVE."' AND ledger_id = '".$ledger_id."' AND parent_sub_ledger_id = '-1'
 			GROUP BY ledger_sub_id";
 			//echo $strSQL;exit();
@@ -212,7 +212,7 @@ Class Ledger{
 
     public function getSibblingsArray($id)
     {
-    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id) AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id) AS credit FROM ledger_sub,account_master
+    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub,account_master
 			WHERE ledger_sub.deleted = '".NOT_DELETED."'AND ledger_sub.status = '".STATUS_ACTIVE."' AND parent_sub_ledger_id = '".$id."' GROUP BY ledger_sub_id";
 			 mysql_query("SET NAMES utf8");
 		

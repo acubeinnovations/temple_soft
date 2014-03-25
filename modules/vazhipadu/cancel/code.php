@@ -7,6 +7,12 @@ $pagination = new Pagination(10);
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
 
+$account=new Account($myconnection);
+$account->connection=$myconnection;
+
+$voucher=new Voucher($myconnection);
+$voucher->connection=$myconnection;
+
 $vazhipadu->total_records=$pagination->total_records;
 
 $data = array();
@@ -32,6 +38,12 @@ if(isset($_GET['cnl'])){
 	$vazhipadu->vazhipadu_rpt_number = $_GET['cnl'];
 	$cancel = $vazhipadu->cancelVazhipadu();
 	if($cancel){
+		$voucher->module_id = MODULE_VAZHIPADU;
+		$voucher->get_details_with_moduleid();
+		$account->voucher_type_id = $voucher->voucher_id;
+		$account->voucher_number = $vazhipadu->vazhipadu_rpt_number;
+		$account->delete_with_voucher();
+
 		$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu cancelled";
         header( "Location:".$current_url);
         exit();
