@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
 				<input  name="txtrpt" id="txtrpt" value="<?php echo $vazhipadu->vazhipadu_rpt_number;?>" /></label>
 			</div>
 			<div class="medium-2 columns">
-				<input type="submit" class="small button" value="Search" name="submit">
+				<input type="submit" class="tiny button" value="Search" name="submit">
 			</div>
 
 		</div>

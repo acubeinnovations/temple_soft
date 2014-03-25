@@ -33,7 +33,7 @@ if(!defined('CHECK_INCLUDED')){
 
  		<div class="row">
  			<div class="medium-6 columns">
- 				<input class="small button"  value="submit" name="submit" type="submit"/>
+ 				<input class="tiny button"  value="submit" name="submit" type="submit"/>
  				<input type="hidden" name="h_id" value="<?php echo $star->id; ?>" />
 
  			</div>

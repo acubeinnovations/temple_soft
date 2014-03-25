@@ -13,13 +13,13 @@ if(!defined('CHECK_INCLUDED')){
     			<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
     		</div>
     		<div class="medium-2 columns">
-     	 		<input type="submit" name="submit" value="Search" class="small button" />
+     	 		<input type="submit" name="submit" value="Search" class="tiny button" />
      	 	</div>
 
      	 	<div class="medium-5 columns">
 	 			<div class="text-right">
-	 			<a href="pooja.php" class="small button">Add New</a>
-	 				<a href="pooja_register.php" class="small button">Register</a>
+	 			<a href="pooja.php" class="tiny button">Add New</a>
+	 				<a href="pooja_register.php" class="tiny button">Register</a>
 	 			</div>
  			</div>
 

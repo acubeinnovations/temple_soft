@@ -10,8 +10,8 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="row">
  			<div class="medium-6 columns">
     	<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>
-     	 <input type="submit" name="submit" value="Search" class="small button" />
-			<a href="star.php" class="small button">Add New Star</a>
+     	 <input type="submit" name="submit" value="Search" class="tiny button" />
+			<a href="star.php" class="tiny button">Add New Star</a>
  			
  			</div>
  		</div>

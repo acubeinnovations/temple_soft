@@ -248,7 +248,7 @@ Class StockRegister{
 
        
 
-        $strSQL .= " GROUP BY sr.item_id";
+        $strSQL .= " GROUP BY sr.item_id ,sr.unit_rate";
        // echo $strSQL;exit();
 
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
