@@ -175,7 +175,7 @@ if(!defined('CHECK_INCLUDED')){
 					<td><?php echo populate_list_array("lstitem", $items, 'id','name', '',$disable=false);?></td>
 					<td><input type="text" name="txtquantity" id="txtquantity" value="1" /></td>
 					<td><input type="text" name="txtrate" id="txtrate" value=0.00 /></td>
-					<td><?php echo populate_list_array("lsttax", $taxes, 'id','rate','',$disable=false,0);?></td>
+					<td><?php echo populate_list_array("lsttax", $taxes, 'id','rate','',$disable=false,true);?></td>
 					<td><label id="txtlinetotal">0.00</label></td>
 					<td>
 						<input type="hidden" name="hd_stock" id="hd_stock" value=0/>
