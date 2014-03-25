@@ -35,9 +35,9 @@ public function __construct($connection)
             $this->fy_name =$row['fy_name'];
             $this->fy_start =$row['fy_start'];
             $this->fy_end =$row['fy_end'];
-            $this->error=false;
+            $this->error= false;
         }else{
-            $this->error=true;
+            $this->error = true;
         }
     }
 
@@ -53,7 +53,6 @@ FROM
 ledger_sub LS, ledger_master LM , account_master AM
 WHERE 
 LS.ledger_id=LM.ledger_id 
-AND LS.fy_id='".$this->fy_id."' 
 AND  AM.ref_ledger=LS.ledger_sub_id 
 AND AM.fy_id='".$this->fy_id."' 
 AND AM.deleted='".NOT_DELETED."'
@@ -147,7 +146,6 @@ FROM
 ledger_sub LS, ledger_master LM , account_master AM
 WHERE 
 LS.ledger_id=LM.ledger_id 
-AND LS.fy_id='".$this->fy_id."' 
 AND  AM.ref_ledger=LS.ledger_sub_id 
 AND AM.fy_id='".$this->fy_id."' 
 AND AM.deleted='".NOT_DELETED."'
@@ -159,6 +157,8 @@ ORDER BY LS.ledger_sub_id ASC";
         if(mysql_num_rows($rsRES) > 0){
 			$sheet_liabilities = array();
 			$sheet_assets = array();
+			$sheet_income = array();
+			$sheet_expenses = array();
 			$total_liabilities =0;
 			$total_assets =0;
 			$total_expenses =0;
@@ -207,9 +207,21 @@ ORDER BY LS.ledger_sub_id ASC";
 					
 				}
 				if(in_array($row['ledger_id'],$this->p_and_l_expenses)){
+						$sheet_expenses[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_expenses[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_expenses[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+						$sheet_expenses[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+						$sheet_expenses[$index]["balance"] = abs($row['balance']);
+						$sheet_expenses[$index]["balance_raw"] = $row['balance'];
 						$total_expenses += abs($row['balance']);
 				}
 				if(in_array($row['ledger_id'],$this->p_and_l_income)){
+						$sheet_income[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_income[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_income[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+						$sheet_income[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+						$sheet_income[$index]["balance"] = abs($row['balance']);
+						$sheet_income[$index]["balance_raw"] = $row['balance'];
 						$total_income += abs($row['balance']);
 				}
 
@@ -217,6 +229,9 @@ ORDER BY LS.ledger_sub_id ASC";
 			}
 			$balancesheet["liabilities"] = $sheet_liabilities;
 			$balancesheet["assets"] = $sheet_assets;
+			$balancesheet["income"] = $sheet_income;
+			$balancesheet["expenses"] = $sheet_expenses;
+
 			$balancesheet["total_liabilities"] = $total_liabilities;
 			$balancesheet["total_assets"] = $total_assets;
 			$balancesheet["total_expenses"] = $total_expenses;
@@ -260,7 +275,6 @@ FROM
 ledger_sub LS, ledger_master LM , account_master AM
 WHERE 
 LS.ledger_id=LM.ledger_id 
-AND LS.fy_id='".$this->fy_id."' 
 AND  AM.ref_ledger=LS.ledger_sub_id 
 AND AM.fy_id='".$this->fy_id."' 
 AND AM.deleted='".NOT_DELETED."' ".$condition."

@@ -13,6 +13,9 @@ Class FinancialYear{
 	var $fy_end ="";
 	var $status = FINANCIAL_YEAR_CLOSE;
 
+	var $current_fy_id =  gINVALID;
+	var $next_fy_id =  gINVALID;
+
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
@@ -153,6 +156,114 @@ Class FinancialYear{
     	}
 
     }
+
+    public function get_default_capital_account(){
+		$strSQL = "SELECT* FROM account_settings  WHERE id = '1'";
+        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+        if(mysql_num_rows($rsRES) > 0){
+            $row = mysql_fetch_assoc($rsRES);
+            return $row["default_capital"];
+        }else{
+           return false;
+        }
+
+	}
+
+    public function revert_close(){
+		$this->get_details();
+		$this->status = FINANCIAL_YEAR_OPNE;
+		$this->update();
+		return true;
+		
+	}
+    public function close(){
+		$this->get_details();
+		if($this->checkNextFY($this->fy_end)){
+			$this->status = FINANCIAL_YEAR_CLOSE;
+			$this->update();
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+
+    public function create_FY_subledgers($new_fyid){
+
+		if($new_fyid>0){
+			$strSQL = "INSERT INTO fy_ledger_sub (fy_id,ledger_sub_id) SELECT ".$new_fyid.", ledger_sub_id FROM ledger_sub";
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+
+    public function delete_FY_subledgers($new_fyid){
+
+		if($new_fyid>0){
+			$strSQL = "DELETE FROM fy_ledger_sub WHERE fy_id ='".$new_fyid."'";
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+    public function delete_FY_account_entries($new_fyid){
+
+		if($new_fyid>0){
+			$strSQL = "DELETE FROM account_master WHERE fy_id ='".$new_fyid."'";
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+
+	public function checkNextFY($enddate){
+		
+		if(trim($enddate) != ""){
+			$start_date =date('Y-m-d', strtotime('+1 day', strtotime($enddate)));
+			$strSQL = "SELECT * FROM fy_master WHERE fy_start = '".$start_date."'";
+		    $strSQL .= " ORDER BY fy_id";
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			if ( mysql_num_rows($rsRES) == 1 ){
+				$row = mysql_fetch_assoc($rsRES);
+				$this->next_fy_id = $row["fy_id"];
+				return true;
+			}else{
+				$this->next_fy_id = gINVALID;
+				return false;
+			}
+		}else{
+			$this->next_fy_id = gINVALID;
+			return false;
+		}
+	}
+
+	public function updateCurrentFY(){
+        if ( $this->current_fy_id >0 ) {
+            $strSQL = "UPDATE account_settings SET current_fy_id = '".$this->current_fy_id."'";
+
+            $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+
+            if ( mysql_affected_rows($this->connection) > 0 ) {
+                $this->current_fy_id = mysql_insert_id();
+                return $this->current_fy_id;
+            }else{
+                $this->error_number = 3;
+                $this->error_description="Can't Update Financial Year";
+                return false;
+			}
+		}
+	}
+	
 
 
     

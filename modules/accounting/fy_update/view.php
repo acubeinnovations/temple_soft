@@ -9,7 +9,7 @@ if(!defined('CHECK_INCLUDED')){
 <input type="hidden" value="<?php echo $financial_year->id;?>" name="hdfyid" />
  	<fieldset>
  			<div class="row">
-	 			<div class="medium-2 columns">
+	 			<div class="medium-3 columns">
 	 				<label for="financial-year">Financial Year Start
 		 				<?php if(isset($_GET['edt'])) {?>
 		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" disabled requierd type="text"/> 
@@ -19,7 +19,7 @@ if(!defined('CHECK_INCLUDED')){
 	 				</label>
 
 	 			</div>
-	 			<div class="medium-2 columns">
+	 			<div class="medium-3 columns">
 	 				<label for="financial-year">Financial Year End
 	 				<?php if(isset($_GET['edt'])) {?>
 	 				<input type="text" name="txtfyend" id="fystart" value="<?php echo $financial_year->fy_end;?>" disabled requierd type="date"/> 
@@ -28,18 +28,10 @@ if(!defined('CHECK_INCLUDED')){
 	 				<?php }?>
 	 				</label>
 	 			</div>
-	 			<div class="medium-3 columns">
+	 			<div class="medium-4 columns">
 	 				<label for="financial-year">Financial Year Name<small>required</small>
 	 				<input type="text" name="txtfyname" id="fyname" value="<?php echo $financial_year->fy_name;?>" required/>
 	 				</label>
-	 			</div>
-
-	 			<div class="medium-2 columns">
-	 				<label for="financial-year">Closed</label>
-	 				<select name="lststatus">
-	 					<option value=1>No</option>
-	 					<option value=0>Yes</option>
-	 				</select>
 	 			</div>
 
 	 			<div class="medium-2 columns">
@@ -67,11 +59,15 @@ if(!defined('CHECK_INCLUDED')){
 	</thead>
 	<tbody>
 	<?php 
+		$closing_year = false;
+		$closing_count = 0;
+		
 		$slno = ($pagination->page_num*$pagination->max_records)+1;
 	for($i=0; $i<$count_financial_years; $i++){
 			
 			$edit = $current_url."?edt=".$financial_years[$i]['fy_id'];
 			$delete = $current_url."?dlt=".$financial_years[$i]['fy_id'];
+			$close = $current_url."?cls=".$financial_years[$i]['fy_id'];
 	?>
 		<tr>
 			<td><?php echo $slno;?></td>
@@ -81,6 +77,11 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $financial_years[$i]['fy_status'];?></td>
 			<td>
 				<a href="<?php echo $edit; ?>">Edit</a>
+				<?php  if($closing_year==false && ($count_financial_years - $closing_count) > 1 && $financial_years[$i]['status'] == FINANCIAL_YEAR_OPEN  ){ ?>
+				<a href="javascript:closeFY(<?php echo $financial_years[$i]['fy_id']?>)" >Close</a>
+				
+				<?php 
+						$closing_year=true; } $closing_count++; ?>
 				<!--<a href="javascript:deleteFY(<?php echo $financial_years[$i]['fy_id']?>)" >Delete</a>-->
 			</td>
 		</tr>
