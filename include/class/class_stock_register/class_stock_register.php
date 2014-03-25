@@ -284,7 +284,7 @@ Class StockRegister{
     public function getItemOpeningQuantity()
     {
     	if($this->item_id >0){
-    		$strSQL = "SELECT sr.quantity AS opening_qty,sr.stk_id FROM stock_register sr WHERE sr.fy_id = '".$this->current_fy_id."' AND sr.item_id = '".$this->item_id."' AND sr.voucher_type_id = '".gINVALID."' AND sr.input_type = '".INPUT_PURCHASE."'";
+    		$strSQL = "SELECT sr.quantity AS opening_qty,sr.stk_id FROM stock_register sr WHERE sr.fy_id = '".$this->current_fy_id."' AND sr.item_id = '".$this->item_id."' AND sr.input_type = '".INPUT_OPENING."'";
     		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
     		if(mysql_num_rows($rsRES) > 0){
     			$row = mysql_fetch_assoc($rsRES);
