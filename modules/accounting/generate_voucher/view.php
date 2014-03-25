@@ -13,7 +13,7 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 
 	<div class="text-right" style="margin-top:5px;">
-		<a class="small button" href="<?php echo $list_url; ?>">Register</a>
+		<a class="tiny button" href="<?php echo $list_url; ?>">Register</a>
 	</div>
 </div>
 
@@ -76,7 +76,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row">
 		<div class="text-center">
-			<input class="small button"  value="Save" name="submit" type="submit"/>
+			<input class="tiny button"  value="Save" name="submit" type="submit"/>
 		</div>
 	</div>
 
@@ -175,7 +175,7 @@ if(!defined('CHECK_INCLUDED')){
 					<td><?php echo populate_list_array("lstitem", $items, 'id','name', '',$disable=false);?></td>
 					<td><input type="text" name="txtquantity" id="txtquantity" value="1" /></td>
 					<td><input type="text" name="txtrate" id="txtrate" value=0.00 /></td>
-					<td><?php echo populate_list_array("lsttax", $taxes, 'id','rate','',$disable=false,0);?></td>
+					<td><?php echo populate_list_array("lsttax", $taxes, 'id','rate','',$disable=false,true);?></td>
 					<td><label id="txtlinetotal">0.00</label></td>
 					<td>
 						<input type="hidden" name="hd_stock" id="hd_stock" value=0/>

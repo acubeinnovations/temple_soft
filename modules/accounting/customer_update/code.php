@@ -73,36 +73,28 @@ if(isset($_POST['submit'])){
         exit();
 	}else{//validation true
 		$customer->customer_id = $_POST['hd_customerid'];
-		$customer->customer_mobile = $_POST['txtmobile'];
-		if(!$customer->validate()){
-			$customer->customer_name = $_POST['txtname'];
-			$customer->customer_address = $_POST['txtaddress'];
-			$customer->customer_phone = $_POST['txtphone'];
-			$customer->customer_fax = $_POST['txtfax'];
-			$customer->customer_email = $_POST['txtemail'];
-			$customer->customer_cst_number = $_POST['txtcstnumber'];
-			$customer->customer_tin_number = $_POST['txttinnumber'];
+		$customer->customer_name = $_POST['txtname'];
+		if($customer->validate()){
+			$ledger->ledger_sub_id = $customer->ledger_sub_id;
+			$ledger->ledger_sub_name = $_POST['txtname'];
+			$ledger->ledger_id = LEDGER_SUNDRY_CREDITORS;
+			$ledger->fy_id = $account_settings->current_fy_id;
+			$ledger_sub_id = $ledger->update();
 
-			if($customer->customer_id > 0){
-				$customer->get_details();
-				$ledger->ledger_sub_name = $customer->name;
-				$ledger_sub_id = $ledger->getLedgerId();
-			}else{
-				$ledger_sub_id = false;
+			if($ledger_sub_id){
+				$customer->ledger_sub_id = $ledger_sub_id;
+				$customer->customer_name = $_POST['txtname'];
+				$customer->customer_mobile = $_POST['txtmobile'];
+				$customer->customer_address = $_POST['txtaddress'];
+				$customer->customer_phone = $_POST['txtphone'];
+				$customer->customer_fax = $_POST['txtfax'];
+				$customer->customer_email = $_POST['txtemail'];
+				$customer->customer_cst_number = $_POST['txtcstnumber'];
+				$customer->customer_tin_number = $_POST['txttinnumber'];
+				$update = $customer->update();
 			}
 			
-			$update = $customer->update();
 			if($update){
-
-				if($ledger_sub_id){
-					$ledger->ledger_sub_id = $ledger_sub_id;
-				}
-				$ledger->ledger_sub_name = $_POST['txtname'];
-				$ledger->ledger_id = LEDGER_SUNDRY_CREDITORS;
-				$ledger->fy_id = $account_settings->current_fy_id;
-
-				$ledger->update();
-
 				$_SESSION[SESSION_TITLE.'flash'] = "Success";
 	        	header( "Location:".$current_url);
 	        	exit();

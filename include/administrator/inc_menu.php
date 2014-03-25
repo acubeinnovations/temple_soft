@@ -93,6 +93,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
           <a href="#">Vazhipadu</a>
           <ul class="dropdown">
             <li><a href="vazhipadu.php">Add Vazhipadu</a></li>
+            <li><a href="cancel_vazhipadu.php">Cancel Vazhipadu</a></li>
             <li><a href="vazhipadu_register.php">Vazhipadu Register</a></li>
             <li><a href="pooja_register.php">Pooja Register</a></li>
           </ul>

@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
 			        exit();
 				}
 			}else{
-				$_SESSION[SESSION_TITLE.'flash'] = "You can not add pooja . Please contact administrator";
+				$_SESSION[SESSION_TITLE.'flash'] = "You can not add pooja . Vazhipadu Ledger not added";
 		        header( "Location:".$current_url);
 		        exit();
 			}	

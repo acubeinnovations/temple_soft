@@ -34,7 +34,7 @@ if(!defined('CHECK_INCLUDED')){
     		</div>
     		<div class="medium-2 columns">
 	    		<div class="text-center">
-					<input type="submit" name="submit" value="Search" class="small button" />
+					<input type="submit" name="submit" value="Search" class="tiny button" />
 	 			</div>
 	 		</div>
  		</div>

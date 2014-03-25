@@ -16,7 +16,8 @@ Class Customer{
 	var $customer_email ="";
 	var $customer_cst_number ="";
 	var $customer_tin_number ="";
-	var $delete = "";
+	var $deleted = NOT_DELETED;
+	var $ledger_sub_id = gINVALID;
 	
 
 	var $error = false;
@@ -27,7 +28,7 @@ Class Customer{
     public function update()
     {
     	if ( $this->customer_id == "" || $this->customer_id == gINVALID) {
-    		$strSQL= "INSERT INTO customer(customer_name,customer_address,customer_phone,customer_mobile,customer_fax,customer_email,customer_cst_number,customer_tin_number) VALUES('";
+    		$strSQL= "INSERT INTO customer(customer_name,customer_address,customer_phone,customer_mobile,customer_fax,customer_email,customer_cst_number,customer_tin_number,ledger_sub_id,deleted) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->customer_name)."','";
     		$strSQL.= mysql_real_escape_string($this->customer_address)."','";
     		$strSQL.= mysql_real_escape_string($this->customer_phone)."','";
@@ -35,7 +36,9 @@ Class Customer{
     		$strSQL.= mysql_real_escape_string($this->customer_fax)."','";
     		$strSQL.= mysql_real_escape_string($this->customer_email)."','";
     		$strSQL.= mysql_real_escape_string($this->customer_cst_number)."','";
-    		$strSQL.= mysql_real_escape_string($this->customer_tin_number)."')";
+    		$strSQL.= mysql_real_escape_string($this->customer_tin_number)."','";
+    		$strSQL.= mysql_real_escape_string($this->ledger_sub_id)."','";
+    		$strSQL.= mysql_real_escape_string($this->deleted)."')";
    
 			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
@@ -58,6 +61,8 @@ Class Customer{
     		$strSQL .= "customer_fax = '".addslashes(trim($this->customer_fax))."',";
     		$strSQL .= "customer_email = '".addslashes(trim($this->customer_email))."',";
     		$strSQL .= "customer_cst_number = '".addslashes(trim($this->customer_cst_number))."',";
+    		$strSQL .= "ledger_sub_id = '".addslashes(trim($this->ledger_sub_id))."',";
+    		$strSQL .= "deleted = '".addslashes(trim($this->deleted))."',";
 			$strSQL .= "customer_tin_number = '".addslashes(trim($this->customer_tin_number))."'";
 			$strSQL .= " WHERE customer_id = '".$this->customer_id."'";
 			//echo $strSQL;exit();
@@ -76,15 +81,16 @@ Class Customer{
     public function validate()
     {
     	if($this->customer_id > 0){//edit
-    		return false;
+    		$this->get_details();
+    		return true;
     	}else{
-	    	if(trim($this->customer_mobile) !=""){
-	    		$strSQL = "SELECT * FROM customer WHERE customer_mobile = '".$this->customer_mobile."'";
+	    	if(trim($this->customer_name) !=""){
+	    		$strSQL = "SELECT * FROM customer WHERE customer_name = '".$this->customer_name."'";
 	    		$rsRES  = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
 	    		if ( mysql_num_rows($rsRES) > 0 ){
-	    			return true;
-	    		}else{
 	    			return false;
+	    		}else{
+	    			return true;
 	    		}
 	    	}else{
 	    		return false;
@@ -146,6 +152,8 @@ Class Customer{
 				$this->customer_email 		= $row['customer_email'];
 				$this->customer_cst_number 	= $row['customer_cst_number'];
 				$this->customer_tin_number	= $row['customer_tin_number'];
+				$this->ledger_sub_id		= $row['ledger_sub_id'];
+				$this->deleted				= $row['deleted'];
 				return true;
 			}else{
 				return false;

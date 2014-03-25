@@ -354,22 +354,19 @@ Class Account{
 
     public function delete_with_voucher()
     {
-        $lastTX = $this->lastTransaction();
-        if($lastTX){
-            $strSQL = "UPDATE account_master SET deleted='".DELETED."' WHERE voucher_type_id = '".$this->voucher_type_id."' AND voucher_number = '".$this->voucher_number."'";
-           // echo $strSQL;exit();
-            $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
-            if(mysql_affected_rows() > 0){
-                $this->error_description = "voucher deleted";
-               return true;
-            }else{
-                $this->error_description = "Error in deleting record";
-                return false;
-            }
+       // $lastTX = $this->lastTransaction();
+       
+        $strSQL = "UPDATE account_master SET deleted='".DELETED."' WHERE voucher_type_id = '".$this->voucher_type_id."' AND voucher_number = '".$this->voucher_number."'";
+       // echo $strSQL;exit();
+        $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+        if(mysql_affected_rows() > 0){
+            $this->error_description = "voucher deleted";
+           return true;
         }else{
-            $this->error_description = "You can not delete this voucher";
+            $this->error_description = "Error in deleting record";
             return false;
         }
+        
 
     }
 

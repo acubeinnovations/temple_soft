@@ -35,7 +35,9 @@ if(!defined('CHECK_INCLUDED')){
 	 			</div>
 
 	 			<div class="medium-2 columns">
-	 				<input type="submit" name="submit" value="<?php echo $submit_value;?>"  class="small button"/>
+
+	 				<input type="submit" name="submit" value="<?php echo $submit_value;?>"  class="tiny button"/>
+
 
 	 			</div>
 

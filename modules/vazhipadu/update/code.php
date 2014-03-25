@@ -27,7 +27,6 @@ $array_star=$add_star->get_array();
 
 if(isset($_POST['submit'])){
 
-
 	$errorMSG = "";
 	if($_POST['listpooja'] >0){
 	}else{

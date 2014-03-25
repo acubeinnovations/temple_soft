@@ -17,7 +17,8 @@ Class Supplier{
 	var $contact_email ="";
 	var $supplier_cst_number ="";
 	var $supplier_tin_number ="";
-	var $delete = "";
+	var $deleted = NOT_DELETED;
+	var $ledger_sub_id = gINVALID;
 	
 
 	var $error = false;
@@ -28,7 +29,7 @@ Class Supplier{
     public function update()
     {
     	if ( $this->supplier_id == "" || $this->supplier_id == gINVALID) {
-    		$strSQL= "INSERT INTO supplier(supplier_name,supplier_address,supplier_phone,contact_person,contact_mobile,supplier_fax,contact_email,supplier_cst_number,supplier_tin_number) VALUES('";
+    		$strSQL= "INSERT INTO supplier(supplier_name,supplier_address,supplier_phone,contact_person,contact_mobile,supplier_fax,contact_email,supplier_cst_number,supplier_tin_number,ledger_sub_id,deleted) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->supplier_name)."','";
     		$strSQL.= mysql_real_escape_string($this->supplier_address)."','";
     		$strSQL.= mysql_real_escape_string($this->supplier_phone)."','";
@@ -37,7 +38,9 @@ Class Supplier{
     		$strSQL.= mysql_real_escape_string($this->supplier_fax)."','";
     		$strSQL.= mysql_real_escape_string($this->contact_email)."','";
     		$strSQL.= mysql_real_escape_string($this->supplier_cst_number)."','";
-    		$strSQL.= mysql_real_escape_string($this->supplier_tin_number)."')";
+    		$strSQL.= mysql_real_escape_string($this->supplier_tin_number)."','";
+    		$strSQL.= mysql_real_escape_string($this->ledger_sub_id)."','";
+    		$strSQL.= mysql_real_escape_string($this->deleted)."')";
    
 			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
@@ -61,7 +64,8 @@ Class Supplier{
     		$strSQL .= "supplier_fax = '".addslashes(trim($this->supplier_fax))."',";
     		$strSQL .= "contact_email = '".addslashes(trim($this->contact_email))."',";
     		$strSQL .= "supplier_cst_number = '".addslashes(trim($this->supplier_cst_number))."',";
-			$strSQL .= "supplier_tin_number = '".addslashes(trim($this->supplier_tin_number))."'";
+			$strSQL .= "supplier_tin_number = '".addslashes(trim($this->supplier_tin_number))."',";
+			$strSQL .= "ledger_sub_id = '".addslashes(trim($this->ledger_sub_id))."'";
 			$strSQL .= " WHERE supplier_id = '".$this->supplier_id."'";
 			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
@@ -78,17 +82,22 @@ Class Supplier{
 
     public function validate()
     {
-    	if(trim($this->supplier_phone) !=""){
-    		$strSQL = "SELECT * FROM supplier WHERE supplier_phone = '".$this->supplier_phone."'";
-    		$rsRES  = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
-    		if ( mysql_num_rows($rsRES) > 0 ){
-    			return true;
-    		}else{
-    			return false;
-    		}
+    	if($this->supplier_id > 0){//edit
+    		$this->get_details();
+    		return true;
     	}else{
-    		return false;
-    	}
+	    	if(trim($this->supplier_name) !=""){
+	    		$strSQL = "SELECT * FROM supplier WHERE supplier_name = '".$this->supplier_name."'";
+	    		$rsRES  = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
+	    		if ( mysql_num_rows($rsRES) > 0 ){
+	    			return false;
+	    		}else{
+	    			return true;
+	    		}
+	    	}else{
+	    		return false;
+	    	}
+	    }
     }
 
    
@@ -121,6 +130,7 @@ Class Supplier{
 				$suppliers[$i]["contact_email"] =  $row['contact_email'];
 				$suppliers[$i]["supplier_cst_number"] = $row['supplier_cst_number'];
 				$suppliers[$i]["supplier_tin_number"] = $row['supplier_tin_number'];
+				$suppliers[$i]["ledger_sub_id"] = $row['ledger_sub_id'];
 				$i++;
 			}
 			return $suppliers;
@@ -147,6 +157,8 @@ Class Supplier{
 				$this->contact_email 		= $row['contact_email'];
 				$this->supplier_cst_number 	= $row['supplier_cst_number'];
 				$this->supplier_tin_number	= $row['supplier_tin_number'];
+				$this->ledger_sub_id		= $row['ledger_sub_id'];
+				$this->deleted				= $row['deleted'];
 				return true;
 			}else{
 				return false;

@@ -12,7 +12,7 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 <div class="medium-8 columns">
 	<div class="text-right" style="margin-top:5px;">
-		<input type="button" class="small button" value="print" id="button-print"/>
+		<input type="button" class="tiny button" value="print" id="button-print"/>
 	</div>
 	</div>
 </div>
@@ -30,7 +30,7 @@ if(!defined('CHECK_INCLUDED')){
 				<input class="mydatepicker" name="txtto" id="" value="<?php echo $pooja->to_date;?>" /></label>
 			</div>
 			<div class="medium-2 columns">
-				<input type="submit" class="small button" value="Search" name="submit">
+				<input type="submit" class="tiny button" value="Search" name="submit">
 			</div>
 			
 		</div>

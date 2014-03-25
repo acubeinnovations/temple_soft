@@ -8,6 +8,14 @@ $pagination = new Pagination(10);
 $stock=new Stock($myconnection);
 $stock->connection=$myconnection;
 
+$stock_register = new StockRegister($myconnection);
+$stock_register->connection=$myconnection;
+
+$fy_year = new FinancialYear($myconnection);
+$fy_year->connection = $myconnection;
+$fy_year->id = $stock_register->current_fy_id;
+$fy_year->get_details();
+
 $stock->total_records=$pagination->total_records;
 
 $items = $stock->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
@@ -18,12 +26,16 @@ if($items <> false){
 }else{
 	$count_items = 0;
 }
+$opening_qty = false;
+$stk_id = -1;
 
 //edit
 if(isset($_GET['edt'])){
 	$stock->item_id = $_GET['edt'];
 	$stock->get_details();
-	
+
+	$stock_register->item_id = $stock->item_id;
+	list($stk_id,$opening_qty) = $stock_register->getItemOpeningQuantity();
 }
 if(isset($_GET['dlt'])){
 	$stock->item_id = $_GET['dlt'];
@@ -58,6 +70,7 @@ if(isset($_POST['submit'])){
 
 	if(trim($errorMSG) == ""){
 		$stock->item_id = $_POST['hd_itemid'];
+		$stock_register->stk_id = $_POST['hd_stkid'];
 		$stock->item_name = $_POST['txtname'];
 		$stock->uom_id = $_POST['lstuom'];
 
@@ -68,10 +81,18 @@ if(isset($_POST['submit'])){
 		}
 
 		if($check){
-
 			$update = $stock->update();
-
 			if($update){
+				if($_POST['txtqty'] > 0){
+					$stock->get_details();
+					$stock_register->item_id = $stock->item_id;
+					$stock_register->quantity = $_POST['txtqty'];
+					$stock_register->input_type = INPUT_OPENING;
+					$stock_register->date = $fy_year->fy_start;
+					//echo $stock_register->stk_id;exit();
+					$stock_register->update();
+				}
+
 				$_SESSION[SESSION_TITLE.'flash'] = "Item udated successfully";
 		        header( "Location:".$current_url);
 		        exit();

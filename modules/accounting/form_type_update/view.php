@@ -11,7 +11,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
-			<a href="ac_form_variable.php" class="small button">Form Variable</a>
+			<a href="ac_form_variable.php" class="tiny button">Form Variable</a>
 		</div>
 	</div>
 </div>
@@ -34,7 +34,7 @@ if(!defined('CHECK_INCLUDED')){
 			
 
 			<div class="medium-3 columns">
-				<input type="submit" name="submit" value="Add"  class="small button"/>
+				<input type="submit" name="submit" value="Add"  class="tiny button"/>
 
 			</div>
 		</div>

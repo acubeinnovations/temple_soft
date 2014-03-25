@@ -37,7 +37,7 @@
 
     <div class="row">
         <div class="medium-6 columns">
-            <input class="small button" value="submit" type="submit" name="submit" >
+            <input class="tiny button" value="submit" type="submit" name="submit" >
         </div>
     </div>
 

@@ -7,30 +7,30 @@ if(!defined('CHECK_INCLUDED')){
 <h3><?php echo (isset($_GET['edt']))?"Edit Item":"Add Item";?></h3>
 
 <form id="frmitemadd" name="frmitemadd" method="POST" action="<?php echo $current_url;?>">
-	<input type="hidden" value="<?php echo $stock->item_id;?>" name="hd_itemid" />
+<input type="hidden" value="<?php echo $stock->item_id;?>" name="hd_itemid" />
  	<fieldset>
  		<div class="row">
- 			<div class="large-4 columns">
- 			</div>
- 		</div>
-
- 		<div class="row">
- 			<div class="large-4 columns">
+ 			<div class="medium-3 columns">
  				<label for="stock">Item name</label>
  				<input type="text" name="txtname" id="txtname" value="<?php echo $stock->item_name;?>"/>
  			</div>
 
- 			<div class="large-4 columns">
+ 			<div class="medium-3 columns">
  				<label for="stock">Unit of Measure</label>
  				<?php echo populate_list_array("lstuom", $uom_list, 'id','value', $stock->uom_id,$disable=false);?>
  			</div>
 
- 			<div class="large-4 columns">
+ 			<div class="medium-3 columns">
+ 				<label for="stock">Opening Quantity</label>
+ 				<input type="text" name="txtqty" id="txtqty" value="<?php if($opening_qty) echo $opening_qty;?>"/>
+ 				<input type="hidden" name="hd_stkid" value="<?php echo $stk_id;?>"/>
+ 			</div>
+
+ 			<div class="medium-3 columns">
  				<input type="submit" name="submit" value="Save" class="tiny button"/>
  			</div>
 
  		</div>
-
 
  	</fieldset>
 </form>

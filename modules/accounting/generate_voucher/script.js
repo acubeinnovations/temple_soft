@@ -97,11 +97,15 @@ $(document).ready(function(){
 		var rate = $("#txtrate").val();
 		var qty = $("#txtquantity").val();
 		var tax = $("#lsttax").val();
-		var taxvalue = $("#lsttax option:selected").text();
+		if(tax > 0){
+			var taxvalue = $("#lsttax option:selected").text();
+		}else{
+			var taxvalue = 0;
+		}
 		var l_totaltxt = $("#txtlinetotal").text();
 		var stock = $("#hd_stock").val();
 
-		total_amount += parseFloat(l_totaltxt);
+		
 
 		var codetxt = code+'<input type="hidden" name="hd_itemcode[]" value="'+code+'">';
 		var ratetxt = rate+'<input type="hidden" name="hd_itemrate[]" value="'+rate+'">';
@@ -110,7 +114,7 @@ $(document).ready(function(){
 
 		if($("#lstitem").val() >0){
 
-
+			total_amount += parseFloat(l_totaltxt);
 			$("#insert-item").before('<tr><td>'+codetxt+'</td><td>'+nametxt+'</td><td>'+qtytxt+'</td><td>'+ratetxt+'</td><td>'+taxtxt+'%</td><td>'+l_totaltxt+'</td><td></td></tr>');
 			clearForm();
 
@@ -139,7 +143,10 @@ function clearForm(){
 function calculateLineTotal(rate,quantity,tax)
 {
 	var total = parseFloat(rate)*parseInt(quantity);
-	var tax_value = parseFloat($("#lsttax option:selected").text());
+	var tax_value = 0;
+	if($("#lsttax").val() >0 ){
+		tax_value = parseFloat($("#lsttax option:selected").text());
+	}
 	var tax_rate = tax_value/100;
 	var tax = total*tax_rate;
 	return total+tax;

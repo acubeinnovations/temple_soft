@@ -17,6 +17,7 @@ Class StockRegister{
 	var $purchase_reference_number = "";
 	var $date = "";
 	var $tax_id = gINVALID;
+	var $fy_id = gINVALID;
 	
 
 	var $error = false;
@@ -43,7 +44,7 @@ Class StockRegister{
     public function insert_batch($dataArray = array())
     {
     	if(count($dataArray) > 0){
-    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,date) VALUES";
+    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,fy_id,date) VALUES";
 			$i=0;
 			while($i<count($dataArray)){
 				$strSQL.= "('";
@@ -55,6 +56,7 @@ Class StockRegister{
 	    		$strSQL.= mysql_real_escape_string($this->input_type)."','";
 	    		$strSQL.= mysql_real_escape_string($this->purchase_reference_number)."','";
 	    		$strSQL.= mysql_real_escape_string($dataArray[$i]['tax'])."','";
+	    		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
 	    		$strSQL.= date('Y-m-d',strtotime($this->date))."'),";
 				$i++;
 			}
@@ -75,7 +77,7 @@ Class StockRegister{
     public function update()
     {
     	if ( $this->stk_id == "" || $this->stk_id == gINVALID) {
-    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,date) VALUES('";
+    		$strSQL= "INSERT INTO stock_register(voucher_number,voucher_type_id,item_id,quantity,unit_rate,input_type,purchase_reference_number,tax_id,fy_id,date) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
     		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
     		$strSQL.= mysql_real_escape_string($this->item_id)."','";
@@ -84,6 +86,7 @@ Class StockRegister{
     		$strSQL.= mysql_real_escape_string($this->input_type)."','";
     		$strSQL.= mysql_real_escape_string($this->purchase_reference_number)."','";
     		$strSQL.= mysql_real_escape_string($this->tax_id)."','";
+    		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
     		$strSQL.= date('Y-m-d',strtotime($this->date))."')";
    
 			//echo $strSQL;exit();
@@ -100,17 +103,18 @@ Class StockRegister{
 			}
 
     	}elseif($this->stk_id > 0 ) {
-    		$strSQL = "UPDATE stock_register SET voucher_number = '".addslashes(trim($this->voucher_name))."',";
+    		$strSQL = "UPDATE stock_register SET voucher_number = '".addslashes(trim($this->voucher_number))."',";
 			$strSQL .= "voucher_type_id = '".addslashes(trim($this->voucher_type_id))."',";
 			$strSQL .= "item_id = '".addslashes(trim($this->item_id))."',";
-			$strSQL .= "quantity = '".addslashes(trim($this->quantity))."'";
-			$strSQL .= "unit_rate = '".addslashes(trim($this->unit_rate))."'";
-			$strSQL .= "input_type = '".addslashes(trim($this->input_type))."'";
-			$strSQL .= "purchase_reference_number = '".addslashes(trim($this->purchase_reference_number))."'";
-			$strSQL .= "tax_id = '".addslashes(trim($this->tax_id))."'";
-			$strSQL .= "date = '".addslashes(trim($this->number_series))."'";
+			$strSQL .= "quantity = '".addslashes(trim($this->quantity))."',";
+			$strSQL .= "unit_rate = '".addslashes(trim($this->unit_rate))."',";
+			$strSQL .= "input_type = '".addslashes(trim($this->input_type))."',";
+			$strSQL .= "purchase_reference_number = '".addslashes(trim($this->purchase_reference_number))."',";
+			$strSQL .= "tax_id = '".addslashes(trim($this->tax_id))."',";
+			$strSQL .= "fy_id = '".addslashes(trim($this->current_fy_id))."',";
+			$strSQL .= "date = '".date('Y-m-d',strtotime($this->date))."'";
 			$strSQL .= " WHERE stk_id = ".$this->stk_id;
-			echo $strSQL;exit();
+			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 
             if ( mysql_affected_rows($this->connection) >= 0 ) {
@@ -146,7 +150,7 @@ Class StockRegister{
     	$strSQL .= " LEFT JOIN tax_master tm ON tm.id = sr.tax_id";
     	
 
-    	$strSQL .= " WHERE sr.voucher_number = '".$this->voucher_number."' AND sr.voucher_type_id = '".$this->voucher_type_id."'";
+    	$strSQL .= " WHERE sr.fy_id='".$this->current_fy_id."' AND sr.voucher_number = '".$this->voucher_number."' AND sr.voucher_type_id = '".$this->voucher_type_id."'";
     	
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		if(mysql_num_rows($rsRES) > 0){
@@ -208,7 +212,7 @@ Class StockRegister{
     	$strSQL = "SELECT sr.item_id,sr.quantity,sr.unit_rate,sm.item_name FROM stock_register sr";	
     	$strSQL .=" LEFT JOIN stock_master sm ON sm.item_id = sr.item_id";
     	$strSQL .=" INNER JOIN voucher v ON v.voucher_id = sr.voucher_type_id";
-    	$strSQL .= " WHERE v.fy_id = '".$this->current_fy_id."' AND sr.voucher_number = '".$this->voucher_number."' AND sr.voucher_type_id = '".$this->voucher_type_id."'";
+    	$strSQL .= " WHERE sr.fy_id = '".$this->current_fy_id."' AND sr.voucher_number = '".$this->voucher_number."' AND sr.voucher_type_id = '".$this->voucher_type_id."'";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	$items= array();$i=0;
 		if(mysql_num_rows($rsRES) > 0){
@@ -236,8 +240,7 @@ Class StockRegister{
         $strSQL .= " LEFT JOIN stock_master sm ON sm.item_id = sr.item_id";
         $strSQL .= " LEFT JOIN tax_master tm ON tm.id = sr.tax_id";
         $strSQL .= " LEFT JOIN uom_master um ON sm.uom_id = um.uom_id";
-        $strSQL .=" INNER JOIN voucher v ON v.voucher_id = sr.voucher_type_id";
-        $strSQL .= " WHERE v.fy_id = '".$this->current_fy_id."'";
+        $strSQL .= " WHERE sr.fy_id = '".$this->current_fy_id."'";
 
         if($this->input_type != ""){
         	$strSQL .= " AND sr.input_type = '".$this->input_type."'";
@@ -245,8 +248,8 @@ Class StockRegister{
 
        
 
-        $strSQL .= " GROUP BY item_id";
-       // echo $strSQL;
+        $strSQL .= " GROUP BY sr.item_id ,sr.unit_rate";
+       // echo $strSQL;exit();
 
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
@@ -275,6 +278,27 @@ Class StockRegister{
 		} else {
 			return false;
 		}
+    }
+
+
+    public function getItemOpeningQuantity()
+    {
+    	if($this->item_id >0){
+    		$strSQL = "SELECT sr.quantity AS opening_qty,sr.stk_id FROM stock_register sr WHERE sr.fy_id = '".$this->current_fy_id."' AND sr.item_id = '".$this->item_id."' AND sr.input_type = '".INPUT_OPENING."'";
+    		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+    		if(mysql_num_rows($rsRES) > 0){
+    			$row = mysql_fetch_assoc($rsRES);
+    			$id= $row['stk_id'];
+    			$value = $row['opening_qty'];
+    			
+    			return array($id,$value);
+    		}else{
+    			return false;
+    		}
+
+    	}else{
+    		return false;
+    	}
     }
 
 
