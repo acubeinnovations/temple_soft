@@ -81,10 +81,10 @@ if(!defined('CHECK_INCLUDED')){
 
 		</tr>
 		<?php $total_amount+=$vazhipadu_list[$i]['amount'];$i++;}?>
-		<tr>
+		<!--<tr>
 			<td colspan="3" align="right" style="font-weight:bold;">Total</td>
 			<td><?php echo $total_amount;?></td>
-		</tr>
+		</tr>-->
 			
 		</tbody>
 

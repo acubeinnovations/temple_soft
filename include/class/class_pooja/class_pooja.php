@@ -188,7 +188,7 @@ function get_array()
 
     	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
     	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
-    	$strSQL .= " WHERE 1";
+    	$strSQL .= " WHERE deleted = '".NOT_DELETED."'";
     	
     	 if($this->from_date != "" and $this->to_date != ""){
 	      if($this->from_date == $this->to_date){
