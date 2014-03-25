@@ -11,8 +11,10 @@ $(document).ready(function(){
 		if(uom == -1 || uom == ''){
 			errorMSG += "Select Unit of Measure <br>";
 		}
-		if(isNaN(qty) || qty ==''){
-			errorMSG += "Invalid Quantity <br>";
+		if(qty !=''){
+			if(isNaN(qty)){
+				errorMSG += "Invalid Quantity <br>";
+			}
 		}
 
 		if(errorMSG == ""){

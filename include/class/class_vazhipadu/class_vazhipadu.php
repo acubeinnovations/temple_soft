@@ -136,21 +136,22 @@ Class Vazhipadu{
       }
   }
 
-  function get_filter_array_by_limit($dataArray = array(),$start_record = 0,$max_records = 25)
+  function get_filter_array_by_limit($start_record = 0,$max_records = 25,$dataArray = array())
   {
     $vazhipadu = array();$i=0;
     $strSQL = "SELECT  v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,p.name as pooja_name,sum(quantity) as quantity FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
-    $str_condition = "";
-    if(isset($dataArray['from_date']) and isset($dataArray['to_date'])){
+    $strSQL .= " WHERE 1";
 
+    if($this->vazhipadu_date != ""){
+      $strSQL .=" AND vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
+    }else if(isset($dataArray['from_date']) and isset($dataArray['to_date'])){
       $this->from_date = date('Y-m-d',strtotime($dataArray['from_date']));
       $this->to_date = date('Y-m-d',strtotime($dataArray['to_date']));
-      $str_condition .= ($str_condition!="")?" AND":"";
-      $str_condition .=" (vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
+      $strSQL .=" AND (vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
     }
 
-    $strSQL .= ($str_condition!="")?" WHERE ".$str_condition:"";
+  
     $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();

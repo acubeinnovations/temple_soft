@@ -26,12 +26,16 @@ if($items <> false){
 }else{
 	$count_items = 0;
 }
+$opening_qty = false;
+$stk_id = -1;
 
 //edit
 if(isset($_GET['edt'])){
 	$stock->item_id = $_GET['edt'];
 	$stock->get_details();
-	
+
+	$stock_register->item_id = $stock->item_id;
+	list($stk_id,$opening_qty) = $stock_register->getItemOpeningQuantity();
 }
 if(isset($_GET['dlt'])){
 	$stock->item_id = $_GET['dlt'];
@@ -66,6 +70,7 @@ if(isset($_POST['submit'])){
 
 	if(trim($errorMSG) == ""){
 		$stock->item_id = $_POST['hd_itemid'];
+		$stock_register->stk_id = $_POST['hd_stkid'];
 		$stock->item_name = $_POST['txtname'];
 		$stock->uom_id = $_POST['lstuom'];
 
@@ -84,6 +89,7 @@ if(isset($_POST['submit'])){
 					$stock_register->quantity = $_POST['txtqty'];
 					$stock_register->input_type = INPUT_PURCHASE;
 					$stock_register->date = $fy_year->fy_start;
+					//echo $stock_register->stk_id;exit();
 					$stock_register->update();
 				}
 

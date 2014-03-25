@@ -22,7 +22,8 @@ if(!defined('CHECK_INCLUDED')){
 
  			<div class="medium-3 columns">
  				<label for="stock">Opening Quantity</label>
- 				<input type="text" name="txtqty" id="txtqty" value=""/>
+ 				<input type="text" name="txtqty" id="txtqty" value="<?php if($opening_qty) echo $opening_qty;?>"/>
+ 				<input type="hidden" name="hd_stkid" value="<?php echo $stk_id;?>"/>
  			</div>
 
  			<div class="medium-3 columns">
