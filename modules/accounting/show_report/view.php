@@ -14,7 +14,7 @@ if(!defined('CHECK_INCLUDED')){
 		<tr>
 
 		<?php if($report->lhs == LHS_STATUS_ACTIVE){?>
-		<td>
+		<td valign="top">
 			<table width="100%">
 				<thead>
 				<tr>
@@ -101,7 +101,7 @@ if(!defined('CHECK_INCLUDED')){
 		<?php }?>
 
 		<?php if($report->rhs == RHS_STATUS_ACTIVE){?>
-		<td>
+		<td valign="top">
 			<table width="100%">
 				<thead>
 				<tr>
