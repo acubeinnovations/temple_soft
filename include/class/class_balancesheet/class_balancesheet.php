@@ -280,6 +280,17 @@ ORDER BY LS.ledger_sub_id ASC";
 				$subledgers[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
 				$subledgers[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
 				$subledgers[$index]["balance"] = abs($row['balance']);
+				if($row['balance'] > 0){
+					$subledgers[$index]["balance_dr"] = abs($row['balance']);
+					$subledgers[$index]["balance_cr"] = 0;
+				}elseif($row['balance'] < 0){
+					$subledgers[$index]["balance_dr"] = 0;
+					$subledgers[$index]["balance_cr"] = abs($row['balance']);
+				}else{
+					$subledgers[$index]["balance_dr"] = 0;
+					$subledgers[$index]["balance_cr"] = 0;
+				}
+				
 				$index++;
 			}
 

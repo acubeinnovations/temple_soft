@@ -1,7 +1,8 @@
 <div class="medium-12 colum"> <a href="#" onclick="window.print();" class="button right" >Print</a></div>
 
 <?php ob_start(); ?>
-<h3>Balancehseet For year <?php echo $mybalancesheet->fy_name ." (" . date("d-m-Y",strtotime($mybalancesheet->fy_start)) . " TO " .date("d-m-Y",strtotime($mybalancesheet->fy_end)) .")";	 ?></h3>
+<br/>
+<h4>Balance Sheet for year <?php echo $mybalancesheet->fy_name ." (" . date("d-m-Y",strtotime($mybalancesheet->fy_start)) . " to " .date("d-m-Y",strtotime($mybalancesheet->fy_end)) .")";	 ?></h4>
 <table width="100%">
 	<tr>
 	<td width="50%" valign="top">
