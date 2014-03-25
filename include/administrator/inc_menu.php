@@ -172,6 +172,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
                   }
                 }
                 ?>
+			<li><a href="balancesheet.php">Balancesheet</a>
 			</ul>
 			</li>
             <li class="has-dropdown">

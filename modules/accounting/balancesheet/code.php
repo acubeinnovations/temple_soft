@@ -3,17 +3,31 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-$mybalancesheet = new BalanceSheet();
-$mybalancesheet->connection = $myconnection;
-$mybalancesheet->fy_id = 1;
+$mybalancesheet = new BalanceSheet($myconnection);
 
-$sheet = $mybalancesheet->get();
-$sheet_closing = $mybalancesheet->get_closing();
+if($mybalancesheet->error == true){
 
+	$_SESSION[SESSION_TITLE.'flash'] = "Please set Financial Year";
+	header("Location:dashboard.php");
+	exit();
+
+}
+
+
+if(isset($_GET["mode"]) && $_GET["mode"]="expanded"){
+	$sheet = $mybalancesheet->get_closing();
+}else{
+	$sheet = $mybalancesheet->get();
+}
+
+$total_liabilities = 0;
+$total_assets = 0;
+/*
 echo "<pre> <h2>Balancesheet</h2>";
 
 print_r($sheet);
 echo "</pre>";
+
 echo "<pre> <h2>Closing</h2>";
 
 print_r($sheet_closing);
@@ -31,7 +45,7 @@ echo "<pre> <h2>vazipadu Todays Closing</h2>";
 print_r($vazipadu_closing);
 echo "</pre>";
 
-
+*/
 
 
 ?>
