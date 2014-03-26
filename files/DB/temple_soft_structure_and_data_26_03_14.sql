@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2014 at 06:43 AM
+-- Generation Time: Mar 26, 2014 at 04:50 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -19,20 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `temple_soft`
 --
-
-DELIMITER $$
---
--- Functions
---
-CREATE DEFINER=`root`@`localhost` FUNCTION `getSubSubledger`(id INT) RETURNS text CHARSET latin1
-    DETERMINISTIC
-BEGIN
-    DECLARE NAME TEXT DEFAULT NULL;
-    SELECT GROUP_CONCAT(ledger_sub_name) INTO NAME FROM ledger_sub WHERE parent_sub_ledger_id = id;
-    RETURN  NAME;
-  END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -55,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `account_master` (
   `ref_ledger` int(11) NOT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=104 ;
 
 --
 -- Dumping data for table `account_master`
@@ -118,18 +104,8 @@ INSERT INTO `account_master` (`account_id`, `voucher_number`, `voucher_type_id`,
 (58, '0026', 8, 1, '', 3, 28, 0.00, 1000.00, '2014-03-22', '', 28, 1),
 (59, '0001', 10, 1, '', 29, 3, 296223.00, 0.00, '2014-03-22', '', 29, 1),
 (60, '0001', 10, 1, '', 29, 3, 0.00, 296223.00, '2014-03-22', '', 3, 1),
-(61, '0001', 1, 1, '', 3, 2, 20.00, 0.00, '2014-03-22', '', 3, 1),
-(62, '0001', 1, 1, '', 3, 2, 0.00, 20.00, '2014-03-22', '', 2, 1),
 (63, '0002', 9, 1, '', 32, 3, 5000.00, 0.00, '2014-03-24', 'Salary for the month of March 2014', 32, 1),
 (64, '0002', 9, 1, '', 32, 3, 0.00, 5000.00, '2014-03-24', 'Salary for the month of March 2014', 3, 1),
-(65, '0002', 1, 1, '', 36, 2, 5.00, 0.00, '2014-03-24', '', 3, 1),
-(66, '0002', 1, 1, '', 36, 2, 0.00, 5.00, '2014-03-24', '', 2, 1),
-(67, '0003', 1, 1, '', 37, 2, 400.00, 0.00, '2014-03-24', '', 3, 1),
-(68, '0003', 1, 1, '', 37, 2, 0.00, 400.00, '2014-03-24', '', 2, 1),
-(69, '0004', 1, 1, '', 36, 2, 5.00, 0.00, '2014-03-24', '', 3, 1),
-(70, '0004', 1, 1, '', 36, 2, 0.00, 5.00, '2014-03-24', '', 2, 1),
-(71, '0005', 1, 1, '', 3, 37, 400.00, 0.00, '2014-03-24', '', 3, 1),
-(72, '0005', 1, 1, '', 3, 37, 0.00, 400.00, '2014-03-24', '', 2, 1),
 (73, '0003', 9, 1, '', 38, 3, 4000.00, 0.00, '2014-03-24', 'Salary', 38, 1),
 (74, '0003', 9, 1, '', 38, 3, 0.00, 4000.00, '2014-03-24', 'Salary', 3, 1),
 (75, '', -1, 1, '', 40, 0, 0.00, 1000.00, '2014-03-24', '', 40, 1),
@@ -138,7 +114,23 @@ INSERT INTO `account_master` (`account_id`, `voucher_number`, `voucher_type_id`,
 (78, '', -1, 1, '', 0, 43, 0.00, 1000.00, '2014-03-24', '', 43, 1),
 (79, '', -1, 1, '', 44, 0, 1000.00, 0.00, '2014-03-24', '', 44, 1),
 (80, '', -1, 1, '', 0, 45, 0.00, 1000.00, '1970-01-01', '', 45, 1),
-(81, '', -1, 1, '', 46, 0, 1000.00, 0.00, '2013-04-01', '', 46, 1);
+(81, '', -1, 1, '', 46, 0, 1000.00, 0.00, '2013-04-01', '', 46, 1),
+(82, '0001', 14, 1, '', 3, 62, 10000.00, 0.00, '2014-03-25', '', 3, 1),
+(83, '0001', 14, 1, '', 3, 62, 0.00, 10000.00, '2014-03-25', '', 62, 1),
+(84, '0001', 13, 1, '', 3, 61, 1000.00, 0.00, '2014-03-25', '', 3, 1),
+(85, '0001', 13, 1, '', 3, 61, 0.00, 1000.00, '2014-03-25', '', 61, 1),
+(86, '0002', 13, 1, '', 3, 61, 1050.00, 0.00, '2014-03-25', '', 3, 1),
+(87, '0002', 13, 1, '', 3, 61, 0.00, 1050.00, '2014-03-25', '', 61, 1),
+(88, '0002', 14, 1, '', 3, 62, 10500.00, 0.00, '2014-03-25', '', 3, 1),
+(89, '0002', 14, 1, '', 3, 62, 0.00, 10500.00, '2014-03-25', '', 62, 1),
+(90, '0003', 13, 1, '', 3, 61, 1500.00, 0.00, '2014-03-25', '', 3, 1),
+(91, '0003', 13, 1, '', 3, 61, 0.00, 1500.00, '2014-03-25', '', 61, 1),
+(98, '0001', 1, 1, '', 3, 36, 10.00, 0.00, '2014-03-25', '', 3, 1),
+(99, '0001', 1, 1, '', 3, 36, 0.00, 10.00, '2014-03-25', '', 2, 1),
+(100, '0002', 1, 1, '', 3, 37, 600.00, 0.00, '2014-03-25', '', 3, 2),
+(101, '0002', 1, 1, '', 3, 37, 0.00, 600.00, '2014-03-25', '', 2, 2),
+(102, '0003', 1, 1, '', 3, 37, 400.00, 0.00, '2014-03-25', '', 3, 1),
+(103, '0003', 1, 1, '', 3, 37, 0.00, 400.00, '2014-03-25', '', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -149,6 +141,7 @@ INSERT INTO `account_master` (`account_id`, `voucher_number`, `voucher_type_id`,
 CREATE TABLE IF NOT EXISTS `account_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `current_fy_id` int(11) NOT NULL,
+  `default_capital` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -156,8 +149,8 @@ CREATE TABLE IF NOT EXISTS `account_settings` (
 -- Dumping data for table `account_settings`
 --
 
-INSERT INTO `account_settings` (`id`, `current_fy_id`) VALUES
-(1, 1);
+INSERT INTO `account_settings` (`id`, `current_fy_id`, `default_capital`) VALUES
+(1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -299,6 +292,70 @@ INSERT INTO `form_variables` (`id`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fy_ledger_sub`
+--
+
+CREATE TABLE IF NOT EXISTS `fy_ledger_sub` (
+  `fy_id` int(11) NOT NULL,
+  `ledger_sub_id` int(11) NOT NULL,
+  KEY `fy_id` (`fy_id`,`ledger_sub_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `fy_ledger_sub`
+--
+
+INSERT INTO `fy_ledger_sub` (`fy_id`, `ledger_sub_id`) VALUES
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11),
+(1, 12),
+(1, 13),
+(1, 14),
+(1, 15),
+(1, 16),
+(1, 17),
+(1, 18),
+(1, 19),
+(1, 20),
+(1, 21),
+(1, 22),
+(1, 23),
+(1, 24),
+(1, 25),
+(1, 26),
+(1, 27),
+(1, 28),
+(1, 29),
+(1, 30),
+(1, 31),
+(1, 32),
+(1, 36),
+(1, 37),
+(1, 38),
+(1, 39),
+(1, 40),
+(1, 41),
+(1, 42),
+(1, 43),
+(1, 44),
+(1, 45),
+(1, 46),
+(1, 51),
+(1, 60),
+(1, 61),
+(1, 62);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fy_master`
 --
 
@@ -386,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `ledger_sub` (
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 for active, 2 for inactive',
   `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`ledger_sub_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=61 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
 
 --
 -- Dumping data for table `ledger_sub`
@@ -436,7 +493,9 @@ INSERT INTO `ledger_sub` (`ledger_sub_id`, `ledger_sub_name`, `ledger_id`, `pare
 (45, 'Fees5', 11, -1, 1, 1, 1),
 (46, 'Fees6', 11, -1, 1, 1, 1),
 (51, 'rosy swapna I J', 31, -1, 1, 1, 1),
-(60, 'Narayana Shops', 32, -1, 1, 1, 1);
+(60, 'Narayana Shops', 32, -1, 1, 1, 1),
+(61, 'Sales', 28, -1, 1, 1, 1),
+(62, 'Purchase', 25, -1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -569,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `stock_master` (
   `uom_id` int(11) NOT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `stock_master`
@@ -579,7 +638,10 @@ INSERT INTO `stock_master` (`item_id`, `item_name`, `uom_id`, `deleted`) VALUES
 (1, 'Product1', 1, 1),
 (2, 'product2', 2, 1),
 (3, 'product3', 3, 1),
-(6, 'product4', 2, 1);
+(6, 'product4', 2, 1),
+(7, 'product5', 4, 1),
+(8, 'Product6', 3, 1),
+(9, 'Product7', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -594,20 +656,28 @@ CREATE TABLE IF NOT EXISTS `stock_register` (
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `unit_rate` double(25,2) NOT NULL,
-  `input_type` varchar(50) NOT NULL COMMENT 'purchase or donation(+) and auction or delivery(-)',
+  `input_type` varchar(50) NOT NULL COMMENT 'purchase or donation(+) and auction or delivery(-) opening(+)',
   `purchase_reference_number` varchar(125) NOT NULL,
   `date` date NOT NULL,
   `tax_id` int(11) NOT NULL DEFAULT '-1',
   `fy_id` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`stk_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `stock_register`
 --
 
 INSERT INTO `stock_register` (`stk_id`, `voucher_number`, `voucher_type_id`, `item_id`, `quantity`, `unit_rate`, `input_type`, `purchase_reference_number`, `date`, `tax_id`, `fy_id`) VALUES
-(1, '', -1, 6, 123, 0.00, 'Purchase', '', '2013-04-01', -1, 1);
+(1, '', -1, 6, 120, 0.00, 'Opening', '', '2013-04-01', -1, 1),
+(2, '', -1, 7, 110, 0.00, 'Opening', '', '2013-04-01', -1, 1),
+(3, '0001', 14, 1, 100, 100.00, 'Purchase', '', '2014-03-25', -1, 1),
+(4, '0001', 13, 1, -10, 100.00, 'Sale', '', '2014-03-25', -1, 1),
+(5, '', -1, 8, 15, 0.00, 'Opening', '', '2013-04-01', -1, 1),
+(6, '', -1, 9, 100, 0.00, 'Opening', '', '2013-04-01', -1, 1),
+(7, '0002', 13, 1, -10, 105.00, 'Sale', '', '2014-03-25', -1, 1),
+(8, '0002', 14, 1, 100, 105.00, 'Purchase', '', '2014-03-25', -1, 1),
+(9, '0003', 13, 1, -15, 100.00, 'Sale', '', '2014-03-25', -1, 1);
 
 -- --------------------------------------------------------
 
@@ -769,22 +839,22 @@ CREATE TABLE IF NOT EXISTS `vazhipadu` (
   `age` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `amount` double(25,2) NOT NULL,
+  `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`vazhipadu_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `vazhipadu`
 --
 
-INSERT INTO `vazhipadu` (`vazhipadu_id`, `vazhipadu_rpt_number`, `vazhipadu_date`, `star_id`, `pooja_id`, `name`, `age`, `quantity`, `amount`) VALUES
-(1, '0001', '2014-03-22', 1, 1, 'Rajesh T R', 0, 1, 10.00),
-(2, '0001', '2014-03-22', 3, 1, 'Rosy Swapna Associates', 0, 1, 10.00),
-(3, '0002', '2014-03-24', 1, 1, 'swapna', 0, 1, 5.00),
-(4, '0003', '2014-03-24', 4, 2, 'sasi', 0, 1, 200.00),
-(5, '0003', '2014-03-24', 3, 2, 'kumar', 0, 1, 200.00),
-(6, '0004', '2014-03-24', 1, 1, 'gjh', 0, 1, 5.00),
-(7, '0005', '2014-03-24', 3, 2, 'sdfsdfsd', 0, 1, 200.00),
-(8, '0005', '2014-03-24', 1, 2, 'sdf', 0, 1, 200.00);
+INSERT INTO `vazhipadu` (`vazhipadu_id`, `vazhipadu_rpt_number`, `vazhipadu_date`, `star_id`, `pooja_id`, `name`, `age`, `quantity`, `amount`, `deleted`) VALUES
+(1, '0001', '2014-03-25', 3, 1, 'rosy swapna I J', 0, 1, 5.00, 1),
+(2, '0001', '2014-03-25', 1, 1, 'sanil', 0, 1, 5.00, 1),
+(3, '0002', '2014-03-25', 3, 2, 'reji', 0, 1, 200.00, 2),
+(4, '0002', '2014-03-25', 3, 2, 'sdf', 0, 1, 200.00, 2),
+(5, '0002', '2014-03-25', 4, 2, 'ef', 0, 1, 200.00, 2),
+(6, '0003', '2014-03-25', 1, 2, 'fd sdf', 0, 1, 200.00, 1),
+(7, '0003', '2014-03-25', 3, 2, 'sdfds', 0, 1, 200.00, 1);
 
 -- --------------------------------------------------------
 
@@ -813,7 +883,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `module_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `module_id` (`module_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `voucher`
@@ -824,7 +894,9 @@ INSERT INTO `voucher` (`voucher_id`, `voucher_name`, `voucher_description`, `fy_
 (8, 'Cash Receipt', '', 1, 2, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', '', -1, 1, 1, NULL),
 (9, 'Cash Payment', '', 1, 1, '', '', '0001', '', '', '0001', '', '', 'a:1:{i:0;s:1:"3";}', -1, 1, 1, NULL),
 (10, 'Bank Receipt', '', 1, 4, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:2:"29";}', '', -1, 1, 1, NULL),
-(11, 'Bank Payment', '', 1, 5, '', '', '0001', '', '', '0001', '', '', 'a:1:{i:0;s:2:"29";}', -1, 1, 1, NULL);
+(11, 'Bank Payment', '', 1, 5, '', '', '0001', '', '', '0001', '', '', 'a:1:{i:0;s:2:"29";}', -1, 1, 1, NULL),
+(13, 'Sale', '', 1, 13, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"61";}', 1, 2, 1, NULL),
+(14, 'Purchase', '', 1, 14, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"62";}', -1, 2, 1, NULL);
 
 -- --------------------------------------------------------
 
