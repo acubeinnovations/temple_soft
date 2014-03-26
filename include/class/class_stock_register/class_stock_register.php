@@ -281,6 +281,42 @@ Class StockRegister{
     }
 
 
+    function get_list_array(){
+    	$items = array();
+		$i=0;
+		$str_condition = "";
+        $strSQL = "SELECT sr.item_id,sm.item_name,tm.rate,um.uom_value,sr.unit_rate,SUM(sr.quantity) AS quantity FROM stock_register sr";
+        $strSQL .= " LEFT JOIN stock_master sm ON sm.item_id = sr.item_id";
+        $strSQL .= " LEFT JOIN tax_master tm ON tm.id = sr.tax_id";
+        $strSQL .= " LEFT JOIN uom_master um ON sm.uom_id = um.uom_id";
+        $strSQL .= " WHERE sr.fy_id = '".$this->current_fy_id."'";
+
+        if($this->input_type != ""){
+        	$strSQL .= " AND sr.input_type = '".$this->input_type."'";
+        }
+
+        $strSQL .= " GROUP BY sr.item_id ,sr.unit_rate";
+		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+		if ( mysql_num_rows($rsRES) > 0 ){
+			while ( list ($id,$name,$tax,$uom,$unit_rate,$quantity) = mysql_fetch_row($rsRES) ){
+				$tax_rate = ($tax == NULL)?0:$tax;
+				$items[$i]["item_code"] =  $id;
+				$items[$i]["item_name"] = $name;
+				$items[$i]["uom_value"] = $uom;
+				$items[$i]["unit_rate"] =  $unit_rate;
+				$items[$i]["quantity"] = abs($quantity);
+				$items[$i]['gross_amt'] =$unit_rate*abs($quantity);
+				$items[$i]['tax'] = $items[$i]['gross_amt']*$tax_rate;
+				$items[$i]['net_amt'] = $items[$i]['gross_amt']+$items[$i]['tax'];
+
+				$i++;
+			}
+			return $items;
+		} else {
+			return false;
+		}
+    }
+
     function get_list_array_bylimit($start_record = 0,$max_records = 25){
     	$items = array();
 		$i=0;

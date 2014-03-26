@@ -3,7 +3,20 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-<h3>List Ledger</h3>
+
+
+
+<div class="row" >
+	<div class="medium-4 columns">
+		<h3>List Ledger</h3>
+	</div>
+	<div class="medium-8 columns">
+		<div class="text-right" style="margin-top:5px;">
+			<input type="button" class="tiny button" value="print" id="button-print"/>
+		</div>
+	</div>
+</div>
+
 
 <fieldset>
 <div class="row" style="font-weight:bold;">
@@ -66,3 +79,13 @@ if(!defined('CHECK_INCLUDED')){
 </div>
 
 </fieldset>
+
+<?php ob_start();?>
+
+
+<?php 
+	$print_content = ob_get_contents();
+	ob_end_clean();
+	//echo $print_content;
+	
+?>
