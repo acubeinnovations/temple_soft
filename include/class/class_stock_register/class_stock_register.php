@@ -142,6 +142,55 @@ Class StockRegister{
     }
 
 
+
+
+
+    public function close($current_fy_id,$next_fy_id, $opening_date)
+    {
+
+		if($current_fy_id > 0 && $next_fy_id > 0 && trim($opening_date) != ""){
+			$strSQL = "SELECT SR.item_id, SR.unit_rate, sum(SR.quantity) as quantity_in_hand  FROM stock_register SR, stock_master S WHERE SR.fy_id='".$current_fy_id."' AND SR.item_id = S.item_id GROUP BY SR.item_id,SR.unit_rate ";
+			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+			while($row = mysql_fetch_assoc($rsRES)){
+				if($row["quantity_in_hand"] > 0){
+					$this->stk_id= gINVALID;
+					$this->voucher_number ="";
+					$this->voucher_type_id = gINVALID; //voucher
+					$this->item_id	= $row["item_id"];
+					$this->quantity = $row["quantity_in_hand"];
+					$this->unit_rate = $row["unit_rate"];
+					$this->input_type = INPUT_OPENING; //from where or how the item added in stock
+					$this->purchase_reference_number = "";
+					$this->date = $opening_date;
+					$this->tax_id = gINVALID;
+					$this->fy_id = gINVALID;
+					$this->current_fy_id = $next_fy_id;	
+					$this->update();
+				}
+			}
+
+			return true;
+		}else{
+			return false;
+		}
+    }
+
+   public function revert_close($next_fy_id) {
+		if($next_fy_id > 0){
+			$strSQL = "DELETE FROM stock_register WHERE fy_id='".$next_fy_id."'";
+			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+			return true;
+		}else{
+			return false;
+		}
+    }
+
+
+
+
+
+
+
     public function get_voucher_inventory_details()
     {
     	$items = array();$i=0;
