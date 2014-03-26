@@ -429,7 +429,10 @@ Class Ledger{
     	$ledgers = array();$i=0;
 		$strSQL = "SELECT  ledger_sub_id,ledger_sub_name FROM ledger_sub WHERE deleted = '".NOT_DELETED."' AND status = '".STATUS_ACTIVE."'";
 		$strSQL .= " AND ledger_sub.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
-		 mysql_query("SET NAMES utf8");
+		if($this->ledger_id > 0){
+			$strSQL .= " AND ledger_id = '".$this->ledger_id."'";
+		}
+		mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		if ( mysql_num_rows($rsRES) > 0 )
 		{

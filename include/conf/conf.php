@@ -72,10 +72,6 @@ define("PRIORITY_SUB", 2);
 define("SALES",13);
 define("PURCHASE",14);
 
-//LEDGER MASTER IDS
-define(LEDGER_DUTIES_AND_TAXES, 12);
-define(LEDGER_SUNDRY_CREDITORS, 31);
-define(LEDGER_SUNDRY_DEBITORS, 32);
 
 //modules
 define("MODULE_VAZHIPADU", 1);
@@ -158,25 +154,6 @@ define("CREDIT_TYPE_REPORT", '4');
 define("CREDIT_TYPE_ORGANIZATION_CREDIT", '5');
 define("CREDIT_TYPE_VOUCHER", '6');
 
-//payment online
-define("PAYMENT_ONLINE",'1');
-define("PAYMENT_OFFLINE", '0');
-
-//payment type
-define("PAYMENT_TYPE_IIPAY", '1');
-define("PAYMENT_TYPE_CCAVENUE", '2');
-define("PAYMENT_TYPE_CHEQUE", '3');
-define("PAYMENT_TYPE_CASH", '4');
-
-// question Status
-define("QUESTION_STATUS_ACTIVE", 1);
-define("QUESTION_STATUS_INACTIVE", 2);
-
-// question Types
-define("QUESTION_TYPE_SINGLE_ANSWER", 1);
-define("QUESTION_TYPE_MULTIPLE_ANSWERS", 2);
-
-
 
 //import default delimiter
 define("DEFAULT_IMPORT_DELIMITER", ',');
@@ -197,14 +174,19 @@ define('VOUCHER_BANK_RECEIPT', 10);
 define('VOUCHER_BANK_PAYMENT', 11);
 
 
-//LEDGERS
-define(LEDGER_DIRECT_INCOME, 11);
+//MASTER LEDGERS
+define('LEDGER_CAPITAL_ACCOUNT',5);
+define('LEDGER_DIRECT_INCOME', 11);
+define('LEDGER_DUTIES_AND_TAXES', 12);
+define('LEDGER_SUNDRY_CREDITORS', 31);
+define('LEDGER_SUNDRY_DEBITORS', 32);
 
 //SUB LEDGER
-define(LEDGER_SUB_VAZHIPADU, 'വഴിപാട്');
+define('LEDGER_SUB_VAZHIPADU', 'വഴിപാട്');
 
 //vazhipadu cancel
 define('CANCEL_STATUS_TRUE', 2);
 define('CANCEL_STATUS_FALSE',1);
+
 
 ?>

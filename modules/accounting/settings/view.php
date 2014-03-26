@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
         <div class="row">
  			<div class="medium-5 columns">
  				<label for="ledger">Default Capital Ledger:</label>
- 				<input type="text" />
+ 				<?php echo populate_list_array("lstledger", $ledgers, 'id','name', '',$disable=false);?>
  			</div>
  			
  		</div>
