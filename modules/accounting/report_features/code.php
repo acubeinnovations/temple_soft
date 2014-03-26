@@ -16,6 +16,7 @@ $ledgers = $ledger->get_list_master_array();
 
 
 
+
 if(isset($_GET['slno'])){
 	$report->report_id = $_GET['slno'];
 	$report->get_details();	
@@ -78,7 +79,7 @@ if(isset($_POST['submit'])){
 if(isset($_GET['master'])){
 	
 	$ledger->ledger_id = $_GET['master'];
-	$sub = $ledger->get_list_sub_array_with_masterid();
+	$sub = $ledger->get_list_sub_array_with_masterid_and_fy();
 	if($sub){
 		$json['sub'] = $sub;
 	}

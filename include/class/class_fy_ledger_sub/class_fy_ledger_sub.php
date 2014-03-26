@@ -32,6 +32,24 @@ Class FyLedgerSub{
     	}
     }
 
+    public function update()
+    {
+    	if($this->validate()){
+	    	$strSQL = "INSERT INTO fy_ledger_sub(fy_id,ledger_sub_id) VALUES('".mysql_real_escape_string($this->current_fy_id)."','".mysql_real_escape_string($this->ledger_sub_id)."')";
+			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+			if ( mysql_affected_rows($this->connection) > 0 ) {
+				$this->error_description="Data inserted Successfully";
+				return true;
+			}else{
+				$this->error_number = 3;
+				$this->error_description="Can't insert data ";
+				return false;
+			}
+		}else{
+			return false;
+		}
+    }
+
     public function insert_batch($dataArray= array())
     {
     	if(count($dataArray) > 0){
@@ -48,7 +66,6 @@ Class FyLedgerSub{
 	    		$strSQL.= mysql_real_escape_string($this->ledger_sub_id)."'),";
 			}
 			$strSQL.= substr($strSQL, 0,-1);
-			mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 			if ( mysql_affected_rows($this->connection) > 0 ) {
 				$this->error_description="Data inserted Successfully";
@@ -88,6 +105,21 @@ Class FyLedgerSub{
     		$this->error_description = "Can't list ledgers";
     		return false;
     	}
+    }
+
+    public function validate()
+    {
+    	if($this->ledger_sub_id > 0){
+	    	$strSQL = "SELECT * FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."' AND ledger_sub_id = '".$this->ledger_sub_id."'";
+	    	$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+	    	if(mysql_num_rows($rsRES) > 0){
+	    		return false;
+	    	}else{
+	    		return true;
+	    	}
+	    }else{
+	    	return false;
+	    }
     }
 
 }
