@@ -13,7 +13,7 @@ ob_start();
 
 			<div class="medium-4 columns">
 				Receipt Number :<?php echo $vazhipadu->vazhipadu_rpt_number; ?><br/>
-				Date :<?php echo $vazhipadu->vazhipadu_date; ?>
+				Date :<?php //echo $vazhipadu->vazhipadu_date; ?><?php echo date("d-m-Y");?>
 			</div>
 	</div>
 
@@ -46,6 +46,11 @@ ob_start();
 					<td align="right" style="font-weight:bold;">Total</td>
 					<td style="font-weight:bold;"><?php echo $total;?></td>
 				</tr>
+				<tr>
+					<td align="left">Date of Vazhipadu</td>
+					<td align="left"><?php echo $vazhipadu->vazhipadu_date; ?></td>
+					<td></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -57,4 +62,4 @@ ob_start();
 <?php 
 $print_content = ob_get_contents();
 ob_end_clean();
-echo $print_content;?>
+$print_content;?>
