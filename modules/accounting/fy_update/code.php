@@ -34,7 +34,7 @@ if(isset($_GET['dlt'])){
 
 //close
 if(isset($_GET['cls'])){
-
+	$_SESSION[SESSION_TITLE.'flash'] = "";
 	if($mybalancesheet->error == false){
 
 	$financial_year->id = $_GET['cls'];
@@ -106,6 +106,7 @@ if(isset($_GET['cls'])){
 					$account->update();
 					$result=true;
 				}else{
+					$_SESSION[SESSION_TITLE.'flash'] .= "Default capital account not in settings<br>";
 					$result=false;
 				}
 
@@ -116,11 +117,12 @@ if(isset($_GET['cls'])){
 					// close FY
 					$result = $financial_year->close();
 				}else{
-					
+					$_SESSION[SESSION_TITLE.'flash'] .= "Adding sub ledges for next Fy failed <br>";
 					$result =false;
 					
 				}
 			}else{
+				$_SESSION[SESSION_TITLE.'flash'] .= "Please check for next FY <br>";
 				$result =false;
 			}
 
@@ -139,9 +141,11 @@ if(isset($_GET['cls'])){
 			}
 			
 		}else{
+			$_SESSION[SESSION_TITLE.'flash'] .= "Please check for next FY <br>";
 			$result =false;
 		}
 	}else{
+		$_SESSION[SESSION_TITLE.'flash'] .= "Unable to fetch closing data, Please check for FY in account settings <br>";
 		$result =false;
 	}
 
@@ -151,7 +155,7 @@ if(isset($_GET['cls'])){
 	    header( "Location:".$current_url);
 	    exit();
 	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = "Unable to close Financial Year, Please check Next Financial Year Details";
+		$_SESSION[SESSION_TITLE.'flash'] .= "Unable to close Financial Year, Please check Next Financial Year Details";
 	    header( "Location:".$current_url);
 	    exit();
 	}
