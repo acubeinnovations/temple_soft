@@ -9,6 +9,7 @@ Class AccountSettings{
 	var $connection ="";
 	var $id  =  gINVALID;//fy_id
 	var $current_fy_id = gINVALID;
+    var $default_capital = gINVALID;
 
 	var $error = false;
     var $error_number=gINVALID;
@@ -24,16 +25,19 @@ Class AccountSettings{
     		$row 	= mysql_fetch_assoc($rsRES);
     		$this->id = $row['id'];
     		$this->current_fy_id = $row['current_fy_id'];
+            $this->default_capital = $row['default_capital'];
     		return true;
     	}else{
     		return false;
     	}
     }
 
-	public function updateCurrentFY()
+	public function update()
     {
     	if ( ($this->current_fy_id != "" || $this->current_fy_id != gINVALID) && $this->current_fy_id >0 ) {
-    		$strSQL = "UPDATE account_settings SET current_fy_id = '".$this->current_fy_id."'";
+    		$strSQL = "UPDATE account_settings SET";
+            $strSQL.= " current_fy_id = '".mysql_real_escape_string($this->current_fy_id)."',";
+            $strSQL.= " default_capital = '".mysql_real_escape_string($this->default_capital)."'";
 
     		$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 
