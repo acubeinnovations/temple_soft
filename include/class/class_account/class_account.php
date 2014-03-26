@@ -259,6 +259,7 @@ Class Account{
         $strSQL .= " LEFT JOIN voucher v ON v.voucher_id = am.voucher_type_id";
         $strSQL .= " LEFT JOIN ledger_sub ls ON ls.ledger_sub_id = am.ref_ledger";
         $strSQL .= " WHERE 1";
+         $strSQL .= " AND am.fy_id = '".$this->current_fy_id."' AND am.deleted='".NOT_DELETED."'";
         mysql_query("SET NAMES utf8");
 
         if(is_array($ledgers)){
