@@ -251,6 +251,63 @@ Class Account{
     		}
     	
     }
+    public function getAllAccountTransaction($voucher = array())
+    {
+       // print_r($voucher);
+            $strSQL = "SELECT am.account_id,am.voucher_number, am.voucher_type_id,am.date,am.narration,am.account_from,am.account_to,am.account_debit,am.account_credit,v.voucher_name FROM account_master am";
+            $strSQL .= " LEFT JOIN voucher v ON v.voucher_id=am.voucher_type_id";
+            $strSQL .= " WHERE am.fy_id = '".$this->current_fy_id."' AND am.deleted='".NOT_DELETED."'";
+
+            if($this->voucher_type_id > 0){
+              $strSQL .= " AND am.voucher_type_id = '".$this->voucher_type_id."'";
+            }
+
+            if(isset($voucher['account_from'])){
+                $ids = implode(",",$voucher['account_from']);
+                $strSQL.= " AND am.ref_ledger IN(".$ids.")";
+            }
+            else if(isset($voucher['account_to'])){
+                $ids = implode(",",$voucher['account_to']);
+                $strSQL.= " AND am.ref_ledger IN(".$ids.")";
+            }
+
+            if(isset($voucher['book_ledgers'])){
+                $ids = implode(",",$voucher['book_ledgers']);
+                $strSQL.= " AND am.ref_ledger IN(".$ids.")";
+            }
+
+            if(isset($voucher['ref_ledger'])){
+                $id = $voucher['ref_ledger'];
+                $strSQL.= " AND am.ref_ledger ='".$id."'";
+            }
+            //time period
+            if(isset($voucher['datefrom']) and isset($voucher['dateto'])){
+                $datefrom = date('Y-m-d',strtotime($voucher['datefrom']));
+                $dateto = date('Y-m-d',strtotime($voucher['dateto']));
+                $strSQL.= " AND am.date BETWEEN '".$datefrom."' AND '".$dateto."'";
+            }
+
+            mysql_query("SET NAMES utf8");            
+            $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+            //echo $strSQL;exit();
+            $data = array();$i=0;
+            if(mysql_num_rows($rsRES) > 0){
+                while($row = mysql_fetch_assoc($rsRES)){
+                    $data[$i]['account_id']     = $row['account_id'];
+                    $data[$i]['voucher_number'] = $row['voucher_number'];
+                    $data[$i]['voucher_name']   = $row['voucher_name'];
+                    $data[$i]['date']           = date('d-m-Y',strtotime($row['date']));
+                    $data[$i]['narration']      = $row['narration'];
+                    $data[$i]['account_from']   = $row['account_from'];
+                    $data[$i]['account_to']     = $row['account_to'];
+                    $data[$i]['account_debit']  = $row['account_debit'];
+                    $data[$i]['account_credit'] = $row['account_credit'];
+                    $i++;
+                }
+                return $data;
+            }
+        
+    }
 
     //result for account books
     public function getBookDetails($start_record = 0,$max_records = 25,$ledgers = array())
@@ -278,6 +335,44 @@ Class Account{
                 $all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
                 $this->total_records = mysql_num_rows($all_rs);
             }
+            while($row = mysql_fetch_assoc($rsRES)){
+                $limited_data[$i]['account_id']     = $row['account_id'];
+                $limited_data[$i]['voucher_number'] = $row['voucher_number'];
+                $limited_data[$i]['voucher_name'] = $row['voucher_name'];
+                $limited_data[$i]['voucher_type_id'] = $row['voucher_type_id'];
+                $limited_data[$i]['ref_ledger_name']  = $row['ref_ledger_name'];
+                $limited_data[$i]['date']           = date('d-m-Y',strtotime($row['date']));
+                $limited_data[$i]['narration']      = $row['narration'];
+                $limited_data[$i]['account_from']   = $row['account_from'];
+                $limited_data[$i]['account_to']     = $row['account_to'];
+                $limited_data[$i]['account_debit']  = $row['account_debit'];
+                $limited_data[$i]['account_credit'] = $row['account_credit'];
+                $i++;
+            }
+            //print_r($limited_data);exit();
+            return $limited_data;
+        }
+    }
+
+    //result for account books
+    public function getAllBookDetails($ledgers = array())
+    {
+        $strSQL = "SELECT am.account_id,am.voucher_number, am.voucher_type_id,am.date,am.narration,am.account_from,am.account_to,am.account_debit,am.account_credit,v.voucher_name,ls.ledger_sub_name AS ref_ledger_name FROM account_master am";
+        $strSQL .= " LEFT JOIN voucher v ON v.voucher_id = am.voucher_type_id";
+        $strSQL .= " LEFT JOIN ledger_sub ls ON ls.ledger_sub_id = am.ref_ledger";
+        $strSQL .= " WHERE 1";
+         $strSQL .= " AND am.fy_id = '".$this->current_fy_id."' AND am.deleted='".NOT_DELETED."'";
+        mysql_query("SET NAMES utf8");
+
+        if(is_array($ledgers)){
+            $ledger_ids = implode(",",$ledgers);
+            $strSQL .= " AND am.ref_ledger IN(".$ledger_ids.")";
+        }
+
+        
+        $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+        $limited_data = array();$i=0;
+        if(mysql_num_rows($rsRES) > 0){
             while($row = mysql_fetch_assoc($rsRES)){
                 $limited_data[$i]['account_id']     = $row['account_id'];
                 $limited_data[$i]['voucher_number'] = $row['voucher_number'];
