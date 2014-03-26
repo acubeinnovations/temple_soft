@@ -155,7 +155,7 @@ if(isset($_GET['cls'])){
 	    header( "Location:".$current_url);
 	    exit();
 	}else{
-		$_SESSION[SESSION_TITLE.'flash'] .= "Unable to close Financial Year, Please check Next Financial Year Details";
+		$_SESSION[SESSION_TITLE.'flash'] .= "Unable to close Financial Year.";
 	    header( "Location:".$current_url);
 	    exit();
 	}
