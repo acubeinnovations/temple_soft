@@ -4,8 +4,15 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
+
+
 <div class="row" >
-	<h3><?php echo $page_heading; ?></h3>
+	<div class="medium-4 columns">
+		<h3><?php echo $page_heading; ?></h3>
+	</div>
+	<div class="text-right" style="margin-top:5px;">
+		<input type="button" class="tiny button" value="print" id="button-print"/>
+	</div>
 </div>
 
 <div class="row" style="border:1px solid black;">
@@ -187,3 +194,12 @@ if(!defined('CHECK_INCLUDED')){
 		</tr>
 	</table>
 </div>
+
+<?php ob_start();?>
+
+<?php 
+	$print_content = ob_get_contents();
+	ob_end_clean();
+	echo $print_content;
+	
+?>
