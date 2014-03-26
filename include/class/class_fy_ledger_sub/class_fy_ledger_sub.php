@@ -10,6 +10,9 @@ Class FyLedgerSub{
 	var $fy_id  =  gINVALID; //master ledger
 	var $ledger_sub_id = gINVALID;
 
+	var $current_fy_id = gINVALID;
+	var $default_capital = gINVALID;
+
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
@@ -22,9 +25,10 @@ Class FyLedgerSub{
     	if(mysql_num_rows($rsRES) > 0){
     		$row = mysql_fetch_assoc($rsRES);
     		$this->current_fy_id =$row['current_fy_id'];
-    		//echo $this->current_fy_id;exit();
+    		$this->default_capital =$row['default_capital'];
+    		return true;
     	}else{
-    		header("Location:ac_account_settings.php");exit();
+    		return false;
     	}
     }
 
@@ -62,9 +66,28 @@ Class FyLedgerSub{
 		}
     }
 
-    public function getFyLedgers()
+    public function getCurrentLedgers()
     {
-
+    	$strSQL = "SELECT fls.ledger_sub_id,ls.ledger_sub_name,lm.ledger_name FROM fy_ledger_sub fls" ;
+    	$strSQL .= " LEFT JOIN ledger_sub ls ON  ls.ledger_sub_id = fls.ledger_sub_id";
+    	$strSQL .= " LEFT JOIN ledger_master lm ON  lm.ledger_id = ls.ledger_id";
+    	$strSQL .= " WHERE ls.status='".STATUS_ACTIVE."' AND ls.deleted = '".NOT_DELETED."' AND fls.fy_id = '".$this->current_fy_id."'";
+    	$strSQL .= " ORDER BY ls.ledger_id";
+    	mysql_query("SET NAMES utf8");
+    	$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+    	$ledgers = array();$i=0;
+    	if(mysql_num_rows($rsRES) > 0){
+    		while($row = mysql_fetch_assoc($rsRES)){
+    			$ledgers[$i]['ledger_sub_id'] 	= $row['ledger_sub_id'];
+    			$ledgers[$i]['ledger_sub_name'] = $row['ledger_sub_name'];
+    			$ledgers[$i]['ledger_name'] 	= $row['ledger_name'];
+    			$i++;
+    		}
+    		return $ledgers;
+    	}else{
+    		$this->error_description = "Can't list ledgers";
+    		return false;
+    	}
     }
 
 }

@@ -130,7 +130,7 @@ Class StockRegister{
 
     public function quantityInStock($item_id)
     {
-		$strSQL = "SELECT sum(quantity) as quantity_in_hand FROM stock_register WHERE item_id = '".$item_id."'";
+		$strSQL = "SELECT sum(quantity) as quantity_in_hand FROM stock_register WHERE fy_id='".$this->current_fy_id."' AND item_id = '".$item_id."'";
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		$row = mysql_fetch_assoc($rsRES);
 		if($row['quantity_in_hand'] == NULL){

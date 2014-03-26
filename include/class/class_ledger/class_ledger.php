@@ -431,6 +431,7 @@ $output =array();
 			$strSQL .= " FROM ledger_sub L1";
 			$strSQL .= " LEFT JOIN ledger_sub L2 ON L2.ledger_sub_id = L1.ledger_sub_id";
 			$strSQL .= " WHERE L1.deleted = '".NOT_DELETED."' AND L1.fy_id = '".$this->current_fy_id."' AND  L2.fy_id = '".$this->current_fy_id."' AND L1.status = '".STATUS_ACTIVE."' AND L2.deleted = '".NOT_DELETED."'AND L2.status = '".STATUS_ACTIVE."' AND L1.ledger_id = '".$this->ledger_id."'";
+			$strSQL .= " AND L1.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
 			 mysql_query("SET NAMES utf8");
 			 
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );

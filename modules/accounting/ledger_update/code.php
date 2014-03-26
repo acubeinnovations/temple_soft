@@ -19,7 +19,6 @@ $fy_year->get_details();
 
 $ledgers = $ledger->generateLedgerList();
 
-
 $ledger_masters = $ledger->get_list_master_array();
 
 if(isset($_POST['submit'])){
