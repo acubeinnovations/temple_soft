@@ -61,7 +61,7 @@
 
 			if($sheet["difference_in_opening_balance"] < 0){ ?>
 			<table width="100%">
-				<tr><td align="left" >Difference in opening Balance</td> <td align="right"><?php echo $sheet["difference_in_opening_balance"]; ?></td></td>
+				<tr><td align="left" >Difference in opening Balance</td> <td align="right"><?php echo abs($sheet["difference_in_opening_balance"]); ?></td></td>
 			</table>
 		<?php 
 				$total_assets = $sheet["total_assets"] +  abs($sheet["difference_in_opening_balance"]);
