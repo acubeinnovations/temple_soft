@@ -107,14 +107,10 @@ Class ReportFeature{
 						// Do Noting
 					}
 
-                    $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, (SELECT SUM(account_debit) FROM account_master   WHERE fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id ) AS debit,(SELECT SUM(account_credit) FROM account_master   WHERE  fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id) AS credit 
-FROM ledger_sub ls 
-WHERE ls.fy_id = '".$this->current_fy_id."' AND ls.ledger_sub_id IN(".$sub_ledgers.")";
+                    $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, (SELECT SUM(account_debit) FROM account_master   WHERE fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id AND deleted = '".NOT_DELETED."' ) AS debit,(SELECT SUM(account_credit) FROM account_master   WHERE  fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit";
+                    $strSQL_sub .= " FROM ledger_sub ls";
+                    $strSQL_sub .= " WHERE ls.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."') AND ls.ledger_sub_id IN(".$sub_ledgers.")";
 
-    				//$strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, SUM(am.account_debit) AS debit,SUM(am.account_credit) AS credit FROM ledger_sub ls";
-    				//$strSQL_sub .= " LEFT JOIN account_master am ON am.ref_ledger = ls.ledger_sub_id";
-    				//$strSQL_sub .= " WHERE ls.ledger_sub_id IN(".$sub_ledgers.")";
-                   // echo $strSQL_sub;exit();
     				$rsRES_sub = mysql_query($strSQL_sub,$this->connection) or die(mysql_error(). $strSQL_sub );
     				$sub_ledger = array();$j=0;
     				$master_balance = 0;
