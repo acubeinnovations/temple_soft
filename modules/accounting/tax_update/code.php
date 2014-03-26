@@ -15,6 +15,9 @@ $tax->connection = $myconnection;
 $ledger = new Ledger($myconnection);
 $ledger->connection = $myconnection;
 
+$fy_ledger_sub = new FyLedgerSub($myconnection);
+$fy_ledger_sub->connection = $myconnection;
+
 $tax->total_records=$pagination->total_records;
 
 $tax_list = $tax->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
@@ -82,7 +85,12 @@ if(isset($_POST['submit'])){
 			$ledger->ledger_id = LEDGER_DUTIES_AND_TAXES;
 			$ledger->fy_id = $account_settings->current_fy_id;
 
-			$ledger->update();
+			$update_ledger = $ledger->update();
+			if($update_ledger){
+				//add ledger in fy_ledger_sub
+				$fy_ledger_sub->ledger_sub_id = $ledger->ledger_sub_id;
+				$fy_ledger_sub->update();
+			}
 			$_SESSION[SESSION_TITLE.'flash'] = "Success";
 	        header( "Location:".$current_url);
 	        exit();
