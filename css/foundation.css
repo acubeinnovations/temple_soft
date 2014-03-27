@@ -40,7 +40,10 @@ body {
   font-style: normal;
   line-height: 1;
   position: relative;
-  cursor: default; }
+  cursor: default; 
+  background:url(../images/ayyappa.jpg) no-repeat;
+  background-position:left bottom; 
+}
 
 a:hover {
   cursor: pointer; }
