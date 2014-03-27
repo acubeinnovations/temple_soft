@@ -114,6 +114,8 @@ Class ReportFeature{
 
                     $strSQL_sub .= " ORDER BY ls.ledger_sub_name";
 
+                   // echo $strSQL_sub;exit();
+
     				$rsRES_sub = mysql_query($strSQL_sub,$this->connection) or die(mysql_error(). $strSQL_sub );
     				$sub_ledger = array();$j=0;
     				$master_balance = 0;
@@ -173,6 +175,18 @@ Class ReportFeature{
                 $i++;
             }
             return $features;
+        }else{
+            return false;
+        }
+    }
+
+
+    public function delete()
+    {
+        $strSQL = "DELETE FROM report_feature WHERE feature_id = '".$this->feature_id."'";
+        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+        if ( mysql_affected_rows($this->connection) > 0 ) {
+            return true;
         }else{
             return false;
         }

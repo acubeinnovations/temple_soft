@@ -75,10 +75,10 @@ if(isset($_POST['submit'])){
 		$account->date				= CURRENT_DATE;
 		$dataAccount[0]['account_debit']  = $total_amount;
 		$dataAccount[0]['account_credit'] = "";
-		$dataAccount[0]['ref_ledger'] = $voucher->default_from;
+		$dataAccount[0]['ref_ledger'] = $account->account_from;
 		$dataAccount[1]['account_debit']  = "";
 		$dataAccount[1]['account_credit'] = $total_amount;
-		$dataAccount[1]['ref_ledger'] = $voucher->default_to;
+		$dataAccount[1]['ref_ledger'] = $account->account_to;
 
 		//print_r($dataAccount);exit();
 		$insert = $account->insert_batch($dataAccount);

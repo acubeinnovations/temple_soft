@@ -120,10 +120,39 @@ Class Ledger{
     	}
     }
 
+    //get ledger sub list which have no children - current financial year
+    public function get_list_array_have_no_children($filter = "")
+    {
+    	$ledgers = array();$i=0;
+		$strSQL = "SELECT ledger_sub_id,ledger_sub_name FROM ledger_sub WHERE deleted = '".NOT_DELETED."'AND status = '".STATUS_ACTIVE."'";
+		$strSQL .= " AND ledger_sub_id NOT IN (SELECT parent_sub_ledger_id FROM ledger_sub)";
+		$strSQL .= " AND ledger_sub.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
+		if($filter != ""){
+			$strSQL .= " AND ".$filter;
+		}
+		$strSQL .= " ORDER BY ledger_sub_name";
+		 mysql_query("SET NAMES utf8");
+		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+		if ( mysql_num_rows($rsRES) > 0 )
+		{
+			while ( list ($id,$name) = mysql_fetch_row($rsRES) ){
+				$ledgers[$i]['id'] = $id;
+				$ledgers[$i]['name'] = $name; 
+				$i++;
+				
+       		}
+            return $ledgers;
+       	}else{
+			$this->error_number = 4;
+			$this->error_description="Can't list Ledgers";
+			return false;
+    	}
+    }
+
     //get ledger sub list of current financial year combine with account master
     public function get_list_sub_level1_with_account_master($ledger_id)
     {
-    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub,account_master
+    	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub,account_master
 			WHERE ledger_sub.deleted = '".NOT_DELETED."' AND account_master.fy_id = '".$this->current_fy_id."' AND ledger_sub.status = '".STATUS_ACTIVE."' AND ledger_id = '".$ledger_id."' AND parent_sub_ledger_id = '-1'";
 			$strSQL .= " AND ledger_sub.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
 			$strSQL .= " GROUP BY ledger_sub_id";
@@ -226,7 +255,7 @@ Class Ledger{
     //get ledger sub list of ledger sub in current financial year with account master
     public function getSibblingsArray($id)
     {
-    	$strSQL = "SELECT ls.ledger_sub_id,ls.ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub ls,account_master
+    	$strSQL = "SELECT ls.ledger_sub_id,ls.ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub ls,account_master
 			WHERE ls.deleted = '".NOT_DELETED."'AND ls.status = '".STATUS_ACTIVE."' AND ls.parent_sub_ledger_id = '".$id."'";
 		$strSQL .= " AND ls.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
 		$strSQL .= " GROUP BY ls.ledger_sub_id";
@@ -485,10 +514,13 @@ Class Ledger{
 	    	$sub_ledgers = array();
 			$strSQL = "SELECT L1.ledger_sub_id ,L1.ledger_sub_name AS ledger_sub_name";
 			$strSQL .= " FROM ledger_sub L1";
-			$strSQL .= " WHERE L1.deleted = '".NOT_DELETED."' AND L1.status = '".STATUS_ACTIVE."' AND L1.ledger_id = '".$this->ledger_id."'";
+			$strSQL .= " WHERE L1.deleted = '".NOT_DELETED."' AND L1.status = '".STATUS_ACTIVE."'";
+			if($this->ledger_id >0){
+				$strSQL .=" AND L1.ledger_id = '".$this->ledger_id."'";
+			}
 			$strSQL .= " AND L1.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
 			$strSQL .= " AND L1.ledger_sub_id NOT IN(SELECT parent_sub_ledger_id FROM ledger_sub)";
-			
+
 			mysql_query("SET NAMES utf8");
 			 
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
