@@ -1,5 +1,6 @@
 <!--
 $(document).ready(function(){
+	$('#listpooja').focus();
 
 	var nameObj	= $("input:text[name=txtname]");
 	var starObj = $("#liststar");

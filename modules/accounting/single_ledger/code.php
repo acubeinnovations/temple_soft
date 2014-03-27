@@ -10,7 +10,7 @@ $ledger->connection = $myconnection;
 $account = new Account($myconnection);
 $account->connection = $myconnection;
 
-$ledgers = $ledger->get_list_array();
+$ledgers = $ledger->get_list_array_have_no_children();
 
 $datefrom = "";
 $dateto = "";

@@ -141,7 +141,7 @@ define("EMAIL_SUPPORT", "noreply@temple_soft.local");
 define("WEB_URL", "http://temple_soft.local");
 define("ADMIN_URL", "http://temple_soft.local/admin");
 define("WEB_NAME", "temple_soft.local");
-define("ORG_NAME", "temple_soft");
+define("ORG_NAME", "Sree Hariharasudha Ayyappa Temple");
 
 
 

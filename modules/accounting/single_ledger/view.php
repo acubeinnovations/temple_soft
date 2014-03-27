@@ -98,7 +98,7 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <?php ob_start();?>
-<?php if( count($account_total_list) >0){?>
+<?php if( isset($account_total_list) and count($account_total_list) > 0){?>
 	<h3><?php echo $ledger_name; ?></h3>
 	<p>Date :<?php echo $datestr;?></p>
 	<table width="100%">
@@ -153,7 +153,7 @@ if(!defined('CHECK_INCLUDED')){
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
-	echo $print_content;
+	//echo $print_content;
 	
 ?>
 

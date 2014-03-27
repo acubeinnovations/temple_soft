@@ -62,7 +62,7 @@ if(!defined('CHECK_INCLUDED')){
 										<?php echo $sub[$j]['ledger_sub_name'];?>
 									</div>
 									<div class="medium-5 columns">
-										<?php echo $sub[$j]['balance']?>
+										<?php echo number_format($sub[$j]['balance'],2)?>
 									</div>
 									
 								</div>
@@ -88,7 +88,7 @@ if(!defined('CHECK_INCLUDED')){
 							Total
 						</div>
 						<div class="medium-2 columns" style="font-weight:bold;">
-							<?php echo $lhs_total_balance; ?>
+							<?php echo number_format($lhs_total_balance,2); ?>
 						</div>
 					</div>
 				</div>

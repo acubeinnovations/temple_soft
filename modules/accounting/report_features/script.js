@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	$("#lstsledger").attr('disabled',true);
 
+	
+
 	$("#button-add").click(function(){
 
 		var ledger = $("#lstmledger").val();
@@ -64,7 +66,38 @@ $(document).ready(function(){
 		$("#sub-ledger").html(lstsledger); 
 
 	});
-	
+
+
+
+	//remove feature
+	$(".button-remove").click(function(){
+		var cnf = confirm("Do you really want to remove this feature?");
+		if(cnf){
+			var feature_id = $(this).attr('feature');
+			$.ajax({
+				type:'POST',
+				url:CURRENT_URL,
+				data:{remove_feature:feature_id},
+				success: function (data) {
+					if(data == '1'){
+						popup_alert("Feature Removed",false);
+					}else{
+						popup_alert("Failed to remove feature",false);
+					}
+				}
+			});
+		}
+
+			
+	});
+
+
+	$("#popup_alert_button_cancel").click(function(){
+		location.reload();
+	});
+
+
+
 
 });
 

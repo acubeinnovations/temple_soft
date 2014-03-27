@@ -21,7 +21,7 @@ $tax = new Tax($myconnection);
 $tax->connection = $myconnection;
 $taxes = $tax->get_list_array();
 
-$ledgers_all = $ledger->get_list_array();
+$ledgers_all = $ledger->get_list_array_have_no_children();
 $items = $stock->get_list_array();
 
 $page_heading = "Generate Voucher";
@@ -80,9 +80,9 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$default_from = true;
 		$ids = unserialize($voucher->default_from);
 		$filter = "ledger_sub_id IN (".implode(",",$ids).")";
-		$ledgers_default_from_filtered = $ledger->get_list_array($filter);
+		$ledgers_default_from_filtered = $ledger->get_list_array_have_no_children($filter);
 		$filter1 = "ledger_sub_id NOT IN (".implode(",",$ids).")";
-		$ledgers_exept_default_from_filtered = $ledger->get_list_array($filter1);
+		$ledgers_exept_default_from_filtered = $ledger->get_list_array_have_no_children($filter1);
 	}else{
 		$default_from = false;	
 	}
@@ -91,9 +91,9 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$default_to = true;
 		$ids = unserialize($voucher->default_to);
 		$filter = "ledger_sub_id IN (".implode(",",$ids).")";
-		$ledgers_default_to_filtered = $ledger->get_list_array($filter);
+		$ledgers_default_to_filtered = $ledger->get_list_array_have_no_children($filter);
 		$filter1 = "ledger_sub_id NOT IN (".implode(",",$ids).")";
-		$ledgers_exept_default_to_filtered = $ledger->get_list_array($filter1);
+		$ledgers_exept_default_to_filtered = $ledger->get_list_array_have_no_children($filter1);
 	}else{
 		$default_to = false;
 	}
@@ -132,6 +132,7 @@ else{
 
 //submit form
 if(isset($_POST['submit'])){
+
 
 	$voucher->voucher_id = $_POST['hd_voucherid'];
 	$voucher->get_details();
@@ -207,9 +208,14 @@ if(isset($_POST['submit'])){
 					$stock_register->insert_batch($dataArray);
 				}
 
+				if(isset($_POST['ch_print'])){
 				
-				header( "Location:ac_voucher_print.php?ac=".$account_id);
-			    exit();
+					header( "Location:ac_voucher_print.php?ac=".$account_id);
+				    exit();
+				}else{
+					header( "Location:".$current_url."?v=".$voucher->voucher_id);
+						exit();
+				}
 			   
 					
 				
@@ -275,14 +281,22 @@ if(isset($_POST['submit'])){
 			}
 
 			if($insert){
-				
-				if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
-					header( "Location:ac_form_print.php?ac=".$insert);
-		    		exit();
+
+				if(isset($_POST['ch_print'])){
+					if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
+						header( "Location:ac_form_print.php?ac=".$insert);
+			    		exit();
+					}else{
+						header( "Location:ac_voucher_print.php?ac=".$insert);
+						exit();
+					}
 				}else{
-					header( "Location:ac_voucher_print.php?ac=".$insert);
-					exit();
+					header( "Location:".$current_url."?v=".$voucher->voucher_id);
+						exit();
+
 				}
+				
+				
 				
 			}
 		}
