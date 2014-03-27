@@ -15,25 +15,27 @@ $ledger->connection = $myconnection;
 $ledgers = $ledger->get_list_master_array();
 
 
-
-
 if(isset($_GET['slno'])){
 	$report->report_id = $_GET['slno'];
 	$report->get_details();	
 
-
 	$report_feature->report_id = $report->report_id;
-	
-	
 
-
-}/*else{
-	$_SESSION[SESSION_TITLE.'flash'] = "Invalid Report";
-    header( "Location:ac_report_list.php");
-    exit();
-}*/
-
+}
 $features = $report_feature->get_details_with_report();
+if($features){
+	$ledger_master_ids = array();
+	foreach($features as $feature){
+		array_push($ledger_master_ids, $feature['ledger_master_id']);
+	}
+	
+	foreach ($ledgers as $index=>$ledger) {
+		if(in_array($ledger['id'],$ledger_master_ids)){
+			unset($ledgers[$index]);
+		}
+	}
+
+}
 
 
 
@@ -64,7 +66,7 @@ if(isset($_POST['submit'])){
 			
 			$i++;
 		}
-		print_r($dataArray);exit();
+		//print_r($dataArray);exit();
 
 		$insert = $report_feature->insert_batch($dataArray);
 		if($insert){
@@ -96,8 +98,17 @@ if(isset($_GET['master'])){
 	}
 	echo json_encode($json);exit();
 	//print_r($sub_ledgers);exit();
-	
 
+}
+
+if(isset($_POST['remove_feature'])){
+	$report_feature->feature_id = $_POST['remove_feature'];
+	$delete = $report_feature->delete();
+	if($delete){
+		print 1;exit();
+	}else{
+		print 0;exit();
+	}
 }
 
 ?>
