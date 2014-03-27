@@ -133,6 +133,7 @@ else{
 //submit form
 if(isset($_POST['submit'])){
 
+
 	$voucher->voucher_id = $_POST['hd_voucherid'];
 	$voucher->get_details();
 
@@ -207,9 +208,14 @@ if(isset($_POST['submit'])){
 					$stock_register->insert_batch($dataArray);
 				}
 
+				if(isset($_POST['ch_print'])){
 				
-				header( "Location:ac_voucher_print.php?ac=".$account_id);
-			    exit();
+					header( "Location:ac_voucher_print.php?ac=".$account_id);
+				    exit();
+				}else{
+					header( "Location:".$current_url."?v=".$voucher->voucher_id);
+						exit();
+				}
 			   
 					
 				
@@ -275,14 +281,22 @@ if(isset($_POST['submit'])){
 			}
 
 			if($insert){
-				
-				if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
-					header( "Location:ac_form_print.php?ac=".$insert);
-		    		exit();
+
+				if(isset($_POST['ch_print'])){
+					if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
+						header( "Location:ac_form_print.php?ac=".$insert);
+			    		exit();
+					}else{
+						header( "Location:ac_voucher_print.php?ac=".$insert);
+						exit();
+					}
 				}else{
-					header( "Location:ac_voucher_print.php?ac=".$insert);
-					exit();
+					header( "Location:".$current_url."?v=".$voucher->voucher_id);
+						exit();
+
 				}
+				
+				
 				
 			}
 		}
