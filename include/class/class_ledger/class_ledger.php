@@ -485,9 +485,10 @@ Class Ledger{
 	    	$sub_ledgers = array();
 			$strSQL = "SELECT L1.ledger_sub_id ,L1.ledger_sub_name AS ledger_sub_name";
 			$strSQL .= " FROM ledger_sub L1";
-			$strSQL .= " LEFT JOIN ledger_sub L2 ON L2.ledger_sub_id = L1.ledger_sub_id";
-			$strSQL .= " WHERE L1.deleted = '".NOT_DELETED."' AND L1.status = '".STATUS_ACTIVE."' AND L2.deleted = '".NOT_DELETED."'AND L2.status = '".STATUS_ACTIVE."' AND L1.ledger_id = '".$this->ledger_id."'";
+			$strSQL .= " WHERE L1.deleted = '".NOT_DELETED."' AND L1.status = '".STATUS_ACTIVE."' AND L1.ledger_id = '".$this->ledger_id."'";
 			$strSQL .= " AND L1.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
+			$strSQL .= " AND L1.ledger_sub_id NOT IN(SELECT parent_sub_ledger_id FROM ledger_sub)";
+			
 			mysql_query("SET NAMES utf8");
 			 
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );

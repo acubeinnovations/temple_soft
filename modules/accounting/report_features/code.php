@@ -47,13 +47,24 @@ if(isset($_POST['submit'])){
 		while($i<$insert_count){
 			$report_feature->report_id 	= $report_id;
 			$dataArray[$i]['ledger_master_id'] = $_POST['hd_ledger'][$i];
-			$dataArray[$i]['sub_ledgers'] = $_POST['hd_subledger'][$i];
+			if($_POST['hd_subledger'][$i] == ''){
+				$ledger->ledger_id = $dataArray[$i]['ledger_master_id'];
+				$sub = $ledger->get_list_sub_array_with_masterid_and_fy();
+				if($sub){
+					$dataArray[$i]['sub_ledgers'] = implode(',',array_keys($sub));
+				}else{
+					$dataArray[$i]['sub_ledgers'] = '';
+				}
+			}else{
+				$dataArray[$i]['sub_ledgers'] = $_POST['hd_subledger'][$i];
+			}
 			$dataArray[$i]['position'] 	= $_POST['hd_position'][$i];
 			$dataArray[$i]['sort_order'] 	= 1;
 			$dataArray[$i]['status'] 	= STATUS_ACTIVE;
 			
 			$i++;
 		}
+		print_r($dataArray);exit();
 
 		$insert = $report_feature->insert_batch($dataArray);
 		if($insert){

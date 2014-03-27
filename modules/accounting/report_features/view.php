@@ -51,7 +51,7 @@ if(!defined('CHECK_INCLUDED')){
 -->
 			<tr id="insert">
 				<td><?php echo populate_list_array("lstmledger", $ledgers, 'id','name', '',$disable=false);?></td>
-				<td id="sub-ledger"><?php echo populate_multiple_list_array("lstsledger", array(), 'id','name', '',$disable=false);?></td>
+				<td id="sub-ledger"><?php echo populate_multiple_list_array("lstsledger", array(), 'id','name', '',$disable=false,false);?></td>
 				<td>
 					<select name="lstposition" id="lstposition">
 						<option value=1>LHS</option>
