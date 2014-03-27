@@ -5,6 +5,7 @@ if(!defined('CHECK_INCLUDED')){
 ?>
 
 
+<?php ob_start();?>
 
 <div class="row" >
 	<div class="medium-4 columns">
@@ -17,17 +18,17 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
+<div class="wrapper">
 
-<fieldset>
 <div class="row" style="font-weight:bold;">
-<div class="medium-12 columns" id="ledger_list">
-	<div class="medium-8 columns">Ledgers
+	<div class="medium-12 columns" id="ledger_list">
+		<div class="medium-8 columns">Ledgers
+		</div>
+		<div class="medium-2 columns">Debit
+		</div>
+		<div class="medium-2 columns">Credit
+		</div>
 	</div>
-	<div class="medium-2 columns">Debit
-	</div>
-	<div class="medium-2 columns">Credit
-	</div>
-</div>
 </div>
 <br/>
 
@@ -78,14 +79,12 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 </div>
 
-</fieldset>
-
-<?php ob_start();?>
+</div>
 
 
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
-	//echo $print_content;
+	echo $print_content;
 	
 ?>
