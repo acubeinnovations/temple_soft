@@ -21,7 +21,7 @@ $tax = new Tax($myconnection);
 $tax->connection = $myconnection;
 $taxes = $tax->get_list_array();
 
-$ledgers_all = $ledger->get_list_array();
+$ledgers_all = $ledger->get_list_array_have_no_children();
 $items = $stock->get_list_array();
 
 $page_heading = "Generate Voucher";
@@ -80,9 +80,9 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$default_from = true;
 		$ids = unserialize($voucher->default_from);
 		$filter = "ledger_sub_id IN (".implode(",",$ids).")";
-		$ledgers_default_from_filtered = $ledger->get_list_array($filter);
+		$ledgers_default_from_filtered = $ledger->get_list_array_have_no_children($filter);
 		$filter1 = "ledger_sub_id NOT IN (".implode(",",$ids).")";
-		$ledgers_exept_default_from_filtered = $ledger->get_list_array($filter1);
+		$ledgers_exept_default_from_filtered = $ledger->get_list_array_have_no_children($filter1);
 	}else{
 		$default_from = false;	
 	}
@@ -91,9 +91,9 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$default_to = true;
 		$ids = unserialize($voucher->default_to);
 		$filter = "ledger_sub_id IN (".implode(",",$ids).")";
-		$ledgers_default_to_filtered = $ledger->get_list_array($filter);
+		$ledgers_default_to_filtered = $ledger->get_list_array_have_no_children($filter);
 		$filter1 = "ledger_sub_id NOT IN (".implode(",",$ids).")";
-		$ledgers_exept_default_to_filtered = $ledger->get_list_array($filter1);
+		$ledgers_exept_default_to_filtered = $ledger->get_list_array_have_no_children($filter1);
 	}else{
 		$default_to = false;
 	}
