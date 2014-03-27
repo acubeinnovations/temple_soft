@@ -41,8 +41,9 @@ body {
   line-height: 1;
   position: relative;
   cursor: default; 
-  background:url(../images/ayyappa.jpg) no-repeat;
-  background-position:left bottom; 
+ /* background:url(../images/ayyappa.jpg) no-repeat;
+  background-position:left bottom;*/ 
+  background:url(../images/cream_pixels.png) repeat;
 }
 
 a:hover {
