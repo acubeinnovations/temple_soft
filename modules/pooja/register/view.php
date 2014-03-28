@@ -88,7 +88,7 @@ if(!defined('CHECK_INCLUDED')){
 <?php ob_start();?>
 <div id="print_content" >
 	<h3>Pooja Register</h3>
-	<p>Date : <?php echo date('d-m-Y',strtotime($pooja->vazhipadu_date));?></p>
+	<p>Date : <?php echo ($pooja->from_date == $pooja->to_date)?$pooja->from_date:$pooja->from_date." - ".$pooja->to_date;?></p>
 	<?php if(count($pooja_total_list) > 0){?>
 	<table width="100%">
 		<thead>
