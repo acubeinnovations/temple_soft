@@ -57,6 +57,10 @@ p.heading {
 	border:1px solid #ccc;
 	padding: 0.85em;
 	width: 100%;
+	background-color: #FFFFFF;
+}
+fieldset{
+	background-color: #FFFFFF;
 }
 
 @media screen
