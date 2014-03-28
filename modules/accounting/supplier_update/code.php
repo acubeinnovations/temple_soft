@@ -63,8 +63,10 @@ if(isset($_POST['submit'])){
 	if(trim($_POST['txtphone']) == ""){
 		$errorMSG .= "supplier Phone number is required  <br>";
 	}
-	if(!filter_var($_POST['txtemail'], FILTER_VALIDATE_EMAIL)){
-		$errorMSG .= "Invalid Email Id <br>";
+	if(trim($_POST['txtemail']) != "" ){
+		if(!filter_var($_POST['txtemail'], FILTER_VALIDATE_EMAIL)){
+			$errorMSG .= "Invalid Email Id <br>";
+		}
 	}
 	
 
