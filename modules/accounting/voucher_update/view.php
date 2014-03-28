@@ -26,15 +26,25 @@ if(!defined('CHECK_INCLUDED')){
 				<input type="text" name="txtname" id="txtname" value="" required/>
 				</label>
 
-				<label for="ledger">Type<small>requied</small>
-				<?php echo populate_list_array("lstmvoucher", $masterVouchers, 'id','name', '',$disable=false);?>
-				</label>
+				<label for="ledger">Description</label>
+				<textarea name="txtdescription"></textarea>
 			
 				
 			</div>
 			<div class="medium-6 columns">
-				<label for="ledger">Description</label>
-				<textarea name="txtdescription"></textarea>
+				<label for="ledger">Type<small>requied</small>
+				<?php echo populate_list_array("lstmvoucher", $masterVouchers, 'id','name', '',$disable=false);?>
+				</label>
+                
+                <label for="ledger">Customer/Supplier</label>
+						<select name="cs_su">
+							<option value="">None</option>
+							<option value="_">Customer</option>
+							<option value="-">Supplier</option>
+							<option value=".">Customer*</option>
+							<option value=":">Supplier*</option>
+							
+						</select>
 			</div>
 			
 		</fieldset>	
@@ -88,12 +98,20 @@ if(!defined('CHECK_INCLUDED')){
  		<legend>Form Elements</legend>
  		
  		<div class="row">
- 			<div class="medium-6 columns" >	
+        <div class="medium-12 columns" >
+ 			<input type="checkbox" name="def_head" id="def_head"/> Use Default Header
+ 		</div>
+ 			<div class="medium-12 columns" >	
  				<label for="ledger">Header</label>
  				<textarea class="ckeditor" name="txtheader"></textarea>
- 			</div>
- 		
- 			<div class="medium-6 columns">	
+ 			</div></div>
+<br />
+
+<div class="row">
+ 		<div class="medium-12 columns" >
+ 			<input type="checkbox" name="def_foot" id="def_foot"/> Use Default Footer
+ 		</div>
+ 			<div class="medium-12 columns">	
  				<label for="ledger">Footer</label>
  				<textarea class="ckeditor" name="txtfooter"></textarea>
  			</div>
@@ -108,10 +126,23 @@ if(!defined('CHECK_INCLUDED')){
 	<fieldset>
  		<legend>Voucher Settings</legend>
 
- 		<div class="medium-3 columns" >
+ 		<div class="medium-4 columns" >
  			<input type="checkbox" name="chk_hidden" id="chk_hidden"/> Voucher For Module
  		</div>
-
+	<div class="medium-4 columns" >
+ 			<input type="checkbox" name="def_currency" id="def_currency"/> Default Currency (Rupee)
+ 		</div>
+        <div class="medium-4 columns" >
+        <label for="ledger">Select Currency</label>
+						<select name="cs_su">
+							<option value="">None</option>
+							<option value="_">Dollar</option>
+							<option value="-">Pound</option>
+							<option value=".">Euro</option>
+							<option value=":">Rupee</option>
+							
+						</select>
+                        </div>
  		<div class="medium-12 columns" style="display:none;" id="div-settings">
 
  		<div class="medium-4 columns" >
