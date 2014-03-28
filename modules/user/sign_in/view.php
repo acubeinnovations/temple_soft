@@ -4,7 +4,7 @@ if ( !defined('CHECK_INCLUDED') ){
 }?>
 
 <h3>Login</h3> 
-<fieldset style="background-color:#FFFFFF;">
+<fieldset>
 <div class="row" >
 <div class="medium-4 columns"><img src="../../images/ayyappa.png" alt="" name="" width="321" height="268" />
 </div>
