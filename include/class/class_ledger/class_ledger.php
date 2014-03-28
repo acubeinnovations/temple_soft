@@ -70,7 +70,7 @@ Class Ledger{
 			}
 
     	}elseif($this->ledger_sub_id > 0 ) {
-    		/*
+    		
     		$strSQL = "UPDATE ledger_sub SET ledger_sub_name = '".addslashes(trim($this->ledger_sub_name))."',";
 			$strSQL .= "ledger_id = '".addslashes(trim($this->ledger_id))."',";
 			$strSQL .= "parent_sub_ledger_id = '".addslashes(trim($this->parent_sub_ledger_id))."',";
@@ -89,7 +89,7 @@ Class Ledger{
 				$this->error_description="Can't update Ledger";
 				return false;
            	}
-           	*/
+           	
     	}
     }
 
