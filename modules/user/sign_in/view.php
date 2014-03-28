@@ -38,7 +38,7 @@ if ( !defined('CHECK_INCLUDED') ){
 						<div class="medium-5 columns ">
 							<input  value="<?php echo $capSIGNIN; ?>" type="submit" name="submit" class="small button" >
          					    <input name="h_id" value="" type="hidden"><input name="h_login" value="pass" type="hidden">
-								<a href="forgot_password.php" class="button-link">Forgot Password?</a>
+								<!--<a href="forgot_password.php" class="button-link">Forgot Password?</a>-->
 		  </div>
 						<div class="medium-5 columns ">
 					

@@ -24,7 +24,7 @@ if(!defined('CHECK_INCLUDED')){
 	<tr>
 
 		<?php if($report->lhs == LHS_STATUS_ACTIVE){?>
-		<td valign="top">
+		<td valign="top" style="border-right:#CCCCCC solid 1px;">
 			<div class="medium-12 columns">
 				<div class="row" >
 					<div class="medium-12 columns" >
