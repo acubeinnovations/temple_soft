@@ -45,6 +45,8 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$voucher_number = $account->voucher_number;
 		$readonly = "readonly='readonly'";
 
+		$list_url = "ac_generated_vouchers.php?slno=".$voucher->voucher_id;
+
 		if($account->account_from ==$account->ref_ledger){
 			$amount = $account->account_debit;
 		}elseif($account->account_to ==$account->ref_ledger){
@@ -133,19 +135,22 @@ else{
 //submit form
 if(isset($_POST['submit'])){
 
-
+	$account->account_id = $_POST['hd_ac_id'];
 	$voucher->voucher_id = $_POST['hd_voucherid'];
 	$voucher->get_details();
+
 
 	$errorMSG = "";
 	if($_POST['txtvnumber'] == ""){
 		$errorMSG .= "Invalid voucher<br>";
 	}
-	if($_POST['lstfrom'] == gINVALID || $_POST['lstfrom'] == ""){
-		$errorMSG .= "Select From account<br>";
-	}
-	if($_POST['lstto'] == gINVALID || $_POST['lstto'] == ""){
-		$errorMSG .= "Select To account<br>";
+	if($account->account_id ==gINVALID || $account->account_id == ''){
+		if($_POST['lstfrom'] == gINVALID || $_POST['lstfrom'] == ""){
+			$errorMSG .= "Select From account<br>";
+		}
+		if($_POST['lstto'] == gINVALID || $_POST['lstto'] == ""){
+			$errorMSG .= "Select To account<br>";
+		}
 	}
 
 	if($voucher->source == VOUCHER_FOR_INVENTORY){
@@ -174,12 +179,9 @@ if(isset($_POST['submit'])){
 				$arr['narration'] = $_POST['txtnarration'];
 				$arr['amount'] 	  = $_POST['txtamount'];
 				$update = $account->update_batch($arr);
-				header( "Location:ac_voucher_print.php?ac=".$account_id);
-		    	exit();
 
-			}elseif($voucher->source == VOUCHER_FOR_INVENTORY and isset($_POST['hd_itemcode'])){
+			}else if($voucher->source == VOUCHER_FOR_INVENTORY and isset($_POST['hd_itemcode'])){
 				$item_count = count($_POST['hd_itemcode']);
-
 				$arr['narration'] = $_POST['txtnarration'];
 				$dataArray = array();
 				for($i=0; $i<$item_count; $i++){
@@ -189,40 +191,43 @@ if(isset($_POST['submit'])){
 					$dataArray[$i]['tax'] 		= $_POST['hd_itemtax'][$i];
 				}
 				$arr['amount'] = calculateTotal($dataArray);
-				
 				$update = $account->update_batch($arr);
-				
-				//delete and reinsert items
-				$stock_register->voucher_number = $voucher_number;
-				$stock_register->voucher_type_id = $voucher->voucher_id;
-				$delete=$stock_register->delete();
-				if($delete){
-					if($voucher->voucher_master_id = SALES){
-						$stock_register->input_type =INPUT_SALE; 
-					}elseif($voucher->voucher_master_id = PURCHASE){
-						$stock_register->input_type =INPUT_PURCHASE; 
-					}
-				
-					$stock_register->purchase_reference_number = $_POST['txtrnumber'];
-					$stock_register->date = $_POST['txtdate'];
-					$stock_register->insert_batch($dataArray);
-				}
-
-				if(isset($_POST['ch_print'])){
-				
-					header( "Location:ac_voucher_print.php?ac=".$account_id);
-				    exit();
-				}else{
-					header( "Location:".$current_url."?v=".$voucher->voucher_id);
-						exit();
-				}
-			   
+				if($update){
+					//delete and reinsert items
+					$stock_register->voucher_number = $voucher_number;
+					$stock_register->voucher_type_id = $voucher->voucher_id;
+					$delete=$stock_register->delete();
+					if($delete){
+						if($voucher->voucher_master_id = SALES){
+							$stock_register->input_type =INPUT_SALE; 
+						}elseif($voucher->voucher_master_id = PURCHASE){
+							$stock_register->input_type =INPUT_PURCHASE; 
+						}
 					
+						$stock_register->purchase_reference_number = $_POST['txtrnumber'];
+						$stock_register->date = $_POST['txtdate'];
+						$stock_register->insert_batch($dataArray);
+					}
+				}
 				
 			}
 
 			
+			if(isset($_POST['ch_print'])){
+				if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
+					header( "Location:ac_form_print.php?ac=".$insert);
+		    		exit();
+				}else{
+					header( "Location:ac_voucher_print.php?ac=".$insert);
+					exit();
+				}
+			}else{
+				$_SESSION[SESSION_TITLE.'flash'] = $account->error_description;
+				header( "Location:ac_generated_vouchers.php?slno=".$voucher->voucher_id);
+				exit();
 
+			}	
+			
 
 		}else{//new entry
 
@@ -233,8 +238,6 @@ if(isset($_POST['submit'])){
 			$account->account_to		= $_POST['lstto'];
 			$account->date				= $_POST['txtdate'];
 			$account->narration 		= $_POST['txtnarration'];
-
-			
 			
 			if($voucher->source == VOUCHER_FOR_ACCOUNT){//update account master only
 				$dataAccount[0]['account_debit']  = $_POST['txtamount'];
@@ -281,7 +284,6 @@ if(isset($_POST['submit'])){
 			}
 
 			if($insert){
-
 				if(isset($_POST['ch_print'])){
 					if($voucher->source == VOUCHER_FOR_INVENTORY && $voucher->form_type_id > 0){
 						header( "Location:ac_form_print.php?ac=".$insert);
@@ -291,18 +293,17 @@ if(isset($_POST['submit'])){
 						exit();
 					}
 				}else{
+					$_SESSION[SESSION_TITLE.'flash'] = $account->error_description;
 					header( "Location:".$current_url."?v=".$voucher->voucher_id);
-						exit();
+					exit();
 
-				}
-				
-				
-				
+				}	
 			}
-		}
-	}
 
-}
+		}//new entry close
+	}//validation close
+
+}//post close
 
 
 
