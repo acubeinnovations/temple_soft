@@ -25,6 +25,15 @@ $add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
 $array_star=$add_star->get_array();
 
+if(isset($_GET['pr'])){
+	$add_vazhipadu->vazhipadu_rpt_number = $_GET['pr'];
+	$vazhipadu_details = $add_vazhipadu->get_vazhipadu_details();
+
+}else{
+	$vazhipadu_details = false;
+}
+
+
 if(isset($_POST['submit'])){
 
 	$errorMSG = "";
@@ -88,19 +97,19 @@ if(isset($_POST['submit'])){
 			$account->get_details();
 			$vazhipadu_rpt_number = $voucher->series_prefix.$voucher->series_seperator.$account->voucher_number.$voucher->series_seperator.$voucher->series_sufix;
 			$add_vazhipadu->vazhipadu_rpt_number = $vazhipadu_rpt_number;
-//echo $add_vazhipadu->vazhipadu_rpt_number;
-//print_r($dataArray);exit();
+
 			$last_id = $add_vazhipadu->update($dataArray);
 			if($last_id){
-				if($vazhipadu_rpt_number){
-					header("Location:vazhipadu_print.php?id=".$vazhipadu_rpt_number);
+				if($vazhipadu_rpt_number){	
+					//print page
+					header( "Location:".$current_url."?pr=".$vazhipadu_rpt_number);
 					exit();
-				}else{
-					header("Location:vazhipadu.php");
-					exit();
+					//header("Location:vazhipadu_print.php?id=".$vazhipadu_rpt_number);
+					//exit();
 				}
 			}
 		}
+
 	}else{
 		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
         header( "Location:".$current_url);
