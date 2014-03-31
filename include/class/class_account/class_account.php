@@ -99,7 +99,7 @@ Class Account{
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 
 			if ( mysql_affected_rows($this->connection) > 0 ) {
-				$this->error_description="Success";
+				$this->error_description="Voucher Genereted";
 				return mysql_insert_id();
 			}else{
 				$this->error_number = 3;
@@ -123,7 +123,7 @@ Class Account{
            // echo $strSQL;exit();
             $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
             if ( mysql_affected_rows($this->connection) > 0 ) {
-                $this->error_description="Success";
+                $this->error_description="Voucher Updated";
                 return mysql_insert_id();
             }else{
                 $this->error_number = 3;

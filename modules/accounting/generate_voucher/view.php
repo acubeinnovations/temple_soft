@@ -5,6 +5,7 @@ if(!defined('CHECK_INCLUDED')){
 ?>
 
 <form name="frmvoucher" id="frmvoucher" action="" method="POST">
+<input type="hidden" name="hd_ac_id" value="<?php echo $account->account_id; ?>" />
 <input type="hidden" name="hd_voucherid" value="<?php echo $voucher->voucher_id; ?>" />
 
 <div class="row" >
