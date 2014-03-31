@@ -182,6 +182,7 @@ if(isset($_POST['submit'])){
 
 			}else if($voucher->source == VOUCHER_FOR_INVENTORY and isset($_POST['hd_itemcode'])){
 				$item_count = count($_POST['hd_itemcode']);
+
 				$arr['narration'] = $_POST['txtnarration'];
 				$dataArray = array();
 				for($i=0; $i<$item_count; $i++){
@@ -190,25 +191,28 @@ if(isset($_POST['submit'])){
 					$dataArray[$i]['rate'] 		= $_POST['hd_itemrate'][$i];
 					$dataArray[$i]['tax'] 		= $_POST['hd_itemtax'][$i];
 				}
+				//print_r($dataArray);exit();
 				$arr['amount'] = calculateTotal($dataArray);
-				$update = $account->update_batch($arr);
-				if($update){
-					//delete and reinsert items
-					$stock_register->voucher_number = $voucher_number;
-					$stock_register->voucher_type_id = $voucher->voucher_id;
-					$delete=$stock_register->delete();
-					if($delete){
-						if($voucher->voucher_master_id = SALES){
-							$stock_register->input_type =INPUT_SALE; 
-						}elseif($voucher->voucher_master_id = PURCHASE){
-							$stock_register->input_type =INPUT_PURCHASE; 
-						}
-					
-						$stock_register->purchase_reference_number = $_POST['txtrnumber'];
-						$stock_register->date = $_POST['txtdate'];
-						$stock_register->insert_batch($dataArray);
+				//echo $arr['amount'];exit();
+				$account->update_batch($arr);
+
+			
+				//delete and reinsert items
+				$stock_register->voucher_number = $voucher_number;
+				$stock_register->voucher_type_id = $voucher->voucher_id;
+				$delete=$stock_register->delete();
+				if($delete){
+					if($voucher->voucher_master_id = SALES){
+						$stock_register->input_type =INPUT_SALE; 
+					}elseif($voucher->voucher_master_id = PURCHASE){
+						$stock_register->input_type =INPUT_PURCHASE; 
 					}
+				
+					$stock_register->purchase_reference_number = $_POST['txtrnumber'];
+					$stock_register->date = $_POST['txtdate'];
+					$update = $stock_register->insert_batch($dataArray);
 				}
+				
 				
 			}
 

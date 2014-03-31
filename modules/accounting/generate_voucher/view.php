@@ -97,7 +97,9 @@ if(!defined('CHECK_INCLUDED')){
 			</thead>
 			<tbody>
 				<?php if($edt_items){
+					
 					foreach($edt_items as $item){
+						$amount +=$item['total'];
 				?>
 				<tr>
 					<td><?php echo $item['item_id'];?><input type="hidden" name="hd_itemcode[]" value="<?php echo $item['item_id'];?>"></td>
