@@ -26,25 +26,15 @@ if(!defined('CHECK_INCLUDED')){
 				<input type="text" name="txtname" id="txtname" value="" required/>
 				</label>
 
-				<label for="ledger">Description</label>
-				<textarea name="txtdescription"></textarea>
+				<label for="ledger">Type<small>requied</small>
+				<?php echo populate_list_array("lstmvoucher", $masterVouchers, 'id','name', '',$disable=false);?>
+				</label>
 			
 				
 			</div>
 			<div class="medium-6 columns">
-				<label for="ledger">Type<small>requied</small>
-				<?php echo populate_list_array("lstmvoucher", $masterVouchers, 'id','name', '',$disable=false);?>
-				</label>
-                
-                <label for="ledger">Customer/Supplier</label>
-						<select name="cs_su">
-							<option value="">None</option>
-							<option value="_">Customer</option>
-							<option value="-">Supplier</option>
-							<option value=".">Customer*</option>
-							<option value=":">Supplier*</option>
-							
-						</select>
+				<label for="ledger">Description</label>
+				<textarea name="txtdescription"></textarea>
 			</div>
 			
 		</fieldset>	
@@ -98,20 +88,12 @@ if(!defined('CHECK_INCLUDED')){
  		<legend>Form Elements</legend>
  		
  		<div class="row">
-        <div class="medium-12 columns" >
- 			<input type="checkbox" name="def_head" id="def_head"/> Use Default Header
- 		</div>
- 			<div class="medium-12 columns" >	
+ 			<div class="medium-6 columns" >	
  				<label for="ledger">Header</label>
  				<textarea class="ckeditor" name="txtheader"></textarea>
- 			</div></div>
-<br />
-
-<div class="row">
- 		<div class="medium-12 columns" >
- 			<input type="checkbox" name="def_foot" id="def_foot"/> Use Default Footer
- 		</div>
- 			<div class="medium-12 columns">	
+ 			</div>
+ 		
+ 			<div class="medium-6 columns">	
  				<label for="ledger">Footer</label>
  				<textarea class="ckeditor" name="txtfooter"></textarea>
  			</div>
@@ -126,23 +108,10 @@ if(!defined('CHECK_INCLUDED')){
 	<fieldset>
  		<legend>Voucher Settings</legend>
 
- 		<div class="medium-4 columns" >
+ 		<div class="medium-3 columns" >
  			<input type="checkbox" name="chk_hidden" id="chk_hidden"/> Voucher For Module
  		</div>
-	<div class="medium-4 columns" >
- 			<input type="checkbox" name="def_currency" id="def_currency"/> Default Currency (Rupee)
- 		</div>
-        <div class="medium-4 columns" >
-        <label for="currency">Select Currency</label>
-						<select name="currency">
-							<option value="">None</option>
-							<option value="_">Dollar</option>
-							<option value="-">Pound</option>
-							<option value=".">Euro</option>
-							<option value=":">Rupee</option>
-							
-						</select>
-                        </div>
+
  		<div class="medium-12 columns" style="display:none;" id="div-settings">
 
  		<div class="medium-4 columns" >
@@ -196,39 +165,17 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="medium-8 columns" id="div-dtls2">
  			<div class="medium-4 columns" >
 	 			<label for="ledger">Default From Account</label>
-	 			<?php echo populate_list_array("lstfromledger", $ledgers, 'id','name', array(),$disable=false,false);?>
+	 			<?php echo populate_multiple_list_array("lstfromledger", $ledgers, 'id','name', array(),$disable=false,false);?>
  			</div>
  			<div class="medium-4 columns" >
 				<label for="ledger">Default To Account</label>
- 				<?php echo populate_list_array("lsttoledger", $ledgers, 'id','name',  array(),$disable=false,false);?>
+ 				<?php echo populate_multiple_list_array("lsttoledger", $ledgers, 'id','name',  array(),$disable=false,false);?>
  			</div>
 
- 			<div class="medium-8 columns" >
+ 			<div class="medium-4 columns" >
 				<label for="ledger">Form Type</label>
  				<?php echo populate_list_array("lstformtype", $form_types, 'id','value', '',$disable=false);?>
  			</div>
-            
-            	
-        <div class="medium-8 columns" >
- 			<input type="checkbox" name="fd" id="fd"/> Frieght & Demurage 
-	 		</div><div class="medium-8 columns" >
-	 			<input type="checkbox" name="dis_amt" id="dis_amt"/> Discount Received (Amount)
-	 		</div>
-        <div class="medium-8 columns" >
- 			<input type="checkbox" name="rf" id="rf"/> Round Off 
- 		</div>
-         <div class="medium-8 columns" >
- 			<label for="print">Number of Prints</label>
-						<select name="print">
-							<option value="">None</option>
-							<option value="_">1</option>
-							<option value="-">2</option>
-							<option value=".">3</option>
-							<option value=":">4</option>
-							
-						</select> 
- 		</div>
-        
  		</div>
 
  		
