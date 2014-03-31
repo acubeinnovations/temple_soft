@@ -1,3 +1,9 @@
+<style>
+table, tr, td{
+	font-size:10px !important;
+	line-spacing:20px;
+}
+</style>
 <?php
 if(!defined('CHECK_INCLUDED')){
 	exit();
