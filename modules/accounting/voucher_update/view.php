@@ -133,8 +133,8 @@ if(!defined('CHECK_INCLUDED')){
  			<input type="checkbox" name="def_currency" id="def_currency"/> Default Currency (Rupee)
  		</div>
         <div class="medium-4 columns" >
-        <label for="ledger">Select Currency</label>
-						<select name="cs_su">
+        <label for="currency">Select Currency</label>
+						<select name="currency">
 							<option value="">None</option>
 							<option value="_">Dollar</option>
 							<option value="-">Pound</option>
@@ -196,17 +196,39 @@ if(!defined('CHECK_INCLUDED')){
  		<div class="medium-8 columns" id="div-dtls2">
  			<div class="medium-4 columns" >
 	 			<label for="ledger">Default From Account</label>
-	 			<?php echo populate_multiple_list_array("lstfromledger", $ledgers, 'id','name', array(),$disable=false,false);?>
+	 			<?php echo populate_list_array("lstfromledger", $ledgers, 'id','name', array(),$disable=false,false);?>
  			</div>
  			<div class="medium-4 columns" >
 				<label for="ledger">Default To Account</label>
- 				<?php echo populate_multiple_list_array("lsttoledger", $ledgers, 'id','name',  array(),$disable=false,false);?>
+ 				<?php echo populate_list_array("lsttoledger", $ledgers, 'id','name',  array(),$disable=false,false);?>
  			</div>
 
- 			<div class="medium-4 columns" >
+ 			<div class="medium-8 columns" >
 				<label for="ledger">Form Type</label>
  				<?php echo populate_list_array("lstformtype", $form_types, 'id','value', '',$disable=false);?>
  			</div>
+            
+            	
+        <div class="medium-8 columns" >
+ 			<input type="checkbox" name="fd" id="fd"/> Frieght & Demurage 
+	 		</div><div class="medium-8 columns" >
+	 			<input type="checkbox" name="dis_amt" id="dis_amt"/> Discount Received (Amount)
+	 		</div>
+        <div class="medium-8 columns" >
+ 			<input type="checkbox" name="rf" id="rf"/> Round Off 
+ 		</div>
+         <div class="medium-8 columns" >
+ 			<label for="print">Number of Prints</label>
+						<select name="print">
+							<option value="">None</option>
+							<option value="_">1</option>
+							<option value="-">2</option>
+							<option value=".">3</option>
+							<option value=":">4</option>
+							
+						</select> 
+ 		</div>
+        
  		</div>
 
  		
