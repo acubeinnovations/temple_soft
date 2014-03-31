@@ -1,5 +1,7 @@
 <!--
 $(document).ready(function(){
+
+	var key_code = [48,49,50,51,52,53,54,55,56,57];
 	$('#listpooja').focus();
 
 	var nameObj	= $("input:text[name=txtname]");
@@ -60,6 +62,26 @@ $(document).ready(function(){
 				}				
 			});
         }
+    });
+
+    
+
+    $("#liststar").focus(function(){
+    	var star ='';
+    	$(this).keypress(function(e){  
+            if(e.which == 0){
+            	$(this).val(star);
+            	if($(this).val() == null){
+            		$(this).val(-1);
+            	}
+            	star = 0;
+            }else{
+            	var val = key_code.indexOf(e.which); 
+            	star += val.toString();
+            }
+                
+        });
+
     });
 
 

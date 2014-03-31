@@ -268,10 +268,10 @@ Class StockRegister{
 			while($row = mysql_fetch_assoc($rsRES)){
 				$items[$i]['item_id'] = $row['item_id'];
 				$items[$i]['item_name'] = $row['item_name'];
-				$items[$i]['quantity'] = $row['quantity'];
+				$items[$i]['quantity'] = abs($row['quantity']);
 				$items[$i]['unit_rate'] = $row['unit_rate'];
 				$items[$i]['tax'] = 0;
-				$items[$i]['total'] = $row['unit_rate']*$row['quantity'];
+				$items[$i]['total'] = $row['unit_rate']*abs($row['quantity']);
 				$i++;
 			}
 			return $items;

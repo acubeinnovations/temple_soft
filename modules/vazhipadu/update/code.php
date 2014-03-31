@@ -15,6 +15,8 @@ $add_vazhipadu->connection=$myconnection;
 $add_pooja=new Pooja($myconnection);
 $add_pooja->connection=$myconnection;
 
+
+
 $array_vazhipadu=$add_pooja->get_array();
 if($array_vazhipadu==false){
 	$array_vazhipadu=array();
