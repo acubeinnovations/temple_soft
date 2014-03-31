@@ -59,9 +59,9 @@ if(!defined('CHECK_INCLUDED')){
 		<tr>
 			<td><?php echo $slno;?></td>
 			<td><?php echo $pooja_list[$i]['name']?></td>
-			<td><?php echo $pooja_list[$i]['rate']?></td>
+			<td><?php echo number_format($pooja_list[$i]['rate'],2)?></td>
 			<td><?php echo $pooja_list[$i]['quantity']?></td>
-			<td><?php echo $pooja_list[$i]['total']?></td>
+			<td><?php echo number_format($pooja_list[$i]['total'],2);?></td>
 		</tr>
 		<?php
 				$total_qty += $pooja_list[$i]['quantity'];$total_amount +=$pooja_list[$i]['total'];
