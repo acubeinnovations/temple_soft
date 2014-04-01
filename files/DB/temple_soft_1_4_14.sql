@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2014 at 05:57 AM
+-- Generation Time: Apr 01, 2014 at 06:22 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `account_master` (
   `ref_ledger` int(11) NOT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=141 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=209 ;
 
 --
 -- Dumping data for table `account_master`
@@ -152,7 +152,75 @@ INSERT INTO `account_master` (`account_id`, `voucher_number`, `voucher_type_id`,
 (137, '0032', 8, 1, '', 3, 41, 50.00, 0.00, '2014-03-27', 'sdf', 3, 1),
 (138, '0032', 8, 1, '', 3, 41, 0.00, 50.00, '2014-03-27', 'sdf', 41, 1),
 (139, '0005', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-28', '', 3, 1),
-(140, '0005', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-28', '', 37, 1);
+(140, '0005', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-28', '', 37, 1),
+(141, '0033', 8, 1, '', 3, 42, 150.00, 0.00, '2014-03-28', '', 3, 1),
+(142, '0033', 8, 1, '', 3, 42, 0.00, 150.00, '2014-03-28', '', 42, 1),
+(143, '0006', 1, 1, '', 3, 37, 800.00, 0.00, '2014-03-28', '', 3, 1),
+(144, '0006', 1, 1, '', 3, 37, 0.00, 800.00, '2014-03-28', '', 37, 1),
+(145, '0007', 1, 1, '', 3, 36, 20.00, 0.00, '2014-03-28', '', 3, 1),
+(146, '0007', 1, 1, '', 3, 36, 0.00, 20.00, '2014-03-28', '', 36, 1),
+(147, '0008', 1, 1, '', 3, 37, 400.00, 0.00, '2014-03-28', '', 3, 1),
+(148, '0008', 1, 1, '', 3, 37, 0.00, 400.00, '2014-03-28', '', 37, 1),
+(149, '0009', 1, 1, '', 3, 36, 20.00, 0.00, '2014-03-28', '', 3, 1),
+(150, '0009', 1, 1, '', 3, 36, 0.00, 20.00, '2014-03-28', '', 36, 1),
+(151, '0010', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(152, '0010', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(153, '0011', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(154, '0011', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(155, '0012', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(156, '0012', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(157, '0013', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(158, '0013', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(159, '0014', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(160, '0014', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(161, '0015', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(162, '0015', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(163, '0016', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(164, '0016', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(165, '0017', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-29', '', 3, 1),
+(166, '0017', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-29', '', 37, 1),
+(167, '0018', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-29', '', 3, 1),
+(168, '0018', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-29', '', 36, 1),
+(169, '0019', 1, 1, '', 3, 37, 400.00, 0.00, '2014-03-31', '', 3, 1),
+(170, '0019', 1, 1, '', 3, 37, 0.00, 400.00, '2014-03-31', '', 37, 1),
+(171, '0020', 1, 1, '', 3, 36, 20.00, 0.00, '2014-03-31', '', 3, 1),
+(172, '0020', 1, 1, '', 3, 36, 0.00, 20.00, '2014-03-31', '', 36, 1),
+(173, '0021', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(174, '0021', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(175, '0022', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(176, '0022', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(177, '0023', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-31', '', 3, 1),
+(178, '0023', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-31', '', 36, 1),
+(179, '0024', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(180, '0024', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(181, '0025', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(182, '0025', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(183, '0026', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(184, '0026', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(185, '0027', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(186, '0027', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(187, '0028', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(188, '0028', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(189, '0029', 1, 1, '', 3, 69, 234.00, 0.00, '2014-03-31', '', 3, 1),
+(190, '0029', 1, 1, '', 3, 69, 0.00, 234.00, '2014-03-31', '', 69, 1),
+(191, '0030', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-31', '', 3, 1),
+(192, '0030', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-31', '', 36, 1),
+(193, '0031', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(194, '0031', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(195, '0032', 1, 1, '', 3, 37, 200.00, 0.00, '2014-03-31', '', 3, 1),
+(196, '0032', 1, 1, '', 3, 37, 0.00, 200.00, '2014-03-31', '', 37, 1),
+(197, '0033', 1, 1, '', 3, 36, 5.00, 0.00, '2014-03-31', '', 3, 1),
+(198, '0033', 1, 1, '', 3, 36, 0.00, 5.00, '2014-03-31', '', 36, 1),
+(199, '0005', 13, 1, '', 3, 61, 113.50, 0.00, '2014-03-31', '', 3, 1),
+(200, '0005', 13, 1, '', 3, 61, 0.00, 113.50, '2014-03-31', '', 61, 1),
+(201, '0006', 13, 1, '', 3, 61, 113.50, 0.00, '2014-03-31', '', 3, 1),
+(202, '0006', 13, 1, '', 3, 61, 0.00, 113.50, '2014-03-31', '', 61, 1),
+(203, '0007', 13, 1, '', 3, 61, 10.00, 0.00, '2014-03-31', '', 3, 1),
+(204, '0007', 13, 1, '', 3, 61, 0.00, 10.00, '2014-03-31', '', 61, 1),
+(205, '0008', 13, 1, '', 3, 61, 15.00, 0.00, '2014-03-31', '', 3, 1),
+(206, '0008', 13, 1, '', 3, 61, 0.00, 15.00, '2014-03-31', '', 61, 1),
+(207, '0009', 13, 1, '', 3, 61, 17.00, 0.00, '2014-03-31', '', 3, 1),
+(208, '0009', 13, 1, '', 3, 61, 0.00, 17.00, '2014-03-31', '', 61, 1);
 
 -- --------------------------------------------------------
 
@@ -164,6 +232,12 @@ CREATE TABLE IF NOT EXISTS `account_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `current_fy_id` int(11) NOT NULL,
   `default_capital` int(11) DEFAULT NULL,
+  `organization_name` text,
+  `organization_address` text,
+  `tax_payers_id_no` text,
+  `central_sales_tax_reg_no` text,
+  `central_exise_reg_no` text,
+  `reg_no` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -171,8 +245,8 @@ CREATE TABLE IF NOT EXISTS `account_settings` (
 -- Dumping data for table `account_settings`
 --
 
-INSERT INTO `account_settings` (`id`, `current_fy_id`, `default_capital`) VALUES
-(1, 1, 66);
+INSERT INTO `account_settings` (`id`, `current_fy_id`, `default_capital`, `organization_name`, `organization_address`, `tax_payers_id_no`, `central_sales_tax_reg_no`, `central_exise_reg_no`, `reg_no`) VALUES
+(1, 1, 66, 'Sree Hariharasudha Ayyapa Temple', 'Ernakulam', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -720,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `stock_register` (
   `tax_id` int(11) NOT NULL DEFAULT '-1',
   `fy_id` int(11) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`stk_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `stock_register`
@@ -741,7 +815,14 @@ INSERT INTO `stock_register` (`stk_id`, `voucher_number`, `voucher_type_id`, `it
 (12, '', -1, 14, 0, 15.00, 'Opening', '', '2013-04-01', -1, 1),
 (13, '', -1, 15, 10, 25.00, 'Opening', '', '2013-04-01', -1, 1),
 (14, '0003', 14, 1, 1, 100.00, 'Purchase', '', '2014-03-27', -1, 1),
-(15, '0004', 13, 1, -10, 100.00, 'Sale', '', '2014-03-27', 1, 1);
+(15, '0004', 13, 1, -10, 100.00, 'Sale', '', '2014-03-27', 1, 1),
+(16, '0005', 13, 1, -1, 100.00, 'Sale', '', '2014-03-31', 1, 1),
+(17, '0006', 13, 1, -1, 100.00, 'Sale', '', '2014-03-31', 1, 1),
+(18, '0007', 13, 1, -1, 10.00, 'Sale', '', '2014-03-31', -1, 1),
+(19, '0008', 13, 1, -1, 10.00, 'Sale', '', '2014-03-31', -1, 1),
+(23, '0009', 13, 1, -1, 10.00, 'Sale', '', '2014-03-31', 0, 1),
+(24, '0009', 13, 6, -1, 2.00, 'Sale', '', '2014-03-31', 0, 1),
+(25, '0009', 13, 7, -1, 5.00, 'Sale', '', '2014-03-31', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -845,14 +926,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `user_status_id` (`user_status_id`),
   KEY `organization_id` (`organization_id`),
   KEY `user_type_id` (`user_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `address`, `occupation`, `user_status_id`, `organization_id`, `registration_date`, `activation_token`, `password_token`, `user_type_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'administrator', '', 'rosy.swapna@acube.co', NULL, NULL, NULL, 1, NULL, '2014-03-21 00:00:00', NULL, NULL, 3);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'administrator', '', 'rosy.swapna@acube.co', NULL, NULL, NULL, 1, NULL, '2014-03-21 00:00:00', NULL, NULL, 3),
+(2, 'testcounter', 'e10adc3949ba59abbe56e057f20f883e', 'test', 'counter', '', '', '', '', 1, 0, '2014-03-31 10:25:09', '', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -887,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `user_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `user_types`
@@ -895,7 +977,8 @@ CREATE TABLE IF NOT EXISTS `user_types` (
 
 INSERT INTO `user_types` (`id`, `name`) VALUES
 (1, 'COUNTER'),
-(2, 'FINANCE');
+(2, 'FINANCE'),
+(3, 'ADMINISTRATOR');
 
 -- --------------------------------------------------------
 
@@ -915,7 +998,7 @@ CREATE TABLE IF NOT EXISTS `vazhipadu` (
   `amount` double(25,2) NOT NULL,
   `deleted` tinyint(4) NOT NULL DEFAULT '1' COMMENT '2 for deleted,1 not deleted',
   PRIMARY KEY (`vazhipadu_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `vazhipadu`
@@ -927,7 +1010,49 @@ INSERT INTO `vazhipadu` (`vazhipadu_id`, `vazhipadu_rpt_number`, `vazhipadu_date
 (3, '0002', '2014-03-27', 3, 1, 'sfdsf', 0, 1, 5.00, 1),
 (4, '0003', '2014-03-27', 3, 3, 'sfadsf', 0, 1, 234.00, 1),
 (5, '0004', '2014-03-27', 4, 2, 'sadf', 0, 1, 200.00, 1),
-(6, '0005', '2014-03-28', 3, 2, 'sd', 0, 1, 200.00, 1);
+(6, '0005', '2014-03-28', 3, 2, 'sd', 0, 1, 200.00, 1),
+(7, '0006', '2014-03-28', 1, 2, 'റോസി സ്വപ്ന', 0, 1, 200.00, 1),
+(8, '0006', '2014-03-28', 3, 2, 'നിജോ ജോസഫ്‌', 0, 1, 200.00, 1),
+(9, '0006', '2014-03-28', 4, 2, 'അരുണ്‍ കുമാര്‍ ', 0, 1, 200.00, 1),
+(10, '0006', '2014-03-28', 1, 2, 'പ്രമോദ് മേനോന്‍', 0, 1, 200.00, 1),
+(11, '0007', '2014-03-28', 1, 1, 'രതീഷ്‌', 0, 1, 5.00, 1),
+(12, '0007', '2014-03-28', 1, 1, 'രാജേഷ്‌', 0, 1, 5.00, 1),
+(13, '0007', '2014-03-28', 1, 1, 'നിജോ', 0, 1, 5.00, 1),
+(14, '0007', '2014-03-28', 4, 1, 'അരുണ്‍', 0, 1, 5.00, 1),
+(15, '0008', '2014-03-28', 1, 2, 'ഇന്ദു', 0, 1, 200.00, 1),
+(16, '0008', '2014-03-28', 1, 2, 'ബിന്ദു', 0, 1, 200.00, 1),
+(17, '0009', '2014-03-28', 1, 1, 'rajesh', 0, 1, 5.00, 1),
+(18, '0009', '2014-03-28', 1, 1, 'rathessh', 0, 1, 5.00, 1),
+(19, '0009', '2014-03-28', 1, 1, 'parmod', 0, 1, 5.00, 1),
+(20, '0009', '2014-03-28', 1, 1, 'nijo', 0, 1, 5.00, 1),
+(21, '0010', '2014-03-29', 1, 1, 'Narayanan', 0, 1, 5.00, 1),
+(22, '0011', '2014-03-29', 1, 1, 'Narayanan', 0, 1, 5.00, 1),
+(23, '0012', '2014-03-29', 1, 1, 'Narayana Shop', 0, 1, 5.00, 1),
+(24, '0013', '2014-03-29', 1, 1, 'Narayana Shop', 0, 1, 5.00, 1),
+(25, '0014', '2014-03-29', 1, 1, 'Narayana Shop', 0, 1, 5.00, 1),
+(26, '0015', '2014-03-29', 1, 1, 'Narayana Shop', 0, 1, 5.00, 1),
+(27, '0016', '2014-03-29', 1, 1, 'rajesh', 0, 1, 5.00, 1),
+(28, '0017', '2014-03-29', 4, 2, 'Rajesh', 0, 1, 200.00, 1),
+(29, '0018', '2014-03-29', 1, 1, 'Rajesh', 0, 1, 5.00, 1),
+(30, '0019', '2014-03-31', 3, 2, 'sdfd', 0, 1, 200.00, 1),
+(31, '0019', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(32, '0020', '2014-03-25', 1, 1, 'fd', 0, 1, 5.00, 1),
+(33, '0020', '2014-03-25', 3, 1, 'df.;''', 0, 1, 5.00, 1),
+(34, '0020', '2014-03-25', 3, 1, 'SDFL', 0, 1, 5.00, 1),
+(35, '0020', '2014-03-25', 3, 1, 'FDF', 0, 1, 5.00, 1),
+(36, '0021', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(37, '0022', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(38, '0023', '2014-03-31', 3, 1, 'dsf', 0, 1, 5.00, 1),
+(39, '0024', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(40, '0025', '2014-03-31', 1, 2, 'dfg', 0, 1, 200.00, 1),
+(41, '0026', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(42, '0027', '2014-03-31', 3, 2, 'dsf', 0, 1, 200.00, 1),
+(43, '0028', '2014-03-31', 3, 2, 'rosy swapna', 0, 1, 200.00, 1),
+(44, '0029', '2014-03-31', 3, 3, 'sdf', 0, 1, 234.00, 1),
+(45, '0030', '2014-03-31', 3, 1, 'sdf', 0, 1, 5.00, 1),
+(46, '0031', '2014-03-31', 1, 2, 'sdf', 0, 1, 200.00, 1),
+(47, '0032', '2014-03-31', 3, 2, 'sanitha', 0, 1, 200.00, 1),
+(48, '0033', '2014-03-31', 1, 1, 'dfgf', 0, 1, 5.00, 1);
 
 -- --------------------------------------------------------
 
@@ -956,7 +1081,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `module_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `module_id` (`module_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `voucher`
@@ -968,8 +1093,9 @@ INSERT INTO `voucher` (`voucher_id`, `voucher_name`, `voucher_description`, `fy_
 (9, 'Cash Payment', '', 1, 1, '', '', '0001', '', '', '0001', '', '', 'a:1:{i:0;s:1:"3";}', -1, 1, 1, NULL),
 (10, 'Bank Receipt', '', 1, 4, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:2:"29";}', '', -1, 1, 1, NULL),
 (11, 'Bank Payment', '', 1, 5, '', '', '0001', '', '', '0001', '', '', 'a:1:{i:0;s:2:"29";}', -1, 1, 1, NULL),
-(13, 'Sale', '', 1, 13, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"61";}', 1, 2, 1, NULL),
-(14, 'Purchase', '', 1, 14, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"62";}', -1, 2, 1, NULL);
+(13, 'Sale', '', 1, 13, '<table border="1" cellpadding="0" cellspacing="0" style="height:645px; width:801px">\r\n    <tbody>\r\n        <tr>\r\n            <td style="height:25px; width:322px">\r\n            <p>Tax payers Identification No : 32090935735</p>\r\n            </td>\r\n            <td style="height:25px; width:322px">\r\n            <p style="text-align:right">Central Sales Tax Reg.No.: 32090935735 C</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:25px; width:322px">\r\n            <p>CENTRAL EXCISE REGN.No :</p>\r\n            </td>\r\n            <td style="height:25px; width:322px">\r\n            <p>&nbsp;</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:25px; width:322px">\r\n            <p>SSI / MSI / LSI Regn.No.:</p>\r\n            </td>\r\n            <td style="height:25px; width:322px">\r\n            <p>&nbsp;</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td colspan="2" style="height:139px; width:645px">\r\n            <p style="text-align:center"><span style="font-size:16px"><strong>Organization Name.</strong></span><br />\r\n            Door N.XIV/513, Kamblichungam,, Thekkedesam -P.O., Chittur.,Palakkad, Kerala- 678553<br />\r\n            THE KERALA VALUE ADDED TAX RULES, 2005<br />\r\n            <br />\r\n            <strong><span style="font-size:16px">FORM NO. 8</span></strong><br />\r\n            [See rule 58(10)]</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td colspan="2" style="height:71px; width:645px">\r\n            <p style="text-align:center"><span style="font-size:16px"><strong>TAX INVOICE</strong></span><br />\r\n            CASH / CREDIT<br />\r\n            (To be Prepared in Quadruplicate*)</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:23px; width:322px">\r\n            <p><strong>Invoice No.: 72</strong></p>\r\n            </td>\r\n            <td style="height:23px; width:322px">\r\n            <p style="text-align:right"><strong>Date :16-Nov-2013 </strong></p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:23px; width:322px">\r\n            <p><strong>Purchase order No.&amp; Date :</strong></p>\r\n            </td>\r\n            <td style="height:23px; width:322px">\r\n            <p style="text-align:right">&nbsp;</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:71px; width:322px">\r\n            <p><strong>Name &amp; Address of Purchasing Dealer :</strong></p>\r\n\r\n            <p>Sri Mari Traders , 130, Melapulivard Road,<br />\r\n            Mailam Chandai - 1(C), Tamil Nadu.</p>\r\n            </td>\r\n            <td style="height:71px; width:322px">\r\n            <p style="text-align:right">&nbsp;</p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style="height:23px; width:322px">\r\n            <p>TIN : 33113422385</p>\r\n            </td>\r\n            <td style="height:23px; width:322px">\r\n            <p style="text-align:right">Central Sales Tax Reg.No.: 204622</p>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n', '', '0001', 'pk', '2014', '0001', '/', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"61";}', 1, 2, 1, NULL),
+(14, 'Purchase', '', 1, 14, '', '', '0001', '', '', '0001', '', 'a:1:{i:0;s:1:"3";}', 'a:1:{i:0;s:2:"62";}', -1, 2, 1, NULL),
+(15, 'sdf', '', 1, 1, '', '', '001', '', '', '001', '', 'a:1:{i:0;s:1:"3";}', '', -1, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
