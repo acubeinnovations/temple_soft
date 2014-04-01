@@ -35,10 +35,20 @@ if(isset($_POST['submit']) && $_POST['submit'] == "Save"){
 	}else{
 		$errMSG .= "Select Default Capital<br>";
 	}
+
+	if($_POST['organization'] == ""){
+		$errMSG .= "Enter Organization Name<br>";
+	}
+	if($_POST['address'] == ""){
+		$errMSG .= "Enter address<br>";
+	}
+
 	if($errMSG == ""){
 		//update current financial year
 		$account_settings->current_fy_id = $_POST['lstfy'];
 		$account_settings->default_capital = $_POST['lstledger'];
+		$account_settings->organization_name = $_POST['organization'];
+		$account_settings->organization_address = $_POST['address'];
 		$account_settings->update();
 		$_SESSION[SESSION_TITLE.'flash'] = "Updated";
 	    header( "Location:".$current_url);

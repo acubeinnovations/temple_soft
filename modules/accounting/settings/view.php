@@ -19,6 +19,12 @@ if(!defined('CHECK_INCLUDED')){
 						<label for="ledger"> Address</label>
 						<textarea name="address" id="address" value=""/></textarea>
 			</div>
+
+			<input type="hidden" name="tin" id="tin" value=""/>
+			<input type="hidden" name="cst" id="cst" value=""/>
+			<input type="hidden" name="ce" id="ce" value=""/>
+			<input type="hidden" name="ssi" id="ssi" value=""/>
+			<!--
 			<div class="medium-6 columns">
 						<label for="ledger"> Tax Payers Identification Number</label>
 						<input type="text" name="tin" id="tin" value=""/>
@@ -35,6 +41,7 @@ if(!defined('CHECK_INCLUDED')){
 						<label for="ledger"> SSI / MSI / LSI Reg Number</label>
 						<input type="text" name="ssi" id="ssi" value=""/>
 			</div>
+			-->
 		</div>	
  		<div class="row">
  			<div class="medium-6 columns">
