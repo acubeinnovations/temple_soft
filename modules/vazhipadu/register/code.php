@@ -7,6 +7,10 @@ $pagination = new Pagination(10);
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+$account_settings->getAccountSettings();
+
 $vazhipadu->total_records=$pagination->total_records;
 
 $data = array();
