@@ -14,6 +14,15 @@ $report_feature = new ReportFeature($myconnection);
 $report_feature->connection = $myconnection;
 
 $page_heading = "";
+
+if(isset($_GET['submit'])){
+	$report_feature->date_from = date('d-m-Y',strtotime($_GET['txtfrom']));
+	$report_feature->date_to = date('d-m-Y',strtotime($_GET['txtto']));
+}else{
+	$report_feature->date_from = date('d-m-Y',strtotime(CURRENT_DATE));
+	$report_feature->date_to = date('d-m-Y',strtotime(CURRENT_DATE));
+}
+
 if(isset($_GET['slno'])){
 	$report->report_id = $_GET['slno'];
 	$report->get_details();
@@ -35,10 +44,6 @@ if(isset($_GET['slno'])){
 		//$rhs_total_balance = $report_feature->total_balance;
 	}
 			
-}else{
-	$_SESSION[SESSION_TITLE.'flash'] = "Invalid Report";
-    header( "Location:ac_report_list.php");
-    exit();
 }
 
 ?>
