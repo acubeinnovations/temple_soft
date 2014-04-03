@@ -188,5 +188,9 @@ define('LEDGER_SUB_VAZHIPADU', 'വഴിപാട്');
 define('CANCEL_STATUS_TRUE', 2);
 define('CANCEL_STATUS_FALSE',1);
 
+//default status
+define("DEFAULT_TRUE",1);
+define("DEFAULT_FALSE",2);
+
 
 ?>

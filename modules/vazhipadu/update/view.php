@@ -99,43 +99,35 @@ if(!defined('CHECK_INCLUDED')){
 </form>
 <?php if($vazhipadu_details){?>
 <?php ob_start(); ?>
-<div>	
-	
-	
-
-	<div class="row">
+<style> 
+table tr td {
+line-height: 5px !important;
+}
+</style>
 <table width="360" border="0" cellspacing="0" cellpadding="0">
+
   <tr>
-    <td width="184" height="49">&nbsp;</td>
-    <td width="96" height="49">&nbsp;</td>
-    <td width="80" height="49">&nbsp;</td>
+    <td width="184" style="height:15px !important;">&nbsp;</td>
+    <td width="96" >&nbsp;</td>
+    <td width="80" ><?php echo $add_vazhipadu->vazhipadu_rpt_number; ?></td>
   </tr>
   <tr>
-    <td width="184" height="15">&nbsp;</td>
-    <td width="96" height="15">&nbsp;</td>
-    <td width="80" height="15"><?php echo $add_vazhipadu->vazhipadu_rpt_number; ?></td>
+    <td width="184" style="height:15px !important;"><?php echo $add_vazhipadu->pooja_description; ?></td>
+    <td width="96" >&nbsp;</td>
+    <td width="80" ><?php echo date("d-m-Y");?></td>
   </tr>
+  
   <tr>
-    <td width="184" height="15"><?php echo $add_vazhipadu->pooja_description; ?></td>
-    <td width="96" height="15">&nbsp;</td>
-    <td width="80" height="15"><?php echo date("d-m-Y");?></td>
-  </tr>
-  <tr>
-    <td width="184" height="14">&nbsp;</td>
-    <td width="96" height="14">&nbsp;</td>
-    <td width="80" height="14">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="79" colspan="3">
+    <td height="110" style="min-height:110px !important;" colspan="3">
     	<table width="360">
 				<?php $i=0;$total = 0;
 				while($i<count($vazhipadu_details)){
 					$total += $vazhipadu_details[$i]['rate'];
 				?>
 				<tr>
-					<td width="184" height="19"><?php echo $vazhipadu_details[$i]['name']	;?></td>
-					<td width="96" height="19"><?php echo $vazhipadu_details[$i]['star']; ?></td>
-					<td width="80" height="19"><?php echo $vazhipadu_details[$i]['rate']; ?></td>
+					<td width="184" height="10"><?php echo $vazhipadu_details[$i]['name']	;?></td>
+					<td width="96" height="10"><?php echo $vazhipadu_details[$i]['star']; ?></td>
+					<td width="80" height="10"><?php echo $vazhipadu_details[$i]['rate']; ?></td>
 					
 				</tr>
 				<?php $i++;}?>
@@ -143,18 +135,15 @@ if(!defined('CHECK_INCLUDED')){
     </td>
     </tr>
   <tr>
-    <td width="184" height="17">&nbsp;</td>
-    <td width="96" height="17">&nbsp;</td>
-    <td width="80" height="17"><?php echo $total;?></td>
+    <td width="184" height="10">&nbsp;</td>
+    <td width="96" height="10">&nbsp;</td>
+    <td width="80" height="10"><?php echo $total;?></td>
   </tr>
   <tr>
-    <td height="23" colspan="3"><?php echo $add_vazhipadu->vazhipadu_date; ?></td>
+    <td height="10" colspan="3"><?php echo $add_vazhipadu->vazhipadu_date; ?></td>
   </tr>
 </table>
-  </div>
 
-
-</div>
 
 
 <?php 

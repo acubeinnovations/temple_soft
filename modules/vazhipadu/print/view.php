@@ -5,18 +5,18 @@ if(!defined('CHECK_INCLUDED')){
 }
 ob_start();
 ?>
-<div>	
+
 	<?php if($vazhipadu_details){?>
 	
 
-	<div class="row">
-<table width="360" border="0" cellspacing="0" cellpadding="0">
-  <tr>
+<div style="display:none;">	
+<table width="360" border="0" cellspacing="0" cellpadding="0" style="display:none;">
+  <tr style="display:none;">
     <td width="184" height="49">&nbsp;</td>
     <td width="96" height="49">&nbsp;</td>
     <td width="80" height="49">&nbsp;</td>
   </tr>
-  <tr>
+  <tr style="display:none;">
     <td width="184" height="15">&nbsp;</td>
     <td width="96" height="15">&nbsp;</td>
     <td width="80" height="15"><?php echo $vazhipadu->vazhipadu_rpt_number; ?></td>
@@ -60,7 +60,7 @@ ob_start();
   </div>
 	<?php }?>
 
-</div>
+
 
 
 <?php 
