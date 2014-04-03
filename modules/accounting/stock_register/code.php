@@ -5,6 +5,10 @@ if(!defined('CHECK_INCLUDED')){
 
 $pagination = new Pagination(10);
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+$account_settings->getAccountSettings();
+
 $stock_register = new StockRegister($myconnection);
 $stock_register->connection = $myconnection;
 

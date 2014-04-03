@@ -56,8 +56,12 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <?php ob_start();?>
+	<h3><?php echo $account_settings->organization_name; ?></h3>
+	<p><?php echo $account_settings->organization_address; ?></p>
 <?php if(count($all_items) > 0){?>
-<h3><?php echo $type?> Register</h3>
+
+<h5><?php echo $type?> Register</h5>
+
 
 <table width="100%">
 	  	<thead>
