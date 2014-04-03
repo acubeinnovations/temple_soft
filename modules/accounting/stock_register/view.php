@@ -3,20 +3,24 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-
 <div class="row" >
-	<div class="medium-4 columns">
+	<div class="medium-6 columns">
 		<h3><?php echo $type?> Register</h3>
 	</div>
-	<div class="text-right" style="margin-top:5px;">
-		<input type="button" class="tiny button" value="print" id="button-print"/>
+	<div class="medium-6 columns">
+		<div class="text-right" style="margin-top:5px;">
+			<input type="button" class="tiny button" value="print" id="button-print"/>
+		</div>
 	</div>
 </div>
+
+
 
 
 <?php if($count_items > 0){?>
 
 <div class="row">
+	<div class="medium-12 columns">
 	<table width="100%">
 	  	<thead>
 		<tr>
@@ -49,6 +53,7 @@ if(!defined('CHECK_INCLUDED')){
 		</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
 
 <?php }?>
