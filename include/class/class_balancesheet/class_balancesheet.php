@@ -75,7 +75,7 @@ ORDER BY LS.ledger_id ASC";
             while($row = mysql_fetch_assoc($rsRES)){
 
 				if(in_array($row['ledger_id'],$this->ledgers_liabilities)){
-
+/*
 					if($row['balance'] < 0){
 						$sheet_assets[$index]["ledger_name"] = $row['ledger_name'];
 						$sheet_assets[$index]["ledger_id"] = $row['ledger_id'];
@@ -87,11 +87,27 @@ ORDER BY LS.ledger_id ASC";
 						$sheet_liabilities[$index]["balance"] = abs($row['balance']);
 						$total_liabilities += abs($row['balance']);
 					}
+
+
+*/
+
+					if(($row['balance']*-1) < 0){
+						$sheet_assets[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_assets[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_assets[$index]["balance"] = abs($row['balance']);
+						$total_assets += abs($row['balance']);
+					}else{
+						$sheet_liabilities[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_liabilities[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_liabilities[$index]["balance"] = abs($row['balance']);
+						$total_liabilities += abs($row['balance']);
+					}
+
 
 
 				}
 				if(in_array($row['ledger_id'],$this->ledgers_assets)){
-
+/*
 					if($row['balance'] < 0){
 						$sheet_liabilities[$index]["ledger_name"] = $row['ledger_name'];
 						$sheet_liabilities[$index]["ledger_id"] = $row['ledger_id'];
@@ -103,7 +119,19 @@ ORDER BY LS.ledger_id ASC";
 						$sheet_assets[$index]["balance"] = abs($row['balance']);
 						$total_assets += abs($row['balance']);
 					}
-					
+
+*/					
+					if($row['balance'] < 0){
+						$sheet_liabilities[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_liabilities[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_liabilities[$index]["balance"] = abs($row['balance']);
+						$total_liabilities += abs($row['balance']);
+					}else{
+						$sheet_assets[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_assets[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_assets[$index]["balance"] = abs($row['balance']);
+						$total_assets += abs($row['balance']);
+					}					
 				}
 				if(in_array($row['ledger_id'],$this->p_and_l_expenses)){
 						$total_expenses += abs($row['balance']);
@@ -177,7 +205,7 @@ ORDER BY LS.ledger_sub_id ASC";
             while($row = mysql_fetch_assoc($rsRES)){
 
 				if(in_array($row['ledger_id'],$this->ledgers_liabilities)){
-
+/*
 					if($row['balance'] < 0){
 						$sheet_assets[$index]["ledger_name"] = $row['ledger_name'];
 						$sheet_assets[$index]["ledger_id"] = $row['ledger_id'];
@@ -193,6 +221,25 @@ ORDER BY LS.ledger_sub_id ASC";
 						$sheet_liabilities[$index]["balance"] = abs($row['balance']);
 						$total_liabilities += abs($row['balance']);
 					}
+
+*/
+
+					if(($row['balance']*-1) < 0){
+						$sheet_assets[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_assets[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_assets[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+						$sheet_assets[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+						$sheet_assets[$index]["balance"] = abs($row['balance']);
+						$total_assets += abs($row['balance']);
+					}else{
+						$sheet_liabilities[$index]["ledger_name"] = $row['ledger_name'];
+						$sheet_liabilities[$index]["ledger_id"] = $row['ledger_id'];
+						$sheet_liabilities[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+						$sheet_liabilities[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+						$sheet_liabilities[$index]["balance"] = abs($row['balance']);
+						$total_liabilities += abs($row['balance']);
+					}
+
 
 
 				}
