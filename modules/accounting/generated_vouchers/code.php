@@ -2,10 +2,6 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
-$account_settings = new AccountSettings($myconnection);
-$account_settings->connection = $myconnection;
-$account_settings->getAccountSettings();
-
 $pagination = new Pagination(10);
 
 $stock=new Stock($myconnection);
@@ -30,9 +26,23 @@ $page_heading = "";
 $count_list = 0;
 $new_url = "#";
 
+
+
+
+
+if(isset($_GET['submit'])){
+	$account->date_from = date('d-m-Y',strtotime($_GET['txtfrom']));
+	$account->date_to = date('d-m-Y',strtotime($_GET['txtto']));
+}else{
+	$account->date_from = date('d-m-Y',strtotime(CURRENT_DATE));
+	$account->date_to = date('d-m-Y',strtotime(CURRENT_DATE));
+}
+
+
 if(isset($_GET['slno'])){
 
 	$new_url = "ac_generate_voucher.php?v=".$_GET['slno'];
+	$list_url = "ac_generated_vouchers.php?slno=".$_GET['slno'];
 	$account->total_records=$pagination->total_records;
 
 	$voucher->voucher_id = $_GET['slno'];
@@ -62,7 +72,7 @@ if(isset($_GET['slno'])){
 }
 //ac books start here-------------------------------------
 else if(isset($_GET['bid'])){
-
+	$list_url = "ac_generated_vouchers.php?bid=".$_GET['bid'];
 	$acbook->id = $_GET['bid'];
 	$acbook->get_details();
 	$page_heading = $acbook->name;
@@ -77,11 +87,9 @@ else if(isset($_GET['bid'])){
 	}
 
 
-}else{
-	$_SESSION[SESSION_TITLE.'flash'] = "Invalid Access";
-    header( "Location:dashboard.php");
-    exit();
 }
+
+
 
 
 ?>
