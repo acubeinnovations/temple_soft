@@ -13,11 +13,11 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">
 			<div class="medium-6 columns">
 						<label for="ledger"> Holding Organization</label>
-						<input type="text" name="organization" id="organization" value=""/>
+						<input type="text" name="organization" id="organization" value="<?php echo $account_settings->organization_name; ?>"/>
 			</div>
 			<div class="medium-6 columns">
 						<label for="ledger"> Address</label>
-						<textarea name="address" id="address" value=""/></textarea>
+						<textarea name="address" id="address" /><?php echo $account_settings->organization_address; ?></textarea>
 			</div>
 
 			<input type="hidden" name="tin" id="tin" value=""/>
@@ -53,7 +53,7 @@ if(!defined('CHECK_INCLUDED')){
  		
  			<div class="medium-6 columns">
  				<label for="ledger">Default Capital Ledger:</label>
- 				<?php echo populate_list_array("lstledger", $ledgers, 'id','name', '',$disable=false);?>
+ 				<?php echo populate_list_array("lstledger", $ledgers, 'id','name', $account_settings->default_capital,$disable=false);?>
  				<label for="ledger">(Selcted Default)</label>
  			</div>
  			
