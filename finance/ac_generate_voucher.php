@@ -17,7 +17,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_voucher.php","class_account_settings.php","class_ledger.php","class_account.php","class_stock.php","class_stock_register.php");
+	$page->class_list = array("class_voucher.php","class_account_settings.php","class_ledger.php","class_account.php","class_stock.php","class_stock_register.php","class_tax.php");
 	$page->script_list = array("jquery.min.js");
 	$page->script_list_link = array("ckeditor/ckeditor.js");
 	
