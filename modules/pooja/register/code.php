@@ -6,6 +6,10 @@ if(!defined('CHECK_INCLUDED')){
 $pooja= new Pooja($myconnection);
 $pooja->connection=$myconnection;
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+$account_settings->getAccountSettings();
+
 $pagination = new Pagination(10);
 
 if(isset($_GET['submit'])){
