@@ -78,23 +78,14 @@ if(!defined('CHECK_INCLUDED')){
 
 </div>
 <?php ob_start();?>
-<table width="100%">
-		<tr>
-			<td width="100%" align="center" valign="middle">
-<h3><?php echo $account_settings->organization_name; ?></h3></br>
-<?php echo $account_settings->organization_address; ?>
-</td>
-		</tr>
-		</table>
+
 <div class="row" >
-	<div class="medium-4 columns">
-		<h3>List Ledger</h3>
-	</div>
 	<div class="medium-8 columns">
-		<div class="text-right" style="margin-top:5px;">
-			<input type="button" class="tiny button" value="print" id="button-print"/>
-		</div>
+		<h3><?php echo $account_settings->organization_name; ?></h3>
+		<p><?php echo $account_settings->organization_address; ?></p>
+		<h4>List Ledger</h3>
 	</div>
+	
 </div>
 
 <div class="wrapper">
