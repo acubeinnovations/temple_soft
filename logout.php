@@ -14,7 +14,7 @@ require(ROOT_PATH.'include/class/class_user_session/class_user_session.php');
 $myuser = new UserSession("","","");
 $chk = $myuser->logout();
 if ($chk == true){
-    header("Location: index.php");
+    header("Location:/");
     exit();
 }
 ?>
