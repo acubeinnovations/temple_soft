@@ -24,9 +24,7 @@
 <?php if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
   <li><a href="change_password.php"  >Change Password</a></li>
   <li class="divider"></li>
-  <li><a href="logout.php"  >Logout</a></li>
-<?php } else {?>
-  <li><a href="index.php"  >Login</a></li>
+  <li><a href="../logout.php"  >Logout</a></li>
 <?php }?>
 
 </ul>

@@ -155,9 +155,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
 
   <li class="divider"></li>
   <?php if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
-    <li><a href="logout.php"  >Logout</a></li>
-  <?php } else {?>
-    <li><a href="index.php"  >Login</a></li>
+    <li><a href="../logout.php"  >Logout</a></li>
   <?php }?>
 
 </ul>
