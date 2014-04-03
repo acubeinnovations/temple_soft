@@ -6,6 +6,10 @@ if(!defined('CHECK_INCLUDED')){
 $report = new Report($myconnection);
 $report->connection = $myconnection;
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+$account_settings->getAccountSettings();
+
 $report_feature = new ReportFeature($myconnection);
 $report_feature->connection = $myconnection;
 

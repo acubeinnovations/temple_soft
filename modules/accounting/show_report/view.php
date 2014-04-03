@@ -8,10 +8,17 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <div class="row" >
-	<div class="medium-4 columns">
-		<h3><?php echo $page_heading; ?></h3>
+	<div class="medium-12 columns">
+		<div class="print-head">
+			<h3><?php echo $account_settings->organization_name; ?></h3>
+			<p><?php echo $account_settings->organization_address; ?></p>
+			<h5><?php echo $page_heading; ?></h5>
+		</div>
+		<div class="page-head">
+			<h3><?php echo $page_heading; ?></h3>
+		</div>
 	</div>
-	<div class="medium-8 columns">
+	<div class="medium-12 columns">
 		<div class="text-right" style="margin-top:5px;">
 			<input type="button" class="tiny button" value="print" id="button-print"/>
 		</div>
