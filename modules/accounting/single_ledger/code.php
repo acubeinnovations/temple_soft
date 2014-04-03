@@ -33,6 +33,7 @@ $dateto =date("d-m-Y");
 if(isset($_GET['submit'])){
 
 	if($_GET['lstledger'] > 0 ){
+		$ledger_name = $ledger->ledgerName($_GET['lstledger']);
 		$dataArray['ref_ledger'] = $_GET['lstledger'];
 		$account->ref_ledger = $_GET['lstledger'];	
 
