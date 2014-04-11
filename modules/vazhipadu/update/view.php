@@ -106,10 +106,10 @@ line-height: 2px !important;
 </style>
 <table width="420px" cellspacing="0" cellpadding="0" >
 
-	<tr style="height:20px !important;">
-		<td width="144" valign="top"><?php echo $add_vazhipadu->pooja_description; ?></td>
-		<td width="116" >&nbsp;</td>
-		<td width="100" style="line-height: 5px !important;">
+	<tr style="height:40px !important;">
+		<td width="184" style="line-height: 17px !important;"><?php echo $add_vazhipadu->pooja_description; ?></td>
+		<td width="96" >&nbsp;</td>
+		<td width="110" style="line-height: 6px !important;" valign="top" align="center">
 
 			<?php echo $add_vazhipadu->vazhipadu_rpt_number; ?><br/><br/>
 			<?php echo date("d-m-Y");?>
@@ -117,17 +117,17 @@ line-height: 2px !important;
 	</tr>
 
 	<tr>
-		<td   colspan="3" height="80px">
+		<td   colspan="3" height="95px">
 			
-			<table width="420px" style="min-height:100px !important;">
+			<table width="420px" style="min-height:95px !important;">
 				<?php $i=0;$total = 0;$j=4;
 				while($i<count($vazhipadu_details)){
 					$total += $vazhipadu_details[$i]['rate'];
 				?>
-				<tr height="5px"> 
-					<td width="184" ><?php echo $vazhipadu_details[$i]['name']	;?></td>
-					<td width="96"><?php echo $vazhipadu_details[$i]['star']; ?></td>
-					<td width="80"><?php echo $vazhipadu_details[$i]['rate']; ?></td>
+				<tr height="10px"> 
+					<td width="184" valign="bottom"><?php echo $vazhipadu_details[$i]['name']	;?></td>
+					<td width="96" valign="bottom"><?php echo $vazhipadu_details[$i]['star']; ?></td>
+					<td width="110" valign="bottom" align="center"><?php echo $vazhipadu_details[$i]['rate']; ?></td>
 					
 				</tr>
 				<?php $i++;$j--;}?>
@@ -142,9 +142,10 @@ line-height: 2px !important;
 	</tr>
 
 	<tr height="5px">
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td><?php echo $total;?></td>
+	<td width="184" >&nbsp;</td>
+					<td width="96">&nbsp;</td>
+					<td width="110" align="center" valign="top"><?php echo $total;?></td>
+
 	</tr>
 
 	<tr height="5px">
