@@ -175,16 +175,26 @@ flash_alert(alert_message,alert_redirect);
 </div>
 <div class="overlay"></div>
 
+<div id="hd-fy">
+	<input type="hidden" value="<?php echo (isset($_SESSION[SESSION_TITLE.'fy_start_date']))?$_SESSION[SESSION_TITLE.'fy_start_date']:'';?>" id="hd-fy-start" />
+	<input type="hidden" value="<?php echo (isset($_SESSION[SESSION_TITLE.'fy_end_date']))?$_SESSION[SESSION_TITLE.'fy_end_date']:'';?>" id="hd-fy-end" />
+</div>
+
  	<script src="/js/jquery.js"></script>
  	<script src="/js/foundation.min.js"></script>
 	<script src="/js/foundation/foundation-datepicker.js"></script>
     <script>
             $(document).foundation();
 
+
+            var fy_start = $("#hd-fy-start").val();
+            var fy_end = $("#hd-fy-end").val();
+
             $('.mydatepicker').fdatepicker({
                     format: 'dd-mm-yyyy',
-                    startDate: '01-01-2014',
-                    endDate: '01-01-2015',
+                    startDate: fy_start,
+                    endDate: fy_end,
+                    //startView: 'decade',
                     closeButton: true
             });
     </script>

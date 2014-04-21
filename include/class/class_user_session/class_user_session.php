@@ -30,6 +30,7 @@ class UserSession {
 			$this->username =$username;
 			$this->password =$password;
 			$this->connection =$connection;
+
     }
 
     function login(){
@@ -38,6 +39,14 @@ class UserSession {
 		//echo $strSQL;exit();
           $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
           if ( mysql_num_rows($rsRES) > 0 ){
+                $strSQL_ac = "SELECT ast.id,fm.fy_start AS fy_start_date,fm.fy_end AS fy_end_date FROM account_settings ast LEFT JOIN fy_master fm ON fm.fy_id = ast.current_fy_id WHERE ast.id = '1' ";
+                $rsRES_ac = mysql_query($strSQL_ac,$this->connection) or die(mysql_error(). $strSQL );
+                if(mysql_num_rows($rsRES_ac) > 0){
+                    $row_ac = mysql_fetch_assoc($rsRES_ac);
+                    $_SESSION[SESSION_TITLE.'fy_start_date'] = date('d-m-Y',strtotime($row_ac['fy_start_date']));
+                    $_SESSION[SESSION_TITLE.'fy_end_date'] = date('d-m-Y',strtotime($row_ac['fy_end_date']));
+                }
+
                 $this->id = mysql_result($rsRES,0,'id');
                 $this->username = mysql_result($rsRES,0,'username');
                 $this->email = mysql_result($rsRES,0,'email');
