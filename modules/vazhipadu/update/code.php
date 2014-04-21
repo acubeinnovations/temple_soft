@@ -3,6 +3,13 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+if(isset($_SESSION[SESSION_TITLE.'userid'])){
+	$user_id = $_SESSION[SESSION_TITLE.'userid'];
+}else{
+	$user_id = -1;
+}
+
+
 $voucher=new Voucher($myconnection);
 $voucher->connection=$myconnection;
 
@@ -11,6 +18,7 @@ $account->connection=$myconnection;
 
 $add_vazhipadu=new Vazhipadu($myconnection);
 $add_vazhipadu->connection=$myconnection;
+$add_vazhipadu->user_id = $user_id;
 
 $add_pooja=new Pooja($myconnection);
 $add_pooja->connection=$myconnection;

@@ -183,7 +183,7 @@ function get_array()
         
     }
 
-    public function get_vazhipadu_pooja_list($start_record = 0,$max_records = 25)
+    public function get_vazhipadu_pooja_list($start_record = 0,$max_records = 25,$user_id = -1)
     {
 
     	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
@@ -196,6 +196,10 @@ function get_array()
 	      }else{
 	        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
 	      }
+	    }
+
+	    if($user_id > 0){
+	    	$strSQL .= " AND v.user_id = '".$user_id."'";
 	    }
 
     	$strSQL .= " GROUP BY p.id";

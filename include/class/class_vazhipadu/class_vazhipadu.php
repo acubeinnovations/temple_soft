@@ -16,6 +16,7 @@ Class Vazhipadu{
   var $quantity = 1;
   var $amount = '';
   var $deleted = NOT_DELETED;
+  var $user_id = gINVALID;
 
   var $pooja_description = "";
 
@@ -33,7 +34,7 @@ Class Vazhipadu{
 
     if ( $this->vazhipadu_id == "" || $this->vazhipadu_id == gINVALID) {
       if($dataArray){
-        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,deleted) VALUES";
+        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,deleted,user_id) VALUES";
         for($i=0; $i<count($dataArray); $i++)
         {
           $nameData = $dataArray[$i]['name'];
@@ -46,10 +47,11 @@ Class Vazhipadu{
           $strSQL .= "'".addslashes($nameData)."',";          
           $strSQL .= "'".addslashes(trim($this->quantity))."',";
           $strSQL .= "'".addslashes(trim($this->amount))."',";
-          $strSQL .= "'".addslashes(trim($this->deleted))."'),";
+          $strSQL .= "'".addslashes(trim($this->deleted))."',";
+          $strSQL .= "'".addslashes(trim($this->user_id))."'),";
         }
       }else{
-        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,deleted) VALUES";
+        $strSQL = "INSERT INTO vazhipadu(vazhipadu_rpt_number,vazhipadu_date,star_id,pooja_id,name,quantity,amount,deleted,user_id) VALUES";
         $strSQL .= "('".addslashes(trim($this->vazhipadu_rpt_number))."',";
         $strSQL .= "'".date('Y-m-d',strtotime($this->vazhipadu_date))."',";
         $strSQL .= "'".addslashes(trim($this->star_id))."',";
@@ -57,7 +59,8 @@ Class Vazhipadu{
         $strSQL .= "'".addslashes($this->name)."',";
         $strSQL .= "'".addslashes(trim($this->quantity))."',";
         $strSQL .= "'".addslashes(trim($this->amount))."',";
-        $strSQL .= "'".addslashes(trim($this->deleted))."'),";
+        $strSQL .= "'".addslashes(trim($this->deleted))."',";
+        $strSQL .= "'".addslashes(trim($this->user_id))."'),";
       }
      // echo $strSQL;exit();
        mysql_query("SET NAMES utf8");
@@ -95,13 +98,6 @@ Class Vazhipadu{
 
  
 
-
-
-
-
-
-
-  
 
 
 
@@ -147,16 +143,22 @@ Class Vazhipadu{
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
 
     if($this->vazhipadu_date != ""){
-      $strSQL .=" AND vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
+      $strSQL .=" AND v.vazhipadu_date = '".date('Y-m-d',strtotime($this->vazhipadu_date))."'";
     }else if(isset($dataArray['from_date']) and isset($dataArray['to_date'])){
       $this->from_date = date('Y-m-d',strtotime($dataArray['from_date']));
       $this->to_date = date('Y-m-d',strtotime($dataArray['to_date']));
-      $strSQL .=" AND (vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
+      $strSQL .=" AND (v.vazhipadu_date BETWEEN '".$this->from_date."' AND '".$this->to_date."')";
     }
 
     if($this->vazhipadu_rpt_number != ""){
-      $strSQL .=" AND vazhipadu_rpt_number = '".mysql_real_escape_string($this->vazhipadu_rpt_number)."'";
+      $strSQL .=" AND v.vazhipadu_rpt_number = '".mysql_real_escape_string($this->vazhipadu_rpt_number)."'";
     }
+
+/*
+    if($this->user_id > 0){
+      $strSQL .= " AND v.user_id = '".$this->user_id."'";
+    }
+  */
   
     $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_rpt_number";
@@ -226,6 +228,12 @@ Class Vazhipadu{
         $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
       }
     }
+
+    if($this->user_id > 0){
+      $strSQL .= " AND v.user_id = '".$this->user_id."'";
+    }
+
+    
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();

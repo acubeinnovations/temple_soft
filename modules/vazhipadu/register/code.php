@@ -6,6 +6,7 @@ $pagination = new Pagination(10);
 
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
+$vazhipadu->user_id = $_SESSION[SESSION_TITLE.'userid'];
 
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
