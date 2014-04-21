@@ -9,7 +9,6 @@ if(isset($_SESSION[SESSION_TITLE.'userid'])){
 	$user_id = -1;
 }
 
-
 $voucher=new Voucher($myconnection);
 $voucher->connection=$myconnection;
 
@@ -25,8 +24,6 @@ $add_vazhipadu->user_id = $user_id;
 
 $add_pooja=new Pooja($myconnection);
 $add_pooja->connection=$myconnection;
-
-
 
 $array_vazhipadu=$add_pooja->get_array();
 if($array_vazhipadu==false){
@@ -94,7 +91,6 @@ if(isset($_POST['submit'])){
 			$account->voucher_number 	= $voucher_number;
 			$account->voucher_type_id	= $voucher->voucher_id;
 			$dataAccount = array();
-			$account->fy_id				= $voucher->fy_id;
 			$account->account_from 		= $voucher->default_from;
 			$account->account_to		= $_POST['hd_ledger_id'];//$voucher->default_to;
 			$account->date				= CURRENT_DATE;

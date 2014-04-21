@@ -610,6 +610,30 @@ Class Ledger{
     	}
     }
 
+    function get_details()
+	{
+		if($this->ledger_sub_id >0){
+			$strSQL = "SELECT * FROM ledger_sub WHERE ledger_sub_id = '".$this->ledger_sub_id."'";
+			mysql_query("SET NAMES utf8");
+			$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+		 	if(mysql_num_rows($rsRES) > 0){
+				$row 	= mysql_fetch_assoc($rsRES);
+				$this->ledger_sub_id 		= $row['ledger_sub_id'];
+				$this->ledger_sub_name 		= $row['ledger_sub_name'];
+				$this->ledger_id 			= $row['ledger_id'];
+				$this->parent_sub_ledger_id	= $row['parent_sub_ledger_id'];
+				$this->fy_id 				= $row['fy_id'];
+				$this->status 				= $row['status'];
+				$this->deleted 				= $row['deleted'];
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
 
 }
 ?>

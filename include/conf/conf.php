@@ -75,9 +75,6 @@ define("PURCHASE",14);
 
 //modules
 define("MODULE_VAZHIPADU", 1);
-$g_ARRAY_LIST_MODULE = array();
-$g_ARRAY_LIST_MODULE[0]["id"] = 1;
-$g_ARRAY_LIST_MODULE[0]["name"] = "MODULE_VAZHIPADU";
 
 //ledger for from or to
 define("FROM", 1);
@@ -90,9 +87,6 @@ $g_ARRAY_LIST_STATUS[0]["id"] = 1;
 $g_ARRAY_LIST_STATUS[0]["name"] = "Active";
 $g_ARRAY_LIST_STATUS[1]["id"] = 2;
 $g_ARRAY_LIST_STATUS[1]["name"] = "Inactive";
-
-
-
 
 
 $g_ARRAY_STATUS = array();
