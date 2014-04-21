@@ -116,7 +116,7 @@ if(!defined('CHECK_INCLUDED')){
 
  		<div class="medium-4 columns" >
  			<label for="ledger">Module</label>
- 			<?php echo populate_list_array("lstmodules", $g_ARRAY_LIST_MODULE, 'id','name', '',$disable=false,true);?>
+ 			<?php echo populate_list_array("lstmodules", $modules, 'id','name', '',$disable=false,true);?>
  		</div>
  		<div class="medium-4 columns" >
  			<label for="ledger">Account From</label>

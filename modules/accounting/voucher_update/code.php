@@ -16,6 +16,11 @@ $account_settings->getAccountSettings();
 $voucher = new Voucher($myconnection);
 $voucher->connection = $myconnection;
 
+$module=new Module($myconnection);
+$module->connection=$myconnection;
+$modules = $module->get_list_array();
+
+
 $masterVouchers = $voucher->get_list_master_array();
 
 $ledger = new Ledger($myconnection);
