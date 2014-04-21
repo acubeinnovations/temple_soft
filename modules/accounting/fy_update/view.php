@@ -14,7 +14,7 @@ if(!defined('CHECK_INCLUDED')){
 		 				<?php if(isset($_GET['edt'])) {?>
 		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" disabled requierd type="text"/> 
 		 				<?php }else{?>
-		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" class="mydatepicker" requierd type="text"/>
+		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" class="fydatepicker" requierd type="text"/>
 		 				<?php }?>
 	 				</label>
 
@@ -24,7 +24,7 @@ if(!defined('CHECK_INCLUDED')){
 	 				<?php if(isset($_GET['edt'])) {?>
 	 				<input type="text" name="txtfyend" id="fystart" value="<?php echo $financial_year->fy_end;?>" disabled requierd type="date"/> 
 	 				<?php }else{?>
-	 				<input name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="mydatepicker" requierd type="text"/>
+	 				<input name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="fydatepicker" requierd type="text"/>
 	 				<?php }?>
 	 				</label>
 	 			</div>

@@ -36,11 +36,12 @@ Class FyLedgerSub{
     {
     	if($this->validate()){
 	    	$strSQL = "INSERT INTO fy_ledger_sub(fy_id,ledger_sub_id) VALUES('".mysql_real_escape_string($this->current_fy_id)."','".mysql_real_escape_string($this->ledger_sub_id)."')";
+	    	//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 			if ( mysql_affected_rows($this->connection) > 0 ) {
 				$this->error_description="Data inserted Successfully";
 				return true;
-			}else{
+			}else{echo "not insert";exit();
 				$this->error_number = 3;
 				$this->error_description="Can't insert data ";
 				return false;
@@ -111,6 +112,7 @@ Class FyLedgerSub{
     {
     	if($this->ledger_sub_id > 0){
 	    	$strSQL = "SELECT * FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."' AND ledger_sub_id = '".$this->ledger_sub_id."'";
+	    	//echo $strSQL;exit();
 	    	$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 	    	if(mysql_num_rows($rsRES) > 0){
 	    		return false;
