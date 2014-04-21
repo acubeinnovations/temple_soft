@@ -180,10 +180,13 @@ flash_alert(alert_message,alert_redirect);
 	<script src="/js/foundation/foundation-datepicker.js"></script>
     <script>
             $(document).foundation();
-                                $('.mydatepicker').fdatepicker({
-                                        format: 'dd-mm-yyyy',
-                                        closeButton: true
-                                });
+
+            $('.mydatepicker').fdatepicker({
+                    format: 'dd-mm-yyyy',
+                    startDate: '01-01-2014',
+                    endDate: '01-01-2015',
+                    closeButton: true
+            });
     </script>
     <link rel="stylesheet" href="/css/foundation-datepicker.css" />
 
