@@ -71,7 +71,7 @@ if(!defined('CHECK_INCLUDED')){
 		<tr style="font-weight:bold;">
 			<td colspan="3" align="right">Total</td>
 			<td><?php echo $total_qty;?></td>
-			<td><?php echo $total_amount;?></td>
+			<td><?php echo number_format($total_amount,2);?></td>
 		</tr>
 		<tr>
 			<td colspan="5"><?php  $pagination->pagination_style_numbers();?></td>
