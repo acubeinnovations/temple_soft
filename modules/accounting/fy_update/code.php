@@ -8,6 +8,12 @@ $pagination = new Pagination(10);
 $financial_year = new FinancialYear($myconnection);
 $financial_year->connection = $myconnection;
 
+$filter = "status = '".FINANCIAL_YEAR_OPEN."'";
+$open_fy_count = $financial_year->getCount($filter);
+
+$last_record = $financial_year->getLastRecord();
+
+
 $mybalancesheet = new BalanceSheet($myconnection);
 
 
@@ -174,10 +180,6 @@ if(isset($_GET['cls'])){
 }
 
 
-
-
-
-
 $financial_year->total_records=$pagination->total_records;
 
 $financial_years = $financial_year->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
@@ -214,12 +216,24 @@ if(isset($_POST['submit'])){
 	if($errMSG == ""){
 
 		$financial_year->id	= $_POST['hdfyid'];
-		$financial_year->fy_start	= $_POST['txtfystart'];
-		$financial_year->fy_end		= $_POST['txtfyend'];
-		$financial_year->fy_name    = $_POST['txtfyname'];
-		$financial_year->status 	= FINANCIAL_YEAR_OPEN;
-		$financial_year->update();
-		header("Location:".$current_url);
+
+		$validate = $financial_year->validate($_POST['txtfystart'],$_POST['txtfyend']);
+		
+
+		if($validate){
+			
+			$financial_year->fy_start	= $_POST['txtfystart'];
+			$financial_year->fy_end		= $_POST['txtfyend'];
+			$financial_year->fy_name    = $_POST['txtfyname'];
+			$financial_year->status 	= FINANCIAL_YEAR_OPEN;
+			$financial_year->update();
+			header("Location:".$current_url);
+		}else{
+			
+			$_SESSION[SESSION_TITLE.'flash'] = $financial_year->error_description;
+		    header( "Location:".$current_url);
+		    exit();
+		}
 	}else{
 		$_SESSION[SESSION_TITLE.'flash'] = $errMSG;
 	    header( "Location:".$current_url);

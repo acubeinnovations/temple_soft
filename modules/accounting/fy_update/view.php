@@ -3,16 +3,17 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
-<h3>Add Financial Year</h3>
+<h3>Financial Year</h3>
 
 <form id="frm-fymaster" name="frm-fymaster" method="POST" action="<?php echo $current_url;?>" data-abide >
 <input type="hidden" value="<?php echo $financial_year->id;?>" name="hdfyid" />
+	<?php if(isset($_GET['edt']) || $open_fy_count < 2){?>
  	<fieldset>
  			<div class="row">
 	 			<div class="medium-3 columns">
 	 				<label for="financial-year">Financial Year Start
 		 				<?php if(isset($_GET['edt'])) {?>
-		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" disabled requierd type="text"/> 
+		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" readonly requierd type="text"/> 
 		 				<?php }else{?>
 		 				<input  name="txtfystart" id="fystart" value="<?php echo $financial_year->fy_start;?>" class="fydatepicker" requierd type="text"/>
 		 				<?php }?>
@@ -22,9 +23,9 @@ if(!defined('CHECK_INCLUDED')){
 	 			<div class="medium-3 columns">
 	 				<label for="financial-year">Financial Year End
 	 				<?php if(isset($_GET['edt'])) {?>
-	 				<input type="text" name="txtfyend" id="fystart" value="<?php echo $financial_year->fy_end;?>" disabled requierd type="date"/> 
+	 				<input type="text" name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="fydatepicker" requierd /> 
 	 				<?php }else{?>
-	 				<input name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="fydatepicker" requierd type="text"/>
+	 				<input type="text"  name="txtfyend" id="fyend" value="<?php echo $financial_year->fy_end;?>" class="fydatepicker" requierd />
 	 				<?php }?>
 	 				</label>
 	 			</div>
@@ -44,6 +45,7 @@ if(!defined('CHECK_INCLUDED')){
  			</div>
 
  	</fieldset>
+ 	<?php }?>
  </form>
 
 <?php if($count_financial_years > 0){?>
@@ -78,7 +80,9 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $financial_years[$i]['fy_name'];?></td>
 			<td><?php echo $financial_years[$i]['fy_status'];?></td>
 			<td>
+				<?php if($last_record['id'] == $financial_years[$i]['fy_id'] and $financial_years[$i]['status'] == FINANCIAL_YEAR_OPEN ){?>
 				<a href="<?php echo $edit; ?>">Edit</a>
+				<?php }?>
 				<?php  if($closing_year==false && ($count_financial_years - $closing_count) > 1 && $financial_years[$i]['status'] == FINANCIAL_YEAR_OPEN  ){ ?>
 				<a href="javascript:closeFY(<?php echo $financial_years[$i]['fy_id']?>)" >Close</a>
 				
