@@ -50,7 +50,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == "Save"){
 		//check current date is between fy dates
 		$financial_year->id = $_POST['lstfy'];
 		$financial_year->get_details();
-		if(strtotime(CURRENT_DATE) > strtotime($financial_year->fy_start) and  strtotime(CURRENT_DATE) < strtotime($financial_year->fy_end)){
+		//if(strtotime(CURRENT_DATE) > strtotime($financial_year->fy_start) and  strtotime(CURRENT_DATE) < strtotime($financial_year->fy_end)){
 			//update current financial year
 			$account_settings->current_fy_id = $_POST['lstfy'];
 			$account_settings->default_capital = $_POST['lstledger'];
@@ -67,15 +67,16 @@ if(isset($_POST['submit']) && $_POST['submit'] == "Save"){
 			$financial_year->id = $account_settings->current_fy_id;
 			$_SESSION[SESSION_TITLE.'fy_start_date'] = date('d-m-Y',strtotime($financial_year->fy_start));
 			$_SESSION[SESSION_TITLE.'fy_end_date'] = date('d-m-Y',strtotime($financial_year->fy_end)); 
+			$_SESSION[SESSION_TITLE.'fy_status'] = $financial_year->status;
 			$_SESSION[SESSION_TITLE.'flash'] = "Updated";
 		    header( "Location:".$current_url);
 		    exit();
 			
-		}else{
+		/*}else{
 			$_SESSION[SESSION_TITLE.'flash'] = "Invalid Financial Year";
 		    header( "Location:".$current_url);
 		    exit();
-		}
+		}*/
 		
 		
 	}else{
