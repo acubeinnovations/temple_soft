@@ -237,7 +237,8 @@ Class Voucher{
     public function get_details_with_moduleid(){
     	
     	if ( ($this->module_id != "" || $this->module_id != gINVALID) && $this->module_id >0 ) {
-			$strSQL = "SELECT * FROM voucher WHERE fy_id = '".$this->current_fy_id."' AND module_id = '".$this->module_id."'";
+			$strSQL = "SELECT * FROM voucher WHERE module_id = '".$this->module_id."'";
+			//$strSQL .= " AND fy_id = '".$this->current_fy_id."'";
 			 mysql_query("SET NAMES utf8");
 			// echo $strSQL;exit();
 			$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);

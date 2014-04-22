@@ -76,6 +76,7 @@ if(isset($_POST['submit'])){
 		//add voucher entry
 		$voucher->module_id = $_POST['hd_moduleid'];
 		$voucher->get_details_with_moduleid();
+		//echo $voucher->voucher_id;exit();
 
 		if($voucher->voucher_id > 0){
 
