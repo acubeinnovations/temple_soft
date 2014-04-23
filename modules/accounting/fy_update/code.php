@@ -3,6 +3,12 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+if(isset($_SESSION[SESSION_TITLE.'current_fy_id'])){
+	$current_fy_id = $_SESSION[SESSION_TITLE.'current_fy_id'];
+}else{
+	$current_fy_id = gINVALID;
+}
+
 $pagination = new Pagination(10);
 
 $financial_year = new FinancialYear($myconnection);

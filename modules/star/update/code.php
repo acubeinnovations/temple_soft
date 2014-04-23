@@ -3,6 +3,20 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+//check current date with current financial year
+if(isset($_SESSION[SESSION_TITLE.'fy_start_date']) and isset($_SESSION[SESSION_TITLE.'fy_end_date'])){
+
+	if(strtotime(CURRENT_DATE) > strtotime($_SESSION[SESSION_TITLE.'fy_start_date']) and strtotime(CURRENT_DATE) < strtotime($_SESSION[SESSION_TITLE.'fy_end_date'])){
+
+	}else{
+		$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+        header( "Location:index.php");
+        exit();
+	}
+}
+//checking financial year ends
+
+
 $star=new Stars($myconnection);
 $star->connection=$myconnection;
 

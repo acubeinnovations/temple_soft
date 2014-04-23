@@ -39,13 +39,14 @@ class UserSession {
 		//echo $strSQL;exit();
           $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
           if ( mysql_num_rows($rsRES) > 0 ){
-                $strSQL_ac = "SELECT ast.id,fm.fy_start AS fy_start_date,fm.fy_end AS fy_end_date,fm.status AS fy_status FROM account_settings ast LEFT JOIN fy_master fm ON fm.fy_id = ast.current_fy_id WHERE ast.id = '1' ";
+                $strSQL_ac = "SELECT ast.id,fm.fy_id,fm.fy_start AS fy_start_date,fm.fy_end AS fy_end_date,fm.status AS fy_status FROM account_settings ast LEFT JOIN fy_master fm ON fm.fy_id = ast.current_fy_id WHERE ast.id = '1' ";
                 $rsRES_ac = mysql_query($strSQL_ac,$this->connection) or die(mysql_error(). $strSQL );
                 if(mysql_num_rows($rsRES_ac) > 0){
                     $row_ac = mysql_fetch_assoc($rsRES_ac);
                     $_SESSION[SESSION_TITLE.'fy_start_date'] = date('d-m-Y',strtotime($row_ac['fy_start_date']));
                     $_SESSION[SESSION_TITLE.'fy_end_date'] = date('d-m-Y',strtotime($row_ac['fy_end_date']));
                     $_SESSION[SESSION_TITLE.'fy_status'] = $row_ac['fy_status'];
+                    $_SESSION[SESSION_TITLE.'current_fy_id'] = $row_ac['fy_id'];
                 }
 
                 $this->id = mysql_result($rsRES,0,'id');

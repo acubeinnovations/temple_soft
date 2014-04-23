@@ -72,8 +72,14 @@ if(!defined('CHECK_INCLUDED')){
 			$edit = $current_url."?edt=".$financial_years[$i]['fy_id'];
 			$delete = $current_url."?dlt=".$financial_years[$i]['fy_id'];
 			$close = $current_url."?cls=".$financial_years[$i]['fy_id'];
+
+			if($financial_years[$i]['fy_id'] == $current_fy_id){
+				$class="current_fy";
+			}else{
+				$class="";	
+			}
 	?>
-		<tr>
+		<tr class="<?php echo $class;?>">
 			<td><?php echo $slno;?></td>
 			<td><?php echo $financial_years[$i]['fy_start'];?></td>
 			<td><?php echo $financial_years[$i]['fy_end'];?></td>
