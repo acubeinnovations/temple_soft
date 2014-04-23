@@ -2,8 +2,16 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
 
-$pagination = new Pagination(10);
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
 
 $form_type = new FormType($myconnection);
 $form_type->connection = $myconnection;
@@ -19,14 +27,7 @@ if(isset($_GET['slno'])){
 	$form_type->get_details();
 }
 
-$form_types = $form_type->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
-if($form_types <> false){
-	$pagination->total_records = $form_type->total_records;
-	$pagination->paginate();
-	$count = count($form_types);
-}else{
-	$count = 0;
-}
+
 
 
 if(isset($_POST['submit'])){

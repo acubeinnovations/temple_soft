@@ -3,6 +3,21 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
+
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
+
+
+
+
+
 $pagination = new Pagination(10);
 
 $customer=new Customer($myconnection);
@@ -18,35 +33,13 @@ $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
 $account_settings->getAccountSettings();
 
-$customers = $customer->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
 
-if($customers <> false){
-	$pagination->total_records = $customer->total_records;
-	$pagination->paginate();
-	$count_customers = count($customers);
-}else{
-	$count_customers = 0;
-}
 
 //edit
 if(isset($_GET['edt'])){
 
 	$customer->customer_id = $_GET['edt'];
 	$customer->get_details(); 
-}
-//delete
-if(isset($_GET['dlt'])){
-	$customer->customer_id = $_GET['dlt'];
-	$delete = $customer->delete();
-	if($delete){
-		$_SESSION[SESSION_TITLE.'flash'] = "Customer deleted";
-        header( "Location:".$current_url);
-        exit();
-	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = $customer->error_description;
-        header( "Location:".$current_url);
-        exit();
-	}
 }
 
 
@@ -105,7 +98,7 @@ if(isset($_POST['submit'])){
 			
 			if($update){
 				$_SESSION[SESSION_TITLE.'flash'] = "Success";
-	        	header( "Location:".$current_url);
+	        	header( "Location:ac_customers.php");
 	        	exit();
 			}else{
 				$_SESSION[SESSION_TITLE.'flash'] = "Failed";

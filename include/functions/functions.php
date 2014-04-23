@@ -335,4 +335,28 @@ function convert_digit_to_words($no)
 	    }
 	}
 
+
+
+
+	function checkFinancialYear($status,$start,$end)
+	{
+
+		if($status == FINANCIAL_YEAR_CLOSE){
+			return false;
+		}else{
+			if(trim($start) != '' and trim($end) != ''){
+				if(strtotime(CURRENT_DATE) > strtotime($start) and strtotime(CURRENT_DATE) < strtotime($end)){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}
+
+		
+	}
+
+
 ?>

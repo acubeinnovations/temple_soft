@@ -3,7 +3,19 @@
 if ( !defined('CHECK_INCLUDED') ){
     exit();
 }
-$pagination = new Pagination(10);
+
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
+
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
+
+
 
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
@@ -18,35 +30,11 @@ $ledger->connection = $myconnection;
 $fy_ledger_sub = new FyLedgerSub($myconnection);
 $fy_ledger_sub->connection = $myconnection;
 
-$tax->total_records=$pagination->total_records;
 
-$tax_list = $tax->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
-if($tax_list <> false){
-	$pagination->total_records = $tax->total_records;
-	$pagination->paginate();
-	$count_tax = count($tax_list);
-}else{
-	$count_tax = 0;
-}
 
 if(isset($_GET['edt'])){
 	$tax->id = $_GET['edt'];
 	$tax->get_details();
-	
-}else if(isset($_GET['dlt'])){
-	$tax->id = $_GET['dlt'];
-	$tax->get_details();
-	$ledger->ledger_sub_name = $tax->name;
-	$ledger_sub_id = $ledger->getLedgerId();
-	$delete = $tax->delete();
-	if($delete){
-		if($ledger_sub_id){
-			$ledger->ledger_sub_id = $ledger_sub_id;
-			$ledger->delete();
-		}
-	}
-	header( "Location:".$current_url);
-    exit();
 	
 }
 

@@ -132,8 +132,22 @@ if ( mysql_num_rows($rsRES2) > 0 )
               </ul>
 
             </li>
-            <li><a href="ac_customer.php">Customer</a></li>
-            <li><a href="ac_supplier.php">Supplier</a></li>
+            <li class="has-dropdown">
+              <a href="ac_customers.php">Customer</a>
+              <ul class="dropdown">
+                <li><a href="ac_customer.php">Add Customer</a>
+                <li><a href="ac_customers.php">List Customer</a>
+              </ul>
+            </li>
+
+            <li class="has-dropdown">
+              <a href="ac_suppliers.php">Supplier</a>
+              <ul class="dropdown">
+                <li><a href="ac_supplier.php">Add Supplier</a>
+                <li><a href="ac_suppliers.php">List Supplier</a>
+              </ul>
+            </li>
+
             <li class="has-dropdown"><a href="ac_ledgers.php">Ledgers</a>
 			<ul class="dropdown">
 			<li><a href="ac_ledgers.php">Add Ledger</a>
@@ -180,17 +194,32 @@ if ( mysql_num_rows($rsRES2) > 0 )
                <a href="ac_form_type.php">Form Type</a>
                <ul class="dropdown">
                   <li><a href="ac_form_type.php">Add Form Type</a></li>
+                  <li><a href="ac_form_types.php">List Form Types</a></li>
                   <li><a href="ac_form_variable.php">Add Form Variable</a></li>
                 </ul>
 
             </li>          
             <li class="has-dropdown">
-            <li><a href="ac_financial_year.php">Financial Year</a></li> 
-            <li><a href="ac_tax.php">Tax</a></li>         
+              <a href="ac_financial_year.php">Financial Year</a>
+              <ul class="dropdown">
+                <li><a href="ac_financial_year.php">Add Financial Year</a></li>
+                <li><a href="ac_financial_years.php">List Financial Year</a></li>
+              </ul>
+            </li>
+
+            <li class="has-dropdown">
+              <a href="ac_tax.php">Tax</a>
+              <ul class="dropdown">
+                <li><a href="ac_tax.php">Add Tax</a></li>
+                <li><a href="ac_taxs.php">List Tax</a></li>
+              </ul>
+            </li> 
+
             <li class="has-dropdown">
               <a href="ac_stock.php">Stock</a>
               <ul class="dropdown">
                 <li><a href="ac_stock.php">Add Item</a></li>
+                <li><a href="ac_stocks.php">List Item</a></li>
                 <li><a href="ac_stock_register.php">Stock Register</a></li>
                 <li><a href="ac_stock_register.php?type=<?php echo INPUT_SALE;?>">Sale Register</a></li>
                 <li><a href="ac_stock_register.php?type=<?php echo INPUT_PURCHASE;?>">Purchase Register</a></li>

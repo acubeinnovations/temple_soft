@@ -2,8 +2,18 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
 
-$pagination = new Pagination(10);
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
+
+
 
 $supplier=new Supplier($myconnection);
 $supplier->connection=$myconnection;
@@ -18,35 +28,12 @@ $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
 $account_settings->getAccountSettings();
 
-$suppliers = $supplier->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
-
-if($suppliers <> false){
-	$pagination->total_records = $supplier->total_records;
-	$pagination->paginate();
-	$count_suppliers = count($suppliers);
-}else{
-	$count_suppliers = 0;
-}
 
 //edit
 if(isset($_GET['edt'])){
 
 	$supplier->supplier_id = $_GET['edt'];
 	$supplier->get_details(); 
-}
-//delete
-if(isset($_GET['dlt'])){
-	$supplier->supplier_id = $_GET['dlt'];
-	$delete = $supplier->delete();
-	if($delete){
-		$_SESSION[SESSION_TITLE.'flash'] = "supplier deleted";
-        header( "Location:".$current_url);
-        exit();
-	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = $supplier->error_description;
-        header( "Location:".$current_url);
-        exit();
-	}
 }
 
 

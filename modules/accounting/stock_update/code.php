@@ -3,7 +3,24 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
-$pagination = new Pagination(10);
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
+
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
+
+
+
+
+
+
+
+
 
 $stock=new Stock($myconnection);
 $stock->connection=$myconnection;
@@ -16,16 +33,8 @@ $fy_year->connection = $myconnection;
 $fy_year->id = $stock_register->current_fy_id;
 $fy_year->get_details();
 
-$stock->total_records=$pagination->total_records;
 
-$items = $stock->get_list_array_bylimit($pagination->start_record,$pagination->max_records);
-if($items <> false){
-	$pagination->total_records = $stock->total_records;
-	$pagination->paginate();
-	$count_items = count($items);
-}else{
-	$count_items = 0;
-}
+
 $opening_qty = 0;
 $opening_rate = false;
 $stk_id = -1;
@@ -38,20 +47,6 @@ if(isset($_GET['edt'])){
 	$stock_register->item_id = $stock->item_id;
 	list($stk_id,$opening_qty,$opening_rate) = $stock_register->getItemOpeningQuantity();
 }
-if(isset($_GET['dlt'])){
-	$stock->item_id = $_GET['dlt'];
-	$delete = $stock->delete();
-	if($delete){
-		$_SESSION[SESSION_TITLE.'flash'] = "Item deleted";
-        header( "Location:".$current_url);
-        exit();
-	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = $stock->error_description;
-        header( "Location:".$current_url);
-        exit();
-	}
-}
-
 
 $uom=new Uom($myconnection);
 $uom->connection=$myconnection;

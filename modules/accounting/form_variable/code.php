@@ -3,6 +3,19 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+//check current date with current financial year
+$check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],
+
+$_SESSION[SESSION_TITLE.'fy_end_date']);
+if(!$check){
+	$_SESSION[SESSION_TITLE.'flash'] = "Please check Financial Year";
+    header( "Location:index.php");
+    exit();
+}
+//checking financial year ends
+
+
+
 $form_type = new FormType($myconnection);
 $form_type->connection = $myconnection;
 

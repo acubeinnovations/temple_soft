@@ -10,7 +10,7 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
-			<a href="ac_form_type.php" class="tiny button">Form Types</a>
+			<a href="ac_form_types.php" class="tiny button">Form Types</a>
 		</div>
 	</div>
 </div>
