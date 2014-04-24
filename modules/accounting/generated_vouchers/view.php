@@ -62,7 +62,7 @@ if(!defined('CHECK_INCLUDED')){
 		</thead>
 		<tbody>
 		<?php 
-		$i=0;
+		$i=0; $total_credit = 0;$total_debit = 0;
 		while($i < $count_list){
 			$edit ="ac_generate_voucher.php?edt=".$account_list[$i]['account_id'];
 			$delete ="ac_generate_voucher.php?dlt=".$account_list[$i]['account_id'];
@@ -72,8 +72,8 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $account_list[$i]['date']; ?></td>
 			<td><?php echo $account_list[$i]['voucher_name']."-".$account_list[$i]['voucher_number']; ?></td>		
 			<td><?php echo $account_list[$i]['ref_ledger_name'].",".$account_list[$i]['narration']; ?></td>
-			<td><?php echo $account_list[$i]['account_debit']; ?></td>
-			<td><?php echo $account_list[$i]['account_credit']; ?></td>
+			<td><?php echo number_format($account_list[$i]['account_debit'],2); ?></td>
+			<td><?php echo number_format($account_list[$i]['account_credit'],2); ?></td>
 			<!-- <td>
 				<div <?php if(isset($_GET['bid'])) echo 'style="display:none;"'?>>
 				<a href="<?php echo $edit; ?>">Edit</a>/
@@ -81,7 +81,17 @@ if(!defined('CHECK_INCLUDED')){
 				</div>
 			</td> -->
 		</tr>
-		<?php $i++; }?>
+		<?php 
+			$total_credit += $account_list[$i]['account_credit']; 
+			$total_debit += $account_list[$i]['account_debit'];
+			$i++;
+		}
+		?>
+		<tr style="font-weight:bold;">
+			<td colspan="3"></td>
+			<td><?php echo number_format( $total_debit,2); ?></td>
+			<td><?php echo number_format($total_credit,2); ?></td>
+		</tr>
 		<tr>
 			<td colspan="6"><?php echo $pagination->pagination_style_numbers();?></td>
 		</tr>
