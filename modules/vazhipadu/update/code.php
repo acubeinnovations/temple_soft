@@ -2,7 +2,7 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
-
+//echo $_SESSION[SESSION_TITLE.'fy_end_date'];exit();
 //check current date with current financial year
 $check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],$_SESSION[SESSION_TITLE.'fy_end_date']);
 if(!$check){

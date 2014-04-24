@@ -143,6 +143,7 @@ Class FinancialYear{
 		}
     }
 
+
     function get_list_array_bylimit($start_record = 0,$max_records = 25){
     	$financial_years = array();
 		$i=0;
@@ -174,6 +175,33 @@ Class FinancialYear{
 			return false;
 		}
     }
+
+    function get_list_array_for_account_settings(){
+    	$financial_years = array();
+		$i=0;
+		
+        $strSQL = "SELECT * FROM fy_master ";
+        $strSQL .= " WHERE fy_id IN (SELECT fy_id FROM fy_ledger_sub)";
+        $strSQL .= " ORDER BY fy_id";
+		
+		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+		if ( mysql_num_rows($rsRES) > 0 ){
+
+			while ( list ($id,$name,$start,$end,$status) = mysql_fetch_row($rsRES) ){
+				$financial_years[$i]["fy_id"] =  $id;
+				$financial_years[$i]["fy_name"] = $name;
+				$financial_years[$i]["fy_start"] = date('d-m-Y',strtotime($start));
+				$financial_years[$i]["fy_end"] = date('d-m-Y',strtotime($end));
+				$financial_years[$i]["status"] = $status;
+				$financial_years[$i]["fy_status"] = ($status == FINANCIAL_YEAR_CLOSE)?"Yes":"No";
+				$i++;
+			}
+			return $financial_years;
+		} else {
+			return false;
+		}
+    }
+
 
     public function delete()
     {
@@ -236,10 +264,11 @@ Class FinancialYear{
 	}
 
 	//regenerate vouchers for next financial year 
-	public function create_FY_vouchers($new_fyid){
+	public function create_FY_vouchers($current_fy_id,$new_fyid){
 
 		if($new_fyid>0){
-			$strSQL = "INSERT INTO voucher (fy_id,ledger_sub_id) SELECT ".$new_fyid.", ledger_sub_id FROM ledger_sub";
+			$strSQL = "INSERT INTO voucher (voucher_name,voucher_description,fy_id,voucher_master_id,header,footer,number_series,series_prefix,series_sufix,series_start,series_seperator,default_from,default_to,form_type_id,source,hidden,module_id) SELECT voucher_name,voucher_description,".$new_fyid.",voucher_master_id,header,footer,number_series,series_prefix,series_sufix,series_start,series_seperator,default_from,default_to,form_type_id,source,hidden,module_id FROM voucher WHERE fy_id = '".$current_fy_id."'";
+			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
 			return true;
 		}else{
@@ -253,6 +282,17 @@ Class FinancialYear{
 
 		if($new_fyid>0){
 			$strSQL = "DELETE FROM fy_ledger_sub WHERE fy_id ='".$new_fyid."'";
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function delete_FY_vouchers($new_fyid){
+
+		if($new_fyid>0){
+			$strSQL = "DELETE FROM voucher WHERE fy_id ='".$new_fyid."'";
 			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
 			return true;
 		}else{
@@ -310,6 +350,8 @@ Class FinancialYear{
 			}
 		}
 	}
+
+	
 
 	public function validate($new_start='',$new_end='')
 	{

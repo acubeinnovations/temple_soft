@@ -70,6 +70,22 @@ Class AccountSettings{
 			}
     	}
     }
+
+    public function updateSessionValues()
+    {
+        $this->getAccountSettings();
+
+        $strSQL = "SELECT * FROM fy_master WHERE fy_id = '".$this->current_fy_id."'";
+        $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+        if(mysql_num_rows($rsRES) > 0){
+            list($id,$name,$start,$end,$status) = mysql_fetch_row($rsRES);
+            $_SESSION[SESSION_TITLE.'fy_start_date'] = date('d-m-Y',strtotime($start));
+            $_SESSION[SESSION_TITLE.'fy_end_date'] = date('d-m-Y',strtotime($end));
+            $_SESSION[SESSION_TITLE.'fy_status'] = $status;
+            $_SESSION[SESSION_TITLE.'current_fy_id'] = $id;
+        }
+    }
+
 }
 
 ?>

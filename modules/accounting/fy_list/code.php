@@ -14,6 +14,9 @@ $pagination = new Pagination(10);
 $financial_year = new FinancialYear($myconnection);
 $financial_year->connection = $myconnection;
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+
 $last_record = $financial_year->getLastRecord();
 
 $mybalancesheet = new BalanceSheet($myconnection);
@@ -36,15 +39,15 @@ if(isset($_GET['cls'])){
 	$_SESSION[SESSION_TITLE.'flash'] = "";
 	if($mybalancesheet->error == false){
 
-	$financial_year->id = $_GET['cls'];
-	$financial_year->get_details();
+		$financial_year->id = $_GET['cls'];
+		$financial_year->get_details();
 		if($financial_year->checkNextFY($financial_year->fy_end) == true){
 			// Stock Close
 			$result = $mystock_register->close($_GET['cls'],$financial_year->next_fy_id,date('Y-m-d', strtotime('+1 day', strtotime($financial_year->fy_end))));
-//				echo "<pre>";
-//				print_r($close_data);
-//				echo "</pre>";
-//				exit();
+			//echo "<pre>";
+			//print_r($close_data);
+			//echo "</pre>";
+			//exit();
 
 			if($result == true){
 				//fetched closing data
@@ -56,7 +59,8 @@ if(isset($_GET['cls'])){
 			
 				// set new FY id as current
 				$financial_year->current_fy_id = $financial_year->next_fy_id;
-				$financial_year->updateCurrentFY();
+				$current_fy_id = $financial_year->updateCurrentFY();
+				
 
 				// add opening balance for liabilities
 				foreach ($close_data_liabilities as $row_liabilities){
@@ -113,6 +117,9 @@ if(isset($_GET['cls'])){
 					}
 
 				if($financial_year->next_fy_id > 0 && $result==true  ){
+					// create vouchers for New FY
+
+					$financial_year->create_FY_vouchers($_SESSION[SESSION_TITLE.'current_fy_id'],$financial_year->next_fy_id);
 					// create subledgers for New FY
 					$result = $financial_year->create_FY_subledgers($financial_year->next_fy_id);
 					if($result == true){
@@ -131,18 +138,22 @@ if(isset($_GET['cls'])){
 					$_SESSION[SESSION_TITLE.'flash'] .= "Stock closing failed <br>";
 					$result =false;
 			}
+
 			if($result==false){
 				// error occured remove added account entries for New FY
 				 $financial_year->delete_FY_account_entries($financial_year->next_fy_id);
 
 				// error occured remove added subledgers for New FY
 				 $financial_year->delete_FY_subledgers($financial_year->next_fy_id);
+				 $financial_year->delete_FY_vouchers($financial_year->next_fy_id);
+				 
 				// error occured revert close
 				$financial_year->id = $_GET['cls'];
 				$financial_year->revert_close();
 				//error occured  set reset FY id as current
 				$financial_year->current_fy_id = $_GET['cls'];
-				$financial_year->updateCurrentFY();
+				$current_fy_id = $financial_year->updateCurrentFY();
+				
 				// error occured revert stock closing
 				$mystock_register->revert_close($financial_year->next_fy_id);
 			}
@@ -157,8 +168,9 @@ if(isset($_GET['cls'])){
 		$result =false;
 	}
 
-	if($result==true){
+	$account_settings->updateSessionValues();
 
+	if($result==true){
 		$_SESSION[SESSION_TITLE.'flash'] = "Financial Year Closed";
 	    header( "Location:".$current_url);
 	    exit();

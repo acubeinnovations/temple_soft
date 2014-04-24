@@ -23,7 +23,7 @@ $financial_year->connection = $myconnection;
 $financial_year->id = $account_settings->current_fy_id;
 $financial_year->get_details();
 
-$financial_years = $financial_year->get_list_array();
+$financial_years = $financial_year->get_list_array_for_account_settings();
 
 
 
@@ -47,38 +47,23 @@ if(isset($_POST['submit']) && $_POST['submit'] == "Save"){
 	}
 
 	if($errMSG == ""){
-		//check current date is between fy dates
-		$financial_year->id = $_POST['lstfy'];
-		$financial_year->get_details();
-		//if(strtotime(CURRENT_DATE) > strtotime($financial_year->fy_start) and  strtotime(CURRENT_DATE) < strtotime($financial_year->fy_end)){
-			//update current financial year
-			$account_settings->current_fy_id = $_POST['lstfy'];
-			$account_settings->default_capital = $_POST['lstledger'];
-			$account_settings->organization_name = $_POST['organization'];
-			$account_settings->organization_address = $_POST['address'];
-			$account_settings->update();
+		//update current financial year
+		$account_settings->current_fy_id = $_POST['lstfy'];
+		$account_settings->default_capital = $_POST['lstledger'];
+		$account_settings->organization_name = $_POST['organization'];
+		$account_settings->organization_address = $_POST['address'];
+		$account_settings->update();
 			
-			$account_settings->getAccountSettings();
-			//echo $account_settings->default_capital;exit();
-			//add ledger in fy_ledger_sub
-			$fy_ledger_sub->ledger_sub_id = $account_settings->default_capital;
-			$fy_ledger_sub->update();
+		$account_settings->getAccountSettings();
+		
+		$fy_ledger_sub->fy_id = $account_settings->current_fy_id;
+		$fy_ledger_sub->ledger_sub_id = $account_settings->default_capital;
+		$fy_ledger_sub->update();
 
-			$financial_year->id = $account_settings->current_fy_id;
-			$_SESSION[SESSION_TITLE.'fy_start_date'] = date('d-m-Y',strtotime($financial_year->fy_start));
-			$_SESSION[SESSION_TITLE.'fy_end_date'] = date('d-m-Y',strtotime($financial_year->fy_end)); 
-			$_SESSION[SESSION_TITLE.'fy_status'] = $financial_year->status;
-			$_SESSION[SESSION_TITLE.'flash'] = "Updated";
-		    header( "Location:".$current_url);
-		    exit();
-			
-		/*}else{
-			$_SESSION[SESSION_TITLE.'flash'] = "Invalid Financial Year";
-		    header( "Location:".$current_url);
-		    exit();
-		}*/
-		
-		
+		$account_settings->updateSessionValues();
+		$_SESSION[SESSION_TITLE.'flash'] = "Updated";
+	    header( "Location:".$current_url);
+	    exit();		
 	}else{
 		$_SESSION[SESSION_TITLE.'flash'] = $errMSG;
 	    header( "Location:".$current_url);
