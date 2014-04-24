@@ -7,6 +7,11 @@ $menu_item = new MenuItem($myconnection);
 $menu_item->connection = $myconnection;
 $menu_list = $menu_item->get_list_array();
 
+if(isset($_GET['id'])){
+	$menu_item->id = $_GET['id'];
+	$menu_item->get_details();
+}
+
 
 if(isset($_POST['submit']))
 {	
@@ -14,9 +19,12 @@ if(isset($_POST['submit']))
 	if(trim($_POST['txtname']) == ""){
 		$errMSG .= "Menu Name is empty <br/>";
 	}
-	if(trim($_POST['txturl']) == ""){
-		$errMSG .= "Link Url is empty";
+	if($_POST['lstmenu'] > 0){
+		if(trim($_POST['txturl']) == ""){
+			$errMSG .= "Link Url is empty";
+		}
 	}
+	
 
 	if($errMSG == ""){
 		$menu_item->id = $_POST['h_id'];

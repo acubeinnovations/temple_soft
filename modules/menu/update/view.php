@@ -3,8 +3,18 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 ?>
+<div class="row" >
+	<div class="medium-6 columns">
+		<h3><?php echo (isset($_GET['id']))?"Edit Menu":"Add Menu"; ?></h3>
+	</div>
+	<div class="medium-6 columns">
+		<div class="text-right" style="margin-top:5px;">
+			<a class="tiny button" href="list_menu.php">List Menu</a>
+		</div>
+	</div>
+</div>
 
-<h3>Add Menu</h3>
+
 <form id="frmmenu" name="frmmenu" method="POST" action="" data-abide >
 	<fieldset>
 		<div class="row">
@@ -26,8 +36,8 @@ if(!defined('CHECK_INCLUDED')){
  			</div>
  		
 			<div class="medium-4 columns">
-				<label for="menu">Link Url <small>required</small>
-					<input type="text" name="txturl" id="txturl" value="<?php echo $menu_item->link_url;?>" required/>
+				<label for="menu">Link Url 
+					<input type="text" name="txturl" id="txturl" value="<?php echo $menu_item->link_url;?>"/>
 				</label>
 			</div>
 		</div>

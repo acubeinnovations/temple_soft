@@ -111,15 +111,17 @@ Class MenuItem{
 		$menu_list = array();
 		$i=0;
 		$str_condition = "";
-		$strSQL = "SELECT id,name,parent_id,link_url,status FROM menu_item WHERE deleted = '".NOT_DELETED."'";
+		$strSQL = "SELECT mn1.id,mn1.name,mn1.parent_id,mn1.link_url,mn1.status,mn2.name as parent_name FROM menu_item mn1 LEFT JOIN menu_item mn2 ON mn1.parent_id = mn2.id";
+		$strSQL .= " WHERE mn1.deleted = '".NOT_DELETED."'";
 		if($this->id!='' && $this->id!=gINVALID){
-			$strSQL .= " AND id = '".addslashes(trim($this->id))."'";
+			$strSQL .= " AND mn1.id = '".addslashes(trim($this->id))."'";
 		}
 		if ($this->name!='') {
-			$strSQL .= " AND name LIKE '%".addslashes(trim($this->name))."%'";
+			$strSQL .= " AND mn1.name LIKE '%".addslashes(trim($this->name))."%'";
 		}
 
-		$strSQL .= " ORDER BY id";
+		$strSQL .= " ORDER BY mn1.parent_id,mn1.id ASC";
+		//echo $strSQL;
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
 		mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
@@ -131,12 +133,13 @@ Class MenuItem{
 				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
 				$this->total_records = mysql_num_rows($all_rs);
 			}
-			while ( list ($id,$name,$parent_id,$link_url,$status) = mysql_fetch_row($rsRES) ){
+			while ( list ($id,$name,$parent_id,$link_url,$status,$parent_name) = mysql_fetch_row($rsRES) ){
 				$menu_list[$i]["id"] =  $id;
 				$menu_list[$i]["name"] = $name;
 				$menu_list[$i]["parent_id"] = $parent_id;
 				$menu_list[$i]["link_url"] = $link_url;
 				$menu_list[$i]["status"] = $status;
+				$menu_list[$i]["parent_name"] = $parent_name;
 				$i++;
 			}
 			return $menu_list;
@@ -148,7 +151,7 @@ Class MenuItem{
 
 	public function validate()
 	{
-		$strSQL = "SELECT COUNT(*) AS count FROM menu_item WHERE deleted= '".NOT_DELETED."' name = '".$this->name."' AND link_url = '".$this->link_url."' AND parent_id = '".$this->parent_id."' AND id <> '".$this->id."'";
+		$strSQL = "SELECT COUNT(*) AS count FROM menu_item WHERE deleted= '".NOT_DELETED."' AND name = '".$this->name."' AND link_url = '".$this->link_url."' AND parent_id = '".$this->parent_id."' AND id <> '".$this->id."'";
 		//echo $strSQL;exit();
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		$row = mysql_fetch_assoc($rsRES);
@@ -158,6 +161,23 @@ Class MenuItem{
 			return true;
 		}
 	}
+
+	public function delete()
+    {
+    	if ( ($this->id != "" || $this->id != gINVALID) && $this->id >0 ){
+    		$strSQL = "UPDATE menu_item SET deleted = '".DELETED."' WHERE id = '".$this->id."'";
+    		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+            if ( mysql_affected_rows($this->connection) >= 0 ) {
+            	return true;
+            }else{
+            	$this->error_description="Menu Item not deleted";
+				return false;
+            }
+    	}else{
+    		$this->error_description="Invalid Menu Item";
+			return false;
+    	}
+    }
 
 
 }
