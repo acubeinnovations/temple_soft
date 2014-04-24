@@ -235,6 +235,14 @@ if ( mysql_num_rows($rsRES2) > 0 )
         <li class="has-dropdown">
           <a href="#">Administrator</a>
           <ul class="dropdown">
+            <li class="has-dropdown">
+              <a href="#">Menu</a>
+              <ul class="dropdown">
+                <li><a href="add_menu.php">Add Menu</a></li>
+                <li><a href="list_menu.php">List Menu</a></li>
+                <li><a href="assign_menu.php">Assign Menu</a></li>
+              </ul>
+            </li>
             <li><a href="users.php">Users</a></li>
             <li><a href="change_password.php">Change Password</a></li>
             <li class="divider"></li>
