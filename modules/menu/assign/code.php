@@ -2,42 +2,42 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
+$user = new User($myconnection);
+$user->connection = $myconnection;
+$users = $user->get_list_array_filter("user_type_id <> '".ADMINISTRATOR."'");
+
+$user_menu = new UserMenu($myconnection);
+$user_menu->connection = $myconnection;
+if(isset($_SESSION[SESSION_TITLE.'userid'])){
+	$user_menu->user_id = $_SESSION[SESSION_TITLE.'userid'];
+}
 
 $menu_item = new MenuItem($myconnection);
 $menu_item->connection = $myconnection;
-$menu_list = $menu_item->get_list_array();
+$menu_list = $menu_item->getMenuTreeArray();
+/*
+echo "<pre>";
+print_r($menu_list);
+echo "</pre>";exit();
+*/
 
 
 if(isset($_POST['submit']))
 {	
+	$user_menu->user_id = $_POST['lstuser'];
+	$user_menu->insert_batch($_POST['chk_menu']);
+
+	/*
 	$errMSG = "";
-	if(trim($_POST['txtname']) == ""){
-		$errMSG .= "Menu Name is empty <br/>";
-	}
-	if(trim($_POST['txturl']) == ""){
-		$errMSG .= "Link Url is empty";
-	}
+	
 
 	if($errMSG == ""){
-		$menu_item->id = $_POST['h_id'];
-		$menu_item->name = $_POST['txtname'];
-		$menu_item->parent_id = $_POST['lstmenu'];
-		$menu_item->link_url = $_POST['txturl'];
-		$menu_item->status = $_POST['lststatus'];
-		if($menu_item->validate()){
-			$menu_item->update();
-			$_SESSION[SESSION_TITLE.'flash'] = "Menu Item Updated";
-	        header( "Location:".$current_url);
-	        exit();
-		}else{
-			$_SESSION[SESSION_TITLE.'flash'] = "Menu Item already exists";
-	        header( "Location:".$current_url);
-	        exit();
-		}	
+			
 	}else{
 		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
         header( "Location:".$current_url);
         exit();
 	}
+	*/
 }
 ?>

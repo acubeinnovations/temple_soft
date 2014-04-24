@@ -179,5 +179,81 @@ Class MenuItem{
     	}
     }
 
+    public function getParentMenu()
+    {
+    	$result = array();$i=0;
+    	$strSQL = "SELECT * FROM menu_item WHERE deleted = '".NOT_DELETED."' AND status = '".STATUS_ACTIVE."' AND parent_id = '".gINVALID."'";
+    	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+    	if(mysql_num_rows($rsRES) > 0){
+    		while($row = mysql_fetch_assoc($rsRES)){
+    			$result[$i]['id'] = $row['id'];
+    			$result[$i]['name'] = $row['name'];
+    			$result[$i]['parent_id'] = $row['parent_id'];
+    			$result[$i]['link_url'] = $row['link_url'];
+    			$result[$i]['status'] = $row['status'];
+    			$result[$i]['deleted'] = $row['deleted'];
+    			$i++;
+    		}
+    		return $result;
+    	}else{
+    		
+    		$this->error_description = "can't list data" ;
+    		return false;
+    	}
+
+    }
+
+    public function getSibblings($id)
+    {
+    	$result = array();$i=0;
+    	$strSQL = "SELECT * FROM menu_item WHERE deleted = '".NOT_DELETED."' AND status = '".STATUS_ACTIVE."' AND parent_id = '".$id."'";
+    	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+    	if(mysql_num_rows($rsRES) > 0){
+    		while($row = mysql_fetch_assoc($rsRES)){
+    			$result[$i]['id'] = $row['id'];
+    			$result[$i]['name'] = $row['name'];
+    			$result[$i]['parent_id'] = $row['parent_id'];
+    			$result[$i]['link_url'] = $row['link_url'];
+    			$result[$i]['status'] = $row['status'];
+    			$result[$i]['deleted'] = $row['deleted'];
+    			$next = $this->getSibblings($result[$i]['id']);
+    			if($next){
+    				$result[$i]['sibblings'] = $next;
+    			}
+    			$i++;
+    		}
+    		return $result;
+    	}else{
+    		
+    		$this->error_description = "can't list data" ;
+    		return false;
+    	}
+    }
+
+    public function getMenuTreeArray()
+    {
+    	$menu_list = array();$i=0;
+    	$parents = $this->getParentMenu();
+    	if($parents){
+    		foreach($parents as $parent){
+    			$menu_list[$i]['id'] = $parent['id'];
+    			$menu_list[$i]['name'] = $parent['name'];
+    			$menu_list[$i]['link_url'] = $parent['link_url'];
+    			$menu_list[$i]['parent_id'] = $parent['parent_id'];
+    			$menu_list[$i]['status'] = $parent['status'];
+    			$sibblings = $this->getSibblings($parent['id']);
+    			if($sibblings){
+    				$menu_list[$i]['sibblings'] = $sibblings;
+    			}
+    			$i++;
+    		}
+    		return $menu_list;
+    	}else{
+    		$this->error_description = "Can't list data";
+    		return false;
+    	}
+    	
+    }
+
 
 }

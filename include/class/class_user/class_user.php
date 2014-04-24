@@ -571,7 +571,7 @@ $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 }
 
 
-    function get_list_array_filter($filter = "")
+    function get_list_array_filter($filter = "1")
     {
         $strSQL = "SELECT * FROM users WHERE ".$filter;
         $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
@@ -617,6 +617,8 @@ $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
             return false;
         }
     }
+
+    
 
 
 }
