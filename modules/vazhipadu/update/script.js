@@ -12,11 +12,14 @@ $(document).ready(function(){
 	$("#button-add").click(function(){
 
 		var name	= nameObj.val();
-		var star 	= $("#liststar option:selected").text();
 		var star_id = starObj.val();
+		var star 	= '-';
+		if(star_id > 0){
+			star 	= $("#liststar option:selected").text();
+		}
 	
+		if(name!=''){
 
-		if(name!=''  && star_id >0){
 			var hiddenStr = name+'_'+star_id;
 			
 			$("#tbl-append").append('<tbody><tr><td>'+name+'<input type="hidden" class="hide-rows" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td></td></tr></tbody>');
@@ -29,7 +32,7 @@ $(document).ready(function(){
 			$("#liststar").val(-1);
 
 		}else{
-			popup_alert("Enter Name and Star",false);
+			popup_alert("Enter Name",false);
 		}
 		
 		$("input:text[name=txtname]").focus();
