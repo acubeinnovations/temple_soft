@@ -107,6 +107,45 @@ Class MenuItem{
     	}
 	}
 
+	public function get_list_array_bylimit($start_record = 0,$max_records = 25){
+		$menu_list = array();
+		$i=0;
+		$str_condition = "";
+		$strSQL = "SELECT id,name,parent_id,link_url,status FROM menu_item WHERE deleted = '".NOT_DELETED."'";
+		if($this->id!='' && $this->id!=gINVALID){
+			$strSQL .= " AND id = '".addslashes(trim($this->id))."'";
+		}
+		if ($this->name!='') {
+			$strSQL .= " AND name LIKE '%".addslashes(trim($this->name))."%'";
+		}
+
+		$strSQL .= " ORDER BY id";
+		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
+		mysql_query("SET NAMES utf8");
+		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+		if ( mysql_num_rows($rsRES) > 0 ){
+
+			//without limit  , result of that in $all_rs
+			if (trim($this->total_records)!="" && $this->total_records > 0) {
+			} else {
+				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
+				$this->total_records = mysql_num_rows($all_rs);
+			}
+			while ( list ($id,$name,$parent_id,$link_url,$status) = mysql_fetch_row($rsRES) ){
+				$menu_list[$i]["id"] =  $id;
+				$menu_list[$i]["name"] = $name;
+				$menu_list[$i]["parent_id"] = $parent_id;
+				$menu_list[$i]["link_url"] = $link_url;
+				$menu_list[$i]["status"] = $status;
+				$i++;
+			}
+			return $menu_list;
+		} else {
+			return false;
+		}
+
+	}
+
 	public function validate()
 	{
 		$strSQL = "SELECT COUNT(*) AS count FROM menu_item WHERE deleted= '".NOT_DELETED."' name = '".$this->name."' AND link_url = '".$this->link_url."' AND parent_id = '".$this->parent_id."' AND id <> '".$this->id."'";

@@ -2,42 +2,25 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
+$pagination = new Pagination(10);
 
 $menu_item = new MenuItem($myconnection);
 $menu_item->connection = $myconnection;
-$menu_list = $menu_item->get_list_array();
+
+$menu_item->total_records=$pagination->total_records;
+
+$menu_list = $menu_item->get_list_array_bylimit();
+if($menu_list){
+	$pagination->total_records = $menu_item->total_records;
+	$pagination->paginate();
+	$count_menu=count($menu_list);
+	}else{
+	$count_menu=0;
+}
 
 
 if(isset($_POST['submit']))
 {	
-	$errMSG = "";
-	if(trim($_POST['txtname']) == ""){
-		$errMSG .= "Menu Name is empty <br/>";
-	}
-	if(trim($_POST['txturl']) == ""){
-		$errMSG .= "Link Url is empty";
-	}
-
-	if($errMSG == ""){
-		$menu_item->id = $_POST['h_id'];
-		$menu_item->name = $_POST['txtname'];
-		$menu_item->parent_id = $_POST['lstmenu'];
-		$menu_item->link_url = $_POST['txturl'];
-		$menu_item->status = $_POST['lststatus'];
-		if($menu_item->validate()){
-			$menu_item->update();
-			$_SESSION[SESSION_TITLE.'flash'] = "Menu Item Updated";
-	        header( "Location:".$current_url);
-	        exit();
-		}else{
-			$_SESSION[SESSION_TITLE.'flash'] = "Menu Item already exists";
-	        header( "Location:".$current_url);
-	        exit();
-		}	
-	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
-        header( "Location:".$current_url);
-        exit();
-	}
+	
 }
 ?>
