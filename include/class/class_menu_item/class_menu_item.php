@@ -10,9 +10,9 @@ Class MenuItem{
 	var $id  =  gINVALID;
 	var $name ="";
 	var $parent_id = gINVALID;
-	var $link_url = "";
+	var $page_id = "";
 	var $status = "";
-	var $deleted = NOT_DELETED;
+	var $sort_order = "";
 
 	var $error = false;
     var $error_number=gINVALID;
@@ -22,12 +22,12 @@ Class MenuItem{
     public function update()
     {
     	if ( $this->id == "" || $this->id == gINVALID) {
-    		$strSQL= "INSERT INTO menu_item(name,parent_id,link_url,status,deleted) VALUES('";
+    		$strSQL= "INSERT INTO menu_item(name,parent_id,page_id,status,sort_order) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->name)."','";
     		$strSQL.= mysql_real_escape_string($this->parent_id)."','";
-    		$strSQL.= mysql_real_escape_string($this->link_url)."','";
+    		$strSQL.= mysql_real_escape_string($this->page_id)."','";
     		$strSQL.= mysql_real_escape_string($this->status)."','";
-			$strSQL.= mysql_real_escape_string($this->deleted)."')";
+			$strSQL.= mysql_real_escape_string($this->sort_order)."')";
 			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 
@@ -45,8 +45,8 @@ Class MenuItem{
     		$strSQL = "UPDATE menu_item SET ";
     		$strSQL .= " name = '".addslashes(trim($this->name))."',";
     		$strSQL .= " parent_id = '".addslashes(trim($this->parent_id))."',";
-    		$strSQL .= " link_url = '".addslashes(trim($this->link_url))."',";
-    		$strSQL .= " deleted = '".addslashes(trim($this->deleted))."',";
+    		$strSQL .= " page_id = '".addslashes(trim($this->page_id))."',";
+    		$strSQL .= " sort_order = '".addslashes(trim($this->sort_order))."',";
     		$strSQL .= " status = '".addslashes(trim($this->status))."'";
 			$strSQL .= " WHERE id = ".$this->id;
 			//echo $strSQL;exit();
@@ -65,7 +65,7 @@ Class MenuItem{
     function get_details()
 	{
 		if($this->id >0){
-			$strSQL = "SELECT id,name,parent_id,link_url,status,deleted FROM menu_item WHERE id = '".$this->id."' and deleted = '".NOT_DELETED."'";
+			$strSQL = "SELECT id,name,parent_id,page_id,status,sort_order FROM menu_item WHERE id = '".$this->id."' and status = '".STATUS_ACTIVE."'";
 			mysql_query("SET NAMES utf8");
 			$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
 			if(mysql_num_rows($rsRES) > 0){
@@ -73,9 +73,9 @@ Class MenuItem{
 				$this->id 			= $row['id'];
 				$this->name 		= $row['name'];
 				$this->parent_id 	= $row['parent_id'];
-				$this->link_url 	= $row['link_url'];
+				$this->page_id 	= $row['page_id'];
 				$this->status 		= $row['status'];
-				$this->deleted 		= $row['deleted'];
+				$this->sort_order 		= $row['sort_order'];
 				return true;
 			}else{
 				return false;
@@ -89,7 +89,7 @@ Class MenuItem{
 	function get_list_array()
 	{
 		$menu_list = array();$i=0;
-		$strSQL = "SELECT  id,name FROM menu_item WHERE deleted = '".NOT_DELETED."'";
+		$strSQL = "SELECT  id,name FROM menu_item WHERE status = '".STATUS_ACTIVE."'";
 		mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		if ( mysql_num_rows($rsRES) > 0 )
@@ -111,8 +111,8 @@ Class MenuItem{
 		$menu_list = array();
 		$i=0;
 		$str_condition = "";
-		$strSQL = "SELECT mn1.id,mn1.name,mn1.parent_id,mn1.link_url,mn1.status,mn2.name as parent_name FROM menu_item mn1 LEFT JOIN menu_item mn2 ON mn1.parent_id = mn2.id";
-		$strSQL .= " WHERE mn1.deleted = '".NOT_DELETED."'";
+		$strSQL = "SELECT mn1.id,mn1.name,mn1.parent_id,mn1.page_id,mn1.status,mn2.name as parent_name FROM menu_item mn1 LEFT JOIN menu_item mn2 ON mn1.parent_id = mn2.id";
+		$strSQL .= " WHERE mn1.status = '".STATUS_ACTIVE."'";
 		if($this->id!='' && $this->id!=gINVALID){
 			$strSQL .= " AND mn1.id = '".addslashes(trim($this->id))."'";
 		}
@@ -133,11 +133,11 @@ Class MenuItem{
 				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
 				$this->total_records = mysql_num_rows($all_rs);
 			}
-			while ( list ($id,$name,$parent_id,$link_url,$status,$parent_name) = mysql_fetch_row($rsRES) ){
+			while ( list ($id,$name,$parent_id,$page_id,$status,$parent_name) = mysql_fetch_row($rsRES) ){
 				$menu_list[$i]["id"] =  $id;
 				$menu_list[$i]["name"] = $name;
 				$menu_list[$i]["parent_id"] = $parent_id;
-				$menu_list[$i]["link_url"] = $link_url;
+				$menu_list[$i]["page_id"] = $page_id;
 				$menu_list[$i]["status"] = $status;
 				$menu_list[$i]["parent_name"] = $parent_name;
 				$i++;
@@ -151,7 +151,7 @@ Class MenuItem{
 
 	public function validate()
 	{
-		$strSQL = "SELECT COUNT(*) AS count FROM menu_item WHERE deleted= '".NOT_DELETED."' AND name = '".$this->name."' AND link_url = '".$this->link_url."' AND parent_id = '".$this->parent_id."' AND id <> '".$this->id."'";
+		$strSQL = "SELECT COUNT(*) AS count FROM menu_item WHERE status= '".STATUS_ACTIVE."' AND name = '".$this->name."' AND page_id = '".$this->page_id."' AND parent_id = '".$this->parent_id."' AND id <> '".$this->id."'";
 		//echo $strSQL;exit();
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 		$row = mysql_fetch_assoc($rsRES);
@@ -165,12 +165,12 @@ Class MenuItem{
 	public function delete()
     {
     	if ( ($this->id != "" || $this->id != gINVALID) && $this->id >0 ){
-    		$strSQL = "UPDATE menu_item SET deleted = '".DELETED."' WHERE id = '".$this->id."'";
+    		$strSQL = "UPDATE menu_item SET status = '".STATUS_INACTIVE."' WHERE id = '".$this->id."'";
     		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
             if ( mysql_affected_rows($this->connection) >= 0 ) {
             	return true;
             }else{
-            	$this->error_description="Menu Item not deleted";
+            	$this->error_description="Menu Item not sort_order";
 				return false;
             }
     	}else{
@@ -182,16 +182,16 @@ Class MenuItem{
     public function getParentMenu()
     {
     	$result = array();$i=0;
-    	$strSQL = "SELECT * FROM menu_item WHERE deleted = '".NOT_DELETED."' AND status = '".STATUS_ACTIVE."' AND parent_id = '".gINVALID."'";
+    	$strSQL = "SELECT * FROM menu_item WHERE status = '".STATUS_ACTIVE."' AND parent_id = '".gINVALID."'";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
     		while($row = mysql_fetch_assoc($rsRES)){
     			$result[$i]['id'] = $row['id'];
     			$result[$i]['name'] = $row['name'];
     			$result[$i]['parent_id'] = $row['parent_id'];
-    			$result[$i]['link_url'] = $row['link_url'];
+    			$result[$i]['page_id'] = $row['page_id'];
     			$result[$i]['status'] = $row['status'];
-    			$result[$i]['deleted'] = $row['deleted'];
+    			$result[$i]['sort_order'] = $row['sort_order'];
     			$i++;
     		}
     		return $result;
@@ -206,16 +206,16 @@ Class MenuItem{
     public function getSibblings($id)
     {
     	$result = array();$i=0;
-    	$strSQL = "SELECT * FROM menu_item WHERE deleted = '".NOT_DELETED."' AND status = '".STATUS_ACTIVE."' AND parent_id = '".$id."'";
+    	$strSQL = "SELECT * FROM menu_item WHERE status = '".STATUS_ACTIVE."' AND parent_id = '".$id."'";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
     		while($row = mysql_fetch_assoc($rsRES)){
     			$result[$i]['id'] = $row['id'];
     			$result[$i]['name'] = $row['name'];
     			$result[$i]['parent_id'] = $row['parent_id'];
-    			$result[$i]['link_url'] = $row['link_url'];
+    			$result[$i]['page_id'] = $row['page_id'];
     			$result[$i]['status'] = $row['status'];
-    			$result[$i]['deleted'] = $row['deleted'];
+    			$result[$i]['sort_order'] = $row['sort_order'];
     			$next = $this->getSibblings($result[$i]['id']);
     			if($next){
     				$result[$i]['sibblings'] = $next;
@@ -238,7 +238,7 @@ Class MenuItem{
     		foreach($parents as $parent){
     			$menu_list[$i]['id'] = $parent['id'];
     			$menu_list[$i]['name'] = $parent['name'];
-    			$menu_list[$i]['link_url'] = $parent['link_url'];
+    			$menu_list[$i]['page_id'] = $parent['page_id'];
     			$menu_list[$i]['parent_id'] = $parent['parent_id'];
     			$menu_list[$i]['status'] = $parent['status'];
     			$sibblings = $this->getSibblings($parent['id']);

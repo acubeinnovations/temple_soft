@@ -3,6 +3,10 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+$pages = new Pages($myconnection);
+$pages->connection = $myconnection;
+$page_list = $pages->get_list_array();
+
 $menu_item = new MenuItem($myconnection);
 $menu_item->connection = $myconnection;
 $menu_list = $menu_item->get_list_array();
@@ -19,18 +23,20 @@ if(isset($_POST['submit']))
 	if(trim($_POST['txtname']) == ""){
 		$errMSG .= "Menu Name is empty <br/>";
 	}
-	if($_POST['lstmenu'] > 0){
-		if(trim($_POST['txturl']) == ""){
-			$errMSG .= "Link Url is empty";
+	if($_POST['lstmenu'] >0){
+		if($_POST['lstpage'] == "" || $_POST['lstpage'] == gINVALID){
+			$errMSG .= "Page Name not selected <br/>";
 		}
 	}
 	
-
-	if($errMSG == ""){
+	if(trim($errMSG) == ""){
 		$menu_item->id = $_POST['h_id'];
 		$menu_item->name = $_POST['txtname'];
 		$menu_item->parent_id = $_POST['lstmenu'];
-		$menu_item->link_url = $_POST['txturl'];
+		if(isset($_POST['lstsort'])){
+			$menu_item->sort_order = $_POST['lstsort'];
+		}
+		$menu_item->page_id = $_POST['lstpage'];
 		$menu_item->status = $_POST['lststatus'];
 		if($menu_item->validate()){
 			$menu_item->update();
@@ -43,7 +49,7 @@ if(isset($_POST['submit']))
 	        exit();
 		}	
 	}else{
-		$_SESSION[SESSION_TITLE.'flash'] = $errorMSG;
+		$_SESSION[SESSION_TITLE.'flash'] = $errMSG;
         header( "Location:".$current_url);
         exit();
 	}

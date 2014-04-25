@@ -186,5 +186,23 @@ define('CANCEL_STATUS_FALSE',1);
 define("DEFAULT_TRUE",1);
 define("DEFAULT_FALSE",2);
 
+$g_ARRAY_LIST_SORT_ORDER = array();
+$g_ARRAY_LIST_SORT_ORDER[0]["id"] = 0;
+$g_ARRAY_LIST_SORT_ORDER[0]["value"] = "0";
+$g_ARRAY_LIST_SORT_ORDER[1]["id"] = 1;
+$g_ARRAY_LIST_SORT_ORDER[1]["value"] = "1";
+$g_ARRAY_LIST_SORT_ORDER[2]["id"] = 2;
+$g_ARRAY_LIST_SORT_ORDER[2]["value"] = "2";
+$g_ARRAY_LIST_SORT_ORDER[3]["id"] = 3;
+$g_ARRAY_LIST_SORT_ORDER[3]["value"] = "3";
+$g_ARRAY_LIST_SORT_ORDER[4]["id"] = 4;
+$g_ARRAY_LIST_SORT_ORDER[4]["value"] = "4";
+$g_ARRAY_LIST_SORT_ORDER[5]["id"] = 5;
+$g_ARRAY_LIST_SORT_ORDER[5]["value"] = "5";
+$g_ARRAY_LIST_SORT_ORDER[6]["id"] = 6;
+$g_ARRAY_LIST_SORT_ORDER[6]["value"] = "6";
+$g_ARRAY_LIST_SORT_ORDER[7]["id"] = 7;
+$g_ARRAY_LIST_SORT_ORDER[7]["value"] = "7";
+
 
 ?>
