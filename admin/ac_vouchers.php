@@ -9,7 +9,7 @@ $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Voucher";	// page Title
-	$page->page_name = 'vouchers';		// page name for menu and other purpose
+	$page->page_name = 'ac_vouchers';		// page name for menu and other purpose
 	$page->layout = 'default.html';			// layout name
 
 

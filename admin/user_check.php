@@ -9,7 +9,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - User Check";	// page Title
-	$page->page_name = 'user check';		// page name for menu and other purpose
+	$page->page_name = 'user_check';		// page name for menu and other purpose
 	$page->layout = 'null.html';		// layout name
 
 	//$page->access_list = array("REGISTERED_USER");

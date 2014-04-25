@@ -9,7 +9,7 @@ $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Temple Software";	// page Title
-	$page->page_name = 'ac_financial_year';		// page name for menu and other purpose
+	$page->page_name = 'ac_financial_years';		// page name for menu and other purpose
 	$page->layout = 'default.html';			// layout name
 
 

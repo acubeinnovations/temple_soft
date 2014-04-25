@@ -9,7 +9,7 @@ $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Dashboard";	// page Title
-	$page->page_name = 'index';		// page name for menu and other purpose
+	$page->page_name = 'dashboard';		// page name for menu and other purpose
 	$page->layout = 'default.html';		// layout name
 
 

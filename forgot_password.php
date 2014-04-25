@@ -9,7 +9,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Temple Software";	// page Title
-	$page->page_name = 'forgotpassword';		// page name for menu and other purpose
+	$page->page_name = 'forgot_password';		// page name for menu and other purpose
 	$page->layout = 'default.html';		// layout name
 
 

@@ -9,7 +9,7 @@ $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Supplier";	// page Title
-	$page->page_name = 'supplier';		// page name for menu and other purpose
+	$page->page_name = 'ac_suppliers';		// page name for menu and other purpose
 	$page->layout = 'default.html';			// layout name
 
 
