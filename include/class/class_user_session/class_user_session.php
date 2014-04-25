@@ -39,6 +39,22 @@ class UserSession {
 		//echo $strSQL;exit();
           $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
           if ( mysql_num_rows($rsRES) > 0 ){
+
+                $this->id = mysql_result($rsRES,0,'id');
+                $this->username = mysql_result($rsRES,0,'username');
+                $this->email = mysql_result($rsRES,0,'email');
+                $this->first_name = mysql_result($rsRES,0,'first_name');
+                $this->last_name = mysql_result($rsRES,0,'last_name');
+                $this->user_status_id=mysql_result($rsRES,0,'user_status_id');
+                $this->user_type_id = mysql_result($rsRES,0,'user_type_id');
+                //user session values
+                $_SESSION[SESSION_TITLE.'user_status_id'] = $this->user_status_id;
+                $_SESSION[SESSION_TITLE.'userid'] = $this->id;
+                $_SESSION[SESSION_TITLE.'name'] = $this->first_name." ".$this->last_name;
+                $_SESSION[SESSION_TITLE.'username'] = $this->username;
+                $_SESSION[SESSION_TITLE.'user_type'] = $this->user_type_id;
+
+                //get current account settings
                 $strSQL_ac = "SELECT ast.id,fm.fy_id,fm.fy_start AS fy_start_date,fm.fy_end AS fy_end_date,fm.status AS fy_status FROM account_settings ast LEFT JOIN fy_master fm ON fm.fy_id = ast.current_fy_id WHERE ast.id = '1' ";
                 $rsRES_ac = mysql_query($strSQL_ac,$this->connection) or die(mysql_error(). $strSQL );
                 if(mysql_num_rows($rsRES_ac) > 0){
@@ -49,19 +65,40 @@ class UserSession {
                     $_SESSION[SESSION_TITLE.'current_fy_id'] = $row_ac['fy_id'];
                 }
 
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->username = mysql_result($rsRES,0,'username');
-                $this->email = mysql_result($rsRES,0,'email');
-                $this->first_name = mysql_result($rsRES,0,'first_name');
-                $this->last_name = mysql_result($rsRES,0,'last_name');
-				$this->user_status_id=mysql_result($rsRES,0,'user_status_id');
-                $this->user_type_id = mysql_result($rsRES,0,'user_type_id');
+                //get current user pages
+                $strSQL_pg = "";
+                if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR){
+                    $strSQL_pg .= "SELECT utp.page_id,pg.name FROM user_type_page utp LEFT JOIN pages pg ON utp.page_id = pg.id  WHERE utp.user_type_id = '".$_SESSION[SESSION_TITLE.'user_type']."'"; 
+                }else if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){
+                    $strSQL_pg .= "SELECT up.page_id,pg.name FROM user_page up LEFT JOIN pages pg ON utp.page_id = pg.id WHERE up.user_id = '".$_SESSION[SESSION_TITLE.'userid']."'";
+                }
 
-				$_SESSION[SESSION_TITLE.'user_status_id'] = $this->user_status_id;
-				$_SESSION[SESSION_TITLE.'userid'] = $this->id;
-				$_SESSION[SESSION_TITLE.'name'] = $this->first_name." ".$this->last_name;
-				$_SESSION[SESSION_TITLE.'username'] = $this->username;
-				$_SESSION[SESSION_TITLE.'user_type'] = $this->user_type_id;
+                if(trim($strSQL_pg) != ""){
+                    $rsRES_pg = mysql_query($strSQL_pg,$this->connection) or die ( mysql_error() . $strSQL_pg );
+                     if(mysql_num_rows($rsRES_pg) > 0){
+                        $pages = array();                       
+                        while($row_pg = mysql_fetch_assoc($rsRES_pg)){
+                            //array_push($pages, $row_pg['page_id']);
+                            $id= $row_pg['page_id'];
+                            $name= $row_pg['name'];
+                            $pages[$id] = $name;
+                        }
+                       
+                        $_SESSION[SESSION_TITLE.'pages'] = $pages;
+                     }
+                }
+
+                
+                if(mysql_num_rows($rsRES) > 0){
+                    while($row = mysql_fetch_assoc($rsRES)){
+                        array_push($pages, $row['page_id']);
+                    }
+                    return $pages;
+                }else{
+                    return false;
+                }
+
+               
 
 		      return true;
           }

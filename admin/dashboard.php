@@ -10,6 +10,7 @@ $page = new Page;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Dashboard";	// page Title
 	$page->page_name = 'dashboard';		// page name for menu and other purpose
+	$page->default_access = false;
 	$page->layout = 'default.html';		// layout name
 
 
@@ -24,7 +25,7 @@ $page = new Page;
 	$page->script_list_link = array("jquery.min.js");
 
     $index=0;
-    $content_list[$index]['file_name']='administrator/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 

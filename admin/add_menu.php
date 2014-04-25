@@ -10,6 +10,7 @@ $page = new Page;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "Administrator - Menu";	// page Title
 	$page->page_name = 'add_menu';		// page name for menu and other purpose
+	$page->default_access = false;
 	$page->layout = 'default.html';			// layout name
 
 
@@ -17,13 +18,13 @@ $page = new Page;
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_menu_item.php","class_pages.php");
+	$page->class_list = array("class_pages.php","class_user_page.php","class_user_type_page.php");
 	$page->script_list = array("jquery.min.js");
 	
 	$page->access_list = array("ADMINISTRATOR");
 
     $index=0;
-    $content_list[$index]['file_name']='administrator/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 

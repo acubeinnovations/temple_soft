@@ -23,11 +23,7 @@ if(isset($_POST['submit']))
 	if(trim($_POST['txtname']) == ""){
 		$errMSG .= "Menu Name is empty <br/>";
 	}
-	if($_POST['lstmenu'] >0){
-		if($_POST['lstpage'] == "" || $_POST['lstpage'] == gINVALID){
-			$errMSG .= "Page Name not selected <br/>";
-		}
-	}
+	
 	
 	if(trim($errMSG) == ""){
 		$menu_item->id = $_POST['h_id'];

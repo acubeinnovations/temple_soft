@@ -26,6 +26,9 @@ class Page {
 	var $function_list = array();
     var $access_list = array();
 
+
+    var  $default_access = true;
+
 	var $root_path='./';
 	var $connection_path='include/connection/';
 	var $conf_path='include/conf/';
@@ -122,7 +125,7 @@ class Page {
 
 
 
-
+/*
         if(count($this->access_list) > 0){
        $chk = false;
                 foreach ($this->access_list as $user_type){
@@ -142,6 +145,22 @@ class Page {
                  }
 
 
+        }
+
+        */
+
+        if(!$this->default_access){
+        	$chk = false;
+        	if(isset($_SESSION[SESSION_TITLE.'pages'])){
+        		$chk = array_search($this->page_name, $_SESSION[SESSION_TITLE.'pages']);
+        	}
+
+        	if ( $chk == false ){
+                $_SESSION[SESSION_TITLE.'flash'] = $g_msg_unauthorized_request;
+                //$_SESSION[SESSION_TITLE.'flash_redirect_page'] = $g_msg_unauthorized_request_redirect_page;
+                header( "Location: index.php");
+                exit();
+     		}
         }
 			
 	

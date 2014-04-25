@@ -1,4 +1,36 @@
 <?php 
+	//print menu list function 
+	function printMenuList($menu_list)
+	{
+		if(is_array($menu_list)){
+
+			foreach ($menu_list as $menu) {
+				if(isset($menu['sibblings'])){
+					echo '<li class="has-dropdown"><a href="'.$menu['page'].'">'.$menu['name'].'</a>';
+					printSibblings($menu['sibblings']);
+					echo '</li>';
+				}else{
+					echo '<li><a href="'.$menu['page'].'" >'.$menu['name'].'</a></li>';
+				}
+				echo '<li class="divider"></li>';
+			}
+		}
+		
+	}
+	function printSibblings($menu_list)
+	{
+		echo '<ul class="dropdown">';
+		foreach ($menu_list as $menu) {
+			if(isset($menu['sibblings'])){
+				echo '<li class="has-dropdown"><a href="'.$menu['page'].'">'.$menu['name'].'</a>';
+				printSibblings($menu['sibblings']);
+				echo '</li>';
+			}else{
+				echo '<li><a href="'.$menu['page'].'" >'.$menu['name'].'</a></li>';
+			}
+		}
+		echo '</ul>';
+	}
 
 	function populatelist ($lstname, $str_query, $str_firstvalue="-1", $str_firstoption = "", $str_selected = "", $bln_disabled = false, $str_event = "", $str_style = "") {
 		// Function to fetch using sql and populate values in a dropdown list

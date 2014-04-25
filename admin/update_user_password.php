@@ -22,7 +22,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
 	$page->script_list_link = array("jquery.min.js");
 
 	$index=0;
-	$content_list[$index]['file_name']='administrator/inc_menu.php';
+	$content_list[$index]['file_name']='inc_menu.php';
 	$content_list[$index]['var_name']='menu';
 	$index++;
 

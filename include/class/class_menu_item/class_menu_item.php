@@ -111,7 +111,9 @@ Class MenuItem{
 		$menu_list = array();
 		$i=0;
 		$str_condition = "";
-		$strSQL = "SELECT mn1.id,mn1.name,mn1.parent_id,mn1.page_id,mn1.status,mn2.name as parent_name FROM menu_item mn1 LEFT JOIN menu_item mn2 ON mn1.parent_id = mn2.id";
+		$strSQL = "SELECT mn1.id,mn1.name,mn1.parent_id,mn1.page_id,mn1.status,mn2.name as parent_name,pg.name as page_name,pg.route as page_route,pg.params as page_params FROM menu_item mn1";
+		$strSQL .= " LEFT JOIN menu_item mn2 ON mn1.parent_id = mn2.id";
+		$strSQL .= " LEFT JOIN pages pg ON pg.id = mn1.page_id";
 		$strSQL .= " WHERE mn1.status = '".STATUS_ACTIVE."'";
 		if($this->id!='' && $this->id!=gINVALID){
 			$strSQL .= " AND mn1.id = '".addslashes(trim($this->id))."'";
@@ -133,13 +135,17 @@ Class MenuItem{
 				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
 				$this->total_records = mysql_num_rows($all_rs);
 			}
-			while ( list ($id,$name,$parent_id,$page_id,$status,$parent_name) = mysql_fetch_row($rsRES) ){
+			while ( list ($id,$name,$parent_id,$page_id,$status,$parent_name,$page_name,$page_route,$page_params) = mysql_fetch_row($rsRES) ){
 				$menu_list[$i]["id"] =  $id;
 				$menu_list[$i]["name"] = $name;
 				$menu_list[$i]["parent_id"] = $parent_id;
 				$menu_list[$i]["page_id"] = $page_id;
 				$menu_list[$i]["status"] = $status;
 				$menu_list[$i]["parent_name"] = $parent_name;
+				$menu_list[$i]["pageStr"] = (trim($page_route)!="")?$page_route."/":"";
+				$menu_list[$i]["pageStr"] .= $page_name;	
+				$menu_list[$i]["pageStr"] .= (trim($page_params)!="")?"/".$page_params:"";
+
 				$i++;
 			}
 			return $menu_list;
@@ -182,7 +188,10 @@ Class MenuItem{
     public function getParentMenu()
     {
     	$result = array();$i=0;
-    	$strSQL = "SELECT * FROM menu_item WHERE status = '".STATUS_ACTIVE."' AND parent_id = '".gINVALID."'";
+    	$strSQL = "SELECT mn.id,mn.name,mn.parent_id,mn.page_id,mn.status,mn.sort_order,pg.name as page_name,pg.route as page_route,pg.params as page_params FROM menu_item mn";
+    	$strSQL .= " LEFT JOIN pages pg ON pg.id = mn.page_id";
+    	$strSQL .=" WHERE mn.status = '".STATUS_ACTIVE."' AND mn.parent_id = '".gINVALID."'";
+    	$strSQL .= " ORDER BY mn.sort_order ASC";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
     		while($row = mysql_fetch_assoc($rsRES)){
@@ -192,6 +201,14 @@ Class MenuItem{
     			$result[$i]['page_id'] = $row['page_id'];
     			$result[$i]['status'] = $row['status'];
     			$result[$i]['sort_order'] = $row['sort_order'];
+    			$result[$i]['page_name'] 	= $row['page_name'];
+    			$result[$i]['page_route'] 	= $row['page_route'];
+    			$result[$i]['page_params'] 	= $row['page_params'];
+    			$page 						= "";
+    			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
+    			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
+    			$page 	    				.= (trim($row['page_params']) != "")?$row['page_params']."/":"";
+    			$result[$i]['page']			= $page;
     			$i++;
     		}
     		return $result;
@@ -206,16 +223,27 @@ Class MenuItem{
     public function getSibblings($id)
     {
     	$result = array();$i=0;
-    	$strSQL = "SELECT * FROM menu_item WHERE status = '".STATUS_ACTIVE."' AND parent_id = '".$id."'";
+    	$strSQL = "SELECT mn.id,mn.name,mn.parent_id,mn.page_id,mn.status,mn.sort_order,pg.name as page_name,pg.route as page_route,pg.params as page_params FROM menu_item mn";
+    	$strSQL .= " RIGHT JOIN pages pg ON pg.id = mn.page_id";
+    	$strSQL .= " WHERE mn.status = '".STATUS_ACTIVE."' AND mn.parent_id = '".$id."'";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
     		while($row = mysql_fetch_assoc($rsRES)){
-    			$result[$i]['id'] = $row['id'];
-    			$result[$i]['name'] = $row['name'];
-    			$result[$i]['parent_id'] = $row['parent_id'];
-    			$result[$i]['page_id'] = $row['page_id'];
-    			$result[$i]['status'] = $row['status'];
-    			$result[$i]['sort_order'] = $row['sort_order'];
+    			$result[$i]['id'] 			= $row['id'];
+    			$result[$i]['name'] 		= $row['name'];
+    			$result[$i]['parent_id'] 	= $row['parent_id'];
+    			$result[$i]['page_id'] 		= $row['page_id'];
+    			$result[$i]['status'] 		= $row['status'];
+    			$result[$i]['sort_order'] 	= $row['sort_order'];
+    			$result[$i]['page_name'] 	= $row['page_name'];
+    			$result[$i]['page_route'] 	= $row['page_route'];
+    			$result[$i]['page_params'] 	= $row['page_params'];
+    			$page 						= "";
+    			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
+    			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
+    			$page 	    				.= (trim($row['page_params']) != "")?$row['page_params']."/":"";
+    			$result[$i]['page']			= $page;
+
     			$next = $this->getSibblings($result[$i]['id']);
     			if($next){
     				$result[$i]['sibblings'] = $next;
@@ -241,6 +269,8 @@ Class MenuItem{
     			$menu_list[$i]['page_id'] = $parent['page_id'];
     			$menu_list[$i]['parent_id'] = $parent['parent_id'];
     			$menu_list[$i]['status'] = $parent['status'];
+    			$menu_list[$i]['sort_order'] = $parent['sort_order'];
+    			$menu_list[$i]['page'] = $parent['page'];
     			$sibblings = $this->getSibblings($parent['id']);
     			if($sibblings){
     				$menu_list[$i]['sibblings'] = $sibblings;
@@ -254,6 +284,39 @@ Class MenuItem{
     	}
     	
     }
+
+    //recursive function for filter menu_list with user page_id array(from session variable pages)
+    public function filterMenuTreeArray($menu_list,$pages)
+    {
+    	if(is_array($menu_list) and is_array($pages)){
+    		foreach($menu_list as $key=>$menu){
+    			if($menu['page_id'] > 0){
+    				//echo $menu['page_id'];exit();
+    				
+    				if(array_key_exists($menu['page_id'], $pages)){
+    					//do nothing
+    				}else{
+    					//remove menu item
+    					unset($menu_list[$key]);	
+    				}
+
+    			}else{
+    				if(isset($menu['sibblings'])){
+    					$this->filterMenuTreeArray($menu['sibblings'],$pages);
+    				}else{
+    					unset($menu_list[$key]);
+    				}
+    			}
+    		}
+    		return $menu_list;
+    	}else{
+    		return false;
+    	}
+    }
+
+
+
+    
 
 
 }

@@ -27,7 +27,7 @@ $page = new Page;
 	
 
     $index=0;
-    $content_list[$index]['file_name']='administrator/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 

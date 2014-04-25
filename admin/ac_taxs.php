@@ -23,7 +23,7 @@ $page = new Page;
 	$page->access_list = array("ADMINISTRATOR");
 
     $index=0;
-    $content_list[$index]['file_name']='administrator/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 

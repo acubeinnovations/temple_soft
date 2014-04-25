@@ -69,7 +69,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
 <?php if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR && isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
         <li class="divider"></li>
         <li>
-    <a href="dashboard.php" >Dash Board</a>
+		<a href="dashboard.php" >Dash Board</a>
         </li>
 
 
@@ -149,12 +149,12 @@ if ( mysql_num_rows($rsRES2) > 0 )
             </li>
 
             <li class="has-dropdown"><a href="ac_ledgers.php">Ledgers</a>
-      <ul class="dropdown">
-      <li><a href="ac_ledgers.php">Add Ledger</a>
-      <li><a href="ac_ledger_list.php">List Ledgers</a>
-      <li><a href="ac_single_ledger.php">Single Ledger</a>
-      </ul>
-      </li>
+			<ul class="dropdown">
+			<li><a href="ac_ledgers.php">Add Ledger</a>
+			<li><a href="ac_ledger_list.php">List Ledgers</a>
+			<li><a href="ac_single_ledger.php">Single Ledger</a>
+			</ul>
+			</li>
             <li class="has-dropdown"> 
               <a href="ac_vouchers.php">Voucher</a>
               <ul class="dropdown">
@@ -173,9 +173,9 @@ if ( mysql_num_rows($rsRES2) > 0 )
               </ul>
             </li>
 <li class="has-dropdown"><a href="ac_report.php">Reports</a>
-      <ul class="dropdown">
-      <li><a href="ac_report.php">Add Reports</a>
-      <li><a href="ac_report_list.php">List Reports</a>
+			<ul class="dropdown">
+			<li><a href="ac_report.php">Add Reports</a>
+			<li><a href="ac_report_list.php">List Reports</a>
       <?php if($reports){
                    $i=0;
                   while($i<count($reports)){
@@ -187,9 +187,9 @@ if ( mysql_num_rows($rsRES2) > 0 )
                   }
                 }
                 ?>
-      <li><a href="balancesheet.php">Balancesheet</a>
-      </ul>
-      </li>
+			<li><a href="balancesheet.php">Balancesheet</a>
+			</ul>
+			</li>
             <li class="has-dropdown">
                <a href="ac_form_type.php">Form Type</a>
                <ul class="dropdown">
@@ -253,7 +253,7 @@ if ( mysql_num_rows($rsRES2) > 0 )
 <?php } ?>
         <li class="divider"></li>
          <?php if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
-         <li><a href="../logout.php"  >Logout</a></li>
+			   <li><a href="../logout.php"  >Logout</a></li>
          <?php } ?>
 
 

@@ -1,23 +1,39 @@
+<?php 
+require(ROOT_PATH."/include/connection/connection.php");
+require(ROOT_PATH."/include/class/class_menu_item/class_menu_item.php");
+
+?>
 
 <!-- Right Nav Section -->
 <ul class="right">
-  <?php if(isset($_SESSION[SESSION_TITLE.'user_type']) && isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
     <li class="divider"></li>
-    <li><a href="dashboard.php" >Dash Board</a></li>
-    <li class="divider"></li>
+    <?php
+    if(isset($_SESSION[SESSION_TITLE.'pages'])){ 
+      $pages = $_SESSION[SESSION_TITLE.'pages'];
 
-    <li class="has-dropdown">
-      <a href="#">User</a>
-      <ul class="dropdown">
-        <li><a href="change_password.php">Change Password</a></li>
-        <li class="divider"></li>
-      </ul>
-    </li>
+      $menu_item = new MenuItem($myconnection);
+      $menu_item->connection = $myconnection;
+      //get all menu from table
+      $menu_list = $menu_item->getMenuTreeArray();
+     // echo "<pre>";
+    //  print_r($pages);
+     // echo "</pre>";exit();
 
-  <?php } ?>
-    <li class="divider"></li>
+      $user_menu_list = $menu_item->filterMenuTreeArray($menu_list,$pages);
+      //print user menu list
+      if($user_menu_list){
+        printMenuList($user_menu_list);  
+      }
+
+    }else{
+    //default pages
+    } ?>
+
     <?php if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){ ?>
-    <li><a href="logout.php"  >Logout</a></li>
+      <li><a href="../logout.php"  >Logout</a></li>
+    <?php }else{ ?>
+      <li><a href="../index.php"  >Login</a></li>
     <?php } ?>
 
-</ul>
+  </ul>
+

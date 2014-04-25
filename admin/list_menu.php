@@ -17,13 +17,13 @@ $page = new Page;
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");
 	$page->function_list = array("functions.php");
-	$page->class_list = array("class_menu_item.php","class_pagination.php");
+	$page->class_list = array("class_pagination.php");
 	$page->script_list = array("jquery.min.js");
 	
 	$page->access_list = array("ADMINISTRATOR");
 
     $index=0;
-    $content_list[$index]['file_name']='administrator/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 

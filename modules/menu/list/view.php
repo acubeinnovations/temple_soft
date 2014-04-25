@@ -40,7 +40,7 @@ if(!defined('CHECK_INCLUDED')){
 		<td width="5%">SlNo</td>
 		<td width="20%">Name</td>
 		<td width="20%">Parent Menu</td>
-		<td width="35%">Link Url</td>
+		<td width="35%">Page</td>
 		<td width="10%">Status</td>
 		<td width="10%"></td>
 	</tr>
@@ -54,7 +54,7 @@ if(!defined('CHECK_INCLUDED')){
 		<td><?php echo $slno; ?></td>
 		<td><?php echo $menu_list[$i]['name']?></td>
 		<td><?php echo ($menu_list[$i]['parent_name'] != "")?$menu_list[$i]['parent_name']:"-"; ?></td>
-		<td><?php echo $menu_list[$i]['link_url']; ?></td>
+		<td><?php echo ($menu_list[$i]['pageStr'] != "")?$menu_list[$i]['pageStr']:"-"; ?></td>
 		<td><?php echo $g_ARRAY_STATUS[$menu_list[$i]['status']]; ?></td>
 		<td>
 			<a href="add_menu.php?id=<?php echo $menu_list[$i]['id'] ?>">edit</a>/
