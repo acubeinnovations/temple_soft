@@ -224,7 +224,7 @@ Class MenuItem{
     {
     	$result = array();$i=0;
     	$strSQL = "SELECT mn.id,mn.name,mn.parent_id,mn.page_id,mn.status,mn.sort_order,pg.name as page_name,pg.route as page_route,pg.params as page_params FROM menu_item mn";
-    	$strSQL .= " RIGHT JOIN pages pg ON pg.id = mn.page_id";
+    	$strSQL .= " LEFT JOIN pages pg ON pg.id = mn.page_id";
     	$strSQL .= " WHERE mn.status = '".STATUS_ACTIVE."' AND mn.parent_id = '".$id."'";
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
