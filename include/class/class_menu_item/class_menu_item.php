@@ -224,7 +224,7 @@ Class MenuItem{
     			$result[$i]['page_route'] 	= $row['page_route'];
     			$result[$i]['page_params'] 	= $row['page_params'];
     			$page 						= "";
-    			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
+    			$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
     			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
     			$page 	    				.= (trim($row['page_params']) != "")?"?".$row['page_params']:"";
     			$result[$i]['page']			= $page;
@@ -258,7 +258,7 @@ Class MenuItem{
     			$result[$i]['page_route'] 	= $row['page_route'];
     			$result[$i]['page_params'] 	= $row['page_params'];
     			$page 						= "";
-    			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
+    			$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
     			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
     			$page 	    				.= (trim($row['page_params']) != "")?"?".$row['page_params']:"";
     			$result[$i]['page']			= $page;
