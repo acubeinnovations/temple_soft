@@ -3,6 +3,7 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+
 $pages = new Pages($myconnection);
 $pages->connection = $myconnection;
 $page_list = $pages->get_list_array();

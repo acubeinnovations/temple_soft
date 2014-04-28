@@ -62,6 +62,25 @@ Class MenuItem{
     	}
     }
 
+    public function update_with_page_id()
+    {
+        if($this->page_id > 0 ) {
+            $strSQL = "UPDATE menu_item SET ";
+            $strSQL .= " name = '".addslashes(trim($this->name))."'";
+            $strSQL .= " WHERE page_id = ".$this->page_id;
+            //echo $strSQL;exit();
+            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+
+            if ( mysql_affected_rows($this->connection) >= 0 ) {
+                return true;
+            }else{
+                $this->error_number = 3;
+                $this->error_description="Can't update ";
+                return false;
+            }
+        }
+    }
+
     function get_details()
 	{
 		if($this->id >0){
@@ -144,7 +163,7 @@ Class MenuItem{
 				$menu_list[$i]["parent_name"] = $parent_name;
 				$menu_list[$i]["pageStr"] = (trim($page_route)!="")?$page_route."/":"";
 				$menu_list[$i]["pageStr"] .= $page_name;	
-				$menu_list[$i]["pageStr"] .= (trim($page_params)!="")?"/".$page_params:"";
+				$menu_list[$i]["pageStr"] .= (trim($page_params)!="")?"?".$page_params:"";
 
 				$i++;
 			}
@@ -207,7 +226,7 @@ Class MenuItem{
     			$page 						= "";
     			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
     			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
-    			$page 	    				.= (trim($row['page_params']) != "")?$row['page_params']."/":"";
+    			$page 	    				.= (trim($row['page_params']) != "")?"?".$row['page_params']:"";
     			$result[$i]['page']			= $page;
     			$i++;
     		}
@@ -241,7 +260,7 @@ Class MenuItem{
     			$page 						= "";
     			//$page 	    				.= (trim($row['page_route']) != "")?$row['page_route']."/":"";
     			$page 	    				.= (trim($row['page_name']) != "")?$row['page_name'].".php":"";
-    			$page 	    				.= (trim($row['page_params']) != "")?$row['page_params']."/":"";
+    			$page 	    				.= (trim($row['page_params']) != "")?"?".$row['page_params']:"";
     			$result[$i]['page']			= $page;
 
     			$next = $this->getSibblings($result[$i]['id']);
@@ -312,6 +331,29 @@ Class MenuItem{
     	}else{
     		return false;
     	}
+    }
+
+    function get_filtered_row($filterArray = array())
+    {
+        $strSQL = "SELECT id,name,parent_id,page_id,status,sort_order FROM menu_item WHERE status = '".STATUS_ACTIVE."'";
+        if(isset($filterArray['page_id'])){
+            $strSQL .= " AND page_id = '".$filterArray['page_id']."'";
+        }
+        mysql_query("SET NAMES utf8");
+        $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+        $result = array();
+        if(mysql_num_rows($rsRES) > 0){
+            $row    = mysql_fetch_assoc($rsRES);
+            $result['id']           = $row['id'];
+            $result['name']         = $row['name'];
+            $result['parent_id']   = $row['parent_id'];
+            $result['page_id']  = $row['page_id'];
+            $result['status']       = $row['status'];
+            $result['sort_order']       = $row['sort_order'];
+            return $result;
+        }else{
+            return false;
+        }
     }
 
 

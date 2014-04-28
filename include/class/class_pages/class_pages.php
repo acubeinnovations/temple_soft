@@ -17,6 +17,55 @@ Class Pages{
     var $error_description="";
     var $total_records='';
 
+    public function update(){
+    	if ( $this->id == "" || $this->id == gINVALID) {
+    		$strSQL = "INSERT INTO pages(name,route,params) VALUES('";
+    		$strSQL.= mysql_real_escape_string($this->name)."','";
+    		$strSQL.= mysql_real_escape_string($this->route)."','";
+			$strSQL.= mysql_real_escape_string($this->params)."')";
+			//echo $strSQL;exit();
+			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+
+			if ( mysql_affected_rows($this->connection) > 0 ) {
+				$this->id = mysql_insert_id();
+				$this->error_description="Successfully";
+				return $this->id;
+			}else{
+				$this->error_number = 3;
+				$this->error_description="Can't insert data ";
+				return false;
+			}
+    	}else if($this->id > 0){
+    		$strSQL = "UPDATE pages SET ";
+    		$strSQL .= " name = '".addslashes(trim($this->name))."',";
+    		$strSQL .= " route = '".addslashes(trim($this->route))."',";
+    		$strSQL .= " params = '".addslashes(trim($this->params))."'";
+			$strSQL .= " WHERE id = ".$this->id;
+			//echo $strSQL;exit();
+			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+            if ( mysql_affected_rows($this->connection) >= 0 ) {
+                return true;
+           	}else{
+				$this->error_number = 3;
+				$this->error_description="Can't update ";
+				return false;
+           	}
+    	}
+    }
+
+    public function getPageId(){
+    	$strSQL = "SELECT id FROM pages WHERE name='".$this->name."' AND route = '".$this->route."' AND params = '".$this->params."'";
+    	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+    	if(mysql_num_rows($rsRES) > 0){
+    		$row = mysql_fetch_assoc($rsRES);
+    		$this->id = $row['id'];
+    		return $row['id'];
+    	}else{
+    		return false;
+    	}
+
+    }
+
     function get_list_array()
 	{
 		$pages = array();$i=0;
