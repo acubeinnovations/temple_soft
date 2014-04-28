@@ -11,7 +11,6 @@ Class AcBook{
 	var $name ="";
 	var $ledgers = ""; 
 	
-
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";

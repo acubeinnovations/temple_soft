@@ -3,6 +3,9 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+$menu_item = new MenuItem($myconnection);
+$menu_item->connection = $myconnection;
+
 //check current date with current financial year
 $check =checkFinancialYear($_SESSION[SESSION_TITLE.'fy_status'],$_SESSION[SESSION_TITLE.'fy_start_date'],$_SESSION[SESSION_TITLE.'fy_end_date']);
 if(!$check){
@@ -96,6 +99,42 @@ if(isset($_POST['submit'])){
 			$update = $acbook->update();
 
 			if($update){
+
+				$b_id = $update;
+				//1. get voucher name
+				$acbook->id = $b_id;
+				$acbook->get_details();
+				//2.get current menu's parent id
+				$menu_parent = -1;
+				if(isset($_SESSION[SESSION_TITLE.'pages'])){
+					$page_id = array_search($this->page_name, $_SESSION[SESSION_TITLE.'pages']);
+					if($page_id){
+						$current_menu = $menu_item->get_filtered_row(array('page_id'=>$page_id));
+						$menu_parent = $current_menu['parent_id'];
+					}
+				}
+				//3.create new page with this voucher / get page id
+				$my_page = new Pages($myconnection);
+				$my_page->connection = $myconnection;
+				$my_page->name = "ac_generated_vouchers";
+				$my_page->route = "admin";
+				$my_page->params = "bid=".$b_id;
+				if($my_page->getPageId()){//update book
+					$page_id = $my_page->id;
+					$menu_item->page_id = $page_id;
+					$menu_item->name = $acbook->name;
+					$menu_item->update_with_page_id();
+
+				}else{//new voucher
+					$page_id = $my_page->update();
+					//4.create new menu
+					$menu_item->name = $acbook->name;
+					$menu_item->parent_id = $menu_parent;
+					$menu_item->page_id = $page_id;
+					$menu_item->status = STATUS_ACTIVE;
+					$menu_item->update();
+				}
+
 				$_SESSION[SESSION_TITLE.'flash'] = "Book udated successfully";
 		        header( "Location:".$current_url);
 		        exit();
