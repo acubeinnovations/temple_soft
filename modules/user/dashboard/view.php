@@ -1,5 +1,10 @@
-<?php $breadcrumb = '<a href="/index.php">Home</a> &raquo; <a href="/dashboard.php">Dashboard</a>'; ?>
+
+<h1>User Dashboard</h1>
+
+<p>
+Hi, <br/>
+
+Welcome to Acube MVC.
+</p>
 
 
-<p class="heading">	Dashboard </p>
-Welcome!

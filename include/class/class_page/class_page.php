@@ -151,6 +151,7 @@ class Page {
 
         if(!$this->default_access){
         	$chk = false;
+        	//print_r($_SESSION[SESSION_TITLE.'pages']);exit();
         	if(isset($_SESSION[SESSION_TITLE.'pages'])){
         		$chk = array_search($this->page_name, $_SESSION[SESSION_TITLE.'pages']);
         	}

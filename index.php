@@ -11,6 +11,7 @@ $page = new Page;
 	$page->title = "Temple Software";	// page Title
 	$page->page_name = 'login';		// page name for menu and other purpose
 	$page->layout = 'default.html';		// layout name
+	$page->default_access = true;
 
 
     $page->conf_list = array("conf.php");

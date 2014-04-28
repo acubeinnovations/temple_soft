@@ -56,6 +56,25 @@ $user_types = $myuser->get_list_user_types();
 			$myuser->user_type_id = $_POST['lstusertype'];
 			$chk = $myuser->update();
 	        if ( $chk == true ){
+
+	        	//1.fetch user type pages
+	        	$user_type_page = new UserTypePage($myconnection);
+	        	$user_type_page->connection = $myconnection;
+	        	$user_type_page->user_type_id = $myuser->user_type_id;
+	        	$user_type_pages = $user_type_page->getUserTypePages();
+
+	        	//2.insert user pages
+	        	$user_page = new UserPage($myconnection);
+	        	$user_page->connection = $myconnection;
+	        	if($user_page->check()){
+	        		//do nothing .user pages exists.
+	        	}else{
+	        		if($user_type_pages){
+	        			$user_page->user_id = $myuser->id;
+	        			$user_page->insert_batch($user_type_pages);
+	        		}
+	        	}
+
 				if($myuser->user_status_id==USERSTATUS_WAITING_EMAIL_ACTIVATION){
 					$myuser_notification = new User_notifications();
 					$myuser_notification->username = $myuser->username;

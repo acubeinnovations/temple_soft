@@ -14,6 +14,7 @@ require(ROOT_PATH.'include/class/class_page/class_page.php');	// new Page Class
 
 	
     //$page->access_list = array();
+    $page->default_access = true;
     $page->conf_list = array("conf.php");
     $page->menuconf_list = array("menu_conf.php");
 	$page->connection_list = array("connection.php");

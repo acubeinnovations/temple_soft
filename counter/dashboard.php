@@ -24,7 +24,7 @@ $page = new Page;
 	$page->script_list_link = array("jquery.min.js");
 
     $index=0;
-    $content_list[$index]['file_name']='counter/inc_menu.php';
+    $content_list[$index]['file_name']='inc_menu.php';
     $content_list[$index]['var_name']='menu';
     $index++;
 
@@ -33,7 +33,7 @@ $page = new Page;
 
 	$page->content_list = $content_list;
 
-    $page->module_path = 'modules/counter/';
+    $page->module_path = 'modules/user/';
     $page->module = 'dashboard';
 
 	$page->display(); //completed page with dynamic cintent will be displayed

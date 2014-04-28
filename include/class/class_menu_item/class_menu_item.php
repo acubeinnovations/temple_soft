@@ -305,33 +305,62 @@ Class MenuItem{
     }
 
     //recursive function for filter menu_list with user page_id array(from session variable pages)
+   
     public function filterMenuTreeArray($menu_list,$pages)
-    {
-    	if(is_array($menu_list) and is_array($pages)){
-    		foreach($menu_list as $key=>$menu){
-    			if($menu['page_id'] > 0){
-    				//echo $menu['page_id'];exit();
-    				
-    				if(array_key_exists($menu['page_id'], $pages)){
-    					//do nothing
-    				}else{
-    					//remove menu item
-    					unset($menu_list[$key]);	
-    				}
-
-    			}else{
-    				if(isset($menu['sibblings'])){
-    					$this->filterMenuTreeArray($menu['sibblings'],$pages);
-    				}else{
-    					unset($menu_list[$key]);
-    				}
-    			}
-    		}
-    		return $menu_list;
-    	}else{
-    		return false;
-    	}
+    {   
+        $result = array();$i=0;
+        if(is_array($menu_list) and is_array($pages)){
+            foreach($menu_list as $key=>$menu){
+                if($menu['page_id'] > 0){
+                    if(array_key_exists($menu['page_id'], $pages)){
+                        $result[$i]=$menu;
+                    }
+                }else{
+                    if(isset($menu['sibblings'])){
+                        $sibblings = $this->filteredSibblings($menu['sibblings'],$pages);
+                        if($sibblings){
+                            $result[$i]=$menu;
+                            $result[$i]['sibblings']=$sibblings;  
+                        }
+                    }
+                }
+                $i++;
+            }
+             //  echo "<pre>";print_r($result);echo "</pre>";exit();   
+            return $result;
+        }else{
+            return false;
+        }
     }
+
+    public function filteredSibblings($menu_sibblings,$pages)
+    { 
+        $sibblings = array();$i=0;
+        foreach($menu_sibblings as $menu)
+        {
+            if($menu['page_id'] > 0){
+                if(array_key_exists($menu['page_id'], $pages)){
+                    $sibblings[$i]= $menu;
+                }
+            }else{
+                if(isset($menu['sibblings'])){
+                    $next = $this->filteredSibblings($menu['sibblings'],$pages);
+                    if($next){
+                        $sibblings[$i] = $menu;
+                        $sibblings[$i]['sibblings'] = $next;
+                    }
+                }
+            }
+            $i++;
+        }
+
+        return $sibblings;
+    }
+   
+
+
+
+   
 
     function get_filtered_row($filterArray = array())
     {
