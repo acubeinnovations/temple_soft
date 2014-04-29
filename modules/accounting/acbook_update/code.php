@@ -117,7 +117,7 @@ if(isset($_POST['submit'])){
 				$my_page = new Pages($myconnection);
 				$my_page->connection = $myconnection;
 				$my_page->name = "ac_generated_vouchers";
-				$my_page->route = "admin";
+				$my_page->route = "";
 				$my_page->params = "bid=".$b_id;
 				if($my_page->getPageId()){//update book
 					$page_id = $my_page->id;
@@ -127,6 +127,32 @@ if(isset($_POST['submit'])){
 
 				}else{//new voucher
 					$page_id = $my_page->update();
+
+					//give access to user
+					if(isset($_SESSION[SESSION_TITLE.'user_type'])){
+						$user_type_page = new UserTypePage($myconnection);
+						$user_type_page->connection = $myconnection;
+						$user_type_page->user_type_id = $_SESSION[SESSION_TITLE.'user_type'];
+						$user_type_page->page_id = $page_id;
+						$user_type_page->update();
+						if($_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR){
+							$user_type_page->user_type_id = ADMINISTRATOR;
+							$user_type_page->page_id = $page_id;
+							$user_type_page->update();
+							if(isset($_SESSION[SESSION_TITLE.'userid'])){
+								$user_page = new UserPage($myconnection);
+								$user_page->connection = $myconnection;
+								$user_page->user_id =$_SESSION[SESSION_TITLE.'userid'];
+								$user_page->page_id = $page_id;
+								$user_page->update();
+							}
+						}
+					}
+					//update menu
+					$user_session  = new UserSession($myconnection);
+					$user_session->connection = $myconnection;
+					$user_session->updatePageSession();
+
 					//4.create new menu
 					$menu_item->name = $acbook->name;
 					$menu_item->parent_id = $menu_parent;

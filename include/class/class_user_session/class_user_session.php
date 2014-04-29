@@ -87,17 +87,6 @@ class UserSession {
                         $_SESSION[SESSION_TITLE.'pages'] = $pages;
                      }
                 }
-
-                
-                if(mysql_num_rows($rsRES) > 0){
-                    while($row = mysql_fetch_assoc($rsRES)){
-                        array_push($pages, $row['page_id']);
-                    }
-                    return $pages;
-                }else{
-                    return false;
-                }
-
                
 
 		      return true;
@@ -125,6 +114,33 @@ class UserSession {
         }
         else{
                 return false;
+        }
+    }
+
+    function updatePageSession()
+    {
+        //get current user pages
+        $strSQL_pg = "";
+        if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR){
+            $strSQL_pg .= "SELECT utp.page_id,pg.name FROM user_type_page utp LEFT JOIN pages pg ON utp.page_id = pg.id  WHERE utp.user_type_id = '".$_SESSION[SESSION_TITLE.'user_type']."'"; 
+        }else if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){
+            $strSQL_pg .= "SELECT up.page_id,pg.name FROM user_page up LEFT JOIN pages pg ON up.page_id = pg.id WHERE up.user_id = '".$_SESSION[SESSION_TITLE.'userid']."'";
+        }
+       // echo $strSQL_pg;exit();
+
+        if(trim($strSQL_pg) != ""){
+            $rsRES_pg = mysql_query($strSQL_pg,$this->connection) or die ( mysql_error() . $strSQL_pg );
+             if(mysql_num_rows($rsRES_pg) > 0){
+                $pages = array();                       
+                while($row_pg = mysql_fetch_assoc($rsRES_pg)){
+                    //array_push($pages, $row_pg['page_id']);
+                    $id= $row_pg['page_id'];
+                    $name= $row_pg['name'];
+                    $pages[$id] = $name;
+                }
+               
+                $_SESSION[SESSION_TITLE.'pages'] = $pages;
+             }
         }
     }
 

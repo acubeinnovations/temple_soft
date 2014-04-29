@@ -118,36 +118,66 @@ if(isset($_POST['submit'])){
 			//1. get voucher name
 			$voucher->voucher_id = $voucher_id;
 			$voucher->get_details();
-			//2.get current menu's parent id
-			$menu_parent = -1;
-			if(isset($_SESSION[SESSION_TITLE.'pages'])){
-				$page_id = array_search($this->page_name, $_SESSION[SESSION_TITLE.'pages']);
-				if($page_id){
-					$current_menu = $menu_item->get_filtered_row(array('page_id'=>$page_id));
-					$menu_parent = $current_menu['parent_id'];
+			if($voucher->module_id > 0){
+				//do nothing
+			}else{
+				//2.get current menu's parent id
+				$menu_parent = -1;
+				if(isset($_SESSION[SESSION_TITLE.'pages'])){
+					$page_id = array_search($this->page_name, $_SESSION[SESSION_TITLE.'pages']);
+					if($page_id){
+						$current_menu = $menu_item->get_filtered_row(array('page_id'=>$page_id));
+						$menu_parent = $current_menu['parent_id'];
+					}
+				}
+				//3.create new page with this voucher / get page id
+				$my_page = new Pages($myconnection);
+				$my_page->connection = $myconnection;
+				$my_page->name = "ac_generate_voucher";
+				$my_page->route = "";
+				$my_page->params = "v=".$voucher_id;
+				if($my_page->getPageId()){//update voucher
+					$page_id = $my_page->id;
+					$menu_item->page_id = $page_id;
+					$menu_item->name = $voucher->voucher_name;
+					$menu_item->update_with_page_id();
+
+				}else{//new voucher
+					$page_id = $my_page->update();
+
+					//give access to user
+					if(isset($_SESSION[SESSION_TITLE.'user_type'])){
+						$user_type_page = new UserTypePage($myconnection);
+						$user_type_page->connection = $myconnection;
+						$user_type_page->user_type_id = $_SESSION[SESSION_TITLE.'user_type'];
+						$user_type_page->page_id = $page_id;
+						$user_type_page->update();
+						if($_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR){
+							$user_type_page->user_type_id = ADMINISTRATOR;
+							$user_type_page->page_id = $page_id;
+							$user_type_page->update();
+							if(isset($_SESSION[SESSION_TITLE.'userid'])){
+								$user_page = new UserPage($myconnection);
+								$user_page->connection = $myconnection;
+								$user_page->user_id =$_SESSION[SESSION_TITLE.'userid'];
+								$user_page->page_id = $page_id;
+								$user_page->update();
+							}
+						}
+					}
+					$user_session  = new UserSession($myconnection);
+					$user_session->connection = $myconnection;
+					$user_session->updatePageSession();
+
+					//4.create new menu
+					$menu_item->name = $voucher->voucher_name;
+					$menu_item->parent_id = $menu_parent;
+					$menu_item->page_id = $page_id;
+					$menu_item->status = STATUS_ACTIVE;
+					$menu_item->update();
 				}
 			}
-			//3.create new page with this voucher / get page id
-			$my_page = new Pages($myconnection);
-			$my_page->connection = $myconnection;
-			$my_page->name = "ac_generate_voucher";
-			$my_page->route = "admin";
-			$my_page->params = "v=".$voucher_id;
-			if($my_page->getPageId()){//update voucher
-				$page_id = $my_page->id;
-				$menu_item->page_id = $page_id;
-				$menu_item->name = $voucher->voucher_name;
-				$menu_item->update_with_page_id();
-
-			}else{//new voucher
-				$page_id = $my_page->update();
-				//4.create new menu
-				$menu_item->name = $voucher->voucher_name;
-				$menu_item->parent_id = $menu_parent;
-				$menu_item->page_id = $page_id;
-				$menu_item->status = STATUS_ACTIVE;
-				$menu_item->update();
-			}
+			
 
 			$_SESSION[SESSION_TITLE.'flash'] = "Voucher update successfully!";
 	        header( "Location:".$current_url);
