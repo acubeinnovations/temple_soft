@@ -40,7 +40,7 @@ $(document).ready(function(){
 
 	});
 
-	//remove generated rows on click cancel button
+	//remove generated rows on click cancel
 	$("#button-cancel").click(function(){
 		$("table .new_rows").remove();
 	});
