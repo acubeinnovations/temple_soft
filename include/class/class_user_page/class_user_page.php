@@ -45,7 +45,7 @@ Class UserPage{
 			}
 			
 			$strSQL= substr($strSQL, 0,-1);
-
+			//echo $strSQL;exit();
 			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 			if ( mysql_affected_rows($this->connection) > 0 ) {
 				$this->error_description="Data inserted Successfully";
@@ -70,7 +70,11 @@ Class UserPage{
 	    	$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
 	    	if(mysql_num_rows($rsRES) > 0){
 	    		$row = mysql_fetch_assoc($rsRES);
-	    		return $row['num'];
+	    		if($row['num'] >0){
+	    			return true;
+	    		}else{
+	    			return false;
+	    		}
 	    	}else{
 	    		return false;
 	    	}
@@ -85,10 +89,10 @@ Class UserPage{
 	    	$strSQL = "DELETE FROM user_page WHERE user_id = '".$this->user_id."'";
 	    	//echo $strSQL;exit();
 	    	$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-	    	if(mysql_num_rows($rsRES) > 0){
-	    		return false;
-	    	}else{
+	    	if ( mysql_affected_rows($this->connection) > 0 ) {
 	    		return true;
+	    	}else{
+	    		return false;
 	    	}
 	    }else{
 	    	return false;
@@ -111,6 +115,34 @@ Class UserPage{
 	    }else{
 	    	return false;
 	    }
+    }
+
+    public function get_user_pages()
+    {
+    	$pages = array();
+		$strSQL = "SELECT up.page_id as id,p.name as name,p.route as route,p.params as params FROM user_page up";
+		$strSQL .= " LEFT JOIN pages p ON p.id= up.page_id";
+		$strSQL .= " WHERE 1";
+		if($this->user_id > 0){
+			$strSQL .= " AND up.user_id = '".$this->user_id."'";
+		}
+		//echo $strSQL;exit();
+		mysql_query("SET NAMES utf8");
+		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+		if ( mysql_num_rows($rsRES) > 0 )
+		{
+			while ( list($id,$name,$route,$params) = mysql_fetch_row($rsRES) ){
+				$nameStr = (trim($route)!="")?$route."/":"";
+				$nameStr .= $name.".php";				
+				$nameStr .= (trim($params)!="")?"?".$params:"";
+				$pages[$id] = $nameStr;
+           	}
+            return $pages;
+       	}else{
+			$this->error_number = 4;
+			$this->error_description="Can't list pages";
+			return false;
+    	}
     }
 
 }

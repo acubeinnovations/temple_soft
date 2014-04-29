@@ -19,7 +19,7 @@ require(ROOT_PATH."/include/class/class_menu_item/class_menu_item.php");
 
       //filter menu list with user pages
       $user_menu_list = $menu_item->filterMenuTreeArray($menu_list,$pages);
-     // echo "<pre>";print_r($user_menu_list);echo "</pre>";exit();
+      //echo "<pre>";print_r($user_menu_list);echo "</pre>";exit();
       //print user menu list
       if($user_menu_list){
          // echo "<pre>";print_r($user_menu_list);echo "</pre>";exit();

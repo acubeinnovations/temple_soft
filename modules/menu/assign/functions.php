@@ -10,7 +10,7 @@ function printTree($dataArray = array())
 	foreach($dataArray as $data)
 	{
 		$id = $data['id'];
-		$url = $data['link_url'];
+		$url = $data['page'];
 		echo '<li>';
 		if($url != ''){
 			echo '<input type="checkbox" name="chk_menu[]" value="'.$id.'"/> ';
