@@ -98,16 +98,16 @@ $user_types = $myuser->get_list_user_types();
 	}
 }
 
- if ( isset($_GET['id']) && $_GET['id'] > 0 ){
-      $myuser = new User();
-      $myuser->id = $_GET['id'];
-      $myuser->connection = $myconnection;
-      $chk1 = $myuser->get_detail();
+if ( isset($_GET['id']) && $_GET['id'] > 0 ){
+	$myuser = new User();
+	$myuser->id = $_GET['id'];
+	$myuser->connection = $myconnection;
+	$chk1 = $myuser->get_detail();
 	$user_statuses=$myuser->get_list_array();
-      if ( $chk == false ){
-		  header("Location: index.php");
-		  exit();
-      }
+	if ( $chk1 == false ){
+	  header("Location: index.php");
+	  exit();
+	}
  }
 
 

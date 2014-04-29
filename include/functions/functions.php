@@ -6,11 +6,11 @@
 
 			foreach ($menu_list as $menu) {
 				if(isset($menu['sibblings'])){
-					echo '<li class="has-dropdown"><a href="'.$menu['page'].'">'.$menu['name'].'</a>';
+					echo '<li class="has-dropdown"><a href="'.ROOT_PATH.$menu['page'].'">'.$menu['name'].'</a>';
 					printSibblings($menu['sibblings']);
 					echo '</li>';
 				}else{
-					echo '<li><a href="'.$menu['page'].'" >'.$menu['name'].'</a></li>';
+					echo '<li><a href="'.ROOT_PATH.$menu['page'].'" >'.$menu['name'].'</a></li>';
 				}
 				echo '<li class="divider"></li>';
 			}
@@ -22,11 +22,11 @@
 		echo '<ul class="dropdown">';
 		foreach ($menu_list as $menu) {
 			if(isset($menu['sibblings'])){
-				echo '<li class="has-dropdown"><a href="'.$menu['page'].'">'.$menu['name'].'</a>';
+				echo '<li class="has-dropdown"><a href="'.ROOT_PATH.$menu['page'].'">'.$menu['name'].'</a>';
 				printSibblings($menu['sibblings']);
 				echo '</li>';
 			}else{
-				echo '<li><a href="'.$menu['page'].'" >'.$menu['name'].'</a></li>';
+				echo '<li><a href="'.ROOT_PATH.$menu['page'].'" >'.$menu['name'].'</a></li>';
 			}
 		}
 		echo '</ul>';

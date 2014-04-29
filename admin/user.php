@@ -28,6 +28,7 @@ $page = new Page;
 
 
 	$page->content_list = $content_list;
+	
 
     $page->module_path = 'modules/user/';
     $page->module = 'update_user';
