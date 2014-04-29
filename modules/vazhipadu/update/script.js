@@ -3,6 +3,7 @@ $(document).ready(function(){
 
 	var key_code = [48,49,50,51,52,53,54,55,56,57];
 	$('#listpooja').focus();
+	
 
 	var nameObj	= $("input:text[name=txtname]");
 	var starObj = $("#liststar");
@@ -73,7 +74,7 @@ $(document).ready(function(){
     });
 
     
-
+	//shortcut for star select (number+tab)
     $("#liststar").focus(function(){
     	var star ='';
     	$(this).keypress(function(e){  
@@ -86,6 +87,25 @@ $(document).ready(function(){
             }else{
             	var val = key_code.indexOf(e.which); 
             	star += val.toString();
+            }
+                
+        });
+
+    });
+
+    //shortcut for pooja select (number+tab)
+    $("#listpooja").focus(function(){
+    	var pooja ='';
+    	$(this).keypress(function(e){  
+            if(e.which == 0){
+            	$(this).val(pooja);
+            	if($(this).val() == null){
+            		$(this).val(-1);
+            	}
+            	pooja = 0;
+            }else{
+            	var val = key_code.indexOf(e.which); 
+            	pooja += val.toString();
             }
                 
         });
