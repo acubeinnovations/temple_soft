@@ -87,7 +87,7 @@ if(!defined('CHECK_INCLUDED')){
 
 			<input type="button" name="button-print" value="Print" class="tiny button" />
 
-			<input type="reset" name="button-cancel" value="Cancel" class="tiny button" />
+			<input type="reset" id="button-cancel" name="button-cancel" value="Cancel" class="tiny button" />
 		</div>
 		
 	</div>

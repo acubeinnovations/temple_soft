@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 			var hiddenStr = name+'_'+star_id;
 			
-			$("#tbl-append").append('<tbody><tr><td>'+name+'<input type="hidden" class="hide-rows" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td></td></tr></tbody>');
+			$("#tbl-append").append('<tbody><tr class="new_rows"><td>'+name+'<input type="hidden" class="hide-rows" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td></td></tr></tbody>');
 			var row = $('.hide-rows').length;
 			if(row == 4){
 				$(this).hide();
@@ -38,6 +38,11 @@ $(document).ready(function(){
 		$("input:text[name=txtname]").focus();
 		
 
+	});
+
+	//remove generated rows on click cancel button
+	$("#button-cancel").click(function(){
+		$("table .new_rows").remove();
 	});
 
 
