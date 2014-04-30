@@ -9,7 +9,7 @@
 <p>
 Hi, <br/>
 
-Welcome to Acube MVC.
+Welcome to Temple Administration and Billing System.
 </p>
 
 
