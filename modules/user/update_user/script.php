@@ -94,9 +94,15 @@ function delete_member(){
     }
 
 }
+function assignMenu(id)
+{
+    window.location = "../assign_menu.php?uid="+id;
+}
 
 
 $(document).ready(function(){
+
+   
 
 
     $("#frmuser").submit(function(){

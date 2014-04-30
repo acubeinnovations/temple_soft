@@ -8,7 +8,17 @@ $users = $user->get_list_array_filter("user_type_id <> '".ADMINISTRATOR."'");
 
 $user_page = new UserPage($myconnection);
 $user_page->connection = $myconnection;
-$user_pages = array();
+
+$user_pages_list = array();$i=0;
+if(isset($_GET['uid'])){
+	$user_page->user_id = $_GET['uid'];
+	$user_pages = $user_page->get_user_pages();	
+	foreach($user_pages as $key=>$value){
+		$user_pages_list[$i]['id'] = $key;
+		$user_pages_list[$i]['name'] = $value;
+		$i++;
+	}
+}
 
 
 $my_page = new Pages($myconnection);
@@ -16,7 +26,7 @@ $my_page->connection = $myconnection;
 $pages = $my_page->get_list_array();
 /*
 echo "<pre>";
-print_r($pages);
+print_r($user_pages);
 echo "</pre>";exit();
 */
 

@@ -97,13 +97,14 @@
 	<div class="row">
 		<div class="medium-6 columns">
 
-                    <?php if ( isset($_GET['id']) || isset($_POST['h_id']) ){?>
-                    <input class="tiny button" type="submit" name="submit" value="<?php echo $CAP_update?>" onClick="return validate_member_update();" >
-                    <input class="tiny button" type="Submit" name="submit" value="<?php echo $CAP_delete?>" onClick="return delete_member();">
-<input type="hidden" name="h_id" value="<?php if( isset($_GET['id']) ){echo $myuser->id;}elseif ( isset($_POST['h_id']) ){ echo $_POST['h_id'];}?>">
-                    <?php }else{ ?>
-                    <input class="tiny button" type="submit" name="submit" value="<?php echo$CAP_add?>" onClick="return validate_member_update();">
-                    <?php }?>
+        <?php if ( isset($_GET['id']) || isset($_POST['h_id']) ){?>
+        	<input class="tiny button" type="submit" name="submit" value="<?php echo $CAP_update?>" onClick="return validate_member_update();" >
+        	<input class="tiny button" type="Submit" name="submit" value="<?php echo $CAP_delete?>" onClick="return delete_member();">
+        	<input class="tiny button" type="button" id="button-menu" value="Assign Menu" onClick="assignMenu(<?php echo $_GET['id'];?>);" />
+			<input type="hidden" name="h_id" value="<?php if( isset($_GET['id']) ){echo $myuser->id;}elseif ( isset($_POST['h_id']) ){ echo $_POST['h_id'];}?>">
+        <?php }else{ ?>
+        	<input class="tiny button" type="submit" name="submit" value="<?php echo$CAP_add?>" onClick="return validate_member_update();">
+        <?php }?>
 
                     
 

@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+	//remove user pages from pages
+	$( "#lstuserpages option" ).each(function() {
+		$("#lstpage option[value='"+$(this).val()+"']").remove();
+	});
+
 	$("#lstuser").change(function(){
 		 $("#dv-pages").html('<label for="menu">Pages<small>required</small>'+pages);
 		var user_id = $(this).val();

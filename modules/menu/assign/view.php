@@ -10,7 +10,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">
 			<div class="medium-4 columns">
 				<label for="menu">User<small>required</small>
-					<?php echo populate_list_array("lstuser", $users, 'id','username', '',$disable=false);?>
+					<?php echo populate_list_array("lstuser", $users, 'id','username', $user_page->user_id,$disable=false);?>
 				</label>
 			</div>
 		</div>
@@ -26,7 +26,7 @@ if(!defined('CHECK_INCLUDED')){
 			</div>
 			<div class="medium-4 columns" id="dv-user-pages">
 				<label for="menu">User Pages<small>required</small>
-				<?php echo populate_multiple_list_array("lstuserpages", $user_pages, 'id','nameStr', $user_pages,$disable=false,false);?>
+				<?php echo populate_multiple_list_array("lstuserpages", $user_pages_list, 'id','name', array(),$disable=false,false);?>
 			</div>
 		</div>
 		
