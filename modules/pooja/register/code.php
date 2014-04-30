@@ -5,6 +5,8 @@ if(!defined('CHECK_INCLUDED')){
 
 $pooja= new Pooja($myconnection);
 $pooja->connection=$myconnection;
+$poojas = $pooja->get_array();
+
 
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
@@ -16,6 +18,7 @@ if(isset($_GET['submit'])){
 	
 	$pooja->from_date =  $_GET['txtfrom'];
 	$pooja->to_date   = $_GET['txtto'];
+	$pooja->id = $_GET['lstpooja'];
 
 }else{
 	$pooja->from_date =  date('d-m-Y',strtotime(CURRENT_DATE));

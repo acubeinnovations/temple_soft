@@ -198,6 +198,10 @@ function get_array()
 	      }
 	    }
 
+	    if ($this->id > 0 ) {
+			$strSQL .= " AND v.pooja_id = '".$this->id."'";
+		}
+
 	    if($user_id > 0){
 	    	$strSQL .= " AND v.user_id = '".$user_id."'";
 	    }
