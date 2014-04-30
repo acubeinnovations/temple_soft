@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
 	var key_code = [48,49,50,51,52,53,54,55,56,57];
-	$('#txtdate').focus();
+	$('#txtrpt').focus();
 	
 
 	var nameObj	= $("input:text[name=txtname]");
@@ -88,6 +88,7 @@ $(document).ready(function(){
             	if($(this).val() == null){
             		$(this).val(-1);
             	}
+            	
             	pooja = 0;
             }else{
             	var val = key_code.indexOf(e.which); 
@@ -98,6 +99,8 @@ $(document).ready(function(){
         });
 
     });
+
+   
 
     if($("#chk_qty").prop('checked') == true){
 		$("#txtqty").attr('disabled',false);

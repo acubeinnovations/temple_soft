@@ -23,18 +23,16 @@ if(!defined('CHECK_INCLUDED')){
 <fieldset>
 	<div class="row">
 		<div class="medium-3 columns">
-			<label for="name"> Receipt Number : <font style="font-weight:bold;"><?php echo $voucher_number;?></font></label>
+			<label for="name">
+			<input type="text" name="txtrpt" id="txtrpt" value="Receipt Number : <?php echo $voucher_number;?>" readonly/>
+			
 			<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
 		</div>
 	</div>
 
 	<div class="row">
 
-		<div class="medium-2 columns">
-			<label for="name"> Date
-			<input class="mydatepicker"  name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
-			</label>
-		</div>
+		
 
 		<div class="medium-4 columns">
 			<label for="listpooja"> Select pooja<small>required</small>
@@ -49,18 +47,24 @@ if(!defined('CHECK_INCLUDED')){
 			</label>
 			
 		</div>
+		<div class="medium-2 columns">
+			<label for="name"> Date
+			<input class="mydatepicker"  name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
+			</label>
+		</div>
+
+		<div class="medium-2 columns">
+			<label for="name">
+				<input type="checkbox" name="chk_qty" id="chk_qty" > Quantity
+				<input type="text"  name="txtqty" id="txtqty" value="" />
+			</label>
+		</div>
 	
 
 	</div>
 
 	<div class="row">
-		<div class="medium-2 columns">
-			<label for="name">
-				<input type="checkbox" name="chk_qty" id="chk_qty" > Quantity
-			
-				<input type="text"  name="txtqty" id="txtqty" value="" />
-			</label>
-		</div>
+		
 
 	</div>
 
