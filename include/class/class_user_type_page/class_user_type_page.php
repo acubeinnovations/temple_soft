@@ -62,6 +62,33 @@ Class UserTypePage{
 		}
     }
 
+    public function insert_batch_with_user_types($userTypes= array())
+    {
+    	if(count($userTypes) > 0){
+	    	$strSQL = "INSERT INTO user_type_page(user_type_id,page_id) VALUES";
+	    	foreach ($userTypes as $user_type_id) {
+	    		$strSQL .="('";
+	    		$strSQL.= mysql_real_escape_string($user_type_id)."','";
+	    		$strSQL.= mysql_real_escape_string($this->page_id)."'),";
+			}
+			
+			$strSQL= substr($strSQL, 0,-1);
+			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+			if ( mysql_affected_rows($this->connection) > 0 ) {
+				$this->error_description="Data inserted Successfully";
+				return true;
+			}else{
+				$this->error_number = 3;
+				$this->error_description="Can't insert data ";
+				return false;
+			}
+	 	
+		}else{
+			$this->error_description = "Invalid data";
+			return false;
+		}
+    }
+
  
 
     public function validate()

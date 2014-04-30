@@ -127,25 +127,19 @@ if(isset($_POST['submit'])){
 
 				}else{//new voucher
 					$page_id = $my_page->update();
-
-					//give access to user
-					if(isset($_SESSION[SESSION_TITLE.'user_type'])){
+					if($page_id){
+						//page access for administrator and finance
 						$user_type_page = new UserTypePage($myconnection);
 						$user_type_page->connection = $myconnection;
-						$user_type_page->user_type_id = $_SESSION[SESSION_TITLE.'user_type'];
 						$user_type_page->page_id = $page_id;
-						$user_type_page->update();
-						if($_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR){
-							$user_type_page->user_type_id = ADMINISTRATOR;
-							$user_type_page->page_id = $page_id;
-							$user_type_page->update();
-							if(isset($_SESSION[SESSION_TITLE.'userid'])){
+						$user_types = array(ADMINISTRATOR,FINANCE);
+						$user_type_page->insert_batch_with_user_types($user_types);
+						if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR){
 								$user_page = new UserPage($myconnection);
 								$user_page->connection = $myconnection;
 								$user_page->user_id =$_SESSION[SESSION_TITLE.'userid'];
 								$user_page->page_id = $page_id;
 								$user_page->update();
-							}
 						}
 					}
 					//update menu
