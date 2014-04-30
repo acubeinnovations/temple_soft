@@ -1,5 +1,10 @@
 
-<h1>User Dashboard</h1>
+<h1>
+<?php if(isset($_SESSION[SESSION_TITLE.'user_type'])) {
+	echo $g_ARRAY_USER_TYPE[$_SESSION[SESSION_TITLE.'user_type']];
+
+}
+?> Dashboard</h1>
 
 <p>
 Hi, <br/>

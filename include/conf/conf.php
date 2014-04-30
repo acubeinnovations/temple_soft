@@ -14,6 +14,11 @@ define("CURRENT_TIME",date('H:i:s'));
 define("COUNTER", 1);
 define("FINANCE", 2);
 define("ADMINISTRATOR", 3);
+//user type array
+$g_ARRAY_USER_TYPE = array();
+$g_ARRAY_USER_TYPE[COUNTER] = "Counter";
+$g_ARRAY_USER_TYPE[FINANCE] = "Finance";
+$g_ARRAY_USER_TYPE[ADMINISTRATOR] = "Administrator";
 
 //
 define("NOT_DELETED", 1);

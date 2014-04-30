@@ -7,6 +7,13 @@ $pagination = new Pagination(10);
 $menu_item = new MenuItem($myconnection);
 $menu_item->connection = $myconnection;
 
+if(isset($_GET['submit'])){
+	if(trim($_GET['txtsearch']) != ""){
+		$menu_item->name = $_GET['txtsearch'];
+	}
+}
+
+
 $menu_item->total_records=$pagination->total_records;
 
 $menu_list = $menu_item->get_list_array_bylimit();
@@ -36,6 +43,7 @@ if(isset($_GET['dlt'])){
         exit();
 	}
 }
+
 
 
 ?>

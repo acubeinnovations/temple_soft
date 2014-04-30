@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="row">
 			<div class="medium-5 columns">
 				<label for="menu">Menu Name
-					<input type="text" name="search"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>				
+					<input type="text" name="txtsearch"  value="<?php  if(isset($_GET['search'])) { echo $_GET['search'];}?>"/>				
 				</label>
 			</div>
 			<div class="medium-2 columns">
