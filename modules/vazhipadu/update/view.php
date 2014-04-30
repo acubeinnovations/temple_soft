@@ -29,6 +29,13 @@ if(!defined('CHECK_INCLUDED')){
 	</div>
 
 	<div class="row">
+
+		<div class="medium-2 columns">
+			<label for="name"> Date
+			<input class="mydatepicker"  name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
+			</label>
+		</div>
+
 		<div class="medium-4 columns">
 			<label for="listpooja"> Select pooja<small>required</small>
 			<?php echo populate_list_array("listpooja", $array_vazhipadu, 'id','name',$add_vazhipadu->pooja_id,$disable=false,true);?>
@@ -42,15 +49,7 @@ if(!defined('CHECK_INCLUDED')){
 			</label>
 			
 		</div>
-
 	
-		<div class="medium-2 columns">
-			<label for="name"> Date
-			<input class="mydatepicker" name="txtdate" id="" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
-			</label>
-		</div>
-
-			
 
 	</div>
 
