@@ -21,6 +21,12 @@ if(!defined('CHECK_INCLUDED')){
 </div>
 
 <fieldset>
+	<div class="row">
+		<div class="medium-3 columns">
+			<label for="name"> Receipt Number : <font style="font-weight:bold;"><?php echo $voucher_number;?></font></label>
+			<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
+		</div>
+	</div>
 
 	<div class="row">
 		<div class="medium-4 columns">
@@ -55,11 +61,6 @@ if(!defined('CHECK_INCLUDED')){
 			
 				<input type="text"  name="txtqty" id="txtqty" value="" />
 			</label>
-		</div>
-
-		<div class="medium-2 columns">
-			<label for="name"> Receipt Number :<?php echo $voucher_number;?></label>
-			<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
 		</div>
 
 	</div>
