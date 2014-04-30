@@ -21,19 +21,17 @@ if(!defined('CHECK_INCLUDED')){
 </div>
 
 <fieldset>
-	<div class="row">
+	<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
+
+	<!--<div class="row">
 		<div class="medium-3 columns">
 			<label for="name">
 			<input type="text" name="txtrpt" id="txtrpt" value="Receipt Number : <?php echo $voucher_number;?>" readonly/>
 			
-			<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
 		</div>
-	</div>
+	</div>-->
 
 	<div class="row">
-
-		
-
 		<div class="medium-4 columns">
 			<label for="listpooja"> Select pooja<small>required</small>
 			<?php echo populate_list_array("listpooja", $array_vazhipadu, 'id','name',$add_vazhipadu->pooja_id,$disable=false,true);?>
@@ -63,10 +61,6 @@ if(!defined('CHECK_INCLUDED')){
 
 	</div>
 
-	<div class="row">
-		
-
-	</div>
 
 	<div class="row">
 		

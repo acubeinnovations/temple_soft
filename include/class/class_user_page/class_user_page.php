@@ -120,9 +120,8 @@ Class UserPage{
     public function get_user_pages()
     {
     	$pages = array();
-		$strSQL = "SELECT up.page_id as id,p.name as name,p.route as route,p.params as params FROM user_page up";
-		$strSQL .= " LEFT JOIN pages p ON p.id= up.page_id";
-		$strSQL .= " WHERE 1";
+		$strSQL = "SELECT up.page_id as id,p.name as name,p.route as route,p.params as params FROM user_page up ,pages p";
+		$strSQL .= " WHERE p.id = up.page_id";
 		if($this->user_id > 0){
 			$strSQL .= " AND up.user_id = '".$this->user_id."'";
 		}
