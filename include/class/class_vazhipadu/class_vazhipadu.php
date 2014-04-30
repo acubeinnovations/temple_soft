@@ -217,7 +217,7 @@ Class Vazhipadu{
   function get_array_by_limit($start_record = 0,$max_records = 25,$dataArray = array())
   {
     $vazhipadu = array();$i=0;
-    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.quantity,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
@@ -255,6 +255,7 @@ Class Vazhipadu{
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
           $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
           $vazhipadu[$i]["unit_rate"] = $row['amount'];
+          $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
           $vazhipadu[$i]["name"] = $row['name']; 
           $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
           $vazhipadu[$i]["star_name"] = $row['star_name'];          

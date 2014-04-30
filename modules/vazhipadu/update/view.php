@@ -5,7 +5,7 @@ if(!defined('CHECK_INCLUDED')){
 ?>
 
 <form id="form1" name="form1" method="POST" data-abide >
-<input type="hidden" name="hd_moduleid" value="<?php echo MODULE_VAZHIPADU; ?>"/>
+<input type="hidden" name="hd_moduleid" value="<?php echo $voucher->module_id; ?>"/>
 
 <div class="row" >
 	<div class="medium-6 columns">
@@ -44,19 +44,32 @@ if(!defined('CHECK_INCLUDED')){
 			</label>
 		</div>
 
-		
+			
 
 	</div>
 
 	<div class="row">
 		<div class="medium-2 columns">
-			<label for="name"> Receipt Number :</label>
+			<label for="name">
+				<input type="checkbox" name="chk_qty" id="chk_qty" > Quantity
 			
+				<input type="text"  name="txtqty" id="txtqty" value="" />
+			</label>
 		</div>
+
+		<div class="medium-2 columns">
+			<label for="name"> Receipt Number :<?php echo $voucher_number;?></label>
+			<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
+		</div>
+
 	</div>
 
 	<div class="row">
-	<div class="medium-12 columns">
+		
+	</div>
+
+	<div class="row">
+	<div class="medium-12 columns" id="dv-dtls">
 		<table width="70%" id="tbl-append">
 			<thead>
 				<tr>

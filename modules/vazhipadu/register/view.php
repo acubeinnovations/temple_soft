@@ -121,7 +121,7 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $vazhipadu_list[$i]['pooja_name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['star_name']; ?></td>
-			<td><?php echo number_format($vazhipadu_list[$i]['unit_rate'],2); ?></td>
+			<td><?php echo number_format($vazhipadu_list[$i]['amount'],2); ?></td>
 		</tr>
 		<?php $total_amount+=$vazhipadu_list[$i]['unit_rate'];$i++;}?>
 		<tr style="font-weight:bold;">

@@ -112,24 +112,30 @@ $(document).ready(function(){
 
     });
 
+    if($("#chk_qty").prop('checked') == true){
+		$("#txtqty").attr('disabled',false);
+		$("#dv-dtls").hide();
+	}else{
+		$("#txtqty").attr('disabled',true);
+		$("#dv-dtls").show();
+	}
+ 
+
+
+    $("#chk_qty").click(function(){
+    	if($(this).prop('checked') == true){
+    		$("#txtqty").attr('disabled',false);
+    		$("#dv-dtls").hide();
+    	}else{
+    		$("#txtqty").attr('disabled',true);
+    		$("#dv-dtls").show();
+    	}
+    });
+
 
 
 
 });
 
-	/*
-            var success_post = $.post('<?php echo $current_url ?>',
-            {
-              pooja:pooja_id,
-            });
-            success_post.done(function(rate) {
-              if(rate){
-                $("#txtamount").val(rate);
-              }
-           });
-        }
-   
-    });
-*/
-
+	
 

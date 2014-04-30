@@ -54,6 +54,23 @@ if(isset($_GET['pr'])){
 }
 
 
+// voucher details
+$voucher->module_id = MODULE_VAZHIPADU;
+$voucher->get_details_with_moduleid();
+if($voucher->voucher_id > 0){
+	$next_voucher_number = $account->getNextVoucherNumber($voucher->voucher_id);
+	if($next_voucher_number){
+		$voucher_number = $next_voucher_number;
+	}else{
+		$voucher_number = $voucher->series_start;
+	}
+}else{
+	$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu Voucher Not Found.";
+    header( "Location:".$current_url);
+    exit();
+}
+
+
 if(isset($_POST['submit'])){
 
 	$errorMSG = "";
@@ -61,9 +78,17 @@ if(isset($_POST['submit'])){
 	}else{
 		$errorMSG .= "Select Pooja ";
 	}
-	if(!isset($_POST['hd_row'])){
-		$errorMSG .= "Name not added ";
+
+	if(isset($_POST['chk_qty'])){
+		if(!filter_var($_POST['txtqty'],FILTER_VALIDATE_INT)){
+			$errorMSG .= "Invalid Quantity";
+		}
+	}else{
+		if(!isset($_POST['hd_row'])){
+			$errorMSG .= "Name not added ";
+		}
 	}
+
 
 	if($errorMSG == ""){
 		$total_amount = 0;
@@ -71,33 +96,25 @@ if(isset($_POST['submit'])){
 		$add_vazhipadu->amount=$_POST['txtamount'];
 		$add_vazhipadu->vazhipadu_date = $_POST['txtdate'];
 		
-
-		$dataArray = array();
-		$i=0;
-		
-		$total_amount = $_POST['txtamount']*count($_POST['hd_row']);
-		foreach($_POST['hd_row'] as $row){
-			$list = explode("_", $row);
-			$dataArray[$i]['name'] = $list[0];
-			$dataArray[$i]['star_id'] = $list[1];
-			$i++;
-		}
-		
 		//add voucher entry
-		$voucher->module_id = $_POST['hd_moduleid'];
-		$voucher->get_details_with_moduleid();
-		//echo $voucher->voucher_id;exit();
-
-		if($voucher->voucher_id > 0){
-
+		if($_POST['hd_moduleid'] > 0){
 			//get next voucher number
-			$next_voucher_number = $account->getNextVoucherNumber($voucher->voucher_id);
-			if($next_voucher_number){
-				$voucher_number = $next_voucher_number;
+			$voucher_number = $_POST['hd_rpt_no'];
+
+			if(isset($_POST['chk_qty'])){
+				$total_amount = $_POST['txtamount']*$_POST['txtqty'];
+				$add_vazhipadu->quantity = $_POST['txtqty'];
+				$dataArray = false;
 			}else{
-				$voucher_number = $voucher->series_start;
+				$dataArray = array();$i=0;
+				$total_amount = $_POST['txtamount']*count($_POST['hd_row']);
+				foreach($_POST['hd_row'] as $row){
+					$list = explode("_", $row);
+					$dataArray[$i]['name'] = $list[0];
+					$dataArray[$i]['star_id'] = $list[1];
+					$i++;
+				}
 			}
-			//echo $voucher_number;exit();
 		
 			$account->voucher_number 	= $voucher_number;
 			$account->voucher_type_id	= $voucher->voucher_id;
