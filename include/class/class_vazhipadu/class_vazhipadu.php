@@ -235,7 +235,7 @@ Class Vazhipadu{
 
     
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
-    $strSQL .= " ORDER BY vazhipadu_rpt_number";
+    $strSQL .= " ORDER BY vazhipadu_id DESC";
     //echo $strSQL;exit();
    
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -250,6 +250,53 @@ Class Vazhipadu{
         $this->total_records = mysql_num_rows($all_rs);
       }
 
+        while ( $row = mysql_fetch_assoc($rsRES) ){
+          $vazhipadu[$i]["vazhipadu_id"] = $row['vazhipadu_id'];
+          $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
+          $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
+          $vazhipadu[$i]["unit_rate"] = $row['amount'];
+          $vazhipadu[$i]["name"] = $row['name']; 
+          $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
+          $vazhipadu[$i]["star_name"] = $row['star_name'];          
+          $i++;
+        } 
+        return $vazhipadu;
+      }else{    
+        $this->error_number = 4;
+        $this->error_description="Can't list vazhipadu";
+        return false;
+      }
+  }
+
+  function get_all_array($dataArray = array())
+  {
+    $vazhipadu = array();$i=0;
+    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
+    $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
+    $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
+    if($this->from_date != "" and $this->to_date != ""){
+      if($this->from_date == $this->to_date){
+        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
+      }else{
+        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
+      }
+    }
+
+    if($this->user_id > 0){
+      $strSQL .= " AND v.user_id = '".$this->user_id."'";
+    }
+
+    
+   // $strSQL .= " GROUP BY vazhipadu_rpt_number";
+    $strSQL .= " ORDER BY vazhipadu_rpt_number";
+    //echo $strSQL;exit();
+   
+    mysql_query("SET NAMES utf8");
+    $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+
+    if ( mysql_num_rows($rsRES) > 0 )
+    {
         while ( $row = mysql_fetch_assoc($rsRES) ){
           $vazhipadu[$i]["vazhipadu_id"] = $row['vazhipadu_id'];
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];

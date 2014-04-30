@@ -207,6 +207,7 @@ function get_array()
 	    }
 
     	$strSQL .= " GROUP BY p.id";
+    	$strSQL .= " ORDER BY v.vazhipadu_id DESC";
     	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
     	//echo $strSQL;exit();
     	 mysql_query("SET NAMES utf8");
@@ -218,6 +219,49 @@ function get_array()
 				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
             	$this->total_records = mysql_num_rows($all_rs);
 			}
+			while ( list ($id,$name,$rate,$date,$quantity) = mysql_fetch_row($rsRES) ){
+				$pooja[$i]["id"] =  $id;
+				$pooja[$i]["name"] = $name;
+				$pooja[$i]["rate"] = $rate;
+				$pooja[$i]["date"] = $date;
+				$pooja[$i]["total"] = $rate*$quantity;
+				$pooja[$i]["quantity"] = $quantity;
+				$i++;
+			}
+			return $pooja;
+		} else {
+  			return false;
+        }
+    }
+
+    public function get_all_vazhipadu_pooja_list($user_id = -1)
+    {
+
+    	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
+    	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
+    	$strSQL .= " WHERE deleted = '".NOT_DELETED."'";
+    	
+    	if($this->from_date != "" and $this->to_date != ""){
+	      if($this->from_date == $this->to_date){
+	        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
+	      }else{
+	        $strSQL .=" AND (v.vazhipadu_date BETWEEN '".date('Y-m-d',strtotime($this->from_date))."' AND '".date('Y-m-d',strtotime($this->to_date))."')";
+	      }
+	    }
+
+	    if ($this->id > 0 ) {
+			$strSQL .= " AND v.pooja_id = '".$this->id."'";
+		}
+
+	    if($user_id > 0){
+	    	$strSQL .= " AND v.user_id = '".$user_id."'";
+	    }
+
+    	$strSQL .= " GROUP BY p.id";
+    	mysql_query("SET NAMES utf8");
+		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+		$pooja =array();$i=0;
+        if(mysql_num_rows($rsRES) > 0){
 			while ( list ($id,$name,$rate,$date,$quantity) = mysql_fetch_row($rsRES) ){
 				$pooja[$i]["id"] =  $id;
 				$pooja[$i]["name"] = $name;

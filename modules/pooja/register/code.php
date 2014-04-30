@@ -34,7 +34,7 @@ if(isset($_SESSION[SESSION_TITLE.'userid'])){
 
 $pooja_list = $pooja->get_vazhipadu_pooja_list($pagination->start_record,$pagination->max_records,$user_id);
 
-$pooja_total_list = $pooja->get_vazhipadu_pooja_list($pagination->start_record,$pooja->total_records,$user_id);
+$pooja_total_list = $pooja->get_all_vazhipadu_pooja_list($user_id);
 
 if($pooja_list!=false){
 	$pagination->total_records = $pooja->total_records;

@@ -2,7 +2,7 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
-$pagination = new Pagination(10);
+$pagination = new Pagination(5);
 
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
@@ -29,7 +29,7 @@ if(isset($_GET['submit'])){
 
 
 $vazhipadu_list = $vazhipadu->get_array_by_limit($pagination->start_record,$pagination->max_records,$data);
-$vazhipadu_total_list = $vazhipadu->get_array_by_limit($pagination->start_record,$vazhipadu->total_records,$data);
+$vazhipadu_total_list = $vazhipadu->get_all_array($data);
 
 if($vazhipadu_list){
 	$pagination->total_records = $vazhipadu->total_records;
