@@ -55,21 +55,7 @@ $(document).ready(function(){
         }
         else
         {
-        	$.ajax({
-				type:'GET',
-				url:CURRENT_URL,
-				data:{pooja:pooja_id},
-				contentType: "application/json",
-				dataType: "json",
-				success: function (json) {
-					if(json['rate']){
-						$("#txtamount").val(json['rate']);
-		            }
-		            if(json['ledger']){
-		            	$("#hd_ledger_id").val(json['ledger']);
-		            }
-				}				
-			});
+        	postPooja(pooja_id);
         }
     });
 
@@ -106,6 +92,7 @@ $(document).ready(function(){
             }else{
             	var val = key_code.indexOf(e.which); 
             	pooja += val.toString();
+            	postPooja(val);
             }
                 
         });
@@ -136,6 +123,25 @@ $(document).ready(function(){
 
 
 });
+
+function postPooja(pooja_id)
+{
+	$.ajax({
+		type:'GET',
+		url:CURRENT_URL,
+		data:{pooja:pooja_id},
+		contentType: "application/json",
+		dataType: "json",
+		success: function (json) {
+			if(json['rate']){
+				$("#txtamount").val(json['rate']);
+            }
+            if(json['ledger']){
+            	$("#hd_ledger_id").val(json['ledger']);
+            }
+		}				
+	});
+}
 
 	
 
