@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2014 at 04:44 AM
+-- Generation Time: Apr 30, 2014 at 05:14 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   `status` tinyint(4) NOT NULL COMMENT '1 for active ,2 for inactive',
   `sort_order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `menu_item`
@@ -394,7 +394,8 @@ INSERT INTO `menu_item` (`id`, `name`, `parent_id`, `page_id`, `status`, `sort_o
 (49, 'List Menu', 47, 38, 1, 0),
 (50, 'Assign Menu', 47, 31, 1, 0),
 (51, 'Users', 5, 55, 1, 0),
-(52, 'Change Password', 5, 34, 1, 0);
+(52, 'Change Password', 5, 62, 1, 0),
+(53, 'Change Password', -1, 34, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -427,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `route` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `params` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=63 ;
 
 --
 -- Dumping data for table `pages`
@@ -494,7 +495,8 @@ INSERT INTO `pages` (`id`, `name`, `route`, `params`) VALUES
 (58, 'ac_generate_voucher', '', 'v=4'),
 (59, 'ac_generate_voucher', '', 'v=5'),
 (60, 'ac_generated_vouchers', '', 'bid=1'),
-(61, 'ac_generated_vouchers', '', 'bid=2');
+(61, 'ac_generated_vouchers', '', 'bid=2'),
+(62, 'change_password', 'admin', '');
 
 -- --------------------------------------------------------
 
@@ -746,14 +748,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `user_status_id` (`user_status_id`),
   KEY `organization_id` (`organization_id`),
   KEY `user_type_id` (`user_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `address`, `occupation`, `user_status_id`, `organization_id`, `registration_date`, `activation_token`, `password_token`, `user_type_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'administrator', NULL, 'rosy.swapna@acube.co', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 3);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'administrator', NULL, 'rosy.swapna@acube.co', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 3),
+(2, 'counter01', 'e10adc3949ba59abbe56e057f20f883e', 'sdf', 'df', '', '', '', '', 1, 0, '2014-04-30 10:24:01', '', NULL, 1),
+(3, 'finance01', 'e10adc3949ba59abbe56e057f20f883e', 'sdf', 'df', '', '', '', '', 1, 0, '2014-04-30 10:24:36', '', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -765,6 +769,51 @@ CREATE TABLE IF NOT EXISTS `user_page` (
   `user_id` int(11) NOT NULL,
   `page_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_page`
+--
+
+INSERT INTO `user_page` (`user_id`, `page_id`) VALUES
+(2, 35),
+(2, 46),
+(2, 47),
+(2, 48),
+(2, 40),
+(2, 49),
+(2, 34),
+(3, 35),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 5),
+(3, 6),
+(3, 7),
+(3, 8),
+(3, 9),
+(3, 10),
+(3, 11),
+(3, 12),
+(3, 13),
+(3, 14),
+(3, 15),
+(3, 16),
+(3, 17),
+(3, 18),
+(3, 19),
+(3, 20),
+(3, 21),
+(3, 22),
+(3, 23),
+(3, 24),
+(3, 25),
+(3, 26),
+(3, 27),
+(3, 28),
+(3, 29),
+(3, 32),
+(3, 34);
 
 -- --------------------------------------------------------
 
@@ -859,7 +908,7 @@ INSERT INTO `user_type_page` (`user_type_id`, `page_id`) VALUES
 (3, 31),
 (3, 32),
 (3, 33),
-(3, 34),
+(3, 62),
 (3, 35),
 (3, 36),
 (3, 37),
@@ -888,7 +937,44 @@ INSERT INTO `user_type_page` (`user_type_id`, `page_id`) VALUES
 (3, 60),
 (3, 61),
 (1, 35),
-(2, 35);
+(2, 35),
+(1, 46),
+(1, 47),
+(1, 48),
+(1, 40),
+(1, 49),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(2, 10),
+(2, 11),
+(2, 12),
+(2, 13),
+(2, 14),
+(2, 15),
+(2, 16),
+(2, 17),
+(2, 18),
+(2, 19),
+(2, 20),
+(2, 21),
+(2, 22),
+(2, 23),
+(2, 24),
+(2, 25),
+(2, 26),
+(2, 27),
+(2, 28),
+(2, 29),
+(2, 32),
+(2, 34),
+(1, 34);
 
 -- --------------------------------------------------------
 
