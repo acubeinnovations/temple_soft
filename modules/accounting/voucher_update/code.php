@@ -120,9 +120,7 @@ if(isset($_POST['submit'])){
 			//1. get voucher name
 			$voucher->voucher_id = $voucher_id;
 			$voucher->get_details();
-			if($voucher->module_id > 0){
-				//do nothing
-			}else{
+			if($voucher->hidden == VOUCHER_SHOW){
 				//2.get current menu's parent id
 				$menu_parent = -1;
 				if(isset($_SESSION[SESSION_TITLE.'pages'])){
@@ -137,16 +135,15 @@ if(isset($_POST['submit'])){
 				$my_page->connection = $myconnection;
 				$my_page->name = "ac_generate_voucher";
 				$my_page->route = "";
-				$my_page->params = "v=".$voucher_id;
+				$my_page->params = "v=".$voucher->voucher_id;
 				if($my_page->getPageId()){//update voucher
 					$page_id = $my_page->id;
 					$menu_item->page_id = $page_id;
 					$menu_item->name = $voucher->voucher_name;
 					$menu_item->update_with_page_id();
-
 				}else{//new voucher
+					//echo "show";exit();
 					$page_id = $my_page->update();
-
 					//give access to user
 					if($page_id){
 						//page access for all user type
@@ -176,13 +173,12 @@ if(isset($_POST['submit'])){
 					$menu_item->update();
 				}
 			}
-			
 
-			$_SESSION[SESSION_TITLE.'flash'] = "Voucher update successfully!";
+			$_SESSION[SESSION_TITLE.'flash'] = "Voucher updated successfully!";
 	        header( "Location:".$current_url);
 	        exit();
     	}else{
-    		$_SESSION[SESSION_TITLE.'flash'] = "Voucher not udated";
+    		$_SESSION[SESSION_TITLE.'flash'] = "Voucher not updated";
 	        header( "Location:".$current_url);
 	        exit();
     	}

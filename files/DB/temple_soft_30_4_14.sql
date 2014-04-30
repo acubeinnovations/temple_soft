@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2014 at 05:14 AM
+-- Generation Time: Apr 30, 2014 at 10:03 AM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   `status` tinyint(4) NOT NULL COMMENT '1 for active ,2 for inactive',
   `sort_order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=54 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56 ;
 
 --
 -- Dumping data for table `menu_item`
@@ -395,7 +395,9 @@ INSERT INTO `menu_item` (`id`, `name`, `parent_id`, `page_id`, `status`, `sort_o
 (50, 'Assign Menu', 47, 31, 1, 0),
 (51, 'Users', 5, 55, 1, 0),
 (52, 'Change Password', 5, 62, 1, 0),
-(53, 'Change Password', -1, 34, 1, 6);
+(53, 'Change Password', -1, 34, 1, 6),
+(54, 'Cash Receipt', 24, 63, 1, 0),
+(55, 'Cash Payment', 24, 64, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -428,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `route` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `params` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=65 ;
 
 --
 -- Dumping data for table `pages`
@@ -490,13 +492,11 @@ INSERT INTO `pages` (`id`, `name`, `route`, `params`) VALUES
 (53, 'user', 'admin', ''),
 (54, 'user_check', 'admin', ''),
 (55, 'users', 'admin', ''),
-(56, 'ac_generate_voucher', '', 'v=2'),
-(57, 'ac_generate_voucher', '', 'v=3'),
-(58, 'ac_generate_voucher', '', 'v=4'),
-(59, 'ac_generate_voucher', '', 'v=5'),
 (60, 'ac_generated_vouchers', '', 'bid=1'),
 (61, 'ac_generated_vouchers', '', 'bid=2'),
-(62, 'change_password', 'admin', '');
+(62, 'change_password', 'admin', ''),
+(63, 'ac_generate_voucher', '', 'v=2'),
+(64, 'ac_generate_voucher', '', 'v=3');
 
 -- --------------------------------------------------------
 
@@ -770,51 +770,6 @@ CREATE TABLE IF NOT EXISTS `user_page` (
   `page_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `user_page`
---
-
-INSERT INTO `user_page` (`user_id`, `page_id`) VALUES
-(2, 35),
-(2, 46),
-(2, 47),
-(2, 48),
-(2, 40),
-(2, 49),
-(2, 34),
-(3, 35),
-(3, 1),
-(3, 2),
-(3, 3),
-(3, 4),
-(3, 5),
-(3, 6),
-(3, 7),
-(3, 8),
-(3, 9),
-(3, 10),
-(3, 11),
-(3, 12),
-(3, 13),
-(3, 14),
-(3, 15),
-(3, 16),
-(3, 17),
-(3, 18),
-(3, 19),
-(3, 20),
-(3, 21),
-(3, 22),
-(3, 23),
-(3, 24),
-(3, 25),
-(3, 26),
-(3, 27),
-(3, 28),
-(3, 29),
-(3, 32),
-(3, 34);
-
 -- --------------------------------------------------------
 
 --
@@ -974,7 +929,25 @@ INSERT INTO `user_type_page` (`user_type_id`, `page_id`) VALUES
 (2, 29),
 (2, 32),
 (2, 34),
-(1, 34);
+(1, 34),
+(3, 72),
+(1, 72),
+(2, 72),
+(3, 73),
+(1, 73),
+(2, 73),
+(3, 74),
+(1, 74),
+(2, 74),
+(3, 75),
+(1, 75),
+(2, 75),
+(3, 63),
+(1, 63),
+(2, 63),
+(3, 64),
+(1, 64),
+(2, 64);
 
 -- --------------------------------------------------------
 
@@ -1021,10 +994,10 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `form_type_id` int(11) NOT NULL,
   `source` tinyint(4) NOT NULL COMMENT '1-voucher for ac and 2-voucher for inventory',
   `hidden` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 show,2hidden',
-  `module_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT '-1',
   PRIMARY KEY (`voucher_id`),
   UNIQUE KEY `fy_id` (`fy_id`,`module_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `voucher`
@@ -1033,9 +1006,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
 INSERT INTO `voucher` (`voucher_id`, `voucher_name`, `voucher_description`, `fy_id`, `voucher_master_id`, `header`, `footer`, `number_series`, `series_prefix`, `series_sufix`, `series_start`, `series_seperator`, `default_from`, `default_to`, `form_type_id`, `source`, `hidden`, `module_id`) VALUES
 (1, 'Vazhipadu', '', 1, 2, '', '', '001', '', '', '001', '', '4', '1', -1, -1, 2, 1),
 (2, 'Cash Receipt', '', 1, 2, '', '', '001', '', '', '001', '', 'a:1:{i:0;s:1:"4";}', '', -1, 1, 1, NULL),
-(3, 'Cash Payment', '', 1, 1, '', '', '001', '', '', '001', '', '', 'a:1:{i:0;s:1:"4";}', -1, 1, 1, NULL),
-(4, 'Cash Payment', '', 1, 1, '', '', '001', '', '', '001', '', '', 'a:1:{i:0;s:1:"4";}', -1, 1, 1, NULL),
-(5, 'Cash Payment', '', 1, 1, '', '', '001', '', '', '001', '', '', 'a:1:{i:0;s:1:"4";}', -1, 1, 1, NULL);
+(3, 'Cash Payment', '', 1, 1, '', '', '001', '', '', '001', '', '', 'a:1:{i:0;s:1:"4";}', -1, 1, 1, NULL);
 
 -- --------------------------------------------------------
 

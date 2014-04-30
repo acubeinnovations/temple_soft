@@ -55,6 +55,7 @@ Class Pages{
 
     public function getPageId(){
     	$strSQL = "SELECT id FROM pages WHERE name='".$this->name."' AND route = '".$this->route."' AND params = '".$this->params."'";
+    	//echo $strSQL;exit();
     	$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     	if(mysql_num_rows($rsRES) > 0){
     		$row = mysql_fetch_assoc($rsRES);
