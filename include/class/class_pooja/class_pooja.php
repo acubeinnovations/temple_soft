@@ -186,7 +186,7 @@ function get_array()
     public function get_vazhipadu_pooja_list($start_record = 0,$max_records = 25,$user_id = -1)
     {
 
-    	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
+    	$strSQL = "SELECT v.pooja_id,p.name,v.amount AS rate,v.vazhipadu_date,SUM(v.quantity) AS quantity FROM vazhipadu v";
     	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
     	$strSQL .= " WHERE deleted = '".NOT_DELETED."'";
     	
@@ -206,13 +206,14 @@ function get_array()
 	    	$strSQL .= " AND v.user_id = '".$user_id."'";
 	    }
 
-    	$strSQL .= " GROUP BY p.id";
+    	$strSQL .= " GROUP BY p.id,v.amount";
     	$strSQL .= " ORDER BY v.vazhipadu_id DESC";
     	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-    	//echo $strSQL;exit();
+    	
     	 mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
 		$pooja = array();$i=0;
+		$total_amount = 0;$total_quantity = 0;
         if ( mysql_num_rows($rsRES) > 0 ){
 			if (trim($this->total_records)!="" && $this->total_records > 0) {
             } else {
@@ -223,12 +224,15 @@ function get_array()
 				$pooja[$i]["id"] =  $id;
 				$pooja[$i]["name"] = $name;
 				$pooja[$i]["rate"] = $rate;
-				$pooja[$i]["date"] = $date;
-				$pooja[$i]["total"] = $rate*$quantity;
 				$pooja[$i]["quantity"] = $quantity;
+				$pooja[$i]["amount"] = $rate*$quantity;
+				$pooja[$i]["date"] = $date;	
+				$total_amount += $pooja[$i]["amount"];
+				$total_quantity += $quantity;		
 				$i++;
 			}
-			return $pooja;
+
+			return array($pooja,array('total_amount'=>$total_amount,'total_quantity'=>$total_quantity));
 		} else {
   			return false;
         }
@@ -237,11 +241,11 @@ function get_array()
     public function get_all_vazhipadu_pooja_list($user_id = -1)
     {
 
-    	$strSQL = "SELECT v.pooja_id,p.name,p.rate,v.vazhipadu_date,sum(v.quantity) AS quantity FROM vazhipadu v";
+    	$strSQL = "SELECT v.pooja_id,p.name,v.amount AS rate,v.vazhipadu_date,SUM(v.quantity) AS quantity FROM vazhipadu v";
     	$strSQL .= " LEFT JOIN pooja p ON p.id=v.pooja_id";
     	$strSQL .= " WHERE deleted = '".NOT_DELETED."'";
     	
-    	if($this->from_date != "" and $this->to_date != ""){
+    	 if($this->from_date != "" and $this->to_date != ""){
 	      if($this->from_date == $this->to_date){
 	        $strSQL .=" AND (v.vazhipadu_date = '".date('Y-m-d',strtotime($this->from_date))."')";
 	      }else{
@@ -257,21 +261,25 @@ function get_array()
 	    	$strSQL .= " AND v.user_id = '".$user_id."'";
 	    }
 
-    	$strSQL .= " GROUP BY p.id";
-    	mysql_query("SET NAMES utf8");
+    	$strSQL .= " GROUP BY p.id,v.amount";
+    	//$strSQL .= " ORDER BY v.vazhipadu_id DESC";
 		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
 		$pooja =array();$i=0;
+		$total_amount = 0;$total_quantity = 0;
         if(mysql_num_rows($rsRES) > 0){
 			while ( list ($id,$name,$rate,$date,$quantity) = mysql_fetch_row($rsRES) ){
 				$pooja[$i]["id"] =  $id;
 				$pooja[$i]["name"] = $name;
 				$pooja[$i]["rate"] = $rate;
-				$pooja[$i]["date"] = $date;
-				$pooja[$i]["total"] = $rate*$quantity;
 				$pooja[$i]["quantity"] = $quantity;
+				$pooja[$i]["date"] = $date;
+				$pooja[$i]["amount"] = $rate*$quantity;
+				$total_amount += $rate*$quantity;
+				$total_quantity += $quantity;	
+				
 				$i++;
 			}
-			return $pooja;
+			return array($pooja,array('total_amount'=>$total_amount,'total_quantity'=>$total_quantity));
 		} else {
   			return false;
         }
@@ -295,6 +303,37 @@ function get_array()
 	    }
 
     }
+
+
+//temporary function for insert ledger sub with all pooja
+    /*
+    function updateLedgerSubWithPooja()
+    {
+    	$poojas = $this->get_array();
+    	//echo "<pre>";print_r($poojas);echo "</pre>";exit();
+    	foreach ($poojas as $key => $pooja) {
+    		$pooja_id = $pooja['id'];
+    		$strSQL= "INSERT INTO ledger_sub(ledger_sub_name,ledger_id,parent_sub_ledger_id,fy_id,status,deleted) VALUES('";
+    		$strSQL.= mysql_real_escape_string($pooja['name'])."','";
+    		$strSQL.= mysql_real_escape_string(11)."','";
+    		$strSQL.= mysql_real_escape_string(1)."','";
+    		$strSQL.= mysql_real_escape_string(1)."','";
+    		$strSQL.= mysql_real_escape_string(1)."','";
+    		$strSQL.= mysql_real_escape_string(1)."')";
+			//echo $strSQL;exit();
+ 			mysql_query("SET NAMES utf8");
+			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+
+			if ( mysql_affected_rows($this->connection) > 0 ) {
+				$ledger_sub_id = mysql_insert_id();
+				$strSQL1 = "UPDATE pooja SET ledger_sub_id = '".addslashes(trim($ledger_sub_id))."'";
+				$strSQL1 .= " WHERE id = ".$pooja_id;
+			 	mysql_query("SET NAMES utf8");
+				$rsRES1 = mysql_query($strSQL1,$this->connection) or die(mysql_error(). $strSQL1 );
+			}
+    	}
+    }
+    */
 
 
 }

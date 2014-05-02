@@ -174,7 +174,7 @@ line-height: 2px !important;
 <?php 
 $print_content = ob_get_contents();
 ob_end_clean();
-echo $print_content;?>
+//echo $print_content;?>
 
 	<?php }?>
 

@@ -10,8 +10,9 @@ $poojas = $pooja->get_array();
 
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
-if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR )
-$vazhipadu->user_id = $_SESSION[SESSION_TITLE.'userid'];
+if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR ){
+	$vazhipadu->user_id = $_SESSION[SESSION_TITLE.'userid'];
+}
 
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;

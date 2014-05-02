@@ -48,64 +48,6 @@ if(!defined('CHECK_INCLUDED')){
 <?php if(isset($count)){?>
 <div class="row">
 
-	<!--<table width="100%" id="tbl-append">
-		<thead>
-			<tr>
-				<td width="10%">Voucher Number</td>
-				<td width="20%">Date</td>
-				<td>Pooja Details</td>
-				<td width="15%">Amount</td>
-			</tr>
-		</thead>
-		<tbody
-			<?php 
-			$i=0;$total_amount = 0;
-			while($i<$count){
-			?>
-		<tr>
-			<td><?php echo $vazhipadu_list[$i]['vazhipadu_rpt_number']; ?></td>
-			<td><?php echo $vazhipadu_list[$i]['vazhipadu_date']; ?></td>
-			<td>
-				<?php echo $vazhipadu_list[$i]['pooja_name']; 
-				if($vazhipadu_list[$i]['details']){
-				?>
-				<table width="100%">
-					<thead>
-					<tr>
-						<td width="40%">Name</td>
-						<td width="40%">Star</td>
-						<td width="20%">Amount</td>
-					</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($vazhipadu_list[$i]['details'] as $details) {?>
-							<tr>
-								<td><?php echo $details['name'];?></td>
-								<td><?php echo $details['star'];?></td>
-								<td><?php echo $vazhipadu_list[$i]['unit_rate']; ?></td>
-								
-							</tr>
-						<?php }?>
-					</tbody>
-				</table>
-				<?php }?>
-				
-			</td>
-			<td><?php echo number_format($vazhipadu_list[$i]['amount'],2); ?></td>
-
-		</tr>
-		<?php $total_amount+=$vazhipadu_list[$i]['amount'];$i++;}?>
-		<tr>
-			<td colspan="3" align="right" style="font-weight:bold;">Total</td>
-			<td><?php echo $total_amount;?></td>
-		</tr>
-			
-		</tbody>
-
-		
-
-	</table>-->
-
 	<table width="100%" id="tbl-append">
 		<thead>
 			<tr>
@@ -114,6 +56,7 @@ if(!defined('CHECK_INCLUDED')){
 				<td width="30%">Pooja</td>
 				<td>Name</td>
 				<td width="15%">Star</td>
+				<td width="15%">Quantity</td>
 				<td width="10%">Amount</td>
 			</tr>
 		</thead>
@@ -128,11 +71,12 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $vazhipadu_list[$i]['pooja_name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['star_name']; ?></td>
+			<td><?php echo $vazhipadu_list[$i]['quantity']; ?></td>
 			<td><?php echo number_format($vazhipadu_list[$i]['amount'],2); ?></td>
 		</tr>
-		<?php $total_amount+=$vazhipadu_list[$i]['unit_rate'];$i++;}?>
+		<?php $total_amount+=$vazhipadu_list[$i]['unit_rate']*$vazhipadu_list[$i]['quantity'];$i++;}?>
 		<tr style="font-weight:bold;">
-			<td colspan="5" align="right" >Total</td>
+			<td colspan="6" align="right" >Total</td>
 			<td><?php echo number_format($total_amount,2);?></td>
 		</tr>
 			
@@ -180,12 +124,13 @@ No Records Found
 <table width="100%" id="tbl-append">
 		<thead>
 			<tr>
-				<td width="8%">Voucher Number</td>
-				<td width="10%">Date</td>
-				<td width="30%">Pooja</td>
-				<td>Name</td>
-				<td width="15%">Star</td>
-				<td width="10%">Amount</td>
+				<td width="8%"><font size="3">Voucher Number</font></td>
+				<td width="10%"><font size="3">Date</font></td>
+				<td width="30%"><font size="3">Pooja</font></td>
+				<td><font size="3">Name</font></td>
+				<td width="15%"><font size="3">Star</font></td>
+				<td width="15%"><font size="3">Quantity</font></td>
+				<td width="10%"><font size="3">Amount</font></td>
 			</tr>
 		</thead>
 		<tbody
@@ -194,17 +139,18 @@ No Records Found
 			while($i<count($vazhipadu_total_list)){
 			?>
 		<tr>
-			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['name']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['star_name']; ?></td>
-			<td><?php echo number_format($vazhipadu_total_list[$i]['unit_rate'],2); ?></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></font></td>
+			<td><font size="4"><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['name']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['star_name']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['quantity']; ?></font></td>
+			<td><font size="3"><?php echo number_format($vazhipadu_total_list[$i]['amount'],2); ?></font></td>
 		</tr>
-		<?php $total_amount+=$vazhipadu_total_list[$i]['unit_rate'];$i++;}?>
+		<?php $total_amount+=$vazhipadu_total_list[$i]['unit_rate']*$vazhipadu_total_list[$i]['quantity'];$i++;}?>
 		<tr style="font-weight:bold;">
-			<td colspan="5" align="right" >Total</td>
-			<td><?php echo number_format($total_amount,2);?></td>
+			<td colspan="6" align="right" ><font size="3">Total</font></td>
+			<td><font size="3"><?php echo number_format($total_amount,2);?></font></td>
 		</tr>
 			
 		</tbody>

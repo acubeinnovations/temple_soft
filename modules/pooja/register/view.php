@@ -61,7 +61,6 @@ if(!defined('CHECK_INCLUDED')){
 		<tbody>
 		<?php 
 			$i=0;$slno = ($pagination->page_num*$pagination->max_records)+1;
-			$total_qty = 0;$total_amount =0;
 			while($i<$count_pooja){
 		?>
 		<tr>
@@ -69,17 +68,16 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $pooja_list[$i]['name']?></td>
 			<td><?php echo number_format($pooja_list[$i]['rate'],2)?></td>
 			<td><?php echo $pooja_list[$i]['quantity']?></td>
-			<td><?php echo number_format($pooja_list[$i]['total'],2);?></td>
+			<td><?php echo number_format($pooja_list[$i]['amount'],2);?></td>
 		</tr>
 		<?php
-				$total_qty += $pooja_list[$i]['quantity'];$total_amount +=$pooja_list[$i]['total'];
 				$i++;$slno++;
 			}
 		?>
 		<tr style="font-weight:bold;">
 			<td colspan="3" align="right">Total</td>
-			<td><?php echo $total_qty;?></td>
-			<td><?php echo number_format($total_amount,2);?></td>
+			<td><?php echo $variable1['total_quantity'];?></td>
+			<td><?php echo number_format($variable1['total_amount'],2);?></td>
 		</tr>
 		<tr>
 			<td colspan="5"><?php  $pagination->pagination_style_numbers();?></td>
@@ -110,11 +108,11 @@ if(!defined('CHECK_INCLUDED')){
 	<table width="100%">
 		<thead>
 		<tr>
-			<td width="10%">Slno</td>
-			<td width="50%">Pooja Details</td>
-			<td width="15%">Unit Rate</td>
-			<td width="10%">Qty</td>
-			<td >Total</td>
+			<td width="10%"><font size="3">Slno</font></td>
+			<td width="50%"><font size="3">Pooja Details</font></td>
+			<td width="15%"><font size="3">Unit Rate</font></td>
+			<td width="10%"><font size="3">Qty</font></td>
+			<td ><font size="3">Total</font></td>
 		</tr>
 		</thead>
 		<tbody>
@@ -123,16 +121,20 @@ if(!defined('CHECK_INCLUDED')){
 			while($i<count($pooja_total_list)){
 		?>
 		<tr>
-			<td><?php echo $slno;?></td>
-			<td><?php echo $pooja_total_list[$i]['name']?></td>
-			<td><?php echo $pooja_total_list[$i]['rate']?></td>
-			<td><?php echo $pooja_total_list[$i]['quantity']?></td>
-			<td><?php echo $pooja_total_list[$i]['total']?></td>
+			<td><font size="3"><?php echo $slno;?></font></td>
+			<td><font size="4"><?php echo $pooja_total_list[$i]['name']?></font></td>
+			<td><font size="3"><?php echo $pooja_total_list[$i]['rate']?></font></td>
+			<td><font size="3"><?php echo $pooja_total_list[$i]['quantity']?></font></td>
+			<td><font size="3"><?php echo number_format($pooja_total_list[$i]['amount'],2)?></font></td>
 		</tr>
 		<?php
 				$i++;$slno++;
 			}
 		?>
+		<tr style="font-weight:bold;">
+			<td colspan="4" align="right">Total</td>
+			<td><?php echo number_format($variable2['total_amount'],2);?></td>
+		</tr>
 		
 		</tbody>
 	</table>
