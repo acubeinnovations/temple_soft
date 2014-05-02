@@ -168,7 +168,7 @@ Class Vazhipadu{
   */
   
     $strSQL .= " GROUP BY vazhipadu_rpt_number";
-    $strSQL .= " ORDER BY vazhipadu_rpt_number";
+    $strSQL .= " ORDER BY vazhipadu_rpt_number DESC";
     //echo $strSQL;exit();
    
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
