@@ -52,7 +52,7 @@ if(!defined('CHECK_INCLUDED')){
 		</div>
 
 		<div class="medium-2 columns">
-			<label for="name">
+			<label for="name">	
 				<input type="checkbox" name="chk_qty" id="chk_qty" > Quantity
 				<input type="text"  name="txtqty" id="txtqty" value="" />
 			</label>
