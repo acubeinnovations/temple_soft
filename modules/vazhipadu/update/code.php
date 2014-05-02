@@ -47,7 +47,7 @@ $array_star=$add_star->get_array();
 
 if(isset($_GET['pr'])){
 	$add_vazhipadu->vazhipadu_rpt_number = $_GET['pr'];
-	$vazhipadu_details = $add_vazhipadu->get_vazhipadu_details();
+	list($vazhipadu_details,$variable) = $add_vazhipadu->get_vazhipadu_details();
 
 }else{
 	$vazhipadu_details = false;
@@ -107,14 +107,17 @@ if(isset($_POST['submit'])){
 				$dataArray = false;
 			}else{
 				$dataArray = array();$i=0;
-				$total_amount = $_POST['txtamount']*count($_POST['hd_row']);
+				$total_amount = 0;
 				foreach($_POST['hd_row'] as $row){
 					$list = explode("_", $row);
 					$dataArray[$i]['name'] = $list[0];
 					$dataArray[$i]['star_id'] = $list[1];
+					$dataArray[$i]['quantity'] = $list[2];
+					$total_amount += $_POST['txtamount'] * $list[2];
 					$i++;
 				}
 			}
+			
 		
 			$account->voucher_number 	= $voucher_number;
 			$account->voucher_type_id	= $voucher->voucher_id;

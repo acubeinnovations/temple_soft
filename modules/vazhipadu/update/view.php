@@ -68,18 +68,20 @@ if(!defined('CHECK_INCLUDED')){
 
 	<div class="row">
 	<div class="medium-12 columns" id="dv-dtls">
-		<table width="70%" id="tbl-append">
+		<table width="83%" id="tbl-append">
 			<thead>
 				<tr>
-					<td>Name</td>
-					<td>Star</td>
-					<td></td>
+					<td width="40%">Name</td>
+					<td width="35%">Star</td>
+					<td width="5%">Quantity</td>
+					<td width="3%"></td>
 				</tr>
 			<thead>
 			<tbody
 				<tr>
 					<td><input  type="text" name="txtname" id="" value=""/></td>
 					<td><?php echo populate_list_array("liststar", $array_star, 'id','name',$add_vazhipadu->star_id,$disable=false);?></td>
+					<td><input  type="text" name="txtquantity" id="" value="1"/></td>
 					<td><input type="hidden" name="txtage" id="txtage" value="" /><input type="button" name="button-add" value="Add" id="button-add" class="tiny secondary button" /></td>
 				</tr>
 				
@@ -96,7 +98,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="medium-5 columns" >
 			<input type="submit" name="submit" value="Submit" class="tiny button" />
 
-			<input type="button" name="button-print" value="Print" class="tiny button" />
+			<!--<input type="button" name="button-print" value="Print" class="tiny button" />-->
 
 			<input type="reset" id="button-cancel" name="button-cancel" value="Cancel" class="tiny button" />
 		</div>
@@ -119,7 +121,7 @@ line-height: 2px !important;
 <table width="420px" cellspacing="0" cellpadding="0" >
 
 	<tr style="height:40px !important;">
-		<td width="184" style="line-height: 17px !important;"><?php echo $add_vazhipadu->pooja_description; ?></td>
+		<td width="184" style="line-height: 17px !important;"><?php echo $add_vazhipadu->pooja_description; ?> (<?php echo $variable['total_quantity'];?>)</td>
 		<td width="96" >&nbsp;</td>
 		<td width="110" style="line-height: 6px !important;" valign="top" align="center">
 
@@ -134,12 +136,13 @@ line-height: 2px !important;
 			<table width="420px" style="min-height:95px !important;">
 				<?php $i=0;$total = 0;$j=4;
 				while($i<count($vazhipadu_details)){
-					$total += $vazhipadu_details[$i]['rate'];
+					$total += $vazhipadu_details[$i]['amount'];
+					
 				?>
 				<tr height="10px"> 
 					<td width="184" valign="bottom"><?php echo $vazhipadu_details[$i]['name']	;?></td>
 					<td width="96" valign="bottom"><?php echo $vazhipadu_details[$i]['star']; ?></td>
-					<td width="110" valign="bottom" align="center"><?php echo $vazhipadu_details[$i]['rate']; ?></td>
+					<td width="110" valign="bottom" align="center"><?php echo $vazhipadu_details[$i]['amount']; ?></td>
 					
 				</tr>
 				<?php $i++;$j--;}?>
@@ -156,7 +159,7 @@ line-height: 2px !important;
 	<tr height="5px">
 	<td width="184" >&nbsp;</td>
 					<td width="96">&nbsp;</td>
-					<td width="110" align="center" valign="top"><?php echo $total;?></td>
+					<td width="110" align="center" valign="top"><?php echo $variable['total_amount'];?></td>
 
 	</tr>
 
@@ -171,7 +174,7 @@ line-height: 2px !important;
 <?php 
 $print_content = ob_get_contents();
 ob_end_clean();
-//echo $print_content;?>
+echo $print_content;?>
 
 	<?php }?>
 
