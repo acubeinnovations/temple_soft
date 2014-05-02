@@ -239,6 +239,9 @@ Class Vazhipadu{
     if($this->user_id > 0){
       $strSQL .= " AND v.user_id = '".$this->user_id."'";
     }
+    if($this->pooja_id > 0){
+      $strSQL .= " AND v.pooja_id = '".$this->pooja_id."'";
+    }
 
     
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
@@ -293,6 +296,9 @@ Class Vazhipadu{
 
     if($this->user_id > 0){
       $strSQL .= " AND v.user_id = '".$this->user_id."'";
+    }
+     if($this->pooja_id > 0){
+      $strSQL .= " AND v.pooja_id = '".$this->pooja_id."'";
     }
 
     

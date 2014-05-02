@@ -2,7 +2,11 @@
 if(!defined('CHECK_INCLUDED')){
 	exit();
 }
-$pagination = new Pagination(5);
+$pagination = new Pagination(10);
+
+$pooja= new Pooja($myconnection);
+$pooja->connection=$myconnection;
+$poojas = $pooja->get_array();
 
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
@@ -21,6 +25,7 @@ if(isset($_GET['submit'])){
 	
 	$vazhipadu->from_date =  $_GET['txtfrom'];
 	$vazhipadu->to_date   = $_GET['txtto'];
+	$vazhipadu->pooja_id = $_GET['lstpooja'];
 
 }else{
 	$vazhipadu->from_date =  date('d-m-Y',strtotime(CURRENT_DATE));

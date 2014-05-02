@@ -29,6 +29,13 @@ if(!defined('CHECK_INCLUDED')){
 				<label for="name"> To Date
 				<input class="mydatepicker" name="txtto" id="" value="<?php echo $vazhipadu->to_date;?>" /></label>
 			</div>
+
+			<div class="medium-4 columns">
+				<label for="listpooja"> Pooja
+				<?php echo populate_list_array("lstpooja", $poojas, 'id','name',$vazhipadu->pooja_id,$disable=false,true);?>
+				</label>
+			</div>
+
 			<div class="medium-2 columns">
 				<input type="submit" class="tiny button" value="Search" name="submit">
 			</div>
