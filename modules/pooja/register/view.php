@@ -96,8 +96,14 @@ if(!defined('CHECK_INCLUDED')){
 <?php ob_start();?>
 <div id="print_content" >
 	
-	<h3><?php echo $account_settings->organization_name; ?></h3>
-	<p><?php echo $account_settings->organization_address; ?></p>
+	<table width="100%">
+		<tr>
+			<td width="100%" align="center" valign="middle">
+<h3><?php echo $account_settings->organization_name; ?></h3></br>
+<?php echo $account_settings->organization_address; ?>
+</td>
+		</tr>
+		</table>
 	<h3>Pooja Register</h3>
 	<p>Date : <?php echo ($pooja->from_date == $pooja->to_date)?$pooja->from_date:$pooja->from_date." - ".$pooja->to_date;?></p>
 	<?php if(count($pooja_total_list) > 0){?>
