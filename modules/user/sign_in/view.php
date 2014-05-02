@@ -9,6 +9,7 @@ if ( !defined('CHECK_INCLUDED') ){
 <div class="medium-4 columns"><img src="../../images/ayyappa.png" alt="" name="" width="321" height="268" />
 </div>
 	<div class="medium-8 columns">
+		<div class="error"><?php echo (isset($_GET['e']))?$g_ARRAY_ERROR[$_GET['e']]:"";?></div>
     <br />
 <br /><br />
 

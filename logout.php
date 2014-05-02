@@ -9,12 +9,17 @@ require(ROOT_PATH.'include/conf/system_conf.php');
 require(ROOT_PATH.'include/connection/connection.php');
 require(ROOT_PATH.'include/class/class_user_session/class_user_session.php');
 
-
+if(isset($_GET['er_no'])){
+	$url_param = "?e=".$_GET['er_no'];
+}else{
+	$url_param = "";
+}
 
 $myuser = new UserSession("","","");
 $chk = $myuser->logout();
+
 if ($chk == true){
-    header("Location:/");
+    header("Location:/index.php".$url_param);
     exit();
 }
 ?>
