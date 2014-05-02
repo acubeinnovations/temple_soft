@@ -77,7 +77,7 @@ Class Ledger{
 			$strSQL .= "status = '".addslashes(trim($this->status))."',";
 			$strSQL .= "deleted = '".addslashes(trim($this->deleted))."',";
 			$strSQL .= "fy_id = '".addslashes(trim($this->current_fy_id))."'";
-			$strSQL .= " WHERE ledger_sub_id = ".$this->ledger_sub_id;
+			$strSQL .= " WHERE ledger_sub_id = '".$this->ledger_sub_id."'";
 			//echo $strSQL;exit();
 			 mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
