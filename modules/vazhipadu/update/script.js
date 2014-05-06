@@ -9,6 +9,7 @@ $(document).ready(function(){
 
 	var nameObj	= $("input:text[name=txtname]");
 	var starObj = $("#liststar");
+    var qtyObj = $("input:text[name=txtquantity]");//row quantity
 
 	var tblArray = [];
 	
@@ -16,6 +17,11 @@ $(document).ready(function(){
 
 		var name	= nameObj.val();
 		var star_id = starObj.val();
+        if(qtyObj.val() > 0){
+            var quantity = qtyObj.val();
+        }else{
+            var quantity = 1;
+        }
 		var star 	= '-';
 		if(star_id > 0){
 			star 	= $("#liststar option:selected").text();
@@ -23,9 +29,9 @@ $(document).ready(function(){
 	
 		if(name!=''){
 
-			var hiddenStr = name+'_'+star_id;
+			var hiddenStr = name+'_'+star_id+'_'+quantity;
 			
-			$("#tbl-append").append('<tbody><tr class="new_rows"><td>'+name+'<input type="hidden" class="hide-rows" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td></td></tr></tbody>');
+			$("#tbl-append").append('<tbody><tr class="new_rows"><td>'+name+'<input type="hidden" class="hide-rows" name="hd_row[]" value="'+hiddenStr+'"></td><td>'+star+'<input type="hidden" name="hd_star[]" value="'+star+'"></td><td>'+quantity+'<input type="hidden" name="hd_star[]" value="'+quantity+'"></td><td></td></tr></tbody>');
 			var row = $('.hide-rows').length;
 			if(row == 4){
 				$(this).hide();

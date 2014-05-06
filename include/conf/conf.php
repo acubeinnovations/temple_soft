@@ -1,6 +1,8 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 
+
+
 //timezone
 date_default_timezone_set('Asia/Kolkata');
 define("CURRENT_DATETIME",date('Y-m-d H:i:s'));
@@ -208,6 +210,14 @@ $g_ARRAY_LIST_SORT_ORDER[6]["id"] = 6;
 $g_ARRAY_LIST_SORT_ORDER[6]["value"] = "6";
 $g_ARRAY_LIST_SORT_ORDER[7]["id"] = 7;
 $g_ARRAY_LIST_SORT_ORDER[7]["value"] = "7";
+
+//ERROR MESSAGES
+define('ERROR',-1);
+$g_ARRAY_ERROR = array();
+$g_ARRAY_ERROR[-1]="";
+$g_ARRAY_ERROR[0]="";
+$g_ARRAY_ERROR[1]= "No defined permissions for this user!";
+
 
 
 ?>

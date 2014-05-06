@@ -173,12 +173,12 @@ No Records Found
 <table width="100%" id="tbl-append">
 		<thead>
 			<tr>
-				<td width="8%">Voucher Number</td>
-				<td width="10%">Date</td>
-				<td width="30%">Pooja</td>
-				<td>Name</td>
-				<td width="15%">Star</td>
-				<td width="10%">Amount</td>
+				<td width="8%"><font size="3">Voucher Number</font></td>
+				<td width="10%"><font size="3">Date</font></td>
+				<td width="30%"><font size="3">Pooja</font></td>
+				<td><font size="3">Name</font></td>
+				<td width="15%"><font size="3">Star</font></td>
+				<td width="10%"><font size="3">Amount</font></td>
 			</tr>
 		</thead>
 		<tbody
@@ -187,17 +187,17 @@ No Records Found
 			while($i<count($vazhipadu_total_list)){
 			?>
 		<tr>
-			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['name']; ?></td>
-			<td><?php echo $vazhipadu_total_list[$i]['star_name']; ?></td>
-			<td><?php echo number_format($vazhipadu_total_list[$i]['unit_rate'],2); ?></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></font></td>
+			<td><font size="4"><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['name']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['star_name']; ?></font></td>
+			<td><font size="3"><?php echo number_format($vazhipadu_total_list[$i]['unit_rate'],2); ?></font></td>
 		</tr>
 		<?php $total_amount+=$vazhipadu_total_list[$i]['unit_rate'];$i++;}?>
 		<tr style="font-weight:bold;">
-			<td colspan="5" align="right" >Total</td>
-			<td><?php echo number_format($total_amount,2);?></td>
+			<td colspan="5" align="right" ><font size="3">Total</font></td>
+			<td><font size="3"><?php echo number_format($total_amount,2);?></font></td>
 		</tr>
 			
 		</tbody>

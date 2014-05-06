@@ -159,8 +159,13 @@ class Page {
         	if ( $chk == false ){
                 $_SESSION[SESSION_TITLE.'flash'] = $g_msg_unauthorized_request;
                 //$_SESSION[SESSION_TITLE.'flash_redirect_page'] = $g_msg_unauthorized_request_redirect_page;
-                header( "Location: index.php");
-                exit();
+                if($this->page_name == 'dashboard'){
+                	header( "Location: logout.php?er_no=1");
+                	exit();
+                }else{
+	                header( "Location: index.php");
+	                exit();
+	            }
      		}
         }
 			

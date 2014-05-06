@@ -39,13 +39,14 @@ Class Vazhipadu{
         {
           $nameData = $dataArray[$i]['name'];
           $starData = $dataArray[$i]['star_id'];
+          $quantityData = $dataArray[$i]['quantity'];
 
           $strSQL .= "('".addslashes(trim($this->vazhipadu_rpt_number))."',";
           $strSQL .= "'".date('Y-m-d',strtotime($this->vazhipadu_date))."',";
           $strSQL .= "'".addslashes(trim($starData))."',";
           $strSQL .= "'".addslashes(trim($this->pooja_id))."',";
-          $strSQL .= "'".addslashes($nameData)."',";          
-          $strSQL .= "'".addslashes(trim($this->quantity))."',";
+          $strSQL .= "'".addslashes(trim($nameData))."',";          
+          $strSQL .= "'".addslashes(trim($quantityData))."',";
           $strSQL .= "'".addslashes(trim($this->amount))."',";
           $strSQL .= "'".addslashes(trim($this->deleted))."',";
           $strSQL .= "'".addslashes(trim($this->user_id))."'),";
@@ -104,7 +105,7 @@ Class Vazhipadu{
   public function get_vazhipadu_details()
   {
       if($this->vazhipadu_rpt_number != ""){
-        $strSQL =" SELECT v.vazhipadu_id,v.vazhipadu_date,v.vazhipadu_rpt_number,v.name AS name,v.age AS age,p.name AS pooja,p.rate,s.name AS star FROM vazhipadu v";
+        $strSQL =" SELECT v.vazhipadu_id,v.vazhipadu_date,v.vazhipadu_rpt_number,v.amount as rate,v.quantity,v.name AS name,v.age AS age,p.name AS pooja,s.name AS star FROM vazhipadu v";
         $strSQL .= " LEFT JOIN pooja p ON p.id = v.pooja_id";
         $strSQL .= " LEFT JOIN stars s ON s.id = v.star_id";
          $strSQL .=" WHERE v.deleted ='".NOT_DELETED."' AND v.vazhipadu_rpt_number = '".$this->vazhipadu_rpt_number."'";
@@ -114,6 +115,8 @@ Class Vazhipadu{
         $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
         if ( mysql_num_rows($rsRES) > 0 ){
           $vazhipadu = array();$i=0;
+          $total_amount = 0;
+          $total_quantity = 0;
           while($row = mysql_fetch_assoc($rsRES)){
             
             $this->vazhipadu_date    = date('d-m-Y',strtotime($row['vazhipadu_date']));
@@ -125,9 +128,13 @@ Class Vazhipadu{
             $vazhipadu[$i]['age']             = $row['age'];
             $vazhipadu[$i]['star']            = $row['star'];
             $vazhipadu[$i]['rate']            = $row['rate'];
+            $vazhipadu[$i]['quantity']        = $row['quantity'];
+            $vazhipadu[$i]['amount']          = $row['quantity']*$row['rate'];
+            $total_amount += $row['quantity']*$row['rate'];
+            $total_quantity += $row['quantity'];
             $i++;
           }
-          return $vazhipadu;
+          return array($vazhipadu,array('total_amount'=>$total_amount,'total_quantity'=>$total_quantity));
         }else{
           $this->error_description = "No Records found";
           return false;
@@ -161,7 +168,7 @@ Class Vazhipadu{
   */
   
     $strSQL .= " GROUP BY vazhipadu_rpt_number";
-    $strSQL .= " ORDER BY vazhipadu_rpt_number";
+    $strSQL .= " ORDER BY vazhipadu_rpt_number DESC";
     //echo $strSQL;exit();
    
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -232,6 +239,9 @@ Class Vazhipadu{
     if($this->user_id > 0){
       $strSQL .= " AND v.user_id = '".$this->user_id."'";
     }
+    if($this->pooja_id > 0){
+      $strSQL .= " AND v.pooja_id = '".$this->pooja_id."'";
+    }
 
     
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
@@ -255,6 +265,7 @@ Class Vazhipadu{
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
           $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
           $vazhipadu[$i]["unit_rate"] = $row['amount'];
+          $vazhipadu[$i]["quantity"] = $row['quantity'];
           $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
           $vazhipadu[$i]["name"] = $row['name']; 
           $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
@@ -272,7 +283,7 @@ Class Vazhipadu{
   function get_all_array($dataArray = array())
   {
     $vazhipadu = array();$i=0;
-    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.quantity,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
@@ -286,6 +297,9 @@ Class Vazhipadu{
 
     if($this->user_id > 0){
       $strSQL .= " AND v.user_id = '".$this->user_id."'";
+    }
+     if($this->pooja_id > 0){
+      $strSQL .= " AND v.pooja_id = '".$this->pooja_id."'";
     }
 
     
@@ -303,6 +317,8 @@ Class Vazhipadu{
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
           $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
           $vazhipadu[$i]["unit_rate"] = $row['amount'];
+          $vazhipadu[$i]["quantity"] = $row['quantity'];
+          $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
           $vazhipadu[$i]["name"] = $row['name']; 
           $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
           $vazhipadu[$i]["star_name"] = $row['star_name'];          

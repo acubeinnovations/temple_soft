@@ -98,8 +98,14 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <?php ob_start();?>
-	<h3><?php echo $account_settings->organization_name; ?></h3>
-	<p><?php echo $account_settings->organization_address; ?></p>
+	<table width="100%">
+		<tr>
+			<td width="100%" align="center" valign="middle">
+			<h3><?php echo $account_settings->organization_name; ?></h3></br>
+			<?php echo $account_settings->organization_address; ?>
+			</td>
+		</tr>
+	</table>
 <?php if( isset($account_total_list) and count($account_total_list) > 0){?>
 	<h5><?php echo $ledger_name; ?></h5>
 	<p>Date :<?php echo $datestr;?></p>

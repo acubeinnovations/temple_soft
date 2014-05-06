@@ -3,8 +3,11 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 } 
 
+
 $poojas= new Pooja($myconnection);
 $poojas->connection=$myconnection;
+
+
 $pagination = new Pagination(10);
 
 $poojas->total_records=$pagination->total_records;

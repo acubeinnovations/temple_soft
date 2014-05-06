@@ -25,16 +25,17 @@ if(isset($_GET['submit'])){
 	$pooja->to_date   = date('d-m-Y',strtotime(CURRENT_DATE));
 }
 
-if(isset($_SESSION[SESSION_TITLE.'userid'])){
+if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR ){
 	$user_id = $_SESSION[SESSION_TITLE.'userid'];
 }else{
 	$user_id = -1;
 }
 
 
-$pooja_list = $pooja->get_vazhipadu_pooja_list($pagination->start_record,$pagination->max_records,$user_id);
+list($pooja_list,$variable1) = $pooja->get_vazhipadu_pooja_list($pagination->start_record,$pagination->max_records,$user_id);
 
-$pooja_total_list = $pooja->get_all_vazhipadu_pooja_list($user_id);
+
+list($pooja_total_list,$variable2) = $pooja->get_all_vazhipadu_pooja_list($user_id);
 
 if($pooja_list!=false){
 	$pagination->total_records = $pooja->total_records;
