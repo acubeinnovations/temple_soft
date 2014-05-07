@@ -1,6 +1,7 @@
 <!--
 $(document).ready(function(){
 
+
 	var key_code = [48,49,50,51,52,53,54,55,56,57];
 	$('#listpooja').focus();
 	
@@ -49,8 +50,15 @@ $(document).ready(function(){
 
 	//remove generated rows on click cancel
 	$("#button-cancel").click(function(){
-		$("table .new_rows").remove();
+		//$("table .new_rows").remove();
+        window.location='vazhipadu.php';
 	});
+
+    //continue - form submission with same values(date and rpt are changed)
+    $("#button-continue").click(function(){
+        $("#hd_continue").val(1);
+       $("#btn-submit").trigger('click');
+    });
 
 
 	$('#listpooja').change(function(){
@@ -108,13 +116,7 @@ $(document).ready(function(){
 
    
 
-    if($("#chk_qty").prop('checked') == true){
-		$("#txtqty").attr('disabled',false);
-		$("#dv-dtls").hide();
-	}else{
-		$("#txtqty").attr('disabled',true);
-		$("#dv-dtls").show();
-	}
+    
  
 
 
@@ -151,6 +153,3 @@ function postPooja(pooja_id)
 		}				
 	});
 }
-
-	
-

@@ -105,7 +105,7 @@ Class Vazhipadu{
   public function get_vazhipadu_details()
   {
       if($this->vazhipadu_rpt_number != ""){
-        $strSQL =" SELECT v.vazhipadu_id,v.vazhipadu_date,v.vazhipadu_rpt_number,v.amount as rate,v.quantity,v.name AS name,v.age AS age,p.name AS pooja,s.name AS star FROM vazhipadu v";
+        $strSQL =" SELECT v.vazhipadu_id,v.vazhipadu_date,v.vazhipadu_rpt_number,v.amount as rate,v.quantity,v.name AS name,v.age AS age,v.pooja_id,v.star_id,p.name AS pooja,s.name AS star FROM vazhipadu v";
         $strSQL .= " LEFT JOIN pooja p ON p.id = v.pooja_id";
         $strSQL .= " LEFT JOIN stars s ON s.id = v.star_id";
          $strSQL .=" WHERE v.deleted ='".NOT_DELETED."' AND v.vazhipadu_rpt_number = '".$this->vazhipadu_rpt_number."'";
@@ -121,12 +121,15 @@ Class Vazhipadu{
             
             $this->vazhipadu_date    = date('d-m-Y',strtotime($row['vazhipadu_date']));
             $this->pooja_description = $row['pooja'];
+            $this->pooja_id = $row['pooja_id'];
+            $this->amount = $row['rate'];
             $this->vazhipadu_rpt_number = $row['vazhipadu_rpt_number'];
 
             $vazhipadu[$i]['vazhipadu_id']    = $row['vazhipadu_id'];
             $vazhipadu[$i]['name']            = $row['name'];
             $vazhipadu[$i]['age']             = $row['age'];
             $vazhipadu[$i]['star']            = $row['star'];
+            $vazhipadu[$i]['star_id']            = $row['star_id'];
             $vazhipadu[$i]['rate']            = $row['rate'];
             $vazhipadu[$i]['quantity']        = $row['quantity'];
             $vazhipadu[$i]['amount']          = $row['quantity']*$row['rate'];
@@ -134,7 +137,12 @@ Class Vazhipadu{
             $total_quantity += $row['quantity'];
             $i++;
           }
-          return array($vazhipadu,array('total_amount'=>$total_amount,'total_quantity'=>$total_quantity));
+          $variables = array(
+                      'total_amount'=>$total_amount,
+                      'total_quantity'=>$total_quantity
+                      );
+
+          return array($vazhipadu,$variables);
         }else{
           $this->error_description = "No Records found";
           return false;

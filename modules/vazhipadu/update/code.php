@@ -18,6 +18,7 @@ if(isset($_SESSION[SESSION_TITLE.'userid'])){
 }else{
 	$user_id = -1;
 }
+$submit_value = $cap_submit;
 
 $voucher=new Voucher($myconnection);
 $voucher->connection=$myconnection;
@@ -39,7 +40,7 @@ $array_vazhipadu=$add_pooja->get_array();
 if($array_vazhipadu==false){
 	$array_vazhipadu=array();
 }
-
+$txtquantity = false;
 
 $add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
@@ -48,9 +49,23 @@ $array_star=$add_star->get_array();
 if(isset($_GET['pr'])){
 	$add_vazhipadu->vazhipadu_rpt_number = $_GET['pr'];
 	list($vazhipadu_details,$variable) = $add_vazhipadu->get_vazhipadu_details();
-
 }else{
 	$vazhipadu_details = false;
+}
+
+if(isset($_GET['cn'])){
+	$add_vazhipadu->vazhipadu_rpt_number = $_GET['cn'];
+	list($vazhipadu_details_cn,$variable_cn) = $add_vazhipadu->get_vazhipadu_details();
+	if(count($vazhipadu_details_cn) == 1){
+		if(trim($vazhipadu_details_cn[0]['name']) == '' and $vazhipadu_details_cn[0]['star_id'] == -1){
+			$txtquantity = $vazhipadu_details_cn[0]['quantity'];
+			$vazhipadu_details_cn = false;
+		}
+	}
+	
+	$submit_value = $cap_Finish;
+}else{
+	$vazhipadu_details_cn = false;
 }
 
 
@@ -72,7 +87,7 @@ if($voucher->voucher_id > 0){
 
 
 if(isset($_POST['submit'])){
-
+//print_r($_POST);exit();
 	$errorMSG = "";
 	if($_POST['listpooja'] >0){
 	}else{
@@ -145,10 +160,12 @@ if(isset($_POST['submit'])){
 				if($last_id){
 					if($vazhipadu_rpt_number){	
 						//print page
-						header( "Location:".$current_url."?pr=".$vazhipadu_rpt_number);
+						$url = $current_url."?pr=".$vazhipadu_rpt_number;
+						if($_POST['hd_continue'] == '1'){
+							$url .= "&cn=1";
+						}
+						header( "Location:".$url);
 						exit();
-						//header("Location:vazhipadu_print.php?id=".$vazhipadu_rpt_number);
-						//exit();
 					}
 				}
 			}

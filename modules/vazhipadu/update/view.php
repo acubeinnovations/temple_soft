@@ -4,7 +4,7 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
-<form id="form1" name="form1" method="POST" data-abide >
+<form id="form-vazhipadu" name="form-vazhipadu" method="POST" data-abide >
 <input type="hidden" name="hd_moduleid" value="<?php echo $voucher->module_id; ?>"/>
 
 <div class="row" >
@@ -40,7 +40,7 @@ if(!defined('CHECK_INCLUDED')){
 
 		<div class="medium-2 columns">
 			<label for="rate">Amount<small>required</small>
-			<input type="text"  name="txtamount" id="txtamount" value="" readonly required/>
+			<input type="text"  name="txtamount" id="txtamount" value="<?php echo $add_vazhipadu->amount;?>" readonly required/>
 			<input type="hidden" name="hd_ledger_id" id="hd_ledger_id" value=""/>
 			</label>
 			
@@ -54,7 +54,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="medium-2 columns">
 			<label for="name">	
 				<input type="checkbox" name="chk_qty" id="chk_qty" > Quantity
-				<input type="text"  name="txtqty" id="txtqty" value="" />
+				<input type="text"  name="txtqty" id="txtqty" value="<?php echo ($txtquantity)?$txtquantity:'';?>" />
 			</label>
 		</div>
 	
@@ -84,6 +84,23 @@ if(!defined('CHECK_INCLUDED')){
 					<td><input  type="text" name="txtquantity" id="" value="1"/></td>
 					<td><input type="hidden" name="txtage" id="txtage" value="" /><input type="button" name="button-add" value="Add" id="button-add" class="tiny secondary button" /></td>
 				</tr>
+
+				<?php if($vazhipadu_details_cn){
+						foreach($vazhipadu_details_cn as $row){
+							$hiddenStr = $row['name'].'_'.$row['star_id'].'_'.$row['quantity'];
+
+				?>
+				<tr class="new_rows">
+					<td>
+						<?php echo $row['name'];?>
+						<input type="hidden" class="hide-rows" name="hd_row[]" value="<?php echo $hiddenStr;?>">
+					</td>
+					<td><?php echo $row['star'];?></td>
+					<td><?php echo $row['quantity'];?></td>
+					<td></td>
+				</tr>
+				<?php }
+				}?>
 				
 			<tbody>
 
@@ -96,11 +113,15 @@ if(!defined('CHECK_INCLUDED')){
 	<div class="row" >
 
 		<div class="medium-5 columns" >
-			<input type="submit" name="submit" value="Submit" class="tiny button" />
+			<input type="submit" name="submit" id="btn-submit" value="<?php echo $submit_value;?>" class="tiny button" />
 
 			<!--<input type="button" name="button-print" value="Print" class="tiny button" />-->
 
 			<input type="reset" id="button-cancel" name="button-cancel" value="Cancel" class="tiny button" />
+
+			<input type="button" name="button-continue" id="button-continue" value="Continue" class="tiny button" />
+
+			<input type="hidden" value="0" name="hd_continue" id="hd_continue" />
 		</div>
 		
 	</div>
