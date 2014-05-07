@@ -3,8 +3,10 @@ $(document).ready(function(){
 
 
 	var key_code = [48,49,50,51,52,53,54,55,56,57];
-	$('#listpooja').focus();
 	
+	setTimeout(function(){
+            $('#listpooja').focus();
+    }, 1);
 
 	var nameObj	= $("input:text[name=txtname]");
 	var starObj = $("#liststar");
@@ -107,7 +109,8 @@ $(document).ready(function(){
             }else{
             	var val = key_code.indexOf(e.which); 
             	pooja += val.toString();
-            	postPooja(val);
+				$('#listpooja').val(pooja);
+				postPooja(val);
             }
                 
         });
