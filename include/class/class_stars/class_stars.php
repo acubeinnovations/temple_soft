@@ -149,8 +149,11 @@ function get_array()
   {
       $stars = array();
       $i=0;
-      $strSQL = "SELECT id,name,status_id FROM stars";
-       mysql_query("SET NAMES utf8");
+      $strSQL = "SELECT id,name,status_id FROM stars WHERE 1";
+      if($this->status_id > 0){
+        $strSQL .= " AND status_id = '".$this->status_id."'";
+      }
+      mysql_query("SET NAMES utf8");
       $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
       if ( mysql_num_rows($rsRES) > 0 ){
             while(list($id,$name,$status_id) = mysql_fetch_row($rsRES) ){

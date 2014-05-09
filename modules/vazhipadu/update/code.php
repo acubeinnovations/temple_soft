@@ -45,6 +45,7 @@ $txtquantity = false;
 
 $add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
+$add_star->status_id = STATUS_ACTIVE;
 $array_star=$add_star->get_array();
 
 if(isset($_GET['pr'])){
