@@ -335,6 +335,107 @@ function get_array()
     }
     */
 
+  public function get_pooja_collection_limit($data = array(),$start_record = 0,$max_records = 25)
+  {
+
+    $strSQL = "SELECT P.id AS pooja_id,P.name AS pooja_name, V.amount,SUM(V.quantity) AS quantity FROM pooja P";
+    $strSQL .= " LEFT JOIN vazhipadu V ON P.id=V.pooja_id";
+    $strSQL .= " WHERE V.deleted = '".NOT_DELETED."'";
+    $strSQL .= " AND P.ledger_sub_id IN (SELECT ref_ledger FROM account_master";
+    if(isset($data['date'])){
+      $strSQL .= " WHERE date = '".date('Y-m-d',strtotime($data['date']))."'";
+    }
+    $strSQL .=")";
+
+    if(isset($data['user_id']) and $data['user_id'] > 0){
+      $strSQL .= " AND v.user_id = '".$data['user_id']."'";
+    }
+    
+    if(isset($data['pooja_id']) and $data['pooja_id'] > 0){
+      $strSQL .= " AND V.pooja_id = '".$data['pooja_id']."'";
+    }
+    
+    $strSQL .= " GROUP BY V.pooja_id,V.amount";
+
+   
+    $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
+    mysql_query("SET NAMES utf8");
+    $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+
+    //echo $strSQL_limit;
+    $result = array();$i=0;
+    if(mysql_num_rows($rsRES) > 0){
+		if (trim($this->total_records)!="" && $this->total_records > 0) {
+		} else {
+			$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit);
+			$this->total_records = mysql_num_rows($all_rs);
+		}
+		while ( $row = mysql_fetch_assoc($rsRES) ){
+			$result[$i]['pooja_id'] = $row['pooja_id'];
+			$result[$i]['pooja_name'] = $row['pooja_name'];
+			$result[$i]['rate'] = $row['amount'];
+			$result[$i]['quantity'] = $row['quantity'];
+			$result[$i]['amount'] = $row['amount']*$row['quantity'];
+			$i++;
+		}
+		return $result;
+    }else{
+      	$this->error_number = 4;
+        $this->error_description="Can't list data";
+        return false;
+    }
+    
+  }
+
+  public function get_pooja_collection($data = array(),$start_record = 0,$max_records = 25)
+  {
+
+    $strSQL = "SELECT P.id AS pooja_id,P.name AS pooja_name, V.amount,SUM(V.quantity) AS quantity FROM pooja P";
+    $strSQL .= " LEFT JOIN vazhipadu V ON P.id=V.pooja_id";
+    $strSQL .= " WHERE V.deleted = '".NOT_DELETED."'";
+    $strSQL .= " AND P.ledger_sub_id IN (SELECT ref_ledger FROM account_master";
+    if(isset($data['date'])){
+      $strSQL .= " WHERE date = '".date('Y-m-d',strtotime($data['date']))."'";
+    }
+    $strSQL .=")";
+
+    if(isset($data['user_id']) and $data['user_id'] > 0){
+      $strSQL .= " AND v.user_id = '".$data['user_id']."'";
+    }
+    
+    if(isset($data['pooja_id']) and $data['pooja_id'] > 0){
+      $strSQL .= " AND V.pooja_id = '".$data['pooja_id']."'";
+    }
+    
+    $strSQL .= " GROUP BY V.pooja_id,V.amount";
+   
+	mysql_query("SET NAMES utf8");
+	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+	$this->total_records = mysql_num_rows($rsRES);
+    
+   // echo $strSQL;
+    $result = array();$i=0;
+    if(mysql_num_rows($rsRES) > 0){
+      while ( $row = mysql_fetch_assoc($rsRES) ){
+        $result[$i]['pooja_id'] = $row['pooja_id'];
+        $result[$i]['pooja_name'] = $row['pooja_name'];
+        $result[$i]['rate'] = $row['amount'];
+        $result[$i]['quantity'] = $row['quantity'];
+        $result[$i]['amount'] = $row['amount']*$row['quantity'];
+        $i++;
+      }
+      return $result;
+    }else{
+      return false;
+    }
+    
+  }
+
+
+
+
+
+
 
 }
 

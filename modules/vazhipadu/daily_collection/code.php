@@ -4,16 +4,6 @@ if(!defined('CHECK_INCLUDED')){
 }
 $pagination = new Pagination(10);
 
-$pooja= new Pooja($myconnection);
-$pooja->connection=$myconnection;
-$poojas = $pooja->get_array();
-
-$vazhipadu=new Vazhipadu($myconnection);
-$vazhipadu->connection=$myconnection;
-if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR ){
-	$vazhipadu->user_id = $_SESSION[SESSION_TITLE.'userid'];
-}
-
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
 $account_settings->getAccountSettings();
@@ -21,27 +11,35 @@ $account_settings->getAccountSettings();
 $account=new Account($myconnection);
 $account->connection=$myconnection;
 
-$vazhipadu->total_records=$pagination->total_records;
+$pooja= new Pooja($myconnection);
+$pooja->connection=$myconnection;
+$poojas = $pooja->get_array();
 
+$vazhipadu=new Vazhipadu($myconnection);
+$vazhipadu->connection=$myconnection;
 $data = array();
+if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR ){
+	$data['user_id'] = $_SESSION[SESSION_TITLE.'userid'];
+}
+$data['date'] =  date('d-m-Y',strtotime(CURRENT_DATE));
+$data['pooja_id'] = -1;
 
-if(isset($_GET['submit'])){
-	
-	$vazhipadu->from_date =  $_GET['txtfrom'];
-	$vazhipadu->pooja_id = $_GET['lstpooja'];
-
-}else{
-	$vazhipadu->from_date =  date('d-m-Y',strtotime(CURRENT_DATE));
+if(isset($_GET['txtdate'])){
+	$data['date'] =  $_GET['txtdate'];
+}
+if(isset($_GET['lstpooja'])){
+	$data['pooja_id'] = $_GET['lstpooja'];
 }
 
 
-$vazhipadu_list = $vazhipadu->get_array_by_limit($pagination->start_record,$pagination->max_records,$data);
-$vazhipadu_total_list = $vazhipadu->get_all_array($data);
+$daily_collection = $pooja->get_pooja_collection_limit($data,$pagination->start_record,$pagination->max_records);
+$daily_collection_all = $pooja->get_pooja_collection($data);
 
-if($vazhipadu_list){
-	$pagination->total_records = $vazhipadu->total_records;
+
+if($daily_collection){
+	$pagination->total_records = $pooja->total_records;
 	$pagination->paginate();
-	$count = count($vazhipadu_list);
+	$count = count($daily_collection);
 }else{
 	$count = 0;
 }
