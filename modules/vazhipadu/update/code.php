@@ -36,6 +36,7 @@ $add_vazhipadu->user_id = $user_id;
 $add_pooja=new Pooja($myconnection);
 $add_pooja->connection=$myconnection;
 
+$add_pooja->status_id = STATUS_ACTIVE;
 $array_vazhipadu=$add_pooja->get_array();
 if($array_vazhipadu==false){
 	$array_vazhipadu=array();

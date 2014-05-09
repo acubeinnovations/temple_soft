@@ -123,8 +123,11 @@ function get_array()
 	{
         	$pooja = array();
 			$i=0;
-			$strSQL = "SELECT id,name,rate,status_id FROM pooja";
-			 mysql_query("SET NAMES utf8");
+			$strSQL = "SELECT id,name,rate,status_id FROM pooja WHERE 1";
+			if($this->status_id > 0){
+				$strSQL .=" AND status_id = '".STATUS_ACTIVE."'";
+			}
+			mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
 			if ( mysql_num_rows($rsRES) > 0 ){
 				 while(list($id,$name,$rate,$status_id) = mysql_fetch_row($rsRES) ){
