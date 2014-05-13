@@ -33,6 +33,7 @@ if(isset($_GET['lstpooja'])){
 
 
 $daily_collection = $pooja->get_pooja_collection_limit($data,$pagination->start_record,$pagination->max_records);
+
 $daily_collection_all = $pooja->get_pooja_collection($data);
 
 

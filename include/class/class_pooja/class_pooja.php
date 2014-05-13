@@ -341,17 +341,15 @@ function get_array()
   public function get_pooja_collection_limit($data = array(),$start_record = 0,$max_records = 25)
   {
 
-    $strSQL = "SELECT P.id AS pooja_id,P.name AS pooja_name, V.amount,SUM(V.quantity) AS quantity FROM pooja P";
-    $strSQL .= " LEFT JOIN vazhipadu V ON P.id=V.pooja_id";
-    $strSQL .= " WHERE V.deleted = '".NOT_DELETED."'";
-    $strSQL .= " AND P.ledger_sub_id IN (SELECT ref_ledger FROM account_master";
-    if(isset($data['date'])){
-      $strSQL .= " WHERE date = '".date('Y-m-d',strtotime($data['date']))."'";
-    }
-    $strSQL .=")";
+    $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+FROM vazhipadu V
+LEFT JOIN pooja P ON P.id = V.pooja_id
+WHERE V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+
+    
 
     if(isset($data['user_id']) and $data['user_id'] > 0){
-      $strSQL .= " AND v.user_id = '".$data['user_id']."'";
+      $strSQL .= " AND V.user_id = '".$data['user_id']."'";
     }
     
     if(isset($data['pooja_id']) and $data['pooja_id'] > 0){
@@ -376,9 +374,9 @@ function get_array()
 		while ( $row = mysql_fetch_assoc($rsRES) ){
 			$result[$i]['pooja_id'] = $row['pooja_id'];
 			$result[$i]['pooja_name'] = $row['pooja_name'];
-			$result[$i]['rate'] = $row['amount'];
+			$result[$i]['rate'] = $row['rate'];
 			$result[$i]['quantity'] = $row['quantity'];
-			$result[$i]['amount'] = $row['amount']*$row['quantity'];
+			$result[$i]['amount'] = $row['rate']*$row['quantity'];
 			$i++;
 		}
 		return $result;
@@ -393,17 +391,16 @@ function get_array()
   public function get_pooja_collection($data = array(),$start_record = 0,$max_records = 25)
   {
 
-    $strSQL = "SELECT P.id AS pooja_id,P.name AS pooja_name, V.amount,SUM(V.quantity) AS quantity FROM pooja P";
-    $strSQL .= " LEFT JOIN vazhipadu V ON P.id=V.pooja_id";
-    $strSQL .= " WHERE V.deleted = '".NOT_DELETED."'";
-    $strSQL .= " AND P.ledger_sub_id IN (SELECT ref_ledger FROM account_master";
-    if(isset($data['date'])){
-      $strSQL .= " WHERE date = '".date('Y-m-d',strtotime($data['date']))."'";
-    }
-    $strSQL .=")";
+  
+	$strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+FROM vazhipadu V
+LEFT JOIN pooja P ON P.id = V.pooja_id
+WHERE V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+
+    
 
     if(isset($data['user_id']) and $data['user_id'] > 0){
-      $strSQL .= " AND v.user_id = '".$data['user_id']."'";
+      $strSQL .= " AND V.user_id = '".$data['user_id']."'";
     }
     
     if(isset($data['pooja_id']) and $data['pooja_id'] > 0){
@@ -411,7 +408,7 @@ function get_array()
     }
     
     $strSQL .= " GROUP BY V.pooja_id,V.amount";
-   
+ 
 	mysql_query("SET NAMES utf8");
 	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
 	$this->total_records = mysql_num_rows($rsRES);
@@ -419,15 +416,18 @@ function get_array()
    // echo $strSQL;
     $result = array();$i=0;
     if(mysql_num_rows($rsRES) > 0){
-      while ( $row = mysql_fetch_assoc($rsRES) ){
+      while ( $row = mysql_fetch_assoc($rsRES) ){ //echo "<pre>";print_r($row);echo "</pre>";exit();
+
         $result[$i]['pooja_id'] = $row['pooja_id'];
         $result[$i]['pooja_name'] = $row['pooja_name'];
-        $result[$i]['rate'] = $row['amount'];
+        $result[$i]['rate'] = $row['rate'];
         $result[$i]['quantity'] = $row['quantity'];
-        $result[$i]['amount'] = $row['amount']*$row['quantity'];
+        $result[$i]['amount'] = $row['rate']*$row['quantity'];
         $i++;
       }
+   //  echo "<pre>";print_r($result);echo "</pre>";exit();
       return $result;
+
     }else{
       return false;
     }
