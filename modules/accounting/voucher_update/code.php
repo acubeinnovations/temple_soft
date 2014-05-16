@@ -143,9 +143,25 @@ if(isset($_POST['submit'])){
 					$menu_item->update_with_page_id();
 				}else{//new voucher
 					//echo "show";exit();
+
+					$my_page->name = "ac_generate_voucher";
+					$my_page->route = "";
+					$my_page->params = "v=".$voucher->voucher_id;
+
 					$page_id = $my_page->update();
+
+
 					//give access to user
 					if($page_id){
+
+						$data = array(
+							'name'		=> "ac_generated_vouchers",
+							'route'		=> "",
+							'params'	=> "slno=".$voucher->voucher_id
+							);
+						
+						$my_page->insert_array($data);
+
 						//page access for all user type
 						$user_type_page = new UserTypePage($myconnection);
 						$user_type_page->connection = $myconnection;

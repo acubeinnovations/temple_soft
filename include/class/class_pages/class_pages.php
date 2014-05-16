@@ -53,6 +53,27 @@ Class Pages{
     	}
     }
 
+    public function insert_array($data = array()){
+    	if($data){
+    		$strSQL = "INSERT INTO pages(name,route,params) VALUES('";
+    		$strSQL.= mysql_real_escape_string($data['name'])."','";
+    		$strSQL.= mysql_real_escape_string($data['route'])."','";
+			$strSQL.= mysql_real_escape_string($data['params'])."')";
+			//echo $strSQL;exit();
+			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+
+			if ( mysql_affected_rows($this->connection) > 0 ) {
+				$this->id = mysql_insert_id();
+				$this->error_description="Successfully";
+				return $this->id;
+			}else{
+				$this->error_number = 3;
+				$this->error_description="Can't insert data ";
+				return false;
+			}
+    	}
+    }
+
     public function getPageId(){
     	$strSQL = "SELECT id FROM pages WHERE name='".$this->name."' AND route = '".$this->route."' AND params = '".$this->params."'";
     	//echo $strSQL;exit();
