@@ -85,7 +85,7 @@ $(document).ready(function(){
             	}
             	star = 0;
             }else{
-            	var val = key_code.indexOf(e.which); 
+            	var val = key_code.indexOf(e.which);
             	star += val.toString();
             }
                 
