@@ -5,7 +5,7 @@ if(!defined('CHECK_INCLUDED')){
 ?>
 
 <form id="form-vazhipadu" name="form-vazhipadu" method="POST" data-abide >
-<input type="hidden" name="hd_moduleid" value="<?php echo $voucher->module_id; ?>"/>
+<input type="hidden" name="hd_voucherid" value="<?php echo $voucher->voucher_id; ?>"/>
 
 <div class="row" >
 	<div class="medium-6 columns">
@@ -21,7 +21,7 @@ if(!defined('CHECK_INCLUDED')){
 </div>
 
 <fieldset>
-	<input type="hidden" name="hd_rpt_no" id="hd_rpt_no" value="<?php echo $voucher_number;?>"/>
+	
 
 	<!--<div class="row">
 		<div class="medium-3 columns">

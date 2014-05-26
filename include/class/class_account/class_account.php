@@ -7,6 +7,7 @@ if ( !defined('CHECK_INCLUDED') ){
 Class Account{
 
 	var $connection ="";
+    var $mysqli = "";
 	var $account_id  =  gINVALID; //master voucher
 	var $voucher_number ="";
 	var $voucher_type_id = gINVALID; //voucher
@@ -80,11 +81,13 @@ Class Account{
     public function insert_batch($dataArray = array())
     {
     	if ($dataArray) {
-    		$strSQL= "INSERT INTO account_master(voucher_number,voucher_type_id,fy_id,reference_number,account_from,account_to,account_debit,account_credit,date,ref_ledger,narration) VALUES";
+            $strSQL = "SET @next_voucher = GET_NEXT_VOUCHER_NUMBER(".$this->voucher_type_id.");";
+    		$strSQL .= " INSERT INTO account_master(voucher_number,voucher_type_id,fy_id,reference_number,account_from,account_to,account_debit,account_credit,date,ref_ledger,narration) VALUES";
     		$i=0;
     		while($i < count($dataArray)){
-    			$strSQL.= "('";
-	    		$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
+    			$strSQL.= "(";
+	    		//$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
+                $strSQL .= "LPAD(@next_voucher,3,'0'),'";
 	    		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
 	    		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
 	    		$strSQL.= mysql_real_escape_string($this->reference_number)."','";
@@ -99,11 +102,13 @@ Class Account{
 			}
    			$strSQL = substr($strSQL, 0,-1);
 			//echo $strSQL;exit();
-			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-
-			if ( mysql_affected_rows($this->connection) > 0 ) {
+			$rsRES = mysqli_multi_query($this->mysqli,$strSQL) or die ( mysqli_error() . $strSQL );
+            
+			if ($rsRES) {
 				$this->error_description="Voucher Genereted";
-				return mysql_insert_id();
+				mysqli_next_result($this->mysqli);
+                return mysqli_insert_id($this->mysqli);
+              //  return true;
 			}else{
 				$this->error_number = 3;
 				$this->error_description="Can't insert data ";
@@ -187,6 +192,8 @@ Class Account{
     	}
     	return $next_voucher_number;
     }
+
+
 
 
     public function getAccountTransaction($start_record = 0,$max_records = 25,$voucher = array())

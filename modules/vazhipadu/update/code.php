@@ -28,6 +28,7 @@ $module->connection=$myconnection;
 
 $account=new Account($myconnection);
 $account->connection=$myconnection;
+$account->mysqli = $mysqli;
 
 $add_vazhipadu=new Vazhipadu($myconnection);
 $add_vazhipadu->connection=$myconnection;
@@ -73,15 +74,8 @@ if(isset($_GET['cn'])){
 
 // voucher details
 $voucher->module_id = MODULE_VAZHIPADU;
-$voucher->get_details_with_moduleid();
-if($voucher->voucher_id > 0){
-	$next_voucher_number = $account->getNextVoucherNumber($voucher->voucher_id);
-	if($next_voucher_number){
-		$voucher_number = $next_voucher_number;
-	}else{
-		$voucher_number = $voucher->series_start;
-	}
-}else{
+$voucher_details = $voucher->get_details_with_moduleid();
+if(!$voucher_details){
 	$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu Voucher Not Found.";
     header( "Location:".$current_url);
     exit();
@@ -114,9 +108,10 @@ if(isset($_POST['submit'])){
 		$add_vazhipadu->vazhipadu_date = $_POST['txtdate'];
 		
 		//add voucher entry
-		if($_POST['hd_moduleid'] > 0){
-			//get next voucher number
-			$voucher_number = $_POST['hd_rpt_no'];
+		if($_POST['hd_voucherid'] > 0){
+			//get voucher details
+			$voucher->voucher_id = $_POST['hd_voucherid'];
+			$voucher->get_details();
 
 			if(isset($_POST['chk_qty'])){
 				$total_amount = $_POST['txtamount']*$_POST['txtqty'];
@@ -135,8 +130,6 @@ if(isset($_POST['submit'])){
 				}
 			}
 			
-		
-			$account->voucher_number 	= $voucher_number;
 			$account->voucher_type_id	= $voucher->voucher_id;
 			$dataAccount = array();
 			$account->account_from 		= $voucher->default_from;
@@ -151,9 +144,11 @@ if(isset($_POST['submit'])){
 
 			//print_r($dataAccount);exit();
 			$insert = $account->insert_batch($dataAccount);
+			mysqli_close();
 			//voucher entry ends
 
 			if($insert){
+				$account->account_id = $insert;
 				$account->get_details();
 				$vazhipadu_rpt_number = $voucher->series_prefix.$voucher->series_seperator.$account->voucher_number.$voucher->series_seperator.$voucher->series_sufix;
 				$add_vazhipadu->vazhipadu_rpt_number = $vazhipadu_rpt_number;
