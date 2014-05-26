@@ -344,7 +344,7 @@ function get_array()
     $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
-WHERE V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
 
     
 
@@ -395,7 +395,7 @@ WHERE V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE 
 	$strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
-WHERE V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
 
     
 
