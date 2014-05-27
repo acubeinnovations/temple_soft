@@ -11,7 +11,14 @@ $(document).ready(function(){
    // $('#listpooja').focus();
     
     
-    $('#advance').focus();
+   /* $('#advance').focus();
+    var e = $.event('keypress');
+    e.which = 0; // TAB
+    $(this).trigger(e);
+    */
+    setTimeout(function(){
+            $('#listpooja').focus();
+    }, 1);
 
 
 
@@ -112,6 +119,8 @@ $(document).ready(function(){
 
     });
 
+    /*
+
     //shortcut for pooja select (number+tab)
     $("#listpooja").focus(function(){
     	var pooja ='';
@@ -133,6 +142,33 @@ $(document).ready(function(){
             	var val = key_code.indexOf(e.which); 
             	pooja += val.toString();
             	postPooja(val);
+            }
+                
+        });
+
+    });
+*/
+//shortcut for pooja select (number+tab)
+    $("#listpooja").focus(function(){
+        var pooja ='';
+        $(this).keypress(function(e){  
+            if(e.which == 0){
+
+                if(pooja == 0){
+                }else{
+                    $(this).val(pooja);
+                    postPooja(pooja);
+                }
+                if($(this).val() == null){
+                    $(this).val(-1);
+                }
+                
+                pooja = 0;
+            }else{
+                var val = key_code.indexOf(e.which); 
+                pooja += val.toString();
+                $('#listpooja').val(pooja);
+                
             }
                 
         });
@@ -167,7 +203,7 @@ $(document).ready(function(){
 });
 
 function postPooja(pooja_id)
-{
+{//alert(pooja_id);
 	$.ajax({
 		type:'GET',
 		url:CURRENT_URL,
