@@ -89,18 +89,23 @@ $(document).ready(function(){
     	var star ='';
     	$(this).keypress(function(e){ 
             if(e.which == 0){
-                
-                $(this).val(star);
+               
+               if(star == 0){
+
+               }else{
+                 $(this).val(star);
+               }
+               
+               
                 if($(this).val() == null){
                     $(this).val(-1);
                 }
-               
-            	
             	star = 0;
             }
             else{
             	var val = key_code.indexOf(e.which);
             	star += val.toString();
+
             }
                 
         });
@@ -112,7 +117,13 @@ $(document).ready(function(){
     	var pooja ='';
     	$(this).keypress(function(e){  
             if(e.which == 0){
-            	$(this).val(pooja);
+
+                if(pooja == 0){
+
+                }else{
+                    $(this).val(pooja);
+                }
+            	
             	if($(this).val() == null){
             		$(this).val(-1);
             	}
