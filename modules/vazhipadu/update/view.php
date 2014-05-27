@@ -15,7 +15,7 @@ if(!defined('CHECK_INCLUDED')){
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
 			<a class="tiny button" href="vazhipadu_register.php">Register</a>
-			<a class="tiny button" href="vazhipadu_bookings.php">Advance Bookings</a>
+			<a class="tiny button" href="vazhipadu_bookings.php" id="advance">Advance Bookings</a>
 		</div>
 	</div>
 </div>
