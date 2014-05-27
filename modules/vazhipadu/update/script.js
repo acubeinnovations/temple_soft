@@ -112,42 +112,14 @@ $(document).ready(function(){
             else{
             	var val = key_code.indexOf(e.which);
             	star += val.toString();
-
+                $(this).val(star);
             }
                 
         });
 
     });
 
-    /*
-
-    //shortcut for pooja select (number+tab)
-    $("#listpooja").focus(function(){
-    	var pooja ='';
-    	$(this).keypress(function(e){  
-            if(e.which == 0){
-
-                if(pooja == 0){
-
-                }else{
-                    $(this).val(pooja);
-                }
-            	
-            	if($(this).val() == null){
-            		$(this).val(-1);
-            	}
-            	
-            	pooja = 0;
-            }else{
-            	var val = key_code.indexOf(e.which); 
-            	pooja += val.toString();
-            	postPooja(val);
-            }
-                
-        });
-
-    });
-*/
+   
 //shortcut for pooja select (number+tab)
     $("#listpooja").focus(function(){
         var pooja ='';
@@ -167,7 +139,7 @@ $(document).ready(function(){
             }else{
                 var val = key_code.indexOf(e.which); 
                 pooja += val.toString();
-                $('#listpooja').val(pooja);
+                $(this).val(pooja);
                 
             }
                 
