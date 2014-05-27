@@ -87,7 +87,8 @@ Class Account{
     		while($i < count($dataArray)){
     			$strSQL.= "(";
 	    		//$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
-                $strSQL .= "LPAD(@next_voucher,3,'0'),'";
+                //$strSQL .= "LPAD(@next_voucher,3,'0'),'";
+                $strSQL .= "@next_voucher,'";
 	    		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
 	    		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
 	    		$strSQL.= mysql_real_escape_string($this->reference_number)."','";
