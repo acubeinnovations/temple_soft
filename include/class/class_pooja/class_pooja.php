@@ -19,6 +19,8 @@ Class Pooja{
 	var $from_date = "";
   	var $to_date = "";
 
+  	var $voucher_id = "";
+
 	var $error = false;
     var $error_number=gINVALID;
     var $error_description="";
@@ -344,7 +346,7 @@ function get_array()
     $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
-WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE voucher_type_id = '".$this->voucher_id."' AND date = '".date('Y-m-d',strtotime($data['date']))."')";
 
     
 
@@ -358,7 +360,7 @@ WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_
     
     $strSQL .= " GROUP BY V.pooja_id,V.amount";
 
-   
+    //echo $strSQL;exit();
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
     mysql_query("SET NAMES utf8");
     $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
@@ -395,7 +397,7 @@ WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_
 	$strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
-WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE date = '".date('Y-m-d',strtotime($data['date']))."')";
+WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE voucher_type_id = '".$this->voucher_id."' AND date = '".date('Y-m-d',strtotime($data['date']))."')";
 
     
 

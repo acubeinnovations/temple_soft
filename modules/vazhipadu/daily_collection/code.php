@@ -15,6 +15,12 @@ $pooja= new Pooja($myconnection);
 $pooja->connection=$myconnection;
 $poojas = $pooja->get_array();
 
+// voucher details
+$voucher=new Voucher($myconnection);
+$voucher->connection=$myconnection;
+$voucher->module_id = MODULE_VAZHIPADU;
+$voucher_details = $voucher->get_details_with_moduleid();
+
 $vazhipadu=new Vazhipadu($myconnection);
 $vazhipadu->connection=$myconnection;
 $data = array();
@@ -31,6 +37,7 @@ if(isset($_GET['lstpooja'])){
 	$data['pooja_id'] = $_GET['lstpooja'];
 }
 
+$pooja->voucher_id = $voucher->voucher_id;
 
 $daily_collection = $pooja->get_pooja_collection_limit($data,$pagination->start_record,$pagination->max_records);
 
