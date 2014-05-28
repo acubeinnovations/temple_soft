@@ -142,7 +142,7 @@ line-height: 2px !important;
 <table width="420px" cellspacing="0" cellpadding="0" >
 
 	<tr style="height:40px !important;">
-		<td width="184" style="line-height: 17px !important;"><?php echo $add_vazhipadu->pooja_description; ?> (<?php echo $variable['total_quantity'];?>)</td>
+		<td width="184" style="line-height: 17px !important;"><font size="4"><?php echo $add_vazhipadu->pooja_description; ?> (<?php echo $variable['total_quantity'];?>)</font></td>
 		<td width="96" >&nbsp;</td>
 		<td width="110" style="line-height: 6px !important;" valign="top" align="center">
 
@@ -161,9 +161,9 @@ line-height: 2px !important;
 					
 				?>
 				<tr height="10px"> 
-					<td width="184" valign="bottom"><?php echo $vazhipadu_details[$i]['name']	;?></td>
-					<td width="96" valign="bottom"><?php echo $vazhipadu_details[$i]['star']; ?></td>
-					<td width="110" valign="bottom" align="center"><?php echo $vazhipadu_details[$i]['amount']; ?></td>
+					<td width="184" valign="bottom"><font size="4"><?php echo $vazhipadu_details[$i]['name']	;?></font></td>
+					<td width="96" valign="bottom"><font size="4"><?php echo $vazhipadu_details[$i]['star']; ?></font></td>
+					<td width="110" valign="bottom" align="center"><font size="3"><?php echo $vazhipadu_details[$i]['amount']; ?></font></td>
 					
 				</tr>
 				<?php $i++;$j--;}?>
@@ -180,7 +180,7 @@ line-height: 2px !important;
 	<tr height="5px">
 	<td width="184" >&nbsp;</td>
 					<td width="96">&nbsp;</td>
-					<td width="110" align="center" valign="top"><?php echo $variable['total_amount'];?></td>
+					<td width="110" align="center" valign="top"><font size="3"><?php echo $variable['total_amount'];?></font></td>
 
 	</tr>
 

@@ -101,9 +101,10 @@ if(isset($_POST['submit'])){
 			if($update){
 
 				$b_id = $update;
-				//1. get voucher name
+				//1. get book name
 				$acbook->id = $b_id;
 				$acbook->get_details();
+
 				//2.get current menu's parent id
 				$menu_parent = -1;
 				if(isset($_SESSION[SESSION_TITLE.'pages'])){
@@ -125,7 +126,7 @@ if(isset($_POST['submit'])){
 					$menu_item->name = $acbook->name;
 					$menu_item->update_with_page_id();
 
-				}else{//new voucher
+				}else{//new ac book
 					$page_id = $my_page->update();
 					if($page_id){
 						//page access for administrator and finance

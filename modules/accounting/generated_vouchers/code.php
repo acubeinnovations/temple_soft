@@ -51,6 +51,9 @@ if(isset($_GET['slno'])){
 
 	$voucher->voucher_id = $_GET['slno'];
 	$voucher->get_details();
+
+	$voucher_number_array = $voucher->get_number_attributes($voucher->voucher_id);
+
 	$page_heading = $voucher->voucher_name;
 
 	$dataArray = array();

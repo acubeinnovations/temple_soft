@@ -53,8 +53,8 @@ if(!defined('CHECK_INCLUDED')){
 		<thead>
 		<tr>
 			<td width="10%">Date</td>
-			<td width="20%">Voucher</td>
-			<td width="45%">Particulars</td>
+			<td width="30%">Voucher</td>
+			<td width="35%">Particulars</td>
 			<td width="10%">Debit</td>
 			<td width="10%">Credit</td>
 			<!-- <td width="5%"></td> -->
@@ -64,13 +64,20 @@ if(!defined('CHECK_INCLUDED')){
 		<?php 
 		$i=0; $total_credit = 0;$total_debit = 0;
 		while($i < $count_list){
+
 			$edit ="ac_generate_voucher.php?edt=".$account_list[$i]['account_id'];
+
 			$delete ="ac_generate_voucher.php?dlt=".$account_list[$i]['account_id'];
+			
+			$voucher_number_array = $voucher->get_number_attributes($account_list[$i]['voucher_type_id']);
+
+
 			
 		?>
 		<tr>
 			<td><?php echo $account_list[$i]['date']; ?></td>
-			<td><?php echo $account_list[$i]['voucher_name']."-".$account_list[$i]['voucher_number']; ?></td>		
+			<td><?php echo $account_list[$i]['voucher_name']."(";
+			printVoucherNumber($account_list[$i]['voucher_number'],$voucher_number_array);echo ")"; ?></td>		
 			<td><?php echo $account_list[$i]['ref_ledger_name'].",".$account_list[$i]['narration']; ?></td>
 			<td><?php echo number_format($account_list[$i]['account_debit'],2); ?></td>
 			<td><?php echo number_format($account_list[$i]['account_credit'],2); ?></td>
@@ -123,11 +130,12 @@ if(!defined('CHECK_INCLUDED')){
 			<?php 
 			$i=0;
 			while($i < count($account_total_list)){
-				
+				$voucher_number_array1 = $voucher->get_number_attributes($account_total_list[$i]['voucher_type_id']);
 			?>
 			<tr>
 				<td><?php echo $account_total_list[$i]['date']; ?></td>
-				<td><?php echo $account_total_list[$i]['voucher_name']."-".$account_total_list[$i]['voucher_number']; ?></td>		
+				<td><?php echo $account_total_list[$i]['voucher_name']."(";
+				printVoucherNumber($account_total_list[$i]['voucher_number'],$voucher_number_array1);echo ")"; ?></td>		
 				<td><?php echo $account_total_list[$i]['ref_ledger_name'].",".$account_total_list[$i]['narration']; ?></td>
 				<td><?php echo $account_total_list[$i]['account_debit']; ?></td>
 				<td><?php echo $account_total_list[$i]['account_credit']; ?></td>
@@ -171,7 +179,7 @@ if(!defined('CHECK_INCLUDED')){
 			
 		?>
 		<tr>
-			<td><?php echo $account_list[$i]['voucher_number']; ?></td>
+			<td><?php echo printVoucherNumber($account_list[$i]['voucher_number'],$voucher_number_array);?></td>
 			<td><?php echo $account_list[$i]['date']; ?></td>
 			<td><?php echo $account_list[$i]['narration']; ?></td>
 			<td><?php echo $ledger->ledgerName($account_list[$i]['account_to']); ?></td>
@@ -232,7 +240,7 @@ if(!defined('CHECK_INCLUDED')){
 				
 			?>
 			<tr>
-				<td><?php echo $account_total_list[$i]['voucher_number']; ?></td>
+				<td><?php echo printVoucherNumber($account_total_list[$i]['voucher_number'],$voucher_number_array);?></td>
 				<td><?php echo $account_total_list[$i]['date']; ?></td>
 				<td><?php echo $account_total_list[$i]['narration']; ?></td>
 				<td><?php echo $ledger->ledgerName($account_total_list[$i]['account_to']); ?></td>
