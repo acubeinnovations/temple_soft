@@ -20,6 +20,7 @@ Class Voucher{
 	var $series_prefix = "";
 	var $series_sufix = "";
 	var $series_start = "";
+	var $print_size = "";
 	var $series_seperator = "";
 	var $default_from = "";
 	var $default_to = "";
@@ -52,7 +53,7 @@ Class Voucher{
     public function update()
     {
     	if ( $this->voucher_id == "" || $this->voucher_id == gINVALID) {
-    		$strSQL= "INSERT INTO voucher(voucher_name,voucher_description,fy_id,voucher_master_id,header,footer,number_series,series_prefix,series_sufix,series_start,series_seperator,default_from,default_to,form_type_id,source,hidden,module_id) VALUES('";
+    		$strSQL= "INSERT INTO voucher(voucher_name,voucher_description,fy_id,voucher_master_id,header,footer,number_series,series_prefix,series_sufix,series_start,print_size,series_seperator,default_from,default_to,form_type_id,source,hidden,module_id) VALUES('";
     		$strSQL.= mysql_real_escape_string($this->voucher_name)."','";
     		$strSQL.= mysql_real_escape_string($this->voucher_description)."','";
     		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
@@ -63,6 +64,7 @@ Class Voucher{
     		$strSQL.= mysql_real_escape_string($this->series_prefix)."','";
     		$strSQL.= mysql_real_escape_string($this->series_sufix)."','";
     		$strSQL.= mysql_real_escape_string($this->series_start)."','";
+    		$strSQL.= mysql_real_escape_string($this->print_size)."','";
     		$strSQL.= mysql_real_escape_string($this->series_seperator)."','";
     		if(is_array($this->default_from)){
     			$strSQL.= mysql_real_escape_string(serialize($this->default_from))."','";
@@ -104,6 +106,7 @@ Class Voucher{
 			$strSQL .= "series_prefix = '".addslashes(trim($this->series_prefix))."'";
 			$strSQL .= "series_sufix = '".addslashes(trim($this->series_sufix))."'";
 			$strSQL .= "series_start = '".addslashes(trim($this->series_start))."'";
+			$strSQL .= "print_size = '".addslashes(trim($this->print_size))."'";
 			$strSQL .= "series_seperator = '".addslashes(trim($this->series_seperator))."'";
 			$strSQL .= "default_from = '".addslashes(trim($this->default_from))."'";
 			$strSQL .= "default_to = '".addslashes(trim($this->default_to))."'";
@@ -221,6 +224,7 @@ Class Voucher{
 				$this->series_prefix 		= $row['series_prefix'];
 				$this->series_sufix 		= $row['series_sufix'];
 				$this->series_start 		= $row['series_start'];
+				$this->print_size 			= $row['print_size'];
 				$this->series_seperator 	= $row['series_seperator'];
 				$this->default_from 		= $row['default_from'];
 				$this->default_to 			= $row['default_to'];
@@ -255,6 +259,7 @@ Class Voucher{
 				$this->series_prefix 		= $row['series_prefix'];
 				$this->series_sufix 		= $row['series_sufix'];
 				$this->series_start 		= $row['series_start'];
+				$this->print_size 			= $row['print_size'];
 				$this->series_seperator 	= $row['series_seperator'];
 				$this->default_from 		= $row['default_from'];
 				$this->default_to 			= $row['default_to'];
@@ -267,6 +272,25 @@ Class Voucher{
 			}else{
 				return false;
 			}
+		}
+    }
+
+
+    public function get_number_attributes($voucher_id){
+    	$strSQL = "SELECT series_prefix,series_sufix,print_size,series_seperator FROM voucher WHERE voucher_id = '".$voucher_id."'";
+		$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+		$number_series = array();
+		if(mysql_num_rows($rsRES) > 0){
+			list($series_prefix,$series_sufix,$print_size,$series_seperator) = mysql_fetch_row($rsRES);
+
+			$number_series['prefix'] = $series_prefix;
+			$number_series['sufix'] = $series_sufix;
+			$number_series['seperator'] = $series_seperator;
+			$number_series['print_size'] = $print_size;
+			
+			return $number_series;
+		}else{
+			return false;
 		}
     }
 

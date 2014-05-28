@@ -1,4 +1,21 @@
 <?php 
+
+	//print voucher number with all its attributes
+	function printVoucherNumber($voucher_number,$data = array()){
+		if(is_array($data)){
+
+			echo (isset($data['prefix']))?$data['prefix']:"";
+			echo (isset($data['seperator']))?$data['seperator']:"";
+			$print_size = (isset($data['print_size']))?$data['print_size']:0;
+			echo str_pad($voucher_number,$print_size,'0',STR_PAD_LEFT);
+			echo (isset($data['seperator']))?$data['seperator']:"";
+			echo (isset($data['sufix']))?$data['sufix']:"";
+		}else{
+			echo "";
+		}
+	}
+
+
 	//print menu list function 
 	function printMenuList($menu_list)
 	{

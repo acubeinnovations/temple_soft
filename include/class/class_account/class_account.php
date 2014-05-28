@@ -47,8 +47,10 @@ Class Account{
     public function update()
     {
     	if ( $this->account_id == "" || $this->account_id == gINVALID) {
-    		$strSQL= "INSERT INTO account_master(voucher_number,voucher_type_id,fy_id,reference_number,account_from,account_to,account_debit,account_credit,date,narration,ref_ledger) VALUES('";
-    		$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
+            $strSQL = "SET @next_voucher = GET_NEXT_VOUCHER_NUMBER(".$this->voucher_type_id.");";
+    		$strSQL .= "INSERT INTO account_master(voucher_number,voucher_type_id,fy_id,reference_number,account_from,account_to,account_debit,account_credit,date,narration,ref_ledger) VALUES('";
+    		//$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
+            $strSQL .= "@next_voucher,'";
     		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
     		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
     		$strSQL.= mysql_real_escape_string($this->reference_number)."','";
@@ -61,17 +63,20 @@ Class Account{
     		$strSQL.= mysql_real_escape_string($this->ref_ledger)."')";
    
 			//echo $strSQL;exit();
-			$rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
+			$rsRES = mysqli_multi_query($this->mysqli,$strSQL) or die ( mysqli_error() . $strSQL );
 
-			if ( mysql_affected_rows($this->connection) > 0 ) {
-				$this->account_id = mysql_insert_id();
-				$this->error_description="Success";
-				return $this->account_id;
-			}else{
-				$this->error_number = 3;
-				$this->error_description="Can't insert data ";
-				return false;
-			}
+            if ($rsRES) {
+                $this->error_description="Success";
+                mysqli_next_result($this->mysqli);
+                $this->account_id = mysqli_insert_id($this->mysqli);
+                return $this->account_id; 
+              //  return true;
+            }else{
+                $this->error_number = 3;
+                $this->error_description="Can't insert data ";
+                return false;
+            }
+
 
     	}elseif($this->account_id > 0 ) {
     		
@@ -108,7 +113,8 @@ Class Account{
 			if ($rsRES) {
 				$this->error_description="Voucher Genereted";
 				mysqli_next_result($this->mysqli);
-                return mysqli_insert_id($this->mysqli);
+                $this->account_id = mysqli_insert_id($this->mysqli);
+                return $this->account_id;
               //  return true;
 			}else{
 				$this->error_number = 3;

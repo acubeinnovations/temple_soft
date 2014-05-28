@@ -4,6 +4,14 @@ if(!defined('CHECK_INCLUDED')){
 }
 $pagination = new Pagination(10);
 
+// voucher details
+$voucher=new Voucher($myconnection);
+$voucher->connection=$myconnection;
+$voucher->module_id = MODULE_VAZHIPADU;
+$voucher_details = $voucher->get_details_with_moduleid();
+$voucher_number_array = $voucher->get_number_attributes($voucher->voucher_id);
+//------------------------------------------------------------------------------
+
 $pooja= new Pooja($myconnection);
 $pooja->connection=$myconnection;
 $poojas = $pooja->get_array();

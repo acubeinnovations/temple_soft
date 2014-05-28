@@ -43,14 +43,30 @@ if($array_vazhipadu==false){
 	$array_vazhipadu=array();
 }
 $txtquantity = false;
+$voucher_number_array = array();
 
 $add_star=new Stars($myconnection);
 $add_star->connection=$myconnection;
 $add_star->status_id = STATUS_ACTIVE;
 $array_star=$add_star->get_array();
 
+// voucher details
+$voucher->module_id = MODULE_VAZHIPADU;
+$voucher_details = $voucher->get_details_with_moduleid();
+if(!$voucher_details){
+	$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu Voucher Not Found.";
+    header( "Location:".$current_url);
+    exit();
+}
+
+
+
 if(isset($_GET['pr'])){
+
 	$add_vazhipadu->vazhipadu_rpt_number = $_GET['pr'];
+	
+	$voucher_number_array = $voucher->get_number_attributes($voucher->voucher_id);
+	
 	list($vazhipadu_details,$variable) = $add_vazhipadu->get_vazhipadu_details();
 }else{
 	$vazhipadu_details = false;
@@ -71,15 +87,6 @@ if(isset($_GET['cn'])){
 	$vazhipadu_details_cn = false;
 }
 
-
-// voucher details
-$voucher->module_id = MODULE_VAZHIPADU;
-$voucher_details = $voucher->get_details_with_moduleid();
-if(!$voucher_details){
-	$_SESSION[SESSION_TITLE.'flash'] = "Vazhipadu Voucher Not Found.";
-    header( "Location:".$current_url);
-    exit();
-}
 
 
 if(isset($_POST['submit'])){
@@ -150,7 +157,7 @@ if(isset($_POST['submit'])){
 			if($insert){
 				$account->account_id = $insert;
 				$account->get_details();
-				$vazhipadu_rpt_number = $voucher->series_prefix.$voucher->series_seperator.$account->voucher_number.$voucher->series_seperator.$voucher->series_sufix;
+				$vazhipadu_rpt_number = $account->voucher_number;
 				$add_vazhipadu->vazhipadu_rpt_number = $vazhipadu_rpt_number;
 
 				$last_id = $add_vazhipadu->update($dataArray);

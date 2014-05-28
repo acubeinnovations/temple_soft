@@ -25,14 +25,21 @@ if(!defined('CHECK_INCLUDED')){
 			<label for="voucher">Date</label>
 			<input type="text" name="txtdate" id="txtdate" value="<?php echo ($account->date =="")?date('d-m-Y',strtotime(CURRENT_DATE)):date('d-m-Y',strtotime($account->date));?>" class="mydatepicker" <?php echo $readonly;?>/>
 		</div>
-		<div class="medium-4 columns">
+		<!--<div class="medium-4 columns">
 			<label for="voucher">Voucher Number</label>
 			<input type="text" name="txtvnumber" id="txtvnumber" value="<?php echo $voucher_number;?>" readonly/>
-		</div>
+		</div>-->
 		<div class="medium-4 columns">
 			<label for="voucher">Reference Number</label>
 			<input type="text" name="txtrnumber" id="txtrnumber" value="<?php echo $account->reference_number?>" <?php echo $readonly;?>/>
 		</div>
+
+		<div class="medium-4 columns">
+			<label for="voucher">Amount</label>
+			<input type="text" name="txtamount" id="txtamount" value="<?php echo $amount;?>" <?php if($voucher->source == VOUCHER_FOR_INVENTORY){ echo "readonly";}?>/>
+		</div>
+
+		
 	</div>
 
 	<div class="row">
@@ -61,10 +68,7 @@ if(!defined('CHECK_INCLUDED')){
 				}
 			?>
 		</div>
-		<div class="medium-4 columns">
-			<label for="voucher">Amount</label>
-			<input type="text" name="txtamount" id="txtamount" value="<?php echo $amount;?>" <?php if($voucher->source == VOUCHER_FOR_INVENTORY){ echo "readonly";}?>/>
-		</div>
+		
 	</div>
 	<div class="row">
 		<div class="medium-8 columns">

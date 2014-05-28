@@ -13,6 +13,7 @@ $voucher->connection = $myconnection;
 
 $account = new Account($myconnection);
 $account->connection = $myconnection;
+$account->mysqli = $mysqli;
 
 $ledger = new Ledger($myconnection);
 $ledger->connection = $myconnection;
@@ -65,15 +66,6 @@ if(isset($_GET['edt']) || isset($_GET['v'])){
 		$list_url = "ac_generated_vouchers.php?slno=".$_GET['v'];
 		$voucher->voucher_id = $_GET['v'];
 		$voucher->get_details();
-
-		//get next voucher number
-		$next_voucher_number = $account->getNextVoucherNumber($voucher->voucher_id);
-		if($next_voucher_number){
-			$voucher_number = $next_voucher_number;
-		}else{
-			$voucher_number = $voucher->series_start;
-		}
-		//echo $voucher_number;exit();
 	}
 	
 	$page_heading = $voucher->voucher_name;
@@ -141,9 +133,7 @@ if(isset($_POST['submit'])){
 
 
 	$errorMSG = "";
-	if($_POST['txtvnumber'] == ""){
-		$errorMSG .= "Invalid voucher<br>";
-	}
+	
 	if($account->account_id ==gINVALID || $account->account_id == ''){
 		if($_POST['lstfrom'] == gINVALID || $_POST['lstfrom'] == ""){
 			$errorMSG .= "Select From account<br>";
@@ -168,12 +158,11 @@ if(isset($_POST['submit'])){
         header( "Location:".$current_url."?v=".$voucher->voucher_id);
         exit();
 	}else{
-
-		$account->voucher_number 	= $_POST['txtvnumber'];
 		$account->voucher_type_id	= $voucher->voucher_id;
 		$exist = $account->exist();
 		if($exist){ //edit
 			$account_id = $account->account_id;
+			$voucher_number = $account->voucher_number; 
 			$arr = array();
 			if($voucher->source == VOUCHER_FOR_ACCOUNT){//update account master only
 				$arr['narration'] = $_POST['txtnarration'];
@@ -272,7 +261,9 @@ if(isset($_POST['submit'])){
 
 				$insert = $account->insert_batch($dataAccount);
 				if($insert){
-					$stock_register->voucher_number = $voucher_number;
+					$account->account_id = $insert;
+					$account->get_details();
+					$stock_register->voucher_number = $account->voucher_number;
 					$stock_register->voucher_type_id = $voucher->voucher_id;
 					if($voucher->voucher_master_id == SALES){
 						$stock_register->input_type =INPUT_SALE; 

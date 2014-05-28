@@ -2,3 +2,19 @@
 	display: none;
 }
 
+#title{
+	display: none;
+	width: 204px;
+	height: 40px;
+	background-color: #E8E8E8;
+	border: 1px solid #909090;
+	position: absolute;
+	top:96px;
+	right: 20px;
+	margin:0 auto;
+	text-align: center;
+	font-size: 13px;
+	padding-top: 10px;
+}
+
+

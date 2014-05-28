@@ -80,13 +80,14 @@ if(isset($_POST['submit'])){
 
 		$voucher->number_series .= (trim($_POST['txtprefix'])!="")?$_POST['txtprefix']:"";
 		$voucher->number_series .= (trim($_POST['lstseperator'])!="")?$_POST['lstseperator']:"";
-		$voucher->number_series .= $_POST['txtseries'];
+		$voucher->number_series .= str_pad($_POST['txtseries'],$_POST['txtprintsize'],'0',STR_PAD_LEFT);
 		$voucher->number_series .= (trim($_POST['lstseperator'])!="")?$_POST['lstseperator']:"";
 		$voucher->number_series .= (trim($_POST['txtsufix'])!="")?$_POST['txtsufix']:"";
 		
 		$voucher->series_prefix = $_POST['txtprefix'];
 		$voucher->series_sufix = $_POST['txtsufix'];
 		$voucher->series_start	= $_POST['txtseries'];
+		$voucher->print_size	= $_POST['txtprintsize'];
 		$voucher->series_seperator = $_POST['lstseperator'];
 
 		$voucher->header = $_POST['txtheader'];

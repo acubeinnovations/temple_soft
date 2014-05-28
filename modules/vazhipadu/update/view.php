@@ -146,7 +146,7 @@ line-height: 2px !important;
 		<td width="96" >&nbsp;</td>
 		<td width="110" style="line-height: 6px !important;" valign="top" align="center">
 
-			<?php echo $add_vazhipadu->vazhipadu_rpt_number; ?><br/><br/>
+			<?php echo printVoucherNumber($add_vazhipadu->vazhipadu_rpt_number,$voucher_number_array); ?><br/><br/>
 			<?php echo date("d-m-Y");?>
 		</td>
 	</tr>

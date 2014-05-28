@@ -43,7 +43,7 @@ if(!defined('CHECK_INCLUDED')){
 
  		
 
- 		<div class="medium-4 columns">
+ 		<div class="medium-4 columns" >
  		<fieldset>
  			<legend>Number Series </legend>
  				<div class="row">
@@ -68,11 +68,29 @@ if(!defined('CHECK_INCLUDED')){
 					</div>
 				</div>
 				<div class="row">
-					<div class="columns">
+					<div class="medium-6 columns">
 						<label for="ledger">Start From<small>required</small>
 						<input type="text" name="txtseries" id="txtseries" value="" required/>
 						</label>
 					</div>
+
+					<div class="medium-4 columns">
+						<label for="ledger" title="Eg: Number 1 will print as '001' for print size 3">Print Size
+						<input type="text" name="txtprintsize" id="txtprintsize" value="" />
+						</label>
+					</div>
+
+					<div class="medium-2 columns">
+						<label style="margin-top:20px;">
+							<a href="javascript:showNumberSeries()">view</a>
+							
+						</label>
+					</div>
+
+				</div>
+
+				<div id="title" >
+						<span>INV-001-2014</span>
 				</div>
 
 				

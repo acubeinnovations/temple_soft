@@ -74,4 +74,81 @@ $(document).ready(function(){
 	});
 
 
+	//series start number must be greater than 0
+	$('input[name="txtseries"]').keyup(function(){
+
+		if($(this).val() != ""){
+			if($(this).val() <= 0){
+				$(this).val('');
+				alert("Enter Valid Number");
+			}
+		}
+		
+
+	});
+
+	$("#title").mouseout(function(){
+		$(this).hide();
+	});
+
+
 });
+
+
+function showNumberSeries()
+{
+	var prefix = $('input[name="txtprefix"]').val();
+
+	var sufix = $('input[name="txtsufix"]').val();
+
+	var seperator = $('select[name="lstseperator"]').val();
+
+	var start = $('input[name="txtseries"]').val();
+
+	var size = $('input[name="txtprintsize"]').val();
+
+	var number_series = "";
+
+	var num_length = 0;
+
+	var prepend_count = 0;
+
+	if(start > 0){
+	
+		if(prefix.trim() != ""){
+			number_series += prefix;
+		}
+
+		if(seperator.trim() != ""){
+			number_series += seperator;
+		}
+
+		if(size > 0){
+			num_length = start.length;
+			prepend_count = size - num_length;
+			while(prepend_count > 0){
+				number_series += '0';
+				prepend_count--;
+			}
+		}
+
+		number_series += start;
+		
+		if(seperator.trim() != ""){
+			number_series += seperator;
+		}
+
+		if(sufix.trim() != ""){
+			number_series += sufix;
+		}
+
+		$("#title").html(number_series);
+		$("#title").show();
+
+
+	}else{
+		alert("Enter valid series start");
+	}
+
+//	alert(number_series);
+}
