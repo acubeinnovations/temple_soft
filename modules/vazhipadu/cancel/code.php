@@ -23,6 +23,10 @@ $account->connection=$myconnection;
 $voucher=new Voucher($myconnection);
 $voucher->connection=$myconnection;
 
+$voucher->module_id = MODULE_VAZHIPADU;
+$voucher_details = $voucher->get_details_with_moduleid();
+$voucher_number_array = $voucher->get_number_attributes($voucher->voucher_id);
+
 $vazhipadu->total_records=$pagination->total_records;
 
 $data = array();

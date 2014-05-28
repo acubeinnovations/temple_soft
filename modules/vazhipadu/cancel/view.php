@@ -47,7 +47,7 @@ if(!defined('CHECK_INCLUDED')){
 			while($i<$count){
 			?>
 		<tr>
-			<td><?php echo $vazhipadu_list[$i]['vazhipadu_rpt_number']; ?></td>
+			<td><?php  echo printVoucherNumber($vazhipadu_list[$i]['vazhipadu_rpt_number'],$voucher_number_array); ?></td>
 			<td><?php echo $vazhipadu_list[$i]['vazhipadu_date']; ?></td>
 			<td>
 				<?php echo $vazhipadu_list[$i]['pooja_name']; 

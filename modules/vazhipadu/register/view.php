@@ -67,8 +67,8 @@ if(!defined('CHECK_INCLUDED')){
 			?>
 		<tr>
 			<td>
-				<?php echo printVoucherNumber($vazhipadu_list[$i]['vazhipadu_rpt_number'],$voucher_number_array); ?>
-			<?php // echo $vazhipadu_list[$i]['vazhipadu_rpt_number']; ?></td>
+			<?php echo printVoucherNumber($vazhipadu_list[$i]['vazhipadu_rpt_number'],$voucher_number_array); ?>
+			</td>
 			<td><?php echo $vazhipadu_list[$i]['vazhipadu_date']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['pooja_name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['name']; ?></td>

@@ -110,7 +110,7 @@ if(isset($_POST['submit'])){
 
 			}elseif($_POST['lstsource'] == VOUCHER_FOR_INVENTORY){//voucher for inventory
 				$voucher->default_from = ($_POST['lstfromledger'] > 0)?$_POST['lstfromledger']:'';
-				$voucher->default_to = ($_POST['lsttoledger'])?$_POST['lsttoledger']:'';
+				$voucher->default_to = ($_POST['lsttoledger'] > 0)?$_POST['lsttoledger']:'';
 				$voucher->form_type_id	= $_POST['lstformtype'];
 			}
 		}
