@@ -111,7 +111,11 @@ if(isset($_POST['submit'])){
 	if($errorMSG == ""){
 		$total_amount = 0;
 		$add_vazhipadu->pooja_id=$_POST['listpooja'];
-		$add_vazhipadu->amount=$_POST['txtamount'];
+		//get pooja rate with pooja
+		$add_pooja->id = $_POST['listpooja'];
+		$add_pooja->get_details();
+		$add_vazhipadu->amount = $add_pooja->rate;
+		
 		$add_vazhipadu->vazhipadu_date = $_POST['txtdate'];
 		
 		//add voucher entry
