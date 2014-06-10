@@ -343,11 +343,18 @@ function get_array()
   public function get_pooja_collection_limit($data = array(),$start_record = 0,$max_records = 25)
   {
 
+/* 
+//INITIAL QUERY
     $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
 WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE voucher_type_id = '".$this->voucher_id."' AND date = '".date('Y-m-d',strtotime($data['date']))."')";
+*/
 
+//OPTIMIZED QUERY 10_06_2014
+ $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+FROM vazhipadu V, pooja P, account_master AM
+WHERE V.deleted ='".NOT_DELETED."' AND  P.id = V.pooja_id AND V.vazhipadu_rpt_number = AM.voucher_number AND AM.voucher_type_id = '".$this->voucher_id."' AND AM.date = '".date('Y-m-d',strtotime($data['date']))."' AND AM.ref_ledger = P.ledger_sub_id";
     
 
     if(isset($data['user_id']) and $data['user_id'] > 0){
@@ -393,12 +400,19 @@ WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_
   public function get_pooja_collection($data = array(),$start_record = 0,$max_records = 25)
   {
 
-  
+  /* 
+//INITIAL QUERY
 	$strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V
 LEFT JOIN pooja P ON P.id = V.pooja_id
 WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_number FROM account_master WHERE voucher_type_id = '".$this->voucher_id."' AND date = '".date('Y-m-d',strtotime($data['date']))."')";
+*/
 
+//OPTIMIZED QUERY 10_06_2014
+ $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+FROM vazhipadu V, pooja P, account_master AM
+WHERE V.deleted ='".NOT_DELETED."' AND  P.id = V.pooja_id AND V.vazhipadu_rpt_number = AM.voucher_number AND AM.voucher_type_id = '".$this->voucher_id."' AND AM.date = '".date('Y-m-d',strtotime($data['date']))."' AND AM.ref_ledger = P.ledger_sub_id";
+    
     
 
     if(isset($data['user_id']) and $data['user_id'] > 0){
