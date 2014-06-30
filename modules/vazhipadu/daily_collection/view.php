@@ -139,7 +139,7 @@ if(!defined('CHECK_INCLUDED')){
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
-	echo $print_content;
+	//echo $print_content;
 	
 ?>
 

@@ -47,7 +47,7 @@ if(!defined('CHECK_INCLUDED')){
 		</div>
 		<div class="medium-2 columns">
 			<label for="name"> Date
-			<input class="mydatepicker"  name="txtdate" id="txtdate" value="<?php echo date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
+			<input class="mydatepicker"  name="txtdate" id="txtdate" value="<?php echo ($add_vazhipadu->vazhipadu_date != "")?date('d-m-Y',strtotime($add_vazhipadu->vazhipadu_date)):date('d-m-Y',strtotime(CURRENT_DATE));?>"/>
 			</label>
 		</div>
 
