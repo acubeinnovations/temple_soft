@@ -41,7 +41,7 @@ if(!defined('CHECK_INCLUDED')){
 		<div class="medium-2 columns">
 			<label for="rate">Amount<small>required</small>
 			<input type="text"  name="txtamount" id="txtamount" value="<?php echo $add_vazhipadu->amount;?>" readonly required/>
-			<input type="hidden" name="hd_ledger_id" id="hd_ledger_id" value=""/>
+			
 			</label>
 			
 		</div>

@@ -125,7 +125,7 @@ if(isset($_POST['submit'])){
 			$voucher->get_details();
 
 			if(isset($_POST['chk_qty'])){
-				$total_amount = $_POST['txtamount']*$_POST['txtqty'];
+				$total_amount = $add_pooja->rate*$_POST['txtqty'];
 				$add_vazhipadu->quantity = $_POST['txtqty'];
 				$dataArray = false;
 			}else{
@@ -136,7 +136,7 @@ if(isset($_POST['submit'])){
 					$dataArray[$i]['name'] = $list[0];
 					$dataArray[$i]['star_id'] = $list[1];
 					$dataArray[$i]['quantity'] = $list[2];
-					$total_amount += $_POST['txtamount'] * $list[2];
+					$total_amount += $add_pooja->rate * $list[2];
 					$i++;
 				}
 			}
@@ -144,7 +144,7 @@ if(isset($_POST['submit'])){
 			$account->voucher_type_id	= $voucher->voucher_id;
 			$dataAccount = array();
 			$account->account_from 		= $voucher->default_from;
-			$account->account_to		= $_POST['hd_ledger_id'];//$voucher->default_to;
+			$account->account_to		= $add_pooja->ledger_sub_id;
 			$account->date				= CURRENT_DATE;
 			$dataAccount[0]['account_debit']  = $total_amount;
 			$dataAccount[0]['account_credit'] = "";
@@ -153,7 +153,7 @@ if(isset($_POST['submit'])){
 			$dataAccount[1]['account_credit'] = $total_amount;
 			$dataAccount[1]['ref_ledger'] = $account->account_to;
 
-			//print_r($dataAccount);exit();
+			
 			$insert = $account->insert_batch($dataAccount);
 			mysqli_close();
 			//voucher entry ends
@@ -197,7 +197,6 @@ if(isset($_GET['pooja']) and $_GET['pooja'] > 0)
    	$add_pooja->id=$_GET['pooja'];
    	$add_pooja->get_details();
    	$json['rate'] = $add_pooja->rate;
-   	$json['ledger'] = $add_pooja->ledger_sub_id;
    	echo json_encode($json);exit();
      
 }

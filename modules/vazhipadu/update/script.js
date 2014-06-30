@@ -27,6 +27,8 @@ $(document).ready(function(){
     var qtyObj = $("input:text[name=txtquantity]");//row quantity
 
 	var tblArray = [];
+
+   
 	
 	$("#button-add").click(function(){
 
@@ -174,6 +176,8 @@ $(document).ready(function(){
 
 });
 
+
+//show pooja rate on text box when change pooja list
 function postPooja(pooja_id)
 {//alert(pooja_id);
 	$.ajax({
@@ -185,9 +189,6 @@ function postPooja(pooja_id)
 		success: function (json) {
 			if(json['rate']){
 				$("#txtamount").val(json['rate']);
-            }
-            if(json['ledger']){
-            	$("#hd_ledger_id").val(json['ledger']);
             }
 		}				
 	});
