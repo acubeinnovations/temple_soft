@@ -6,7 +6,7 @@ if(!defined('CHECK_INCLUDED')){
 
 <div class="row" >
 	<div class="medium-6 columns">
-		<h3>Vazhipadu Collection</h3>
+		<h3>Daily Collection</h3>
 	</div>
 	<div class="medium-6 columns">
 		<div class="text-right" style="margin-top:5px;">
@@ -90,7 +90,7 @@ if(!defined('CHECK_INCLUDED')){
 		</tr>
 	</table>
 
-	<h3>Vazhipadu Collection</h3>
+	<h3>Daily Collection</h3>
 	<p>Date : <?php echo $data['date'];?></p>
 
 	<div>
