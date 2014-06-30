@@ -97,14 +97,16 @@ if(!defined('CHECK_INCLUDED')){
 	<?php if($daily_collection_all){?>
 
 	<table width="100%" id="tbl-append">
-		<thead>
+		<!--<thead>
+			
+		</thead>-->
+		<tbody>
 			<tr>
-				<td width="50%"><font size="3">Pooja</font></td>
-				<td width="20%"><font size="3">Rate</font></td>
-				<td width="30%"><font size="3">Amount</font></td>
+				<th width="50%" align="left"><font size="3">Pooja</font></th>
+				<th width="20%" align="left"><font size="3">Rate</font></th>
+				<th width="30%" align="left"><font size="3">Amount</font></th>
 			</tr>
-		</thead>
-		<tbody
+
 			<?php 
 			$i=0;$total_amount = 0;
 			while($i<count($daily_collection_all)){
@@ -137,7 +139,7 @@ if(!defined('CHECK_INCLUDED')){
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
-	//echo $print_content;
+	echo $print_content;
 	
 ?>
 
