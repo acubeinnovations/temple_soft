@@ -39,6 +39,8 @@ if(!defined('CHECK_INCLUDED')){
 </fieldset>
 </form>
 
+<!--
+
 <div class="medium-12 columns">
 <?php if($daily_collection){?>
 <div class="row" >
@@ -78,10 +80,11 @@ if(!defined('CHECK_INCLUDED')){
 	echo "No Records Found";
 }?>
 </div>
+-->
 
 <?php ob_start();?>
 <?php if($count > 0){?>
-	<table width="100%">
+	<table width="100%" class="print-head">
 		<tr>
 			<td width="100%" align="center" valign="middle">
 			<h3><?php echo $account_settings->organization_name; ?></h3></br>
@@ -139,7 +142,7 @@ if(!defined('CHECK_INCLUDED')){
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
-	//echo $print_content;
+	echo $print_content;
 	
 ?>
 
