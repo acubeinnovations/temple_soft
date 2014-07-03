@@ -343,6 +343,22 @@ function get_array()
   public function get_pooja_collection_limit($data = array(),$start_record = 0,$max_records = 25)
   {
 
+  	/*
+  	//find grand total with a date limit
+  	$grant_total = 0;
+  	$sql = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount*V.quantity) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name FROM vazhipadu V, pooja P, account_master AM WHERE V.deleted ='1' AND P.id = V.pooja_id AND V.vazhipadu_rpt_number = AM.voucher_number AND AM.voucher_type_id = '1' AND (AM.date BETWEEN '2014-06-01' AND '2014-06-30') AND AM.ref_ledger = P.ledger_sub_id GROUP BY V.pooja_id,V.amount";
+
+  	$rsRES = mysql_query($sql, $this->connection) or die(mysql_error(). $sql);
+
+  		while ( $row = mysql_fetch_assoc($rsRES) ){
+  			$grant_total += $row['amount'];
+  		}
+  		echo $grant_total;exit();
+  		*/
+
+  		
+
+
 /* 
 //INITIAL QUERY
     $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
