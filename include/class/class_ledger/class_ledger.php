@@ -78,6 +78,7 @@ Class Ledger{
 			$strSQL .= "deleted = '".addslashes(trim($this->deleted))."',";
 			$strSQL .= "fy_id = '".addslashes(trim($this->current_fy_id))."'";
 			$strSQL .= " WHERE ledger_sub_id = '".$this->ledger_sub_id."'";
+			$strSQL .= " AND ledger_sub_id NOT IN(SELECT ref_ledger FROM account_master WHERE ref_ledger = '".$this->ledger_sub_id."')";
 			//echo $strSQL;exit();
 			 mysql_query("SET NAMES utf8");
 			$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
