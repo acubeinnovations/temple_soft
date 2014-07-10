@@ -534,6 +534,31 @@ Class Account{
     }
 
 
+    public function transactionExists($ledger_id){
+
+        if($ledger_id > 0){
+
+            $strSQL = "SELECT COUNT(*) as trans_count FROM account_master WHERE ref_ledger = '".$ledger_id."'";
+           // echo $strSQL;exit();
+            $rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+            $row = mysql_fetch_assoc($rsRES);
+            if($row['trans_count'] > 0){
+                $this->error_description = "Transaction exists";
+                return true;
+            }else{
+                $this->error_description = "Transaction not exists";
+                return false;
+            }
+        }else{
+            $this->error_description = "Invalid ledger";
+            return false;
+        }
+        
+
+        return true;
+    }
+
+
 
     
 

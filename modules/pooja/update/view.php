@@ -11,14 +11,15 @@ if(!defined('CHECK_INCLUDED')){
  		
 
  		<div class="row">
- 			<div class="large-4 columns">
+ 			<div class="large-8 columns">
+ 				<p class="note"><?php echo $transMSG; ?></p>
  			</div>
  		</div>
 
  		<div class="row">
  			<div class="medium-4 columns">
  				<label for="pooja">Pooja <small>required</small>
- 					<input type="text" name="name" id="pooja" value="<?php echo $pooja->name;?>" required/>
+ 					<input type="text" name="name" id="pooja" value="<?php echo $pooja->name;?>" required <?php echo ($transMSG)?"readonly":"";?>/>
  				</label>
  			</div>
 

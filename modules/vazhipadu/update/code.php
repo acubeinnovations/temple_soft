@@ -109,6 +109,7 @@ if(isset($_POST['submit'])){
 
 
 	if($errorMSG == ""){
+		
 		$total_amount = 0;
 		$add_vazhipadu->pooja_id=$_POST['listpooja'];
 		//get pooja rate with pooja

@@ -102,3 +102,10 @@ fieldset{
 .error{
 	color:red;
 }
+
+.note{
+	font-style: italic;
+	font-size: 14px;
+	color: black;
+
+}

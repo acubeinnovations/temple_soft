@@ -291,23 +291,7 @@ function get_array()
     }
 
 
-    public function validate()
-    {
-    	if ( $this->id >0) {
-    		$this->get_details();
-    		return true;
-    	}else{
-	    	$strSQL = "SELECT * FROM pooja WHERE name = '".$this->name."'";
-	    	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
-	    	if(mysql_num_rows($rsRES) > 0){
-	    		$this->error_description = "Pooja already exists";
-	    		return false;//pooja exist
-	    	}else{
-	    		return true;
-	    	}
-	    }
-
-    }
+    
 
 
 //temporary function for insert ledger sub with all pooja
@@ -458,6 +442,88 @@ WHERE V.deleted ='".NOT_DELETED."' AND  P.id = V.pooja_id AND V.vazhipadu_rpt_nu
   }
 
 
+  	//get ledger id
+  	function getPoojaLedger($pooja_id)
+  	{
+	  	if($pooja_id > 0){
+
+			$strSQL = "SELECT P.ledger_sub_id AS ledger_id FROM pooja P,ledger_sub LS WHERE P.id = '".$pooja_id."' AND LS.ledger_sub_id=P.ledger_sub_id";
+			$rsRES	= mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
+
+			if(mysql_num_rows($rsRES) > 0){
+				$row = mysql_fetch_assoc($rsRES);
+				return $row['ledger_id'];
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+ 	}
+
+/*
+ 	public function validate()
+    {
+    	if ( $this->id >0) {
+    		$this->get_details();
+    		return true;
+    	}else{
+	    	$strSQL = "SELECT * FROM pooja WHERE name = '".$this->name."'";
+	    	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+	    	if(mysql_num_rows($rsRES) > 0){
+	    		$this->error_description = "Pooja already exists";
+	    		return false;//pooja exist
+	    	}else{
+	    		return true;
+	    	}
+	    }
+
+    }*/
+
+ 	function validate($post)
+ 	{
+ 		
+ 		$this->id = $post['h_id'];
+ 		
+		$errorMSG = "";
+
+		//pooja name
+		if(trim($post['name']) == ""){
+			$errorMSG .= "Pooja name required <br/>";
+		}else{//check duplication
+
+			$strSQL = "SELECT id FROM pooja WHERE name = '".$post['name']."'";
+	    	$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+	    	if(mysql_num_rows($rsRES) > 0){
+	    		$row = mysql_fetch_assoc($rsRES);
+	    		if($row['id'] != $post['h_id']){
+	    			$this->error_description = "Pooja already exists";
+	    			return false;
+	    		}
+	    	}
+
+		}
+
+		//pooja rate
+		if(trim($post['rate']) == ""){
+			$errorMSG .= "Pooja rate required";
+		}elseif(!filter_var($post['rate'], FILTER_VALIDATE_FLOAT)){
+			$errorMSG .= "Invalid rate <br/>";
+		}
+
+		//master ledger
+		if($post['lstledger'] == '' || $post['lstledger'] == gINVALID){
+			$errorMSG .= "Ledger Not selected";
+		}
+		
+
+		if($errorMSG != ""){
+			$this->error_description = $errorMSG;
+			return false;
+ 		}else{
+ 			return true;
+ 		}
+	}
 
 
 
