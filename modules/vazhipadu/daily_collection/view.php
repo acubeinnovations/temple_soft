@@ -25,11 +25,19 @@ if(!defined('CHECK_INCLUDED')){
 		<input class="mydatepicker" name="txtdate" id="" value="<?php echo $data['date'];?>" /></label>
 	</div>
 
-	<div class="medium-4 columns">
+	<div class="medium-2 columns">
 		<label for="listpooja"> Pooja
 		<?php echo populate_list_array("lstpooja", $poojas, 'id','name',$data['pooja_id'],$disable=false,true);?>
 		</label>
 	</div>
+
+	<?php if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR){?>
+	<div class="medium-2 columns">
+		<label for="listpooja"> Users
+		<?php echo populate_list_array("lstuser", $users, 'id','name',@$data['user_id'],$disable=false,true);?>
+		</label>
+	</div>
+	<?php }?>
 
 	<div class="medium-2 columns">
 		<input type="submit" class="tiny button" value="Search" name="submit">

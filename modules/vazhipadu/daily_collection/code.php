@@ -4,6 +4,10 @@ if(!defined('CHECK_INCLUDED')){
 }
 $pagination = new Pagination(10);
 
+$user=new User($myconnection);
+$user->connection=$myconnection;
+$users = $user->get_array_for_list();
+
 $account_settings = new AccountSettings($myconnection);
 $account_settings->connection = $myconnection;
 $account_settings->getAccountSettings();
@@ -26,7 +30,10 @@ $vazhipadu->connection=$myconnection;
 $data = array();
 if(isset($_SESSION[SESSION_TITLE.'userid']) && isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] != ADMINISTRATOR ){
 	$data['user_id'] = $_SESSION[SESSION_TITLE.'userid'];
+}elseif(isset($_GET['lstuser'])){
+	$data['user_id'] = $_GET['lstuser'];
 }
+
 $data['date'] =  date('d-m-Y',strtotime(CURRENT_DATE));
 $data['pooja_id'] = -1;
 

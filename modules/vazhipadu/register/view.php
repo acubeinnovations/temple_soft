@@ -30,11 +30,18 @@ if(!defined('CHECK_INCLUDED')){
 				<input class="mydatepicker" name="txtto" id="" value="<?php echo $vazhipadu->to_date;?>" /></label>
 			</div>
 
-			<div class="medium-4 columns">
+			<div class="medium-2 columns">
 				<label for="listpooja"> Pooja
 				<?php echo populate_list_array("lstpooja", $poojas, 'id','name',$vazhipadu->pooja_id,$disable=false,true);?>
 				</label>
 			</div>
+			<?php if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR){?>
+			<div class="medium-2 columns">
+				<label for="listpooja"> Users
+				<?php echo populate_list_array("lstuser", $users, 'id','name',$vazhipadu->user_id,$disable=false,true);?>
+				</label>
+			</div>
+			<?php }?>
 
 			<div class="medium-2 columns">
 				<input type="submit" class="tiny button" value="Search" name="submit">

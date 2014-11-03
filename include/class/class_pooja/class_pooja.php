@@ -343,7 +343,7 @@ function get_array()
   
 
 //OPTIMIZED QUERY 10_06_2014
- $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+ $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(V.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V, pooja P, account_master AM
 WHERE V.deleted ='".NOT_DELETED."' AND  P.id = V.pooja_id AND V.vazhipadu_rpt_number = AM.voucher_number AND AM.voucher_type_id = '".$this->voucher_id."' AND AM.date = '".date('Y-m-d',strtotime($data['date']))."' AND AM.ref_ledger = P.ledger_sub_id";
     
@@ -400,7 +400,7 @@ WHERE V.deleted ='".NOT_DELETED."' AND V.vazhipadu_rpt_number IN(SELECT voucher_
 */
 
 //OPTIMIZED QUERY 10_06_2014
- $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(v.quantity) AS quantity,P.name AS pooja_name
+ $strSQL = "SELECT V.amount AS rate,V.pooja_id,SUM(V.amount) AS amount,sum(V.quantity) AS quantity,P.name AS pooja_name
 FROM vazhipadu V, pooja P, account_master AM
 WHERE V.deleted ='".NOT_DELETED."' AND  P.id = V.pooja_id AND V.vazhipadu_rpt_number = AM.voucher_number AND AM.voucher_type_id = '".$this->voucher_id."' AND AM.date = '".date('Y-m-d',strtotime($data['date']))."' AND AM.ref_ledger = P.ledger_sub_id";
     

@@ -1,5 +1,54 @@
 <?php 
 
+
+	function print_table($th_data = array(),$td_data = array(),$tf_data=array(),$parms = array())
+	{
+
+		$param_str = '';
+		foreach($parms as $key=>$value){
+			$param_str .= ' '.$key.'="'.$value.'"';
+		}
+
+		echo '<table'.$param_str.'>';
+		echo '<tbody>';
+		
+
+		echo '<tr>';
+
+		$cell_order = array();
+		foreach($th_data as $head){
+			
+			echo '<th align="left"><font size="3">'.$head['value'].'</font></th>';
+			$cell_order[]=$head['name'];
+			
+			
+		}
+		echo '</tr>';
+
+		foreach($td_data as $data){
+
+			echo '<tr>';
+			foreach($cell_order as $cell){
+				echo '<td><font size="3">'.$data[$cell].'</font></td>';
+			}
+			echo '</tr>';
+			 
+			
+		}
+
+		if($tf_data){
+			echo '<tr>';
+			foreach($cell_order as $cell){
+				echo '<th align="left"><font size="3">'.$tf_data[$cell].'</font></th>';
+			}
+			echo '</tr>';
+				
+		}
+		
+		echo '</tbody>';
+		echo '</table>';
+	}
+
 	//print voucher number with all its attributes
 	function printVoucherNumber($voucher_number,$data = array()){
 		$str = "";

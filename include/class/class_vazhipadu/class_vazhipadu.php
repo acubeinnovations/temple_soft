@@ -232,7 +232,7 @@ Class Vazhipadu{
   function get_array_by_limit($start_record = 0,$max_records = 25,$dataArray = array())
   {
     $vazhipadu = array();$i=0;
-    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.quantity,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL = "SELECT v.user_id,v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.quantity,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
@@ -253,7 +253,8 @@ Class Vazhipadu{
 
     
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
-    $strSQL .= " ORDER BY vazhipadu_id DESC";
+   // $strSQL .= " ORDER BY vazhipadu_id DESC";
+   $strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();
    
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -277,7 +278,8 @@ Class Vazhipadu{
           $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
           $vazhipadu[$i]["name"] = $row['name']; 
           $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
-          $vazhipadu[$i]["star_name"] = $row['star_name'];          
+          $vazhipadu[$i]["star_name"] = $row['star_name'];  
+	  $vazhipadu[$i]["user_id"] = $row['user_id'];        
           $i++;
         } 
         return $vazhipadu;
@@ -355,6 +357,119 @@ Class Vazhipadu{
       return false;
     }
   }
+
+
+	//get userwise collection amount with date
+	/*public function get_counter_wise_collection($data = array())
+	{
+		$resultArray = array();
+		
+		$strSQL = "SELECT AM.date, SUM(V.quantity*V.amount) AS amount, V.user_id";
+		$strSQL .= " FROM vazhipadu V, account_master AM";
+		$strSQL .= " WHERE V.vazhipadu_rpt_number = AM.voucher_number";
+
+		
+
+		if(isset($data['from_date']) && isset($data['to_date'])){
+			if(strtotime($data['from_date']) == strtotime($data['to_date'])){
+				$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($data['from_date']))."'";
+			}else{
+				$strSQL .= " AND (AM.date BETWEEN '".date('Y-m-d',strtotime($data['from_date']))."' AND '".date('Y-m-d',strtotime($data['to_date']))."')";
+			}
+		}
+		$strSQL .= " GROUP BY AM.date, V.user_id";
+		$strSQL .= " ORDER BY V.user_id";
+
+		//echo $strSQL;exit;
+		
+		$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+		if ( mysql_num_rows($rsRES) > 0 )
+    		{
+        		while ( $row = mysql_fetch_assoc($rsRES) ){
+				$resultArray[] = $row;
+			}
+		}
+
+		return $resultArray;
+	}*/
+
+
+	public function get_counter_wise_collection($date_list = array())
+	{
+		$resultArray = array();$i=0;//final result array
+		$totals = array();//footer content
+
+		$totals['date'] = "Totals";
+
+		foreach($date_list as $date){
+			/*$strSQL = "SELECT V.user_id AS counter,SUM(V.quantity*V.amount) AS amount";
+			$strSQL .= " FROM vazhipadu V, account_master AM";
+			$strSQL .= " WHERE V.vazhipadu_rpt_number = AM.voucher_number";
+			$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($date))."'";
+			$strSQL .= " GROUP BY AM.date,V.user_id";*/
+
+			$strSQL = "SELECT U.user_id AS counter,SUM(V.quantity*V.amount) AS amount";
+			$strSQL .= " FROM users U, account_master AM";
+			$strSQL .= " LEFT JOIN vazhipadu V  ON U.id = V.user_id";
+			$strSQL .= " LEFT JOIN account_master AM  ON V.vazhipadu_rpt_number = AM.voucher_number";
+			$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($date))."'";
+			
+			
+			//$strSQL .= " WHERE AM.date = '".date('Y-m-d',strtotime($date))."'";
+			$strSQL .= " GROUP BY AM.date,V.user_id";
+echo $strSQL;exit;	
+
+
+			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
+			if ( mysql_num_rows($rsRES) > 0 )
+			{
+				$tr['date']=$date;
+				$tot = 0;
+				while ( $row = mysql_fetch_assoc($rsRES) ){
+					
+					$column_name = 'counter'.$row['counter'];
+					$tr[$column_name] = number_format($row['amount'],2);
+					$tot +=$row['amount'];
+
+					if(isset($totals[$column_name])){
+						$totals[$column_name] += $row['amount'];
+					}
+					else{
+						$totals[$column_name] = 0;
+						$totals[$column_name] += $row['amount'];
+					}
+				}
+				if(isset($totals['account'])){
+					$totals['account'] += $tot;
+				}
+				else{
+					$totals['account'] = 0;
+					$totals['account'] += $tot;
+				}
+				$tr['account'] = number_format($tot,2);
+				
+			}else{
+				$tr['date']=$date;
+				
+			}
+			$resultArray[] = $tr;
+
+		}
+		
+		$totals_formatted = array();
+		foreach($totals as $key=>$val)
+		{
+			
+			if($key!= 'date')
+				$totals_formatted[$key] = number_format($val,2);
+			else
+				$totals_formatted[$key] = $val;
+		}
+		
+		
+		return array($resultArray,$totals_formatted);
+
+	}
 
 
   

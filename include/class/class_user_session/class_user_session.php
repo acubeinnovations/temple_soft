@@ -69,6 +69,8 @@ class UserSession {
                 $strSQL_pg = "";
                 if(isset($_SESSION[SESSION_TITLE.'user_type']) && $_SESSION[SESSION_TITLE.'user_type'] == ADMINISTRATOR){
                     $strSQL_pg .= "SELECT utp.page_id,pg.name FROM user_type_page utp LEFT JOIN pages pg ON utp.page_id = pg.id  WHERE utp.user_type_id = '".$_SESSION[SESSION_TITLE.'user_type']."'"; 
+		
+		
                 }else if(isset($_SESSION[SESSION_TITLE.'userid']) && $_SESSION[SESSION_TITLE.'userid'] > 0){
                     $strSQL_pg .= "SELECT up.page_id,pg.name FROM user_page up LEFT JOIN pages pg ON up.page_id = pg.id WHERE up.user_id = '".$_SESSION[SESSION_TITLE.'userid']."'";
                 }

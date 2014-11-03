@@ -195,7 +195,7 @@ function get_detail_by_username(){
 
 function get_array(){
         $users = array();
-        $strSQL = "SELECT id,username FROM users ORDER BY username";
+        $strSQL = "SELECT id,username FROM users ORDER BY username ";
         $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
         if ( mysql_num_rows($rsRES) > 0 ){
         while ( list ($id,$username) = mysql_fetch_row($rsRES) ){
@@ -207,6 +207,27 @@ function get_array(){
         $this->error_number = 4;
         $this->error_description="Can't list users";
         return false;
+        }
+}
+
+function get_array_for_list(){
+        $users = array();
+        $strSQL = "SELECT id,username FROM users WHERE user_type_id != ".ADMINISTRATOR ." ORDER BY username ";
+	
+        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+        if ( mysql_num_rows($rsRES) > 0 ){
+		$i = 0;
+        	while ( list ($id,$username) = mysql_fetch_row($rsRES) ){
+			$users[$i]["id"] = $id;
+          		$users[$i]["name"] = $username;
+			$i++;
+        	}	
+       		 return $users;
+        }
+        else{
+        	$this->error_number = 4;
+        	$this->error_description="Can't list users";
+        	return false;
         }
 }
 
@@ -617,6 +638,27 @@ $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
             return false;
         }
     }
+
+
+	public function get_counter_users()
+	{
+		$strSQL_user = "SELECT id,username FROM users WHERE user_type_id = ".COUNTER." ORDER BY id";
+		$rsRES_user = mysql_query($strSQL_user, $this->connection) or die(mysql_error(). $strSQL_user);
+		
+		
+		if ( mysql_num_rows($rsRES_user) > 0 )
+    		{
+			$counter_users = array();$i = 0;
+			while ( $row_user = mysql_fetch_assoc($rsRES_user) ){
+				$counter_users[$i]['id'] = $row_user['id'];
+				$counter_users[$i]['username'] = $row_user['username'];
+				$i++;
+			}
+			return $counter_users;
+		}else{
+			return false;
+		}
+	}
 
     
 
