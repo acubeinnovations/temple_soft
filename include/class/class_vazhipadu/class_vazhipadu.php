@@ -253,8 +253,8 @@ Class Vazhipadu{
 
     
    // $strSQL .= " GROUP BY vazhipadu_rpt_number";
-   // $strSQL .= " ORDER BY vazhipadu_id DESC";
-   $strSQL .= " ORDER BY vazhipadu_rpt_number";
+    $strSQL .= " ORDER BY vazhipadu_id DESC";
+   //$strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();
    
     $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
@@ -360,25 +360,24 @@ Class Vazhipadu{
 
 
 	//get userwise collection amount with date
-	/*public function get_counter_wise_collection($data = array())
+	public function get_counter_wise_collection($data = array())
 	{
 		$resultArray = array();
 		
-		$strSQL = "SELECT AM.date, SUM(V.quantity*V.amount) AS amount, V.user_id";
-		$strSQL .= " FROM vazhipadu V, account_master AM";
-		$strSQL .= " WHERE V.vazhipadu_rpt_number = AM.voucher_number";
 
-		
 
+		$strSQL = " SELECT SUM(V.quantity*V.amount) as amount,V.user_id,AM.date";
+		$strSQL .=" FROM vazhipadu V";
+		$strSQL .=" LEFT JOIN ( SELECT DISTINCT(voucher_number), date FROM account_master ) AM ON AM.voucher_number=V.vazhipadu_rpt_number ";
 		if(isset($data['from_date']) && isset($data['to_date'])){
 			if(strtotime($data['from_date']) == strtotime($data['to_date'])){
-				$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($data['from_date']))."'";
+				$strSQL .= " WHERE AM.date = '".date('Y-m-d',strtotime($data['from_date']))."'";
 			}else{
-				$strSQL .= " AND (AM.date BETWEEN '".date('Y-m-d',strtotime($data['from_date']))."' AND '".date('Y-m-d',strtotime($data['to_date']))."')";
+				$strSQL .= " WHERE (AM.date BETWEEN '".date('Y-m-d',strtotime($data['from_date']))."' AND '".date('Y-m-d',strtotime($data['to_date']))."')";
 			}
 		}
-		$strSQL .= " GROUP BY AM.date, V.user_id";
-		$strSQL .= " ORDER BY V.user_id";
+
+		$strSQL .= " GROUP BY V.user_id,AM.date";
 
 		//echo $strSQL;exit;
 		
@@ -391,33 +390,25 @@ Class Vazhipadu{
 		}
 
 		return $resultArray;
-	}*/
+	}
 
 
-	public function get_counter_wise_collection($date_list = array())
+	/*public function get_counter_wise_collection($date_list = array())
 	{
 		$resultArray = array();$i=0;//final result array
 		$totals = array();//footer content
 
 		$totals['date'] = "Totals";
 
-		foreach($date_list as $date){
-			/*$strSQL = "SELECT V.user_id AS counter,SUM(V.quantity*V.amount) AS amount";
+		foreach($date_list as $date => $record){
+			
+			$strSQL = "SELECT V.user_id AS counter,SUM(V.quantity*V.amount) AS amount";
 			$strSQL .= " FROM vazhipadu V, account_master AM";
 			$strSQL .= " WHERE V.vazhipadu_rpt_number = AM.voucher_number";
 			$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($date))."'";
-			$strSQL .= " GROUP BY AM.date,V.user_id";*/
-
-			$strSQL = "SELECT U.user_id AS counter,SUM(V.quantity*V.amount) AS amount";
-			$strSQL .= " FROM users U, account_master AM";
-			$strSQL .= " LEFT JOIN vazhipadu V  ON U.id = V.user_id";
-			$strSQL .= " LEFT JOIN account_master AM  ON V.vazhipadu_rpt_number = AM.voucher_number";
-			$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($date))."'";
-			
-			
-			//$strSQL .= " WHERE AM.date = '".date('Y-m-d',strtotime($date))."'";
 			$strSQL .= " GROUP BY AM.date,V.user_id";
-echo $strSQL;exit;	
+
+			echo $strSQL;exit;
 
 
 			$rsRES = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL);
@@ -469,7 +460,7 @@ echo $strSQL;exit;
 		
 		return array($resultArray,$totals_formatted);
 
-	}
+	}*/
 
 
   

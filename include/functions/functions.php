@@ -1,5 +1,51 @@
 <?php 
 
+	function print_monthly_table($th_data = array(),$td_data = array(),$tf_data=array(),$parms = array())
+	{
+
+		$param_str = '';
+		foreach($parms as $key=>$value){
+			$param_str .= ' '.$key.'="'.$value.'"';
+		}
+
+		echo '<table'.$param_str.'>';
+		echo '<tbody>';
+		
+
+		echo '<tr>';
+
+		$cell_order = array();
+		foreach($th_data as $head){
+			
+			echo '<th align="left"><font size="3">'.$head.'</font></th>';
+		}
+		echo '</tr>';
+
+		foreach($td_data as $data){
+
+			echo '<tr>';
+			foreach($data as $val){
+				echo '<td><font size="3">'.$val.'</font></td>';
+			}
+			echo '</tr>';
+			 
+			
+		}
+
+		if($tf_data){
+			echo '<tr>';
+			foreach($tf_data as $val){
+				echo '<th align="left"><font size="3">'.$val.'</font></th>';
+			}
+			echo '</tr>';
+				
+		}
+		
+		echo '</tbody>';
+		echo '</table>';
+	}
+
+
 
 	function print_table($th_data = array(),$td_data = array(),$tf_data=array(),$parms = array())
 	{
