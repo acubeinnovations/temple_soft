@@ -79,6 +79,11 @@ if(!defined('CHECK_INCLUDED')){
 			<td><?php echo $variable1['total_quantity'];?></td>
 			<td><?php echo number_format($variable1['total_amount'],2);?></td>
 		</tr>
+		<tr style="font-weight:bold;">
+			<td colspan="3" align="right">Grand Total</td>
+			<td><?php echo $variable2['total_quantity'];?></td>
+			<td><?php echo number_format($variable2['total_amount'],2);?></td>
+		</tr>
 		<tr>
 			<td colspan="5"><?php  $pagination->pagination_style_numbers();?></td>
 		</tr>
@@ -103,7 +108,7 @@ if(!defined('CHECK_INCLUDED')){
 		</tr>
 		</table>
 	<h3>Pooja Register</h3>
-	<p>Date : <?php echo ($pooja->from_date == $pooja->to_date)?$pooja->from_date:$pooja->from_date." - ".$pooja->to_date;?></p>
+	<p>Date : <?php echo ($pooja->from_date == $pooja->to_date)?$pooja->from_date:$pooja->from_date." To ".$pooja->to_date;?></p>
 	<?php if(count($pooja_total_list) > 0){?>
 	<table width="100%">
 		<thead>

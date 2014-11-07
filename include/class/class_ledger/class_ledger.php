@@ -157,7 +157,7 @@ Class Ledger{
 			WHERE ledger_sub.deleted = '".NOT_DELETED."' AND account_master.fy_id = '".$this->current_fy_id."' AND ledger_sub.status = '".STATUS_ACTIVE."' AND ledger_id = '".$ledger_id."' AND parent_sub_ledger_id = '-1'";
 			$strSQL .= " AND ledger_sub.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
 			$strSQL .= " GROUP BY ledger_sub_id";
-			//echo $strSQL;exit();
+			echo $strSQL;exit();
 		$ledgers = array();$i=0;
 		 mysql_query("SET NAMES utf8");
 		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );

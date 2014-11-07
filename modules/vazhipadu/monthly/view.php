@@ -52,7 +52,8 @@ if(!defined('CHECK_INCLUDED')){
 	</table>
 
 	<h3>Monthly Consolidate</h3>
-	<p>Date : <?php echo $data['from_date']." ".$data['to_date'];?></p>
+	<p>Date : <?php echo ($data['from_date'] == $data['to_date'])?$data['from_date']:$data['from_date']." To ".$data['to_date'];?></p>
+	
 
 	<div>
 		<?php print_monthly_table($theader,$tbody,$tfooter,array('id'=>'tbl-append','width'=>'100%'));?>

@@ -130,7 +130,7 @@ No Records Found
 		</tr>
 		</table>
 <h3>Vazhipadu Register</h3>
-<p>Date : <?php echo ($vazhipadu->from_date == $vazhipadu->to_date)?$vazhipadu->from_date:$vazhipadu->from_date." - ".$vazhipadu->to_date;?></p>
+<p>Date : <?php echo ($vazhipadu->from_date == $vazhipadu->to_date)?$vazhipadu->from_date:$vazhipadu->from_date." To ".$vazhipadu->to_date;?></p>
 <div>
 <?php if($vazhipadu_total_list){?>
 
