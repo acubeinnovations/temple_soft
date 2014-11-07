@@ -8,8 +8,7 @@ $pages = new Pages($myconnection);
 $pages->connection = $myconnection;
 $page_list = $pages->get_list_array();
 
-$menu_item = new MenuItem($myconnection);
-$menu_item->connection = $myconnection;
+
 $menu_list = $menu_item->get_list_array();
 
 if(isset($_GET['id'])){
