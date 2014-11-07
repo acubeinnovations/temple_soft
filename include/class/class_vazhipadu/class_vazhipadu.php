@@ -364,16 +364,15 @@ Class Vazhipadu{
 	{
 		$resultArray = array();
 		
-
-
 		$strSQL = " SELECT SUM(V.quantity*V.amount) as amount,V.user_id,AM.date";
 		$strSQL .=" FROM vazhipadu V";
 		$strSQL .=" LEFT JOIN ( SELECT DISTINCT(voucher_number), date FROM account_master ) AM ON AM.voucher_number=V.vazhipadu_rpt_number ";
+		$strSQL .= " WHERE V.deleted ='".NOT_DELETED."'";
 		if(isset($data['from_date']) && isset($data['to_date'])){
 			if(strtotime($data['from_date']) == strtotime($data['to_date'])){
-				$strSQL .= " WHERE AM.date = '".date('Y-m-d',strtotime($data['from_date']))."'";
+				$strSQL .= " AND AM.date = '".date('Y-m-d',strtotime($data['from_date']))."'";
 			}else{
-				$strSQL .= " WHERE (AM.date BETWEEN '".date('Y-m-d',strtotime($data['from_date']))."' AND '".date('Y-m-d',strtotime($data['to_date']))."')";
+				$strSQL .= " AND (AM.date BETWEEN '".date('Y-m-d',strtotime($data['from_date']))."' AND '".date('Y-m-d',strtotime($data['to_date']))."')";
 			}
 		}
 

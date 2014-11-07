@@ -24,8 +24,11 @@
 		foreach($td_data as $data){
 
 			echo '<tr>';
-			foreach($data as $val){
-				echo '<td><font size="3">'.$val.'</font></td>';
+			foreach($data as $i=>$val){
+				if($i == 0)
+					echo '<td><font size="3">'.$val.'</font></td>';
+				else
+					echo '<td><font size="3">'.$val.'</font></td>';
 			}
 			echo '</tr>';
 			 
@@ -34,8 +37,11 @@
 
 		if($tf_data){
 			echo '<tr>';
-			foreach($tf_data as $val){
-				echo '<th align="left"><font size="3">'.$val.'</font></th>';
+			foreach($tf_data as $i=>$val){
+				if($i == 0)
+					echo '<th align="left"><font size="3">'.$val.'</font></th>';
+				else
+					echo '<th align="left"><font size="3">'.number_format($val,2).'</font></th>';
 			}
 			echo '</tr>';
 				

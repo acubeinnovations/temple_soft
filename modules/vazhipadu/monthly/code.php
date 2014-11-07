@@ -100,10 +100,10 @@ foreach($dateArray as $date=>$tdata){
 		$row_total += $counter_row['amount'];
 
 		if(isset($tfooter[$col])){
-			$tfooter[$col] = number_format($tfooter[$col] + $counter_row['amount'],2);
+			$tfooter[$col] = $tfooter[$col] + $counter_row['amount'];
 		}
 		else{
-			$tfooter[$col] = number_format($counter_row['amount'],2);
+			$tfooter[$col] = $counter_row['amount'];
 		}
 	
 		$col++;
@@ -116,10 +116,10 @@ foreach($dateArray as $date=>$tdata){
 		$theader[$col] = "Account";
 
 	if(isset($tfooter[$col])){
-		$tfooter[$col] = number_format($tfooter[$col] + $row_total,2);
+		$tfooter[$col] = $tfooter[$col] + $row_total;
 	}
 	else{
-		$tfooter[$col] = number_format($row_total,2);
+		$tfooter[$col] = $row_total;
 	}
 	$col++;
 			
