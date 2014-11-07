@@ -3,6 +3,10 @@ if(!defined('CHECK_INCLUDED')){
 	exit();
 }
 
+$account_settings = new AccountSettings($myconnection);
+$account_settings->connection = $myconnection;
+$account_settings->getAccountSettings();
+
 $vazhipadu= new Vazhipadu($myconnection);
 $vazhipadu->connection = $myconnection;
 

@@ -41,7 +41,7 @@ if(!defined('CHECK_INCLUDED')){
 
 
 <?php ob_start();?>
-<?php //if($counter_num > 0){?>
+
 	<table width="100%" class="print-head">
 		<tr>
 			<td width="100%" align="center" valign="middle">
@@ -58,9 +58,6 @@ if(!defined('CHECK_INCLUDED')){
 		<?php print_monthly_table($theader,$tbody,$tfooter,array('id'=>'tbl-append','width'=>'100%'));?>
 	</div>
 
-<?php //}else{?>
-
-<?php //}?>
 <?php 
 	$print_content = ob_get_contents();
 	ob_end_clean();
