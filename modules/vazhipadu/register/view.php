@@ -88,6 +88,10 @@ if(!defined('CHECK_INCLUDED')){
 			<td colspan="6" align="right" >Total</td>
 			<td><?php echo number_format($total_amount,2);?></td>
 		</tr>
+		<tr style="font-weight:bold;">
+			<td colspan="6" align="right" >Grand Total</td>
+			<td><?php echo number_format($grand_total,2);?></td>
+		</tr>
 			
 		</tbody>
 

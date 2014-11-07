@@ -58,7 +58,7 @@ if(isset($_GET['submit'])){
 
 
 $vazhipadu_list = $vazhipadu->get_array_by_limit($pagination->start_record,$pagination->max_records,$data);
-$vazhipadu_total_list = $vazhipadu->get_all_array($data);
+list($vazhipadu_total_list,$grand_total) = $vazhipadu->get_all_array($data);
 
 if($vazhipadu_list){
 	$pagination->total_records = $vazhipadu->total_records;

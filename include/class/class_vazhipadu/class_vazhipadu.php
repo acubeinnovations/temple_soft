@@ -293,6 +293,7 @@ Class Vazhipadu{
   function get_all_array($dataArray = array())
   {
     $vazhipadu = array();$i=0;
+	$grand_total = 0;
     $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.quantity,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
@@ -331,10 +332,11 @@ Class Vazhipadu{
           $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
           $vazhipadu[$i]["name"] = $row['name']; 
           $vazhipadu[$i]["pooja_name"] = $row['pooja_name'];
-          $vazhipadu[$i]["star_name"] = $row['star_name'];          
+          $vazhipadu[$i]["star_name"] = $row['star_name'];
+	  $grand_total += $vazhipadu[$i]["amount"];         
           $i++;
         } 
-        return $vazhipadu;
+        return array($vazhipadu,$grand_total);
       }else{    
         $this->error_number = 4;
         $this->error_description="Can't list vazhipadu";
