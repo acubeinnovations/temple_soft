@@ -98,7 +98,7 @@ foreach($dateArray as $date=>$tdata){
 	foreach($tdata as $counter_row){
 		$tbody[$i][]= number_format($counter_row['amount'],2);
 		if($i == 0)
-			$theader[$col] = $counter_row['title'];
+			$theader[$col] = (isset($counter_row['title']))?$counter_row['title']:'Admin';
 			
 		
 		$row_total += $counter_row['amount'];

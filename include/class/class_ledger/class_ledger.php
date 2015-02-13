@@ -152,7 +152,7 @@ Class Ledger{
 
     //get ledger sub list of current financial year combine with account master
     public function get_list_sub_level1_with_account_master($ledger_id)
-    {
+    {	echo "Nope! Query optimization required";exit;
     	$strSQL = "SELECT ledger_sub_id,ledger_sub_name ,(SELECT SUM(account_debit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_from = ledger_sub_id AND deleted = '".NOT_DELETED."') AS debit ,(SELECT SUM(account_credit)  FROM account_master WHERE fy_id = '".$this->current_fy_id."' AND account_to = ledger_sub_id AND deleted = '".NOT_DELETED."') AS credit FROM ledger_sub,account_master
 			WHERE ledger_sub.deleted = '".NOT_DELETED."' AND account_master.fy_id = '".$this->current_fy_id."' AND ledger_sub.status = '".STATUS_ACTIVE."' AND ledger_id = '".$ledger_id."' AND parent_sub_ledger_id = '-1'";
 			$strSQL .= " AND ledger_sub.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."')";
