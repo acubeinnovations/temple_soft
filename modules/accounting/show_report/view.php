@@ -4,17 +4,17 @@ if(!defined('CHECK_INCLUDED')){
 }
 ?>
 
-<?php ob_start();?>
+
 <form id="" name="form1" method="GET" action="" >
 <input type="hidden" value="<?php echo $report->report_id;?>" name="slno">
 
 <div class="row" >
 	<div class="medium-10 columns">
-		<div class="print-head">
+		<!--<div class="print-head">
 			<h3><?php echo $account_settings->organization_name; ?></h3>
 			<p><?php echo $account_settings->organization_address; ?></p>
 			<h5><?php echo $page_heading; ?></h5>
-		</div>
+		</div>-->
 		<div class="page-head">
 			<h3><?php echo $page_heading; ?></h3>
 		</div>
@@ -38,6 +38,9 @@ if(!defined('CHECK_INCLUDED')){
 			<label for="name"> To Date</label>
 			<input class="mydatepicker" name="txtto" id="" value="<?php echo $report_feature->date_to;?>" />
 		</div>
+
+		
+
 		<div class="medium-2 columns">
 			<input type="submit" class="small button" value="Search" name="submit">
 		</div>
@@ -46,13 +49,34 @@ if(!defined('CHECK_INCLUDED')){
 		</div>
 		
 	</div>
+	<div class="row">
+		<div class="medium-3 columns">
+			<input name="zero_chk" type="checkbox" id="zero_chk" value="1"  <?php echo ($report_feature->zero_chk ==1 )?"checked":"";?>/>
+			<label for="name">Zero Values</label>
+			
+		</div>
+	</div>
 </fieldset>
 </div>
 
-
+<?php ob_start();?>
 <div class="row">
+<div class="medium-12 columns print-head">
+	<table width="100%">
+	<tr>
+	<td width="100%" align="center" valign="middle">
+	<h3><?php echo $account_settings->organization_name; ?></h3></br>
+	<?php echo $account_settings->organization_address; ?>
+	</td>
+	</tr>
+	</table>
+	<h3><?php echo $page_heading; ?></h3>
+	<p>Date : <?php echo ($report_feature->date_from == $report_feature->date_to)?$report_feature->date_from:$report_feature->date_from." To ".$report_feature->date_to;?></p>
+</div>
+
 <div class="medium-12 columns">
 	<table width="100%">
+	
 	<tr>
 
 		<?php if($report->lhs == LHS_STATUS_ACTIVE){?>
@@ -77,7 +101,7 @@ if(!defined('CHECK_INCLUDED')){
 									<div class="medium-2 columns" style="font-weight:bold;">
 										<?php 
 										$lhs_total_balance += $lhs_features[$i]['balance'];
-										echo $lhs_features[$i]['balance'];
+										echo number_format($lhs_features[$i]['balance'],2);
 										?>
 									</div>
 								</div>
@@ -88,13 +112,13 @@ if(!defined('CHECK_INCLUDED')){
 								$sub = $lhs_features[$i]['sub_ledger_details'];$j=0;
 								while ($j < count($sub)) {
 							?>
-							<div class="new_row" >
+							<div class="new_row" style="border-bottom:1px solid black;">
 								<div class="medium-12 columns">
 									<div class="medium-7 columns" style="padding:3px 0px 3px 15px;">
 										<?php echo $sub[$j]['ledger_sub_name'];?>
 									</div>
-									<div class="medium-5 columns">
-										<?php echo number_format($sub[$j]['balance'],2)?>
+									<div class="medium-5 columns" style="padding:3px 0px 3px 15px;">
+										<span class="amount"><?php echo number_format($sub[$j]['balance'],2)?></span>
 									</div>
 									
 								</div>

@@ -26,6 +26,10 @@ Class ReportFeature{
     var $total_records='';
 
      var $current_fy_id = gINVALID;
+
+
+	var $zero_chk = 0;//chek non zero values for show report
+
     public function __construct($connection)
     {
         $strSQL = "SELECT * FROM account_settings WHERE id = '1'";
@@ -89,6 +93,8 @@ Class ReportFeature{
     		$strSQL .= " WHERE RF.report_id = '".$this->report_id."' AND RF.status = '".STATUS_ACTIVE."' AND RF.position = '".$this->position."'";
             $strSQL .= " ORDER BY LM.ledger_id";
 
+//echo $strSQL;exit;
+
             mysql_query("SET NAMES utf8");    		
     		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     		if(mysql_num_rows($rsRES) > 0){
@@ -121,15 +127,39 @@ Class ReportFeature{
                         
                     }
 
-                    $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, (SELECT SUM(account_debit) FROM account_master   WHERE fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id AND deleted = '".NOT_DELETED."' ".$date_filter." ) AS debit,(SELECT SUM(account_credit) FROM account_master   WHERE  fy_id = '".$this->current_fy_id."' AND ref_ledger = ledger_sub_id AND deleted = '".NOT_DELETED."' ".$date_filter.") AS credit";
+		    //------old query---------------------------
+		     /*
+                    $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name, (SELECT SUM(account_debit) FROM account_master   WHERE fy_id = '".$this->current_fy_id."' AND ref_ledger = ls.ledger_sub_id AND deleted = '".NOT_DELETED."' ".$date_filter." ) AS debit,(SELECT SUM(account_credit) FROM account_master   WHERE  fy_id = '".$this->current_fy_id."' AND ref_ledger = ls.ledger_sub_id AND deleted = '".NOT_DELETED."' ".$date_filter.") AS credit";
                     $strSQL_sub .= " FROM ledger_sub ls";
                     $strSQL_sub .= " WHERE ls.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."') AND ls.ledger_sub_id IN(".$sub_ledgers.")";
+		*/
+                   //---------------------------------
+
+  		    
+		    if($this->zero_chk){
+			    /*Following query display all ledgers with  transactions including zero values*/
+			    $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name,SUM(ac.account_debit) AS debit,SUM(ac.account_credit) AS credit";
+		            $strSQL_sub .= " FROM ledger_sub ls";
+			    $strSQL_sub .= " LEFT JOIN account_master ac ON ac.ref_ledger = ls.ledger_sub_id AND";
+			    $strSQL_sub .= "  ac.fy_id = '".$this->current_fy_id."'   AND ac.deleted = '".NOT_DELETED."' ".$date_filter;
+		            $strSQL_sub .= " WHERE ls.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."') AND ls.ledger_sub_id IN(".$sub_ledgers.")";
+			    $strSQL_sub .= " GROUP BY ls.ledger_sub_id";
+		    }else{
+		    	  /* Following query display non zero ledger transactions*/
+
+			   $strSQL_sub = "SELECT ls.ledger_sub_id,ls.ledger_sub_name,SUM(ac.account_debit) AS debit,SUM(ac.account_credit) AS credit";
+		            $strSQL_sub .= " FROM ledger_sub ls,account_master ac";
+			    $strSQL_sub .= " WHERE ac.ref_ledger = ls.ledger_sub_id AND ac.fy_id = '".$this->current_fy_id."'   AND ac.deleted = '".NOT_DELETED."' ".$date_filter;
+		            $strSQL_sub .= " AND ls.ledger_sub_id IN(SELECT ledger_sub_id FROM fy_ledger_sub WHERE fy_id = '".$this->current_fy_id."') AND ls.ledger_sub_id IN(".$sub_ledgers.")";
+			   $strSQL_sub .= " GROUP BY ac.ref_ledger";
+		    }		   
+		   
+ 		   //---------------------------------
 
 
+		   $strSQL_sub .= " ORDER BY ls.ledger_sub_name";
 
-                    $strSQL_sub .= " ORDER BY ls.ledger_sub_name";
-
-                   // echo $strSQL_sub;exit();
+                    //	echo $strSQL_sub;exit();
 
     				$rsRES_sub = mysql_query($strSQL_sub,$this->connection) or die(mysql_error(). $strSQL_sub );
     				$sub_ledger = array();$j=0;

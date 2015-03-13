@@ -18,9 +18,14 @@ $page_heading = "";
 if(isset($_GET['submit'])){
 	$report_feature->date_from = date('d-m-Y',strtotime($_GET['txtfrom']));
 	$report_feature->date_to = date('d-m-Y',strtotime($_GET['txtto']));
+
+	$report_feature->zero_chk = (isset($_GET['zero_chk']))?$_GET['zero_chk']:0;
+
+	
 }else{
 	$report_feature->date_from = date('d-m-Y',strtotime(CURRENT_DATE));
 	$report_feature->date_to = date('d-m-Y',strtotime(CURRENT_DATE));
+
 }
 
 if(isset($_GET['slno'])){
@@ -45,5 +50,7 @@ if(isset($_GET['slno'])){
 	}
 			
 }
+
+
 
 ?>
