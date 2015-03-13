@@ -12,7 +12,14 @@ $ledger->connection = $myconnection;
 
 //$ledgers = $ledger->generateLedgerList();
 
-$ledgers_list = $ledger->getLedgerTransaction();
+//$ledgers_list = $ledger->getLedgerTransaction();
+
+$trans = new LedgerTrans($myconnection);
+$trans->connection = $myconnection;
+
+$ledgers_list = $trans->getLedgerTransaction();
+
+echo "<pre>";print_r($ledgers_list);echo "</pre>";exit;
 
 
 	
