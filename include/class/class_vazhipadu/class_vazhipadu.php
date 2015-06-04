@@ -232,8 +232,9 @@ Class Vazhipadu{
   function get_array_by_limit($start_record = 0,$max_records = 25,$dataArray = array())
   {
     $vazhipadu = array();$i=0;
-    $strSQL = "SELECT v.user_id,v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.quantity,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL = "SELECT ac.date as booking_date,v.user_id,v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.amount,v.quantity,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
+    $strSQL .=" LEFT JOIN account_master ac ON v.vazhipadu_rpt_number = ac.voucher_number ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
     if($this->from_date != "" and $this->to_date != ""){
@@ -273,6 +274,7 @@ Class Vazhipadu{
           $vazhipadu[$i]["vazhipadu_id"] = $row['vazhipadu_id'];
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
           $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
+	  $vazhipadu[$i]["booking_date"] = date('d-m-Y',strtotime($row['booking_date']));
           $vazhipadu[$i]["unit_rate"] = $row['amount'];
           $vazhipadu[$i]["quantity"] = $row['quantity'];
           $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];
@@ -294,7 +296,8 @@ Class Vazhipadu{
   {
     $vazhipadu = array();$i=0;
 	$grand_total = 0;
-    $strSQL = "SELECT v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.quantity,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL = "SELECT ac.date as booking_date, v.vazhipadu_id,v.vazhipadu_rpt_number,v.vazhipadu_date,v.quantity,v.amount,v.name,s.name as star_name,p.name as pooja_name FROM vazhipadu v";
+    $strSQL .=" LEFT JOIN account_master ac ON v.vazhipadu_rpt_number = ac.voucher_number ";
     $strSQL .=" LEFT JOIN pooja p ON p.id=v.pooja_id ";
     $strSQL .=" LEFT JOIN stars s ON s.id=v.star_id ";
     $strSQL .= " WHERE v.deleted ='".NOT_DELETED."'";
@@ -327,6 +330,7 @@ Class Vazhipadu{
           $vazhipadu[$i]["vazhipadu_id"] = $row['vazhipadu_id'];
           $vazhipadu[$i]["vazhipadu_rpt_number"] = $row['vazhipadu_rpt_number'];
           $vazhipadu[$i]["vazhipadu_date"] = date('d-m-Y',strtotime($row['vazhipadu_date']));
+          $vazhipadu[$i]["booking_date"] = date('d-m-Y',strtotime($row['booking_date']));
           $vazhipadu[$i]["unit_rate"] = $row['amount'];
           $vazhipadu[$i]["quantity"] = $row['quantity'];
           $vazhipadu[$i]["amount"] = $row['amount']*$row['quantity'];

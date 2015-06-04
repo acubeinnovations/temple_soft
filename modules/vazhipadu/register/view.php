@@ -59,6 +59,7 @@ if(!defined('CHECK_INCLUDED')){
 		<thead>
 			<tr>
 				<td width="8%">Voucher Number</td>
+				<td width="10%">Booking Date</td>
 				<td width="10%">Date</td>
 				<td width="30%">Pooja</td>
 				<td>Name</td>
@@ -76,6 +77,7 @@ if(!defined('CHECK_INCLUDED')){
 			<td>
 			<?php echo printVoucherNumber($vazhipadu_list[$i]['vazhipadu_rpt_number'],$voucher_number_array); ?>
 			</td>
+			<td><?php echo $vazhipadu_list[$i]['booking_date']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['vazhipadu_date']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['pooja_name']; ?></td>
 			<td><?php echo $vazhipadu_list[$i]['name']; ?></td>
@@ -122,8 +124,8 @@ No Records Found
 
 <?php ob_start();?>
 <table width="100%">
-		<tr>
-			<td width="100%" align="center" valign="middle">
+	<tr>
+	<td width="100%" align="center" valign="middle">
 <h3><?php echo $account_settings->organization_name; ?></h3></br>
 <?php echo $account_settings->organization_address; ?>
 </td>
@@ -137,12 +139,13 @@ No Records Found
 <table width="100%" id="tbl-append">
 		<thead>
 			<tr>
-				<td width="8%"><font size="3">Voucher Number</font></td>
+				<td width="10%"><font size="3">voucher Number</font></td>
+				<td width="10%"><font size="3">Booking Date</font></td>
 				<td width="10%"><font size="3">Date</font></td>
-				<td width="30%"><font size="3">Pooja</font></td>
+				<td width="25%"><font size="3">Pooja</font></td>
 				<td><font size="3">Name</font></td>
 				<td width="15%"><font size="3">Star</font></td>
-				<td width="15%"><font size="3">Quantity</font></td>
+				<td width="10%"><font size="3">Quantity</font></td>
 				<td width="10%"><font size="3">Amount</font></td>
 			</tr>
 		</thead>
@@ -153,6 +156,7 @@ No Records Found
 			?>
 		<tr>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></font></td>
+			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['booking_date']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></font></td>
 			<td><font size="4"><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['name']; ?></font></td>

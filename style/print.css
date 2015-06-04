@@ -20,11 +20,12 @@ h5{
 
 table, tr, td{
   font-size:10px !important;
-  line-spacing:20px;
-}
+
+ }
+
 
 table tbody tr td, table tr td, table tfoot tr td {
-    line-height: 0.125rem;
+    min-height: 0.125rem;
 }
 
 
