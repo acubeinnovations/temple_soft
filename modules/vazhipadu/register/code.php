@@ -55,6 +55,30 @@ if(isset($_GET['submit'])){
 }
 
 
+//print columns 
+if(!isset($_GET['lstpooja']) || $_GET['lstpooja'] == gINVALID){
+	$cols = array('Voucher Number'=>array('width'=>10),
+			'Booking Date'=>array('width'=>10),
+			'Date'=>array('width'=>10),
+			'Pooja'=>array('width'=>20),
+			'Name'=>array('width'=>20),
+			'Star'=>array('width'=>15),
+			'Qty.'=>array('width'=>5),
+			'Amt'=>array('width'=>10)
+			);
+	
+}else{
+	$pooja->id = $_GET['lstpooja'];
+	$pooja->get_details();
+	
+	$cols = array('Name'=>array(),
+			'Star'=>array('width'=>15),
+			'Qty.'=>array('width'=>10),
+			'Amt'=>array('width'=>10)
+			);
+}
+
+
 
 
 $vazhipadu_list = $vazhipadu->get_array_by_limit($pagination->start_record,$pagination->max_records,$data);

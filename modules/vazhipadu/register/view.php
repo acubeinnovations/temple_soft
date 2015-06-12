@@ -133,20 +133,26 @@ No Records Found
 		</table>
 <h3>Vazhipadu Register</h3>
 <p>Date : <?php echo ($vazhipadu->from_date == $vazhipadu->to_date)?$vazhipadu->from_date:$vazhipadu->from_date." To ".$vazhipadu->to_date;?></p>
+
+<?php if(isset($_GET['lstpooja']) && $_GET['lstpooja'] > 0){?>
+<p>Pooja : <?php echo $pooja->name;;?></p>
+<?php }?>
 <div>
 <?php if($vazhipadu_total_list){?>
 
 <table width="100%" id="tbl-append">
 		<thead>
 			<tr>
-				<td width="10%"><font size="3">voucher Number</font></td>
-				<td width="10%"><font size="3">Booking Date</font></td>
-				<td width="10%"><font size="3">Date</font></td>
-				<td width="25%"><font size="3">Pooja</font></td>
-				<td><font size="3">Name</font></td>
-				<td width="15%"><font size="3">Star</font></td>
-				<td width="10%"><font size="3">Quantity</font></td>
-				<td width="10%"><font size="3">Amount</font></td>
+			<?php 
+			
+		
+			?>
+
+			<?php foreach($cols as $col=>$attr){?>
+				<td <?php echo (isset($attr['width']))?'width="'.$attr['width'].'%"':'';?>>
+				<font size="3"><?php echo $col;?></font>
+				</td>
+			<?php }?>
 			</tr>
 		</thead>
 		<tbody
@@ -155,10 +161,12 @@ No Records Found
 			while($i<count($vazhipadu_total_list)){
 			?>
 		<tr>
+			<?php if(!isset($_GET['lstpooja']) || $_GET['lstpooja'] == gINVALID){?>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_rpt_number']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['booking_date']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['vazhipadu_date']; ?></font></td>
 			<td><font size="4"><?php echo $vazhipadu_total_list[$i]['pooja_name']; ?></font></td>
+			<?php }?>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['name']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['star_name']; ?></font></td>
 			<td><font size="3"><?php echo $vazhipadu_total_list[$i]['quantity']; ?></font></td>
@@ -166,7 +174,9 @@ No Records Found
 		</tr>
 		<?php $total_amount+=$vazhipadu_total_list[$i]['unit_rate']*$vazhipadu_total_list[$i]['quantity'];$i++;}?>
 		<tr style="font-weight:bold;">
-			<td colspan="6" align="right" ><font size="3">Total</font></td>
+
+		
+			<td colspan="<?php echo (!isset($_GET['lstpooja']) || $_GET['lstpooja'] == gINVALID)?7:3;?>" align="right" ><font size="3">Total</font></td>
 			<td><font size="3"><?php echo number_format($total_amount,2);?></font></td>
 		</tr>
 			
