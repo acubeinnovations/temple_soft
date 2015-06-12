@@ -253,7 +253,7 @@ Class Vazhipadu{
     }
 
     
-   // $strSQL .= " GROUP BY vazhipadu_rpt_number";
+    $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_id DESC";
    //$strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();
@@ -317,7 +317,7 @@ Class Vazhipadu{
     }
 
     
-   // $strSQL .= " GROUP BY vazhipadu_rpt_number";
+    $strSQL .= " GROUP BY vazhipadu_rpt_number";
     $strSQL .= " ORDER BY vazhipadu_rpt_number";
     //echo $strSQL;exit();
    
