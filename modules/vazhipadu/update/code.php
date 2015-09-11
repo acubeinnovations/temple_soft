@@ -73,7 +73,12 @@ if(isset($_GET['pr'])){
 }
 
 if(isset($_GET['cn'])){
-	$add_vazhipadu->vazhipadu_rpt_number = $_GET['cn'];
+
+	if(isset($_GET['pr']))
+		$add_vazhipadu->vazhipadu_rpt_number = $_GET['pr'];
+	else
+		$add_vazhipadu->vazhipadu_rpt_number = $_GET['cn'];
+
 	list($vazhipadu_details_cn,$variable_cn) = $add_vazhipadu->get_vazhipadu_details();
 	if(count($vazhipadu_details_cn) == 1){
 		if(trim($vazhipadu_details_cn[0]['name']) == '' and $vazhipadu_details_cn[0]['star_id'] == -1){

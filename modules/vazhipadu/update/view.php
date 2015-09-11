@@ -135,59 +135,91 @@ if(!defined('CHECK_INCLUDED')){
 <?php if($vazhipadu_details){?>
 <?php ob_start(); ?>
 <style> 
+
 table tr td{
 line-height: 2px !important;
 }
 </style>
-<table width="420px" cellspacing="0" cellpadding="0" >
+<table width="750px" cellspacing="0" cellpadding="0" style="margin-top:40px;" >
 
-	<tr style="height:40px !important;">
-		<td width="184" style="line-height: 17px !important;"><font size="4"><?php echo $add_vazhipadu->pooja_description; ?> (<?php echo $variable['total_quantity'];?>)</font></td>
+	<tr style="height:22px !important;">
+		<td width="184" style="line-height: 17px !important;"><font size="2"><?php echo $add_vazhipadu->pooja_description; ?> (<?php echo $variable['total_quantity'];?>)</font></td>
 		<td width="96" >&nbsp;</td>
 		<td width="110" style="line-height: 6px !important;" valign="top" align="center">
-
-			<?php echo printVoucherNumber($add_vazhipadu->vazhipadu_rpt_number,$voucher_number_array); ?><br/><br/>
-			<?php echo date("d-m-Y");?>
+			<span style="margin-left:10px;">
+			<font size="2">
+				<?php 
+				echo printVoucherNumber($add_vazhipadu->vazhipadu_rpt_number,$voucher_number_array); 
+			
+				?><br/><br/>
+				<?php echo date("d-m-Y");?>
+			</font>
+			</span>
 		</td>
 	</tr>
 
 	<tr>
-		<td   colspan="3" height="95px">
+		<td colspan="3">
+			<div style="min-height:114px !important;">
 			
-			<table width="420px" style="min-height:95px !important;">
+			<table width="100%" cellspacing="0"  >
 				<?php $i=0;$total = 0;$j=4;
 				while($i<count($vazhipadu_details)){
 					$total += $vazhipadu_details[$i]['amount'];
 					
 				?>
-				<tr height="10px"> 
-					<td width="184" valign="bottom"><font size="4"><?php echo $vazhipadu_details[$i]['name']	;?></font></td>
-					<td width="96" valign="bottom"><font size="4"><?php echo $vazhipadu_details[$i]['star']; ?></font></td>
-					<td width="110" valign="bottom" align="center"><font size="3"><?php echo $vazhipadu_details[$i]['amount']; ?></font></td>
+				<tr height="5px"> 
+					<td width="50%" valign="bottom" style="line-height: 5px !important;"><font size="1"><?php echo $vazhipadu_details[$i]['name']	;?></font></td>
+					<td width="25%" valign="bottom"><font size="1"><?php echo $vazhipadu_details[$i]['star']; ?></font></td>
+					<td width="25%" valign="bottom" align="center"><font size="1"><?php echo $vazhipadu_details[$i]['amount']; ?></font></td>
 					
 				</tr>
 				<?php $i++;$j--;}?>
-				<?php for($k=0; $k < $j; $k++){?>
-				<tr height="5px">
+
+				
+
+				<!-- <?php for($k=0; $k < $j; $k++){?>
+				<tr height="10px">
 					<td colspan="3"></td>
 				</tr>
-				<?php }?>
+				<?php }?> -->
+
+				
 	    	</table>
-	    	
+		</div>
+		
+		<span style="width:110px;float:right;">
+
+			<font size="2"><?php echo $variable['total_amount'];?></font>
+
+		</span>
+
+		<span style="width:300px;float:left;text-align:right;">
+
+			<font size="2"><?php echo $add_vazhipadu->vazhipadu_date;?></font>
+
+		</span>
+
+
 		</td>
 	</tr>
 
-	<tr height="5px">
-	<td width="184" >&nbsp;</td>
-					<td width="96">&nbsp;</td>
-					<td width="110" align="center" valign="top"><font size="3"><?php echo $variable['total_amount'];?></font></td>
+	
+
+	 <!--<tr height="5px" style="border:1px solid black;">
+		<td width="184" >&nbsp;</td>
+		<td width="96">&nbsp;</td>
+		<td width="110" align="center" valign="top"><font size="2"><?php echo $variable['total_amount'];?></font></td>
 
 	</tr>
-
+	-->
+<!--
 	<tr height="5px">
-		 <td align="right" valign="top"><?php echo $add_vazhipadu->vazhipadu_date; ?></td>
+		 <td align="right" valign="top"><font size="2"><?php echo $add_vazhipadu->vazhipadu_date; ?></font></td>
 		<td  colspan="2"></td>
 	</tr>
+
+	-->
 </table>
 
 
