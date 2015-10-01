@@ -204,12 +204,16 @@ Class Account{
 
 
 
-	public function getAccountTransaction($start_record = 0,$max_records = 25,$voucher = array())
+	public function getAccountTransaction($start_record = 0,$max_records = 25,$voucher = array(),$ob=false)
 	{
 		// print_r($voucher);
 		$strSQL = "SELECT am.account_id,am.voucher_number, am.voucher_type_id,am.date,am.narration,am.account_from,am.account_to,am.account_debit,am.account_credit,v.voucher_name FROM account_master am";
 		$strSQL .= " LEFT JOIN voucher v ON v.voucher_id=am.voucher_type_id";
 		$strSQL .= " WHERE am.fy_id = '".$this->current_fy_id."' AND am.deleted='".NOT_DELETED."'";
+
+		if($ob){
+			$strSQL .= " AND am.voucher_type_id != -1";
+		}
 
 		if($this->date_from !=""){
 		if($this->date_to !="" and $this->date_from != $this->date_to){

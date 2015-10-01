@@ -30,6 +30,10 @@ $mybalancesheet = new BalanceSheet($myconnection);
 $datefrom =date("d-m-Y");
 $dateto =date("d-m-Y");
 
+$count_list = 0;
+
+$ob_debit = $ob_credit = 0;
+
 if(isset($_GET['submit'])){
 
 	if($_GET['lstledger'] > 0 ){
@@ -63,7 +67,8 @@ if(isset($_GET['submit'])){
 
 	$ledger_name = $ledger->ledgerName($account->ref_ledger);
 
-	$account_list = $account->getAccountTransaction($pagination->start_record,$pagination->max_records,$dataArray);
+	$account_list = $account->getAccountTransaction($pagination->start_record,$pagination->max_records,$dataArray,true);
+	
 
 	$account_total_list = $account->getAllAccountTransaction($dataArray);
 
@@ -74,6 +79,9 @@ if(isset($_GET['submit'])){
 	if($_GET['lstledger'] > 0 ){
 		$subledger_opening = $mybalancesheet->get_subledger_closing($_GET['lstledger'],$closing_from);
 		$subledger_closing = $mybalancesheet->get_subledger_closing($_GET['lstledger'],$closing_to );
+
+		list($ob_debit,$ob_credit) = $mybalancesheet->get_subledger_opening($_GET['lstledger']);
+		//echo $ob_debit.','.$ob_credit;
 	}
 
 

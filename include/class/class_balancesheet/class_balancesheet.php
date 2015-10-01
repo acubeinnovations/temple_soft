@@ -318,7 +318,7 @@ ORDER BY LS.ledger_sub_id ASC";
 
 
 
-function get_subledger_closing($ledger_sub_id = "", $closing_date = ""){
+	function get_subledger_closing($ledger_sub_id = "", $closing_date = ""){
 		$condition = "";
 		if($ledger_sub_id > 0){
 			$condition .=" AND LS.ledger_sub_id = '".$ledger_sub_id."'";
@@ -336,6 +336,7 @@ FROM
 ledger_sub LS, fy_ledger_sub FYLS , ledger_master LM , account_master AM
 WHERE 
 LS.ledger_id=LM.ledger_id 
+AND AM.voucher_type_id != -1
 AND  LS.ledger_sub_id = FYLS.ledger_sub_id
 AND FYLS.fy_id='".$this->fy_id."'
 AND  AM.ref_ledger=LS.ledger_sub_id 
@@ -344,38 +345,86 @@ AND AM.deleted='".NOT_DELETED."' ".$condition."
 GROUP BY LS.ledger_sub_id 
 ORDER BY LS.ledger_sub_id ASC";
 
+//echo $strSQL;exit;
+
 		mysql_query("SET NAMES utf8");
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if(mysql_num_rows($rsRES) > 0){
-			$subledgers = array();
+		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+		if(mysql_num_rows($rsRES) > 0){
+				$subledgers = array();
 
-			$index = 0;
+				$index = 0;
 
-            while($row = mysql_fetch_assoc($rsRES)){
-				$subledgers[$index]["ledger_name"] = $row['ledger_name'];
-				$subledgers[$index]["ledger_id"] = $row['ledger_id'];
-				$subledgers[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
-				$subledgers[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
-				$subledgers[$index]["balance"] = abs($row['balance']);
-				if($row['balance'] > 0){
-					$subledgers[$index]["balance_dr"] = abs($row['balance']);
-					$subledgers[$index]["balance_cr"] = 0;
-				}elseif($row['balance'] < 0){
-					$subledgers[$index]["balance_dr"] = 0;
-					$subledgers[$index]["balance_cr"] = abs($row['balance']);
-				}else{
-					$subledgers[$index]["balance_dr"] = 0;
-					$subledgers[$index]["balance_cr"] = 0;
-				}
+		    while($row = mysql_fetch_assoc($rsRES)){
+					$subledgers[$index]["ledger_name"] = $row['ledger_name'];
+					$subledgers[$index]["ledger_id"] = $row['ledger_id'];
+					$subledgers[$index]["ledger_sub_name"] = $row['ledger_sub_name'];
+					$subledgers[$index]["ledger_sub_id"] = $row['ledger_sub_id'];
+					$subledgers[$index]["balance"] = abs($row['balance']);
+					if($row['balance'] > 0){
+						$subledgers[$index]["balance_dr"] = abs($row['balance']);
+						$subledgers[$index]["balance_cr"] = 0;
+					}elseif($row['balance'] < 0){
+						$subledgers[$index]["balance_dr"] = 0;
+						$subledgers[$index]["balance_cr"] = abs($row['balance']);
+					}else{
+						$subledgers[$index]["balance_dr"] = 0;
+						$subledgers[$index]["balance_cr"] = 0;
+					}
 				
-				$index++;
-			}
+					$index++;
+				}
 
-        }else{
-			$subledgers =false;
+		}else{
+				$subledgers =false;
 		}
 
 		return $subledgers;
+	}
+
+
+
+	function get_subledger_opening($ledger_sub_id = ""){
+		$condition = "";
+		if($ledger_sub_id > 0){
+			$condition .=" AND LS.ledger_sub_id = '".$ledger_sub_id."'";
+		}
+
+
+		$strSQL = "SELECT ( SUM(AM.account_debit) -SUM(AM.account_credit)) as amount 
+			FROM 
+
+		ledger_sub LS, fy_ledger_sub FYLS , ledger_master LM , account_master AM
+		WHERE 
+		LS.ledger_id=LM.ledger_id 
+		AND  LS.ledger_sub_id = FYLS.ledger_sub_id
+		AND AM.voucher_type_id = -1
+
+		AND FYLS.fy_id='".$this->fy_id."'
+		AND  AM.ref_ledger=LS.ledger_sub_id 
+		AND AM.fy_id='".$this->fy_id."' 
+		AND AM.deleted='".NOT_DELETED."' ".$condition."
+
+		GROUP BY LS.ledger_sub_id ";
+
+//echo $strSQL;exit;
+
+		mysql_query("SET NAMES utf8");
+       		$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+       		if(mysql_num_rows($rsRES) > 0){
+			
+			$row = mysql_fetch_assoc($rsRES);
+
+			if($row['amount'] > 0)
+				return array($row['amount'],0);
+			elseif($row['amount'] < 0)
+				return array(0,$row['amount']);
+		
+
+       		}
+
+		return array(0,0);
+		
+
 	}
 
 }
