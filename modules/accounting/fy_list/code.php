@@ -107,9 +107,9 @@ if(isset($_GET['cls'])){
 						$account->date = date('Y-m-d', strtotime('+1 day', strtotime($financial_year->fy_end))); 
 						$account->account_from = $default_capital;
 						if ($close_data["profit"] >0){
-							$account->account_debit = $close_data["profit"];
+							$account->account_credit = $close_data["profit"];
 						}elseif ($close_data["loss"] >0){
-							$account->account_credit = $close_data["loss"];				
+							$account->account_debit = $close_data["loss"];				
 						}
 
 						$account->update();
