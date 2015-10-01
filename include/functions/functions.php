@@ -495,7 +495,7 @@ function convert_digit_to_words($no)
 			return false;
 		}else{
 			if(trim($start) != '' and trim($end) != ''){
-				if(strtotime(CURRENT_DATE) > strtotime($start) and strtotime(CURRENT_DATE) < strtotime($end)){
+				if(strtotime(CURRENT_DATE) >= strtotime($start) and strtotime(CURRENT_DATE) <= strtotime($end)){
 					return true;
 				}else{
 					return false;
