@@ -51,7 +51,7 @@ Class Account{
 		$strSQL = "SET @next_voucher = GET_NEXT_VOUCHER_NUMBER(".$this->voucher_type_id.");";
 		$strSQL .= "INSERT INTO account_master(voucher_number,voucher_type_id,fy_id,reference_number,account_from,account_to,account_debit,account_credit,date,narration,ref_ledger) VALUES('";
 		//$strSQL.= mysql_real_escape_string($this->voucher_number)."','";
-		$strSQL .= "@next_voucher,'";
+		$strSQL .= "@next_voucher','";
 		$strSQL.= mysql_real_escape_string($this->voucher_type_id)."','";
 		$strSQL.= mysql_real_escape_string($this->current_fy_id)."','";
 		$strSQL.= mysql_real_escape_string($this->reference_number)."','";
@@ -61,7 +61,7 @@ Class Account{
 		$strSQL.= mysql_real_escape_string($this->account_credit)."','";
 		$strSQL.= date('Y-m-d',strtotime($this->date))."','";
 		$strSQL.= mysql_real_escape_string($this->narration)."','";
-		$strSQL.= mysql_real_escape_string($this->ref_ledger)."')";
+		$strSQL.= mysql_real_escape_string($this->ref_ledger)."');";
 
 		//echo $strSQL;exit();
 		$rsRES = mysqli_multi_query($this->mysqli,$strSQL) or die ( mysqli_error() . $strSQL );
