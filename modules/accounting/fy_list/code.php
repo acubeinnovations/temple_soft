@@ -68,6 +68,7 @@ if(isset($_GET['cls'])){
 
 					$account = new Account($myconnection);
 					$account->connection = $myconnection;
+					$account->mysqli = $mysqli;
 					$account->ref_ledger = $row_liabilities["ledger_sub_id"];
 					$account->date = date('Y-m-d', strtotime('+1 day', strtotime($financial_year->fy_end))); 
 					$account->account_to = $row_liabilities["ledger_sub_id"];
@@ -84,6 +85,7 @@ if(isset($_GET['cls'])){
 					//echo $row_assets["ledger_sub_id"].",".$row_assets["ledger_sub_name"].",".$row_assets["balance"]."<br>";
 					$account = new Account($myconnection);
 					$account->connection = $myconnection;
+					$account->mysqli = $mysqli;
 					$account->ref_ledger = $row_assets["ledger_sub_id"];
 					$account->date = date('Y-m-d', strtotime('+1 day', strtotime($financial_year->fy_end))); 
 					$account->account_from = $row_assets["ledger_sub_id"];
@@ -100,6 +102,7 @@ if(isset($_GET['cls'])){
 					if($default_capital > 0){
 						$account = new Account($myconnection);
 						$account->connection = $myconnection;
+						$account->mysqli = $mysqli;
 						$account->ref_ledger = $default_capital;
 						$account->date = date('Y-m-d', strtotime('+1 day', strtotime($financial_year->fy_end))); 
 						$account->account_from = $default_capital;
